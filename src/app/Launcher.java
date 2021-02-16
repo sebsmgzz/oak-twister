@@ -2,10 +2,10 @@ package app;
 
 import javafx.application.Application;
 
-public class Main {
+public class Launcher {
 
     public static void main(String[] args) throws Exception {
-        Application.launch(Home.class);
+        Application.launch(app.OakTwister.class);
     }
 
 }
