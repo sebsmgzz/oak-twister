@@ -1,19 +1,19 @@
 package app;
 
+import app.factories.ModelFactory;
+import app.factories.ViewFactory;
+import app.factories.ViewModelFactory;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class OakTwister extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
-        primaryStage.show();
+        ModelFactory modelFactory = new ModelFactory();
+        ViewModelFactory viewModelFactory = new ViewModelFactory(modelFactory);
+        ViewFactory viewFactory = new ViewFactory(primaryStage, viewModelFactory);
+        viewFactory.start();
     }
 
 }
