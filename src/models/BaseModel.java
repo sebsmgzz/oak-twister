@@ -3,7 +3,6 @@ package models;
 import annotations.Table;
 import metamodels.MetaModel;
 import managers.BaseManager;
-import serializers.BaseSerializer;
 
 @Table(name = "")
 public abstract class BaseModel {
