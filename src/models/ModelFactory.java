@@ -1,4 +1,4 @@
-package factories;
+package models;
 
 import models.HelloWorld;
 

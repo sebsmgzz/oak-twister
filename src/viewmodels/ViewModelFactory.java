@@ -1,5 +1,6 @@
-package factories;
+package viewmodels;
 
+import models.ModelFactory;
 import viewmodels.HelloWorldViewModel;
 
 public class ViewModelFactory {

@@ -1,6 +1,6 @@
-import factories.ModelFactory;
-import factories.ViewFactory;
-import factories.ViewModelFactory;
+import models.ModelFactory;
+import views.ViewFactory;
+import viewmodels.ViewModelFactory;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

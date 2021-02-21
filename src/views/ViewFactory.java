@@ -1,5 +1,6 @@
-package factories;
+package views;
 
+import viewmodels.ViewModelFactory;
 import views.HelloWorld.HelloWorldController;
 
 import javafx.fxml.FXMLLoader;
