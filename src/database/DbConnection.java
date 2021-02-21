@@ -1,41 +1,24 @@
 package database;
 
-import database.statements.CreateTable;
-import database.statements.Select;
-import database.statements.SelectAll;
+import database.statements.BaseStatement;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DbConnection {
 
-    private static DbConnection instance;
-
-    public static DbConnection getInstance() throws SQLException {
-        if(instance == null) {
-            instance = new DbConnection();
-        }
-        return instance;
-    }
-
     private final Connection connection;
 
-    private DbConnection() throws SQLException {
+    public DbConnection() throws SQLException {
         String path = System.getProperty("user.dir") + "/data/db.sqlite";
         this.connection = DriverManager.getConnection("jdbc:sqlite:" + path);
     }
 
-    public SelectAll getSelectAllStatement() throws SQLException {
-        return new SelectAll(connection.createStatement());
-    }
-
-    public Select getSelectStatement() throws SQLException {
-        return new Select(connection.createStatement());
-    }
-
-    public CreateTable getCreateTableStatement() throws SQLException {
-        return new CreateTable(connection.createStatement());
+    public Statement getStatement(BaseStatement baseStatement) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(baseStatement.getQuery());
+        return new Statement(preparedStatement, baseStatement);
     }
 
     public void finalize() {

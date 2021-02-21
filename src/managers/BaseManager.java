@@ -6,7 +6,6 @@ import metamodels.MetaModel;
 import models.BaseModel;
 import database.DbConnection;
 import database.QueryResult;
-import database.statements.SelectAll;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

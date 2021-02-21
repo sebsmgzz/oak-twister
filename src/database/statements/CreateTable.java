@@ -2,26 +2,19 @@ package database.statements;
 
 import database.Column;
 
-import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateTable extends BaseStatement {
+public class CreateTable implements BaseStatement {
 
-    private String tableName;
+    private final String tableName;
     private final List<Column> columns;
 
-    public String getTableName() {
-        return tableName;
-    }
-
-    public void setTableName(String tableName) {
+    public CreateTable(String tableName) {
         this.tableName = tableName;
-    }
-
-    public CreateTable(Statement statement) {
-        super(statement);
-        this.columns = new ArrayList<>();
+        this.columns = new ArrayList<Column>();
     }
 
     public boolean addColumn(Column column) {
@@ -34,10 +27,15 @@ public class CreateTable extends BaseStatement {
 
     @Override
     public String getQuery() {
+        return "CREATE TABLE ? ( ? );";
+    }
+
+    @Override
+    public void setParameters(PreparedStatement statement) throws SQLException {
         List<String> strColumns = new ArrayList<>();
         columns.forEach(c -> strColumns.add(c.toString()));
-        return "CREATE TABLE " + tableName +
-               "(" + String.join(", ", strColumns) + ");";
+        statement.setString(1, tableName);
+        statement.setString(2, String.join(", ", strColumns));
     }
 
 }
