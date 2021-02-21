@@ -1,6 +1,6 @@
-package app.views.HelloWorld;
+package views.HelloWorld;
 
-import app.viewmodels.HelloWorldViewModel;
+import viewmodels.HelloWorldViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

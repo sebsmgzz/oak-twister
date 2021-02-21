@@ -1,6 +1,6 @@
-package app.factories;
+package factories;
 
-import app.views.HelloWorld.HelloWorldController;
+import views.HelloWorld.HelloWorldController;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,7 +25,7 @@ public class ViewFactory {
 
     public void openView(String viewName) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        String path = "/app/views/" + viewName + "/" + viewName + "View.fxml";
+        String path = "/views/" + viewName + "/" + viewName + "View.fxml";
         URL url = getClass().getResource(path);
         loader.setLocation(url);
         Parent root = loader.load();

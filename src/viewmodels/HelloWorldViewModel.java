@@ -1,6 +1,6 @@
-package app.viewmodels;
+package viewmodels;
 
-import app.models.HelloWorld;
+import models.HelloWorld;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 

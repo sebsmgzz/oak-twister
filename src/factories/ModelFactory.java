@@ -1,6 +1,6 @@
-package app.factories;
+package factories;
 
-import app.models.HelloWorld;
+import models.HelloWorld;
 
 public class ModelFactory {
 
