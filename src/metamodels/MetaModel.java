@@ -8,7 +8,11 @@ import java.lang.reflect.Field;
 public class MetaModel {
 
     private final MetaFieldList metaFieldList;
-    public final Table table;
+    private final Table table;
+
+    public String getTableName() {
+        return table.name();
+    }
 
     public MetaFieldList getMetaFieldList() {
         return metaFieldList;

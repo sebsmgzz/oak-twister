@@ -6,6 +6,7 @@ import database.Statement;
 import database.statements.BaseStatement;
 import database.statements.SelectFrom;
 import database.statements.SelectFromWhere;
+import metamodels.MetaModel;
 import models.Platform;
 import serializers.PlatformSerializer;
 
@@ -15,9 +16,11 @@ import java.util.List;
 
 public class PlatformManager {
 
+    private final MetaModel metaModel;
     private final PlatformSerializer serializer;
 
-    public PlatformManager(PlatformSerializer serializer) {
+    public PlatformManager(MetaModel metaModel, PlatformSerializer serializer) {
+        this.metaModel = metaModel;
         this.serializer = serializer;
     }
 
@@ -25,8 +28,7 @@ public class PlatformManager {
         List<Platform> models = new ArrayList<>();
         try {
             DbConnection connection = new DbConnection();
-            //TODO: call metamodel from factory
-            BaseStatement baseStatement = new SelectFrom("platforms");
+            BaseStatement baseStatement = new SelectFrom(metaModel.getTableName());
             Statement statement = connection.getStatement(baseStatement);
             QueryResult result = statement.executeQuery();
             while(result.next()) {
@@ -42,8 +44,7 @@ public class PlatformManager {
     public Platform select(int id) {
         try {
             DbConnection connection = new DbConnection();
-            //TODO: call metamodel from factory
-            BaseStatement baseStatement = new SelectFromWhere("passwords", "id", id);
+            BaseStatement baseStatement = new SelectFromWhere(metaModel.getTableName(), "id", id);
             Statement statement = connection.getStatement(baseStatement);
             QueryResult result = statement.executeQuery();
             if(result.next()) {

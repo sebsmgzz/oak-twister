@@ -6,18 +6,20 @@ import database.Statement;
 import database.statements.BaseStatement;
 import database.statements.SelectFrom;
 import database.statements.SelectFromWhere;
+import metamodels.MetaModel;
 import models.Password;
 import serializers.PasswordSerializer;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PasswordManager {
 
+    private final MetaModel metaModel;
     private final PasswordSerializer serializer;
 
-    public PasswordManager(PasswordSerializer serializer) {
+    public PasswordManager(MetaModel metaModel, PasswordSerializer serializer) {
+        this.metaModel = metaModel;
         this.serializer = serializer;
     }
 
@@ -25,8 +27,7 @@ public class PasswordManager {
         List<Password> models = new ArrayList<>();
         try {
             DbConnection connection = new DbConnection();
-            //TODO: call metamodel from factory
-            BaseStatement baseStatement = new SelectFrom("passwords");
+            BaseStatement baseStatement = new SelectFrom(metaModel.getTableName());
             Statement statement = connection.getStatement(baseStatement);
             QueryResult result = statement.executeQuery();
             while(result.next()) {
@@ -42,8 +43,7 @@ public class PasswordManager {
     public Password select(int id) {
         try {
             DbConnection connection = new DbConnection();
-            //TODO: call metamodel from factory
-            BaseStatement baseStatement = new SelectFromWhere("passwords", "id", id);
+            BaseStatement baseStatement = new SelectFromWhere(metaModel.getTableName(), "id", id);
             Statement statement = connection.getStatement(baseStatement);
             QueryResult result = statement.executeQuery();
             if(result.next()) {

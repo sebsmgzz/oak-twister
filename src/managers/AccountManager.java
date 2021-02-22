@@ -6,18 +6,20 @@ import database.Statement;
 import database.statements.BaseStatement;
 import database.statements.SelectFrom;
 import database.statements.SelectFromWhere;
+import metamodels.MetaModel;
 import models.Account;
 import serializers.AccountSerializer;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AccountManager extends BaseManager {
 
+    private final MetaModel metaModel;
     private final AccountSerializer serializer;
 
-    public AccountManager(AccountSerializer serializer) {
+    public AccountManager(MetaModel metaModel, AccountSerializer serializer) {
+        this.metaModel = metaModel;
         this.serializer = serializer;
     }
 
@@ -25,8 +27,7 @@ public class AccountManager extends BaseManager {
         List<Account> models = new ArrayList<>();
         try {
             DbConnection connection = new DbConnection();
-            // TODO: call metamodel from factory
-            BaseStatement baseStatement = new SelectFrom("accounts"); //TODO: call metamodel from factory
+            BaseStatement baseStatement = new SelectFrom(metaModel.getTableName());
             Statement statement = connection.getStatement(baseStatement);
             QueryResult result = statement.executeQuery();
             while(result.next()) {
@@ -42,8 +43,7 @@ public class AccountManager extends BaseManager {
     public Account select(int id) {
         try {
             DbConnection connection = new DbConnection();
-            // TODO: call metamodel from factory
-            BaseStatement baseStatement = new SelectFromWhere("accounts", "id", id);
+            BaseStatement baseStatement = new SelectFromWhere(metaModel.getTableName(), "id", id);
             Statement statement = connection.getStatement(baseStatement);
             QueryResult result = statement.executeQuery();
             if(result.next()) {

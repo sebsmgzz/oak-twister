@@ -1,29 +1,60 @@
 package managers;
 
+import metamodels.MetaModel;
+import models.Account;
+import models.Identity;
+import models.Password;
+import models.Platform;
 import serializers.SerializerFactory;
 
 public class ManagerFactory {
 
     private final SerializerFactory serializerFactory;
 
+    private AccountManager accountManager;
+    private IdentityManager identityManager;
+    private PasswordManager passwordManager;
+    private PlatformManager platformManager;
+
+
     public ManagerFactory(SerializerFactory serializerFactory) {
         this.serializerFactory = serializerFactory;
     }
 
     public AccountManager getAccountManager() {
-        return new AccountManager(serializerFactory.getAccountSerializer());
+        if(accountManager == null) {
+            accountManager = new AccountManager(
+                    new MetaModel(Account.class),
+                    serializerFactory.getAccountSerializer());
+        }
+        return accountManager;
     }
 
     public IdentityManager getIdentityManager() {
-        return new IdentityManager(serializerFactory.getIdentitySerializer());
+        if(identityManager == null) {
+            identityManager = new IdentityManager(
+                    new MetaModel(Identity.class),
+                    serializerFactory.getIdentitySerializer());
+        }
+        return identityManager;
     }
 
     public PasswordManager getPasswordManager() {
-        return new PasswordManager(serializerFactory.getPasswordSerializer());
+        if(passwordManager == null) {
+            passwordManager = new PasswordManager(
+                    new MetaModel(Password.class),
+                    serializerFactory.getPasswordSerializer());
+        }
+        return passwordManager;
     }
 
     public PlatformManager getPlatformManager() {
-        return new PlatformManager(serializerFactory.getPlatformSerializer());
+        if(platformManager == null) {
+            platformManager = new PlatformManager(
+                    new MetaModel(Platform.class),
+                    serializerFactory.getPlatformSerializer());
+        }
+        return platformManager;
     }
 
 }

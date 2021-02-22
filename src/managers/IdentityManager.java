@@ -6,18 +6,20 @@ import database.Statement;
 import database.statements.BaseStatement;
 import database.statements.SelectFrom;
 import database.statements.SelectFromWhere;
+import metamodels.MetaModel;
 import models.Identity;
 import serializers.IdentitySerializer;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class IdentityManager {
 
+    private final MetaModel metaModel;
     private final IdentitySerializer serializer;
 
-    public IdentityManager(IdentitySerializer identitySerializer) {
+    public IdentityManager(MetaModel metaModel, IdentitySerializer identitySerializer) {
+        this.metaModel = metaModel;
         this.serializer = identitySerializer;
     }
 
@@ -25,8 +27,7 @@ public class IdentityManager {
         List<Identity> models = new ArrayList<>();
         try {
             DbConnection connection = new DbConnection();
-            //TODO: call metamodel from factory
-            BaseStatement baseStatement = new SelectFrom("identities");
+            BaseStatement baseStatement = new SelectFrom(metaModel.getTableName());
             Statement statement = connection.getStatement(baseStatement);
             QueryResult result = statement.executeQuery();
             while(result.next()) {
@@ -42,8 +43,7 @@ public class IdentityManager {
     public Identity select(int id) {
         try {
             DbConnection connection = new DbConnection();
-            //TODO: call metamodel from factory
-            BaseStatement baseStatement = new SelectFromWhere("identities", "id", id);
+            BaseStatement baseStatement = new SelectFromWhere(metaModel.getTableName(), "id", id);
             Statement statement = connection.getStatement(baseStatement);
             QueryResult result = statement.executeQuery();
             if(result.next()) {
