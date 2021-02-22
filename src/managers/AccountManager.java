@@ -13,23 +13,27 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountManager {
+public class AccountManager extends BaseManager {
 
-    private static final String TABLE_NAME = "accounts";
-    private final AccountSerializer serializer = new AccountSerializer();
+    private final AccountSerializer serializer;
+
+    public AccountManager(AccountSerializer serializer) {
+        this.serializer = serializer;
+    }
 
     public List<Account> selectAll() {
         List<Account> models = new ArrayList<>();
         try {
             DbConnection connection = new DbConnection();
-            BaseStatement baseStatement = new SelectFrom(TABLE_NAME);
+            // TODO: call metamodel from factory
+            BaseStatement baseStatement = new SelectFrom("accounts"); //TODO: call metamodel from factory
             Statement statement = connection.getStatement(baseStatement);
             QueryResult result = statement.executeQuery();
             while(result.next()) {
                 Account model = serializer.serialize(result.getAllValues());
                 models.add(model);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             return null;
         }
         return models;
@@ -38,13 +42,14 @@ public class AccountManager {
     public Account select(int id) {
         try {
             DbConnection connection = new DbConnection();
-            BaseStatement baseStatement = new SelectFromWhere(TABLE_NAME, "id", id);
+            // TODO: call metamodel from factory
+            BaseStatement baseStatement = new SelectFromWhere("accounts", "id", id);
             Statement statement = connection.getStatement(baseStatement);
             QueryResult result = statement.executeQuery();
             if(result.next()) {
                 return serializer.serialize(result.getAllValues());
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             return null;
         }
         return null;

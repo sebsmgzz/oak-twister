@@ -14,22 +14,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PasswordManager {
-    
-    private static final String TABLE_NAME = "Passwords";
-    private final PasswordSerializer serializer = new PasswordSerializer();
+
+    private final PasswordSerializer serializer;
+
+    public PasswordManager(PasswordSerializer serializer) {
+        this.serializer = serializer;
+    }
 
     public List<Password> selectAll() {
         List<Password> models = new ArrayList<>();
         try {
             DbConnection connection = new DbConnection();
-            BaseStatement baseStatement = new SelectFrom(TABLE_NAME);
+            //TODO: call metamodel from factory
+            BaseStatement baseStatement = new SelectFrom("passwords");
             Statement statement = connection.getStatement(baseStatement);
             QueryResult result = statement.executeQuery();
             while(result.next()) {
                 Password model = serializer.serialize(result.getAllValues());
                 models.add(model);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             return null;
         }
         return models;
@@ -38,13 +42,14 @@ public class PasswordManager {
     public Password select(int id) {
         try {
             DbConnection connection = new DbConnection();
-            BaseStatement baseStatement = new SelectFromWhere(TABLE_NAME, "id", id);
+            //TODO: call metamodel from factory
+            BaseStatement baseStatement = new SelectFromWhere("passwords", "id", id);
             Statement statement = connection.getStatement(baseStatement);
             QueryResult result = statement.executeQuery();
             if(result.next()) {
                 return serializer.serialize(result.getAllValues());
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             return null;
         }
         return null;

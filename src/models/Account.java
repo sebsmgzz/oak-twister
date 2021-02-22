@@ -57,11 +57,6 @@ public class Account extends BaseModel {
     }
 
     @Override
-    public BaseModel getNew() {
-        return new Account();
-    }
-
-    @Override
     public String toString() {
         return platform.toString() + "_" + identity.toString();
     }

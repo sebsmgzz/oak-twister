@@ -1,24 +1,32 @@
 package serializers;
 
-import models.Account;
-import models.BaseModel;
-import models.Identity;
-import models.Password;
-import models.Platform;
+import managers.ManagerFactory;
+import models.ModelFactory;
 
 public class SerializerFactory {
 
-    public Serializer<?> createSerializer(Class<? extends BaseModel> type) {
-        if(type == Account.class) {
-            return new AccountSerializer();
-        } else if(type == Identity.class) {
-            return new IdentitySerializer();
-        } else if(type == Password.class) {
-            return new PasswordSerializer();
-        } else if(type == Platform.class) {
-            return new PlatformSerializer();
-        }
-        return null;
+    ModelFactory modelFactory;
+    ManagerFactory managerFactory;
+
+    public SerializerFactory(ModelFactory modelFactory, ManagerFactory managerFactory) {
+        this.modelFactory = modelFactory;
+        this.managerFactory = managerFactory;
+    }
+
+    public AccountSerializer getAccountSerializer() {
+        return new AccountSerializer(modelFactory::getAccount, managerFactory.getPlatformManager(), managerFactory.getIdentityManager());
+    }
+
+    public IdentitySerializer getIdentitySerializer() {
+        return new IdentitySerializer(modelFactory::getIdentity);
+    }
+
+    public PasswordSerializer getPasswordSerializer() {
+        return new PasswordSerializer(modelFactory::getPassword, managerFactory.getAccountManager());
+    }
+
+    public PlatformSerializer getPlatformSerializer() {
+        return new PlatformSerializer(modelFactory::getPlatform);
     }
 
 }

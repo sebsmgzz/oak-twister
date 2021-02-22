@@ -15,21 +15,25 @@ import java.util.List;
 
 public class PlatformManager {
 
-    private static final String TABLE_NAME = "Platforms";
-    private final PlatformSerializer serializer = new PlatformSerializer();
+    private final PlatformSerializer serializer;
+
+    public PlatformManager(PlatformSerializer serializer) {
+        this.serializer = serializer;
+    }
 
     public List<Platform> selectAll() {
         List<Platform> models = new ArrayList<>();
         try {
             DbConnection connection = new DbConnection();
-            BaseStatement baseStatement = new SelectFrom(TABLE_NAME);
+            //TODO: call metamodel from factory
+            BaseStatement baseStatement = new SelectFrom("platforms");
             Statement statement = connection.getStatement(baseStatement);
             QueryResult result = statement.executeQuery();
             while(result.next()) {
                 Platform model = serializer.serialize(result.getAllValues());
                 models.add(model);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             return null;
         }
         return models;
@@ -38,13 +42,14 @@ public class PlatformManager {
     public Platform select(int id) {
         try {
             DbConnection connection = new DbConnection();
-            BaseStatement baseStatement = new SelectFromWhere(TABLE_NAME, "id", id);
+            //TODO: call metamodel from factory
+            BaseStatement baseStatement = new SelectFromWhere("passwords", "id", id);
             Statement statement = connection.getStatement(baseStatement);
             QueryResult result = statement.executeQuery();
             if(result.next()) {
                 return serializer.serialize(result.getAllValues());
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             return null;
         }
         return null;

@@ -56,11 +56,6 @@ public class Password extends BaseModel {
     }
 
     @Override
-    public BaseModel getNew() {
-        return new Password();
-    }
-
-    @Override
     public String toString() {
         return value;
     }

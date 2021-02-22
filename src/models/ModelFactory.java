@@ -1,16 +1,25 @@
 package models;
 
-import models.HelloWorld;
-
 public class ModelFactory {
 
-    private HelloWorld helloWorld;
-
     public HelloWorld getHelloWorld() {
-        if(helloWorld == null) {
-            helloWorld = new HelloWorld();
-        }
-        return helloWorld;
+        return new HelloWorld();
+    }
+
+    public Account getAccount() {
+        return new Account();
+    }
+
+    public Identity getIdentity() {
+        return new Identity();
+    }
+
+    public Password getPassword() {
+        return new Password();
+    }
+
+    public Platform getPlatform() {
+        return new Platform();
     }
 
 }

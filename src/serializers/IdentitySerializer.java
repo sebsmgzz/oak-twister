@@ -4,12 +4,18 @@ import models.Identity;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
-public class IdentitySerializer implements Serializer<Identity> {
+public class IdentitySerializer extends BaseSerializer {
 
-    @Override
-    public Identity serialize(Map<String, Object> map) {
-        Identity identity = new Identity();
+    private final Callable<Identity> modelFactory;
+
+    public IdentitySerializer(Callable<Identity> modelFactory) {
+        this.modelFactory = modelFactory;
+    }
+
+    public Identity serialize(Map<String, Object> map) throws Exception {
+        Identity identity = modelFactory.call();
         int id = (int) map.getOrDefault("id", -1);
         identity.setId(id);
         String firstName = (String) map.getOrDefault("first_name", null);
@@ -21,7 +27,6 @@ public class IdentitySerializer implements Serializer<Identity> {
         return identity;
     }
 
-    @Override
     public Map<String, Object> deserialize(Identity identity) {
         Map<String, Object> map = new HashMap<>();
         map.put("id", identity.getId());

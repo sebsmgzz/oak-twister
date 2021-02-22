@@ -52,11 +52,6 @@ public class Identity extends BaseModel {
     }
 
     @Override
-    public BaseModel getNew() {
-        return new Identity();
-    }
-
-    @Override
     public String toString() {
         return email;
     }

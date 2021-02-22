@@ -43,11 +43,6 @@ public class Platform extends BaseModel {
     }
 
     @Override
-    public BaseModel getNew() {
-        return new Platform();
-    }
-
-    @Override
     public String toString() {
         return name;
     }

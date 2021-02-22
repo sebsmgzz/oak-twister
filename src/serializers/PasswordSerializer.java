@@ -1,21 +1,29 @@
 package serializers;
 
+import managers.AccountManager;
 import models.Account;
 import models.Password;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
-public class PasswordSerializer implements Serializer<Password> {
+public class PasswordSerializer extends BaseSerializer {
 
-    @Override
-    public Password serialize(Map<String, Object> map) {
-        Password password = new Password();
+    private final Callable<Password> modelFactory;
+    private final AccountManager accountManager;
+
+    public PasswordSerializer(Callable<Password> modelFactory, AccountManager accountManager) {
+        this.modelFactory = modelFactory;
+        this.accountManager = accountManager;
+    }
+
+    public Password serialize(Map<String, Object> map) throws Exception {
+        Password password = modelFactory.call();
         int id = (int) map.getOrDefault("id", -1);
         password.setId(id);
         int accountId = (int) map.getOrDefault("account", -1);
-        AccountManager accountManager = new AccountManager();
         Account account = accountManager.select(accountId);
         password.setAccount(account);
         Date created = (Date) map.getOrDefault("created", null);
@@ -26,7 +34,6 @@ public class PasswordSerializer implements Serializer<Password> {
         return password;
     }
 
-    @Override
     public Map<String, Object> deserialize(Password password) {
         Map<String, Object> map = new HashMap<>();
         map.put("id", password.getId());
