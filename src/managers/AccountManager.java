@@ -1,11 +1,15 @@
 package managers;
 
+import database.Column;
 import database.DbConnection;
 import database.QueryResult;
 import database.Statement;
 import database.statements.BaseStatement;
+import database.statements.CreateTable;
 import database.statements.SelectFrom;
 import database.statements.SelectFromWhere;
+import metamodels.MetaField;
+import metamodels.MetaFieldList;
 import metamodels.MetaModel;
 import models.Account;
 import serializers.AccountSerializer;
@@ -21,6 +25,25 @@ public class AccountManager extends BaseManager {
     public AccountManager(MetaModel metaModel, AccountSerializer serializer) {
         this.metaModel = metaModel;
         this.serializer = serializer;
+    }
+
+    public boolean createTable() {
+        try {
+            DbConnection connection = new DbConnection();
+            CreateTable createTableStatement = new CreateTable(metaModel.getTableName());
+            List<MetaField> metaFields = metaModel.getMetaFieldList().getColumns();
+            for (MetaField metaField : metaFields) {
+                createTableStatement.addColumn(new Column(
+                    metaField.column.name(),
+                    metaField.column.type(),
+                    metaField.column.notNull(),
+                    metaField.column.primaryKey()));
+            }
+            Statement statement = connection.getStatement(createTableStatement);
+            return statement.execute();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public List<Account> selectAll() {

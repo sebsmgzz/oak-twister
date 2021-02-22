@@ -16,6 +16,11 @@ public class Statement {
         this.baseStatement = baseStatement;
     }
 
+    public boolean execute() throws SQLException {
+        baseStatement.setParameters(preparedStatement);
+        return preparedStatement.execute();
+    }
+
     public int executeUpdate() throws SQLException {
         baseStatement.setParameters(preparedStatement);
         return preparedStatement.executeUpdate();

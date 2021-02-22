@@ -5,7 +5,7 @@ public class Column {
     private String name;
     private boolean isPrimaryKey;
     private Type type;
-    private boolean allowNull;
+    private boolean notNull;
 
     public String getName() {
         return name;
@@ -19,14 +19,14 @@ public class Column {
         return type;
     }
 
-    public boolean isAllowNull() {
-        return allowNull;
+    public boolean isNotNull() {
+        return notNull;
     }
 
-    public Column(String name, Type type, boolean allowNull, boolean isPrimaryKey) {
+    public Column(String name, Type type, boolean notNull, boolean isPrimaryKey) {
         this.name = name;
         this.type = type;
-        this.allowNull = allowNull;
+        this.notNull = notNull;
         this.isPrimaryKey = isPrimaryKey;
     }
 
@@ -36,7 +36,7 @@ public class Column {
         builder.append(name).append(" ");
         builder.append(type.toString()).append(" ");
         builder.append(isPrimaryKey? "PRIMARY KEY " : "");
-        builder.append(allowNull? "" : "NOT NULL ");
+        builder.append(notNull ? "" : "NOT NULL ");
         return builder.toString();
     }
 
