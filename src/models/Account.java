@@ -21,7 +21,7 @@ public class Account extends BaseModel {
     @ForeignKey(model = Identity.class)
     private Identity identity;
 
-    @Column(name = "created", type = Type.TEXT, size = 200)
+    @Column(name = "created", type = Type.TEXT)
     private Date created;
 
     public int getId() {

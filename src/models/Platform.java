@@ -12,7 +12,7 @@ public class Platform extends BaseModel {
     @Column(name = "id", type = Type.INTEGER, primaryKey = true)
     private int id;
 
-    @Column(name = "name", type = Type.TEXT, size = 200)
+    @Column(name = "name", type = Type.TEXT)
     private String name;
 
     @Column(name = "image", type = Type.BLOB)

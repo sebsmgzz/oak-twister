@@ -10,13 +10,13 @@ public class Identity extends BaseModel {
     @Column(name = "id", type = Type.INTEGER, primaryKey = true)
     private int id;
 
-    @Column(name = "first_name", type = Type.TEXT, size = 200)
+    @Column(name = "first_name", type = Type.TEXT)
     private String firstName;
 
-    @Column(name = "last_name", type = Type.TEXT, size = 200)
+    @Column(name = "last_name", type = Type.TEXT)
     private String lastName;
 
-    @Column(name = "email", type = Type.TEXT, size = 200)
+    @Column(name = "email", type = Type.TEXT)
     private String email;
 
     public int getId() {

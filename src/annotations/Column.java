@@ -17,8 +17,8 @@ public @interface Column {
 
     Type type();
 
-    int size() default 0;
+    boolean notNull() default true;
 
-    boolean allowNull() default false;
+    boolean unique() default false;
 
 }

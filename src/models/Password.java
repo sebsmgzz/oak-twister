@@ -17,10 +17,10 @@ public class Password extends BaseModel {
     @ForeignKey(model = Account.class)
     public Account account;
 
-    @Column(name = "created", type = Type.TEXT, size = 200)
+    @Column(name = "created", type = Type.TEXT)
     public Date created;
 
-    @Column(name = "value", type = Type.TEXT, size = 800)
+    @Column(name = "value", type = Type.TEXT)
     public String value;
 
     public int getId() {
