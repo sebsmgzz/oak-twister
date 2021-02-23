@@ -1,4 +1,4 @@
-package metamodels;
+package models.metamodels;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

@@ -1,5 +1,7 @@
 package models;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class ModelFactory {
 
     public HelloWorld getHelloWorld() {
@@ -20,6 +22,15 @@ public class ModelFactory {
 
     public Platform getPlatform() {
         return new Platform();
+    }
+
+    public <T extends BaseModel> T get(Class<T> type) {
+        try {
+            return type.getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | InvocationTargetException |
+                IllegalAccessException | NoSuchMethodException e) {
+            return null;
+        }
     }
 
 }
