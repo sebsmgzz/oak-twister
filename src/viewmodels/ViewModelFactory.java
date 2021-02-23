@@ -1,18 +1,17 @@
 package viewmodels;
 
 import models.ModelFactory;
-import viewmodels.HelloWorldViewModel;
 
 public class ViewModelFactory {
 
     private ModelFactory modelFactory;
-    private HelloWorldViewModel helloWorldViewModel;
+    private HomeViewModel homeViewModel;
 
-    public HelloWorldViewModel getHelloWorldViewModel() {
-        if(helloWorldViewModel == null) {
-            helloWorldViewModel = new HelloWorldViewModel(modelFactory.getHelloWorld());
+    public HomeViewModel getHomeViewModel() {
+        if(homeViewModel == null) {
+            homeViewModel = new HomeViewModel();
         }
-        return helloWorldViewModel;
+        return homeViewModel;
     }
 
     public ViewModelFactory(ModelFactory modelFactory) {

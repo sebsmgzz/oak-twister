@@ -1,7 +1,7 @@
 package views;
 
 import viewmodels.ViewModelFactory;
-import views.HelloWorld.HelloWorldController;
+import views.Home.HomeController;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,7 +21,7 @@ public class ViewFactory {
     }
 
     public void start() throws Exception {
-        openView("HelloWorld");
+        openView("Home");
     }
 
     public void openView(String viewName) throws IOException {
@@ -30,9 +30,9 @@ public class ViewFactory {
         URL url = getClass().getResource(path);
         loader.setLocation(url);
         Parent root = loader.load();
-        if("HelloWorld".equals(viewName)) {
-            HelloWorldController view = loader.getController();
-            view.init(viewModelFactory.getHelloWorldViewModel());
+        if("Home".equals(viewName)) {
+            HomeController view = loader.getController();
+            view.init(viewModelFactory.getHomeViewModel());
             stage.setTitle("HelloWorld");
         }
         Scene scene = new Scene(root);

@@ -1,15 +1,12 @@
 package viewmodels;
 
-import models.HelloWorld;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class HelloWorldViewModel {
+public class HomeViewModel {
 
     private StringProperty output;
     private StringProperty input;
-
-    private HelloWorld helloWorld;
 
     public StringProperty getOutput() {
         return output;
@@ -19,8 +16,7 @@ public class HelloWorldViewModel {
         return input;
     }
 
-    public HelloWorldViewModel(HelloWorld model) {
-        this.helloWorld = model;
+    public HomeViewModel() {
         this.output = new SimpleStringProperty();
         this.input = new SimpleStringProperty();
     }

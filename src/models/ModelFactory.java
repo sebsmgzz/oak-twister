@@ -4,10 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 
 public class ModelFactory {
 
-    public HelloWorld getHelloWorld() {
-        return new HelloWorld();
-    }
-
     public Account getAccount() {
         return new Account();
     }
