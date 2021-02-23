@@ -1,7 +1,6 @@
-package database.executable;
+package database;
 
 import database.statements.BaseStatement;
-import database.executable.ExecutableStatement;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

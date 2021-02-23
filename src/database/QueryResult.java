@@ -1,4 +1,4 @@
-package database.executable;
+package database;
 
 import database.entities.DataRow;
 import database.entities.EntityTable;

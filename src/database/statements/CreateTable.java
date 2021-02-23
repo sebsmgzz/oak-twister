@@ -27,15 +27,14 @@ public class CreateTable implements BaseStatement {
 
     @Override
     public String getQuery() {
-        return "CREATE TABLE ? ( ? );";
+        List<String> strColumns = new ArrayList<>();
+        columns.forEach(c -> strColumns.add(c.toString()));
+        return "CREATE TABLE ? (" + String.join(", ", strColumns) + ");";
     }
 
     @Override
     public void setParameters(PreparedStatement statement) throws SQLException {
-        List<String> strColumns = new ArrayList<>();
-        columns.forEach(c -> strColumns.add(c.toString()));
         statement.setString(1, tableName);
-        statement.setString(2, String.join(", ", strColumns));
     }
 
 }

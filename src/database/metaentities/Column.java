@@ -34,9 +34,9 @@ public class Column {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append(name).append(" ");
-        builder.append(type.toString()).append(" ");
-        builder.append(isPrimaryKey? "PRIMARY KEY " : "");
-        builder.append(notNull ? "" : "NOT NULL ");
+        builder.append(type.toString());
+        builder.append(isPrimaryKey? " PRIMARY KEY" : "");
+        builder.append(notNull ? "" : " NOT NULL");
         return builder.toString();
     }
 

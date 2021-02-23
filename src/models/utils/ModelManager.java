@@ -1,9 +1,9 @@
 package models.utils;
 
 import database.entities.EntityTable;
-import database.executable.DbConnection;
-import database.executable.ExecutableStatement;
-import database.executable.QueryResult;
+import database.DbConnection;
+import database.ExecutableStatement;
+import database.QueryResult;
 import database.metaentities.Column;
 import database.statements.BaseStatement;
 import database.statements.CreateTable;
@@ -46,7 +46,8 @@ public class  ModelManager<T extends BaseModel> {
                         metaField.column.primaryKey()));
             }
             ExecutableStatement executableStatement = connection.getStatement(createTableStatement);
-            return executableStatement.execute();
+            executableStatement.execute();
+            return true;
         } catch (Exception e) {
             return false;
         }
