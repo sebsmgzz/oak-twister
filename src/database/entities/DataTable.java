@@ -1,9 +1,10 @@
 package database.entities;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-public class DataTable {
+public class DataTable implements Iterable<DataRow> {
 
     private final int columnCount;
     private final List<DataRow> data;
@@ -28,6 +29,11 @@ public class DataTable {
         DataRow row = new DataRow(columnCount);
         data.add(row);
         return row;
+    }
+
+    @Override
+    public Iterator<DataRow> iterator() {
+        return data.iterator();
     }
 
 }

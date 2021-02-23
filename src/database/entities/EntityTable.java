@@ -7,11 +7,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-public class EntityTable implements Iterable<String> {
+public class EntityTable implements Iterable<DataRow> {
 
     private final DataTable data;
     private final List<String> names;
     private final List<Integer> types;
+
+    public int getRowCount() {
+        return data.size();
+    }
 
     public String[] getNames() {
         return names.toArray(new String[0]);
@@ -63,9 +67,20 @@ public class EntityTable implements Iterable<String> {
         }
     }
 
+    public HashMap<String, Object> mapRow(int rowIndex) {
+        HashMap<String, Object> map = new HashMap<>();
+        DataRow row = data.get(rowIndex);
+        if(row != null) {
+            for (int i = 0; i < names.size(); i++) {
+                map.put(names.get(i), row.get(i));
+            }
+        }
+        return map;
+    }
+
     @Override
-    public Iterator<String> iterator() {
-        return names.iterator();
+    public Iterator<DataRow> iterator() {
+        return data.iterator();
     }
 
 }
