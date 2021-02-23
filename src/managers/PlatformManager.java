@@ -1,20 +1,14 @@
 package managers;
 
-import database.DbConnection;
-import database.QueryResult;
-import database.Statement;
-import database.statements.BaseStatement;
-import database.statements.SelectFrom;
-import database.statements.SelectFromWhere;
+import database.entities.EntityTable;
 import metamodels.MetaModel;
 import models.Platform;
 import serializers.PlatformSerializer;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlatformManager {
+public class PlatformManager extends BaseManager {
 
     private final MetaModel metaModel;
     private final PlatformSerializer serializer;
@@ -24,34 +18,27 @@ public class PlatformManager {
         this.serializer = serializer;
     }
 
-    public List<Platform> selectAll() {
+    public boolean createTable() {
+        return super.createTable(
+                metaModel.getTableName(),
+                metaModel.getMetaFieldList().getColumns());
+    }
+
+    public List<Platform> selectAll() throws Exception {
         List<Platform> models = new ArrayList<>();
-        try {
-            DbConnection connection = new DbConnection();
-            BaseStatement baseStatement = new SelectFrom(metaModel.getTableName());
-            Statement statement = connection.getStatement(baseStatement);
-            QueryResult result = statement.executeQuery();
-            while(result.next()) {
-                Platform model = serializer.serialize(result.getAllValues());
-                models.add(model);
+        EntityTable entityTable = super.executeSelectAll(metaModel.getTableName());
+        if(entityTable != null) {
+            for(int i = 0; i < entityTable.getRowCount(); i++) {
+                models.add(serializer.serialize(entityTable.mapRow(i)));
             }
-        } catch (Exception e) {
-            return null;
         }
         return models;
     }
 
-    public Platform select(int id) {
-        try {
-            DbConnection connection = new DbConnection();
-            BaseStatement baseStatement = new SelectFromWhere(metaModel.getTableName(), "id", id);
-            Statement statement = connection.getStatement(baseStatement);
-            QueryResult result = statement.executeQuery();
-            if(result.next()) {
-                return serializer.serialize(result.getAllValues());
-            }
-        } catch (Exception e) {
-            return null;
+    public Platform select(int id) throws Exception {
+        EntityTable entityTable = super.executeSelect(metaModel.getTableName(), id);
+        if(entityTable != null) {
+            return serializer.serialize(entityTable.mapRow(0));
         }
         return null;
     }

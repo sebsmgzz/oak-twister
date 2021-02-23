@@ -1,15 +1,6 @@
 package managers;
 
-import database.Column;
-import database.DbConnection;
-import database.QueryResult;
-import database.Statement;
-import database.statements.BaseStatement;
-import database.statements.CreateTable;
-import database.statements.SelectFrom;
-import database.statements.SelectFromWhere;
-import metamodels.MetaField;
-import metamodels.MetaFieldList;
+import database.entities.EntityTable;
 import metamodels.MetaModel;
 import models.Account;
 import serializers.AccountSerializer;
@@ -28,52 +19,26 @@ public class AccountManager extends BaseManager {
     }
 
     public boolean createTable() {
-        try {
-            DbConnection connection = new DbConnection();
-            CreateTable createTableStatement = new CreateTable(metaModel.getTableName());
-            List<MetaField> metaFields = metaModel.getMetaFieldList().getColumns();
-            for (MetaField metaField : metaFields) {
-                createTableStatement.addColumn(new Column(
-                    metaField.column.name(),
-                    metaField.column.type(),
-                    metaField.column.notNull(),
-                    metaField.column.primaryKey()));
-            }
-            Statement statement = connection.getStatement(createTableStatement);
-            return statement.execute();
-        } catch (Exception e) {
-            return false;
-        }
+        return super.createTable(
+                metaModel.getTableName(),
+                metaModel.getMetaFieldList().getColumns());
     }
 
-    public List<Account> selectAll() {
+    public List<Account> selectAll() throws Exception {
         List<Account> models = new ArrayList<>();
-        try {
-            DbConnection connection = new DbConnection();
-            BaseStatement baseStatement = new SelectFrom(metaModel.getTableName());
-            Statement statement = connection.getStatement(baseStatement);
-            QueryResult result = statement.executeQuery();
-            while(result.next()) {
-                Account model = serializer.serialize(result.getAllValues());
-                models.add(model);
+        EntityTable entityTable = super.executeSelectAll(metaModel.getTableName());
+        if(entityTable != null) {
+            for(int i = 0; i < entityTable.getRowCount(); i++) {
+                models.add(serializer.serialize(entityTable.mapRow(i)));
             }
-        } catch (Exception e) {
-            return null;
         }
         return models;
     }
 
-    public Account select(int id) {
-        try {
-            DbConnection connection = new DbConnection();
-            BaseStatement baseStatement = new SelectFromWhere(metaModel.getTableName(), "id", id);
-            Statement statement = connection.getStatement(baseStatement);
-            QueryResult result = statement.executeQuery();
-            if(result.next()) {
-                return serializer.serialize(result.getAllValues());
-            }
-        } catch (Exception e) {
-            return null;
+    public Account select(int id) throws Exception {
+        EntityTable entityTable = super.executeSelect(metaModel.getTableName(), id);
+        if(entityTable != null) {
+            return serializer.serialize(entityTable.mapRow(0));
         }
         return null;
     }
