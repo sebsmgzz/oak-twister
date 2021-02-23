@@ -1,4 +1,4 @@
-package database;
+package database.executable;
 
 import database.statements.BaseStatement;
 
@@ -6,12 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Statement {
+public class ExecutableStatement {
 
     private final PreparedStatement preparedStatement;
     public final BaseStatement baseStatement;
 
-    public Statement(PreparedStatement preparedStatement, BaseStatement baseStatement) {
+    public ExecutableStatement(PreparedStatement preparedStatement, BaseStatement baseStatement) {
         this.preparedStatement = preparedStatement;
         this.baseStatement = baseStatement;
     }

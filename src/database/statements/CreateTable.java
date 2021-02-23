@@ -1,6 +1,6 @@
 package database.statements;
 
-import database.Column;
+import database.metaentities.Column;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

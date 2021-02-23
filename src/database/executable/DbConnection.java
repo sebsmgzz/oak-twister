@@ -1,6 +1,7 @@
-package database;
+package database.executable;
 
 import database.statements.BaseStatement;
+import database.executable.ExecutableStatement;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,9 +17,9 @@ public class DbConnection {
         this.connection = DriverManager.getConnection("jdbc:sqlite:" + path);
     }
 
-    public Statement getStatement(BaseStatement baseStatement) throws SQLException {
+    public ExecutableStatement getStatement(BaseStatement baseStatement) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(baseStatement.getQuery());
-        return new Statement(preparedStatement, baseStatement);
+        return new ExecutableStatement(preparedStatement, baseStatement);
     }
 
     public void finalize() {

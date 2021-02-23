@@ -1,4 +1,4 @@
-package database;
+package database.metaentities;
 
 public enum Type {
     NULL,
