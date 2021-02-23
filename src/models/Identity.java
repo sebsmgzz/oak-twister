@@ -2,7 +2,7 @@ package models;
 
 import annotations.Column;
 import annotations.Table;
-import database.Type;
+import database.metaentities.Type;
 
 @Table(name = "identities")
 public class Identity extends BaseModel {

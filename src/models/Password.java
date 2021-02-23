@@ -3,7 +3,7 @@ package models;
 import annotations.Column;
 import annotations.ForeignKey;
 import annotations.Table;
-import database.Type;
+import database.metaentities.Type;
 
 import java.util.Date;
 
