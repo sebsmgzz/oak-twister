@@ -12,20 +12,17 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
 
-public final class PaneController implements BaseController {
-
-    private PaneViewModel viewModel;
+public final class PaneController extends BaseController<PaneViewModel> {
 
     @FXML
     private ImageView imageView;
+
     @FXML
     private Label label;
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.viewModel = null; // TODO: link this
+    public void initialize() {
         this.imageView.setImage(getRandomImage());
         this.label.setText("Placeholder");
     }

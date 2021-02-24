@@ -1,13 +1,18 @@
 package views;
 
-import javafx.fxml.Initializable;
+import viewmodels.BaseViewModel;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+public abstract class BaseController<T extends BaseViewModel> {
 
-public interface BaseController extends Initializable {
+    protected ViewFactory factory;
+    protected T viewModel;
 
-    @Override
-    void initialize(URL url, ResourceBundle resourceBundle);
+    public void setup(ViewFactory factory, T viewModel) {
+        this.factory = factory;
+        this.viewModel = viewModel;
+        initialize();
+    }
+
+    public abstract void initialize();
 
 }

@@ -1,11 +1,13 @@
 package views;
 
+import javafx.scene.Node;
+import viewmodels.HomeViewModel;
+import viewmodels.LateralPaneViewModel;
+import viewmodels.PaneViewModel;
 import viewmodels.ViewModelFactory;
-import views.home.HomeController;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 
 import java.io.IOException;
 import java.net.URL;
@@ -13,8 +15,38 @@ import java.net.URL;
 public class ViewFactory {
 
     private final ViewModelFactory viewModelFactory;
+    private Parent homeView;
+    private Parent lateralPane;
 
-    private Scene homeView;
+    public Parent getHomeView() throws IOException {
+        if(homeView == null) {
+            FXMLLoader loader = getLoader("Home");
+            Parent root = loader.load();
+            BaseController<HomeViewModel> controller = loader.getController();
+            controller.setup(this, viewModelFactory.getHomeViewModel());
+            homeView = root;
+        }
+        return homeView;
+    }
+
+    public Parent getLateralPaneView() throws IOException {
+        if(lateralPane == null) {
+            FXMLLoader loader = getLoader("LateralPane");
+            Parent root = loader.load();
+            BaseController<LateralPaneViewModel> controller = loader.getController();
+            controller.setup(this, viewModelFactory.getLateralPaneViewModel());
+            lateralPane = root;
+        }
+        return lateralPane;
+    }
+
+    public Node getPaneView() throws IOException {
+        FXMLLoader loader = getLoader("Pane");
+        Parent root = loader.load();
+        BaseController<PaneViewModel> controller = loader.getController();
+        controller.setup(this, viewModelFactory.getPaneViewModel());
+        return root;
+    }
 
     public ViewFactory(ViewModelFactory viewModelFactory) {
         this.viewModelFactory = viewModelFactory;
@@ -26,17 +58,6 @@ public class ViewFactory {
         URL url = getClass().getResource(path);
         loader.setLocation(url);
         return loader;
-    }
-
-    public Scene getHomeView() throws IOException {
-        if(homeView == null) {
-            FXMLLoader loader = getLoader("Home");
-            Parent root = loader.load();
-            HomeController controller = loader.getController();
-            controller.initialize(viewModelFactory.getHomeViewModel());
-            homeView = new Scene(root);
-        }
-        return homeView;
     }
 
 }

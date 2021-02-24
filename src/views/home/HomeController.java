@@ -7,25 +7,15 @@ import javafx.scene.layout.TilePane;
 import viewmodels.HomeViewModel;
 import views.BaseController;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-public final class HomeController implements BaseController {
-
-    private HomeViewModel viewModel;
+public final class HomeController extends BaseController<HomeViewModel> {
 
     @FXML
     private TilePane tilePane;
 
-    public void initialize(HomeViewModel viewModel) {
-        this.viewModel = viewModel;
-        ObservableList<Node> children = tilePane.getChildren();
-    }
-
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.viewModel = null; // TODO: link this
+    public void initialize() {
         ObservableList<Node> children = tilePane.getChildren();
+        //TODO: populate panes from factory
     }
 
 }

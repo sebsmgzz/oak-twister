@@ -1,5 +1,6 @@
 package views;
 
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -14,7 +15,8 @@ public class ViewHandler {
     }
 
     public void start() throws Exception {
-        show(viewFactory.getHomeView());
+        Parent root = viewFactory.getHomeView();
+        show(new Scene(root));
     }
 
     public void show(Scene scene) {
