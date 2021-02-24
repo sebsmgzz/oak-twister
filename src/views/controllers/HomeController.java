@@ -1,16 +1,12 @@
-package views.Home;
+package views.controllers;
 
-import javafx.collections.ObservableList;
+import views.components.Pane;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import views.components.LateralPane;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import viewmodels.HomeViewModel;
 
 import javax.imageio.ImageIO;
@@ -21,7 +17,8 @@ import java.net.URL;
 public class HomeController {
 
     @FXML
-    private VBox vBox;
+    private LateralPane lateralPane;
+
     @FXML
     private TilePane tilePane;
 
@@ -29,20 +26,11 @@ public class HomeController {
 
     public void init(HomeViewModel viewModel) {
         this.viewModel = viewModel;
-        ObservableList<Node> children = this.tilePane.getChildren();
-        for(int i = 0; i < 5; i++) {
-            children.add(getRandomItem(getRandomImage(), String.valueOf(i)));
+        for (Node node : tilePane.getChildren()) {
+            Pane pane = (Pane) node;
+            pane.setImage(getRandomImage());
         }
     }
-
-    public VBox getRandomItem(Image image, String label) {
-        VBox box = new VBox();
-        ObservableList<Node> children = box.getChildren();
-        children.add(new ImageView(image));
-        children.add(new Label(label));
-        return box;
-    }
-
     public Image getRandomImage() {
         try {
             URL url = new URL("https://picsum.photos/200");
@@ -52,5 +40,4 @@ public class HomeController {
             return null;
         }
     }
-
 }
