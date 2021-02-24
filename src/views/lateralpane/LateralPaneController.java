@@ -17,6 +17,6 @@ public final class LateralPaneController extends BaseController<LateralPaneViewM
     private Hyperlink passwords;
 
     @Override
-    public void initialize() { }
+    public void init() { }
 
 }

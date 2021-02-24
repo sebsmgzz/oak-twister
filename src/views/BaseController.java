@@ -10,9 +10,9 @@ public abstract class BaseController<T extends BaseViewModel> {
     public void setup(ViewFactory factory, T viewModel) {
         this.factory = factory;
         this.viewModel = viewModel;
-        initialize();
+        init();
     }
 
-    public abstract void initialize();
+    public abstract void init();
 
 }

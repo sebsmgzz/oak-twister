@@ -3,9 +3,12 @@ package views.home;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.layout.TilePane;
 import viewmodels.HomeViewModel;
 import views.BaseController;
+
+import java.io.IOException;
 
 public final class HomeController extends BaseController<HomeViewModel> {
 
@@ -13,9 +16,14 @@ public final class HomeController extends BaseController<HomeViewModel> {
     private TilePane tilePane;
 
     @Override
-    public void initialize() {
+    public void init() {
         ObservableList<Node> children = tilePane.getChildren();
-        //TODO: populate panes from factory
+        try {
+            for(int i = 0; i < 5; i++) {
+                Node paneView = factory.getPaneView();
+                children.add(paneView);
+            }
+        } catch (IOException ignored) { }
     }
 
 }

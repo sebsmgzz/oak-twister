@@ -22,7 +22,7 @@ public final class PaneController extends BaseController<PaneViewModel> {
     private Label label;
 
     @Override
-    public void initialize() {
+    public void init() {
         this.imageView.setImage(getRandomImage());
         this.label.setText("Placeholder");
     }
