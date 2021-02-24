@@ -3,7 +3,6 @@ package views.home;
 import views.pane.Pane;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
-import views.lateralpane.LateralPane;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.layout.TilePane;
@@ -17,9 +16,6 @@ import java.net.URL;
 public class HomeController {
 
     @FXML
-    private LateralPane lateralPane;
-
-    @FXML
     private TilePane tilePane;
 
     private HomeViewModel viewModel;
@@ -31,6 +27,7 @@ public class HomeController {
             pane.setImage(getRandomImage());
         }
     }
+
     public Image getRandomImage() {
         try {
             URL url = new URL("https://picsum.photos/200");
@@ -40,4 +37,5 @@ public class HomeController {
             return null;
         }
     }
+
 }

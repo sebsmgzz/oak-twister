@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="views.lateralpane.LateralPaneController" prefWidth="100.0">
+    <Label text="OakTwister" />
+    <Separator />
+    <Hyperlink fx:id="identities" text="Identities" />
+    <Hyperlink fx:id="accounts" text="Accounts" />
+    <Hyperlink fx:id="passwords" text="Passwords" />
+</VBox>
