@@ -1,13 +1,10 @@
 package views;
 
 import javafx.scene.Node;
-import viewmodels.HomeViewModel;
-import viewmodels.LateralPaneViewModel;
-import viewmodels.PaneViewModel;
-import viewmodels.ViewModelFactory;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import viewmodels.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -21,10 +18,7 @@ public class ViewFactory {
     public Parent getHomeView() throws IOException {
         if(homeView == null) {
             FXMLLoader loader = getLoader("Home");
-            Parent root = loader.load();
-            BaseController<HomeViewModel> controller = loader.getController();
-            controller.setup(this, viewModelFactory.getHomeViewModel());
-            homeView = root;
+            homeView = load(loader, viewModelFactory.getHomeViewModel());;
         }
         return homeView;
     }
@@ -32,20 +26,14 @@ public class ViewFactory {
     public Parent getLateralPaneView() throws IOException {
         if(lateralPane == null) {
             FXMLLoader loader = getLoader("LateralPane");
-            Parent root = loader.load();
-            BaseController<LateralPaneViewModel> controller = loader.getController();
-            controller.setup(this, viewModelFactory.getLateralPaneViewModel());
-            lateralPane = root;
+            lateralPane = load(loader, viewModelFactory.getLateralPaneViewModel());
         }
         return lateralPane;
     }
 
     public Node getPaneView() throws IOException {
         FXMLLoader loader = getLoader("Pane");
-        Parent root = loader.load();
-        BaseController<PaneViewModel> controller = loader.getController();
-        controller.setup(this, viewModelFactory.getPaneViewModel());
-        return root;
+        return load(loader, viewModelFactory.getPaneViewModel());
     }
 
     public ViewFactory(ViewModelFactory viewModelFactory) {
@@ -58,6 +46,13 @@ public class ViewFactory {
         URL url = getClass().getResource(path);
         loader.setLocation(url);
         return loader;
+    }
+
+    private <T extends BaseViewModel> Parent load(FXMLLoader loader, T viewModel) throws IOException {
+        Parent root = loader.load();
+        BaseController<T> controller = loader.getController();
+        controller.setup(this, viewModel);
+        return root;
     }
 
 }
