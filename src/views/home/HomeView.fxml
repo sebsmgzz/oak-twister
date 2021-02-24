@@ -1,14 +1,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.TilePane?>
 
-<?import views.pane.Pane?>
 <HBox fx:controller="views.home.HomeController" xmlns:fx="http://javafx.com/fxml"
       prefHeight="600" prefWidth="900">
     <fx:include source="/views/lateralpane/LateralPaneView.fxml"/>
-    <TilePane fx:id="tilePane" >
-        <Pane text="11" />
-        <Pane text="12" />
-        <Pane text="13" />
-        <Pane text="14" />
-    </TilePane>
+    <fx:include source="/views/pane/PaneView.fxml"/>
+    <TilePane fx:id="tilePane" />
 </HBox>
