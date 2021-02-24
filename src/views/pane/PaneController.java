@@ -6,14 +6,14 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import viewmodels.PaneViewModel;
-import views.BaseController;
+import views.Controller;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 
-public final class PaneController extends BaseController<PaneViewModel> {
+public final class PaneController implements Controller {
 
     @FXML
     private ImageView imageView;
@@ -21,8 +21,10 @@ public final class PaneController extends BaseController<PaneViewModel> {
     @FXML
     private Label label;
 
-    @Override
-    public void init() {
+    private PaneViewModel viewModel;
+
+    public void setup(PaneViewModel viewModel) {
+        this.viewModel = viewModel;
         this.imageView.setImage(getRandomImage());
         this.label.setText("Placeholder");
     }

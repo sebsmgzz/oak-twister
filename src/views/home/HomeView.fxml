@@ -4,6 +4,5 @@
 <HBox fx:controller="views.home.HomeController" xmlns:fx="http://javafx.com/fxml"
       prefHeight="600" prefWidth="900">
     <fx:include source="/views/lateralpane/LateralPaneView.fxml"/>
-    <fx:include source="/views/pane/PaneView.fxml"/>
     <TilePane fx:id="tilePane" />
 </HBox>

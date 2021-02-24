@@ -5,7 +5,7 @@
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="views.lateralpane.LateralPaneController" prefWidth="100.0">
+      fx:controller="views.lateralpane.LateralPaneController" minWidth="100.0">
     <Label text="OakTwister" />
     <Separator />
     <Hyperlink fx:id="identities" text="Identities" />

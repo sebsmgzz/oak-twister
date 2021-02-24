@@ -3,9 +3,9 @@ package views.lateralpane;
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
 import viewmodels.LateralPaneViewModel;
-import views.BaseController;
+import views.Controller;
 
-public final class LateralPaneController extends BaseController<LateralPaneViewModel> {
+public final class LateralPaneController implements Controller {
 
     @FXML
     private Hyperlink identities;
@@ -16,7 +16,10 @@ public final class LateralPaneController extends BaseController<LateralPaneViewM
     @FXML
     private Hyperlink passwords;
 
-    @Override
-    public void init() { }
+    private LateralPaneViewModel viewModel;
+
+    public void setup(LateralPaneViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
 
 }
