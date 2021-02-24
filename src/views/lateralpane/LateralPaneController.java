@@ -2,8 +2,9 @@ package views.lateralpane;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
+import views.BaseController;
 
-public class LateralPaneController {
+public final class LateralPaneController implements BaseController {
 
     @FXML
     private Hyperlink identities;

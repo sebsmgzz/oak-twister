@@ -33,7 +33,7 @@ public class ViewFactory {
             FXMLLoader loader = getLoader("Home");
             Parent root = loader.load();
             HomeController controller = loader.getController();
-            controller.init(viewModelFactory.getHomeViewModel());
+            controller.initialize(viewModelFactory.getHomeViewModel());
             homeView = new Scene(root);
         }
         return homeView;

@@ -10,19 +10,22 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import viewmodels.BaseViewModel;
+import viewmodels.HomeViewModel;
+import views.BaseController;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 
-public class PaneController extends Group {
+public final class PaneController extends Group implements BaseController {
 
     @FXML
     private ImageView imageView;
 
     @FXML
-    private Label labelView;
+    private Label label;
 
     public Image getRandomImage() {
         try {
