@@ -6,38 +6,37 @@ import views.controllers.HomeController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
 
 public class ViewFactory {
 
-    private final Stage stage;
     private final ViewModelFactory viewModelFactory;
 
-    public ViewFactory(Stage stage, ViewModelFactory viewModelFactory) {
-        this.stage = stage;
+    private Scene homeView;
+
+    public ViewFactory(ViewModelFactory viewModelFactory) {
         this.viewModelFactory = viewModelFactory;
     }
 
-    public void start() throws Exception {
-        openView("Home");
-    }
-
-    public void openView(String viewName) throws IOException {
+    private FXMLLoader getLoader(String name) {
         FXMLLoader loader = new FXMLLoader();
-        String path = "/views/markup/" + viewName + "View.fxml";
+        String path = "/views/markup/" + name + "View.fxml";
         URL url = getClass().getResource(path);
         loader.setLocation(url);
-        Parent root = loader.load();
-        if("Home".equals(viewName)) {
-            HomeController view = loader.getController();
-            view.init(viewModelFactory.getHomeViewModel());
-            stage.setTitle("HelloWorld");
+        return loader;
+    }
+
+    public Scene getHomeView() throws IOException {
+        if(homeView == null) {
+            FXMLLoader loader = getLoader("Home");
+            Parent root = loader.load();
+            HomeController controller = loader.getController();
+            controller.init(viewModelFactory.getHomeViewModel());
+            homeView = new Scene(root);
         }
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        return homeView;
     }
 
 }
