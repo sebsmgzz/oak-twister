@@ -1,9 +1,9 @@
-package views.controllers;
+package views.home;
 
-import views.components.Pane;
+import views.pane.Pane;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
-import views.components.LateralPane;
+import views.lateralpane.LateralPane;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.layout.TilePane;

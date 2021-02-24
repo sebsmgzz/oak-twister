@@ -1,18 +1,18 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.TilePane?>
 
-<?import views.components.LateralPane?>
+<?import views.lateralpane.LateralPane?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
-<?import views.components.Pane?>
-<HBox fx:controller="views.controllers.HomeController" xmlns:fx="http://javafx.com/fxml"
+<?import views.pane.Pane?>
+<HBox fx:controller="views.home.HomeController" xmlns:fx="http://javafx.com/fxml"
       prefHeight="600" prefWidth="900">
     <LateralPane fx:id="lateralPane" />
     <TilePane fx:id="tilePane" >
-        <Pane text="sdf" />
-        <Pane />
-        <Pane />
-        <Pane />
+        <Pane text="11" />
+        <Pane text="12" />
+        <Pane text="13" />
+        <Pane text="14" />
     </TilePane>
 </HBox>

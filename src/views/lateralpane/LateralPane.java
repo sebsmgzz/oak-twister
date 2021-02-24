@@ -1,4 +1,4 @@
-package views.components;
+package views.lateralpane;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Group;

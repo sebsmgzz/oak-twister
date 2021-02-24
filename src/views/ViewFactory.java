@@ -1,7 +1,7 @@
 package views;
 
 import viewmodels.ViewModelFactory;
-import views.controllers.HomeController;
+import views.home.HomeController;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Locale;
 
 public class ViewFactory {
 
@@ -22,7 +23,7 @@ public class ViewFactory {
 
     private FXMLLoader getLoader(String name) {
         FXMLLoader loader = new FXMLLoader();
-        String path = "/views/markup/" + name + "View.fxml";
+        String path = "/views/" + name.toLowerCase() + "/" + name + "View.fxml";
         URL url = getClass().getResource(path);
         loader.setLocation(url);
         return loader;
