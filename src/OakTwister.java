@@ -1,6 +1,6 @@
 import models.*;
 import models.utils.ModelManager;
-import views.ViewFactory;
+import views.ControllerFactory;
 import viewmodels.ViewModelFactory;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -13,8 +13,8 @@ public class OakTwister extends Application {
         setupDatabase();
         ModelFactory modelFactory = new ModelFactory();
         ViewModelFactory viewModelFactory = new ViewModelFactory(modelFactory);
-        ViewFactory viewFactory = new ViewFactory(viewModelFactory);
-        ViewHandler viewHandler = new ViewHandler(primaryStage, viewFactory);
+        ControllerFactory controllerFactory = new ControllerFactory(viewModelFactory);
+        ViewHandler viewHandler = new ViewHandler(primaryStage, controllerFactory);
         viewHandler.start();
     }
 

@@ -2,6 +2,7 @@ package views.pane;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
@@ -13,7 +14,11 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 
-public final class PaneController implements Controller {
+public final class PaneController extends Controller {
+
+    public static final String SOURCE =  "/views/pane/PaneView.fxml";
+    private Parent node;
+    private PaneViewModel viewModel;
 
     @FXML
     private ImageView imageView;
@@ -21,9 +26,13 @@ public final class PaneController implements Controller {
     @FXML
     private Label label;
 
-    private PaneViewModel viewModel;
+    @Override
+    public Parent getNode() {
+        return node;
+    }
 
-    public void setup(PaneViewModel viewModel) {
+    public void setup(Parent node, PaneViewModel viewModel) {
+        this.node = node;
         this.viewModel = viewModel;
         this.imageView.setImage(getRandomImage());
         this.label.setText("Placeholder");

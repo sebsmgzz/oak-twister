@@ -2,21 +2,20 @@ package views;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import views.home.HomeView;
 
 public class ViewHandler {
 
     private final Stage stage;
-    private final ViewFactory viewFactory;
+    private final ControllerFactory controllerFactory;
 
-    public ViewHandler(Stage stage, ViewFactory viewFactory) {
+    public ViewHandler(Stage stage, ControllerFactory controllerFactory) {
         this.stage = stage;
-        this.viewFactory = viewFactory;
+        this.controllerFactory = controllerFactory;
     }
 
     public void start() throws Exception {
-        HomeView view = viewFactory.getHomeView();
-        show(new Scene(view.getNode()));
+        Controller controller = controllerFactory.getHomeController();
+        show(new Scene(controller.getNode()));
     }
 
     public void show(Scene scene) {

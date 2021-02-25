@@ -1,11 +1,16 @@
 package views.lateralpane;
 
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Hyperlink;
 import viewmodels.LateralPaneViewModel;
 import views.Controller;
 
-public final class LateralPaneController implements Controller {
+public final class LateralPaneController extends Controller {
+
+    public static final String SOURCE = "/views/lateralpane/LateralPaneView.fxml";
+    private Parent node;
+    private LateralPaneViewModel viewModel;
 
     @FXML
     private Hyperlink identities;
@@ -16,9 +21,13 @@ public final class LateralPaneController implements Controller {
     @FXML
     private Hyperlink passwords;
 
-    private LateralPaneViewModel viewModel;
+    @Override
+    public Parent getNode() {
+        return node;
+    }
 
-    public void setup(LateralPaneViewModel viewModel) {
+    public void setup(Parent node, LateralPaneViewModel viewModel) {
+        this.node = node;
         this.viewModel = viewModel;
     }
 
