@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.*?>
 
-<HBox xmlns:fx="http://javafx.com/fxml/1"
-      xmlns="http://javafx.com/javafx/11.0.1"
-      fx:controller="views.home.HomeController">
+<HBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.home.HomeController">
     <fx:include source="/views/lateralpane/LateralPaneView.fxml" />
-    <FlowPane fx:id="flowPane" />
+    <FlowPane fx:id="flowPane" HBox.hgrow="ALWAYS" />
 </HBox>
