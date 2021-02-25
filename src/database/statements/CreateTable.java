@@ -29,12 +29,10 @@ public class CreateTable implements BaseStatement {
     public String getQuery() {
         List<String> strColumns = new ArrayList<>();
         columns.forEach(c -> strColumns.add(c.toString()));
-        return "CREATE TABLE ? (" + String.join(", ", strColumns) + ");";
+        return "CREATE TABLE " + tableName + " (" + String.join(", ", strColumns) + ");";
     }
 
     @Override
-    public void setParameters(PreparedStatement statement) throws SQLException {
-        statement.setString(1, tableName);
-    }
+    public void setParameters(PreparedStatement statement) throws SQLException { }
 
 }

@@ -17,7 +17,8 @@ public class DbConnection {
     }
 
     public ExecutableStatement getStatement(BaseStatement baseStatement) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement(baseStatement.getQuery());
+        String query = baseStatement.getQuery();
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
         return new ExecutableStatement(preparedStatement, baseStatement);
     }
 
