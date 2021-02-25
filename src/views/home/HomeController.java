@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.TilePane;
 import viewmodels.HomeViewModel;
 import views.Controller;
@@ -23,7 +24,7 @@ public final class HomeController extends Controller {
     }
 
     @FXML
-    private TilePane tilePane;
+    private FlowPane flowPane;
 
     public void setup(Parent node, HomeViewModel viewModel) {
         this.node = node;
@@ -31,7 +32,7 @@ public final class HomeController extends Controller {
     }
 
     public void populate(ControllerFactory factory) throws IOException {
-        ObservableList<Node> children = tilePane.getChildren();
+        ObservableList<Node> children = flowPane.getChildren();
         for(int i = 0; i < 5; i++) {
             Node paneView = factory.getPaneController().getNode();
             children.add(paneView);

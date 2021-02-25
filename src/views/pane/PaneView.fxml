@@ -6,8 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <VBox xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="views.pane.PaneController"
-            prefHeight="400.0" prefWidth="600.0">
+            fx:controller="views.pane.PaneController" >
     <ImageView fx:id="imageView" />
     <Label fx:id="label" />
 </VBox>

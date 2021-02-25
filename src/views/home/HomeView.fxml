@@ -1,8 +1,11 @@
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.TilePane?>
+<?xml version="1.0" encoding="UTF-8"?>
 
-<HBox fx:controller="views.home.HomeController" xmlns:fx="http://javafx.com/fxml"
-      prefHeight="600" prefWidth="900">
-    <fx:include source="/views/lateralpane/LateralPaneView.fxml"/>
-    <TilePane fx:id="tilePane" />
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.FlowPane?>
+
+<HBox xmlns:fx="http://javafx.com/fxml/1"
+      xmlns="http://javafx.com/javafx/11.0.1"
+      fx:controller="views.home.HomeController">
+    <fx:include source="/views/lateralpane/LateralPaneView.fxml" />
+    <FlowPane fx:id="flowPane" />
 </HBox>
