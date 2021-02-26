@@ -1,9 +1,11 @@
-package models;
+package models.password;
 
 import annotations.Column;
 import annotations.ForeignKey;
 import annotations.Table;
 import database.metaentities.Type;
+import models.BaseDataModel;
+import models.account.Account;
 
 import java.util.Date;
 

@@ -1,8 +1,9 @@
-package models;
+package models.identity;
 
 import annotations.Column;
 import annotations.Table;
 import database.metaentities.Type;
+import models.BaseDataModel;
 
 @Table(name = "identities")
 public class Identity extends BaseDataModel {

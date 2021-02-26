@@ -1,38 +1,52 @@
 package models;
 
-import models.utils.ModelSerializer;
+import models.account.AccountSerializer;
+import models.identity.IdentitySerializer;
+import models.password.PasswordSerializer;
+import models.platform.PlatformSerializer;
 
 public class SerializerFactory {
 
-    private ModelSerializer<Account> accountSerializer;
-    private ModelSerializer<Identity> identitySerializer;
-    private ModelSerializer<Password> passwordSerializer;
-    private ModelSerializer<Platform> platformSerializer;
+    private ModelFactory modelFactory;
+    private MetaModelFactory metaModelFactory;
 
-    public ModelSerializer<Account> getAccountSerializer() {
+    private AccountSerializer accountSerializer;
+    private IdentitySerializer identitySerializer;
+    private PasswordSerializer passwordSerializer;
+    private PlatformSerializer platformSerializer;
+
+    public AccountSerializer getAccountSerializer() {
         if(accountSerializer == null) {
-            accountSerializer = new ModelSerializer<Account>(Account.class);
+            accountSerializer = new AccountSerializer(
+                    modelFactory::getAccount,
+                    metaModelFactory.getAccountMetaModel());
         }
         return accountSerializer;
     }
 
-    public ModelSerializer<Identity> getIdentitySerializer() {
+    public IdentitySerializer getIdentitySerializer() {
         if(identitySerializer == null) {
-            identitySerializer = new ModelSerializer<Identity>(Identity.class);
+            identitySerializer = new IdentitySerializer(
+                    modelFactory::getIdentity,
+                    metaModelFactory.getIdentityMetaModel());
         }
         return identitySerializer;
     }
 
-    public ModelSerializer<Password> getPasswordSerializer() {
+    public PasswordSerializer getPasswordSerializer() {
         if(passwordSerializer == null) {
-            passwordSerializer = new ModelSerializer<Password>(Password.class);
+            passwordSerializer = new PasswordSerializer(
+                    modelFactory::getPassword,
+                    metaModelFactory.getPasswordMetaModel());
         }
         return passwordSerializer;
     }
 
-    public ModelSerializer<Platform> getPlatformSerializer() {
+    public PlatformSerializer getPlatformSerializer() {
         if(platformSerializer == null) {
-            platformSerializer = new ModelSerializer<Platform>(Platform.class);
+            platformSerializer = new PlatformSerializer(
+                    modelFactory::getPlatform,
+                    metaModelFactory.getPlatformMetaModel());
         }
         return platformSerializer;
     }

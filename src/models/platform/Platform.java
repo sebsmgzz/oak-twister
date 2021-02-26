@@ -1,8 +1,9 @@
-package models;
+package models.platform;
 
 import annotations.Column;
 import annotations.Table;
 import database.metaentities.Type;
+import models.BaseDataModel;
 
 import java.awt.Image;
 

@@ -1,12 +1,12 @@
-package models;
+package models.account;
 
 import annotations.Column;
 import annotations.ForeignKey;
 import annotations.Table;
 import database.metaentities.Type;
 import models.BaseDataModel;
-import models.Identity;
-import models.Platform;
+import models.identity.Identity;
+import models.platform.Platform;
 
 import java.util.Date;
 

@@ -1,6 +1,10 @@
 package models;
 
+import models.account.Account;
+import models.identity.Identity;
 import models.metamodels.MetaModel;
+import models.password.Password;
+import models.platform.Platform;
 
 public class MetaModelFactory {
     

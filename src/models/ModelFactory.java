@@ -1,5 +1,10 @@
 package models;
 
+import models.account.Account;
+import models.identity.Identity;
+import models.password.Password;
+import models.platform.Platform;
+
 import java.lang.reflect.InvocationTargetException;
 
 public class ModelFactory {
