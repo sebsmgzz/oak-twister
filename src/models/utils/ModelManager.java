@@ -3,7 +3,6 @@ package models.utils;
 import database.entities.EntityTable;
 import database.DbConnection;
 import database.Statement;
-import database.QueryResult;
 import database.metaentities.Column;
 import database.statements.BaseStatement;
 import database.statements.CreateTable;
@@ -48,8 +47,7 @@ public class  ModelManager {
             DbConnection connection = new DbConnection();
             BaseStatement baseStatement = new SelectFrom(metaModel.getTableName());
             Statement statement = connection.getStatement(baseStatement);
-            QueryResult result = statement.executeQuery();
-            return result.getAll();
+            return statement.executeQuery();
         } catch (SQLException e) {
             return null;
         }
@@ -60,8 +58,7 @@ public class  ModelManager {
             DbConnection connection = new DbConnection();
             BaseStatement baseStatement = new SelectFromWhere(metaModel.getTableName(), "id", id);
             Statement statement = connection.getStatement(baseStatement);
-            QueryResult result = statement.executeQuery();
-            return result.getNext();
+            return statement.executeQuery();
         } catch (SQLException e) {
             return null;
         }

@@ -1,5 +1,6 @@
 package database.entities;
 
+import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -50,6 +51,24 @@ public class EntityTable implements Iterable<DataRow> {
         for(int i = 0; i < metaData.getColumnCount(); i++) {
             this.names.add(metaData.getColumnName(i + 1));
             this.types.add(metaData.getColumnType(i + 1));
+        }
+    }
+
+    public EntityTable(ResultSet resultSet) throws SQLException {
+        ResultSetMetaData metaData = resultSet.getMetaData();
+        this.data = new DataTable(metaData.getColumnCount());
+        this.names = new ArrayList<>();
+        this.types = new ArrayList<>();
+        for(int i = 0; i < metaData.getColumnCount(); i++) {
+            this.names.add(metaData.getColumnName(i + 1));
+            this.types.add(metaData.getColumnType(i + 1));
+        }
+        while (resultSet.next()) {
+            DataRow row = this.addDataRow();
+            for (int i = 0; i < metaData.getColumnCount(); i++) {
+                Object value = resultSet.getObject(i+ 1);
+                row.set(i, value);
+            }
         }
     }
 
