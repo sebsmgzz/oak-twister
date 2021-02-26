@@ -4,35 +4,41 @@ import models.utils.ModelManager;
 
 public class ManagerFactory {
 
-    private ModelManager<Account> accountManager;
-    private ModelManager<Identity> identityManager;
-    private ModelManager<Password> passwordManager;
-    private ModelManager<Platform> platformManager;
+    private final MetaModelFactory metaModelFactory;
 
-    public ModelManager<Account> getAccountManager() {
+    private ModelManager accountManager;
+    private ModelManager identityManager;
+    private ModelManager passwordManager;
+    private ModelManager platformManager;
+
+    public ManagerFactory(MetaModelFactory metaModelFactory) {
+        this.metaModelFactory = metaModelFactory;
+    }
+
+    public ModelManager getAccountManager() {
         if(accountManager == null) {
-            accountManager = new ModelManager<Account>(Account.class);
+            accountManager = new ModelManager(metaModelFactory.getAccountMetaModel());
         }
         return accountManager;
     }
 
-    public ModelManager<Identity> getIdentityManager() {
+    public ModelManager getIdentityManager() {
         if(identityManager == null) {
-            identityManager = new ModelManager<Identity>(Identity.class);
+            identityManager = new ModelManager(metaModelFactory.getIdentityMetaModel());
         }
         return identityManager;
     }
 
-    public ModelManager<Password> getPasswordManager() {
+    public ModelManager getPasswordManager() {
         if(passwordManager == null) {
-            passwordManager = new ModelManager<Password>(Password.class);
+            passwordManager = new ModelManager(metaModelFactory.getPasswordMetaModel());
         }
         return passwordManager;
     }
 
-    public ModelManager<Platform> getPlatformManager() {
+    public ModelManager getPlatformManager() {
         if(platformManager == null) {
-            platformManager = new ModelManager<Platform>(Platform.class);
+            platformManager = new ModelManager(metaModelFactory.getPlatformMetaModel());
         }
         return platformManager;
     }

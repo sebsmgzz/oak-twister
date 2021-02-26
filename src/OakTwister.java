@@ -19,10 +19,11 @@ public class OakTwister extends Application {
     }
 
     public void setupDatabase() {
-        new ModelManager<>(Account.class).createTable();
-        new ModelManager<>(Identity.class).createTable();
-        new ModelManager<>(Password.class).createTable();
-        new ModelManager<>(Platform.class).createTable();
+        ManagerFactory managerFactory = new ManagerFactory(new MetaModelFactory());
+        managerFactory.getAccountManager().createTable();
+        managerFactory.getIdentityManager().createTable();
+        managerFactory.getPasswordManager().createTable();
+        managerFactory.getPlatformManager().createTable();
     }
 
 }

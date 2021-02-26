@@ -1,9 +1,6 @@
 package commands;
 
-import models.Account;
-import models.Identity;
-import models.Password;
-import models.Platform;
+import models.*;
 import models.utils.ModelManager;
 import models.utils.ModelSerializer;
 
@@ -20,11 +17,12 @@ public class ImportDatabase {
     private final HashMap<String, ModelManager> managersMap;
 
     public ImportDatabase() {
+        ManagerFactory managerFactory = new ManagerFactory(new MetaModelFactory());
         this.managersMap = new HashMap<>();
-        this.managersMap.put("accounts", new ModelManager<>(Account.class));
-        this.managersMap.put("identities", new ModelManager<>(Identity.class));
-        this.managersMap.put("passwords", new ModelManager<>(Password.class));
-        this.managersMap.put("platforms", new ModelManager<>(Platform.class));
+        this.managersMap.put("accounts", managerFactory.getAccountManager());
+        this.managersMap.put("identities", managerFactory.getIdentityManager());
+        this.managersMap.put("passwords", managerFactory.getPasswordManager());
+        this.managersMap.put("platforms", managerFactory.getPlatformManager());
     }
 
     public void execute() {
