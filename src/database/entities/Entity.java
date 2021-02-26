@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-public class EntityTable implements Iterable<DataRow> {
+public class Entity implements Iterable<DataRow> {
 
     private final DataTable data;
     private final List<String> names;
@@ -44,17 +44,7 @@ public class EntityTable implements Iterable<DataRow> {
         return getType(names.indexOf(name));
     }
 
-    public EntityTable(ResultSetMetaData metaData) throws SQLException {
-        this.data = new DataTable(metaData.getColumnCount());
-        this.names = new ArrayList<>();
-        this.types = new ArrayList<>();
-        for(int i = 0; i < metaData.getColumnCount(); i++) {
-            this.names.add(metaData.getColumnName(i + 1));
-            this.types.add(metaData.getColumnType(i + 1));
-        }
-    }
-
-    public EntityTable(ResultSet resultSet) throws SQLException {
+    public Entity(ResultSet resultSet) throws SQLException {
         ResultSetMetaData metaData = resultSet.getMetaData();
         this.data = new DataTable(metaData.getColumnCount());
         this.names = new ArrayList<>();

@@ -1,6 +1,6 @@
 package models.utils;
 
-import database.entities.EntityTable;
+import database.entities.Entity;
 import database.DbConnection;
 import database.Statement;
 import database.metaentities.Column;
@@ -42,7 +42,7 @@ public class  ModelManager {
         }
     }
 
-    public EntityTable selectAll() {
+    public Entity selectAll() {
         try {
             DbConnection connection = new DbConnection();
             BaseQuery baseQuery = new SelectFrom(metaModel.getTableName());
@@ -53,7 +53,7 @@ public class  ModelManager {
         }
     }
 
-    protected EntityTable select(int id) {
+    protected Entity select(int id) {
         try {
             DbConnection connection = new DbConnection();
             BaseQuery baseQuery = new SelectFromWhere(metaModel.getTableName(), "id", id);

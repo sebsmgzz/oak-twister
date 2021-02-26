@@ -1,6 +1,6 @@
 package database;
 
-import database.entities.EntityTable;
+import database.entities.Entity;
 import database.querys.BaseQuery;
 
 import java.sql.PreparedStatement;
@@ -27,10 +27,10 @@ public class Statement {
         return preparedStatement.executeUpdate();
     }
 
-    public EntityTable executeQuery() throws SQLException {
+    public Entity executeQuery() throws SQLException {
         baseQuery.setParameters(preparedStatement);
         ResultSet resultSet = preparedStatement.executeQuery();
-        return new EntityTable(resultSet);
+        return new Entity(resultSet);
     }
 
 }
