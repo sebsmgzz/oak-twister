@@ -1,9 +1,9 @@
-package database.statements;
+package database.querys;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class SelectFrom implements BaseStatement {
+public class SelectFrom implements BaseQuery {
 
     private final String[] columnNames;
     private final String tableName;

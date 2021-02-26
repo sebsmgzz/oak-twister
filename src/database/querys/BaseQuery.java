@@ -1,9 +1,9 @@
-package database.statements;
+package database.querys;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public interface BaseStatement {
+public interface BaseQuery {
 
     String getQuery();
 

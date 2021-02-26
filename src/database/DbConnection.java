@@ -1,6 +1,6 @@
 package database;
 
-import database.statements.BaseStatement;
+import database.querys.BaseQuery;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,10 +16,10 @@ public class DbConnection {
         this.connection = DriverManager.getConnection("jdbc:sqlite:" + path);
     }
 
-    public Statement getStatement(BaseStatement baseStatement) throws SQLException {
-        String query = baseStatement.getQuery();
+    public Statement getStatement(BaseQuery baseQuery) throws SQLException {
+        String query = baseQuery.getQuery();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
-        return new Statement(preparedStatement, baseStatement);
+        return new Statement(preparedStatement, baseQuery);
     }
 
     public void finalize() {

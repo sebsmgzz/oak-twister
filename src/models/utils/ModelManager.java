@@ -4,10 +4,10 @@ import database.entities.EntityTable;
 import database.DbConnection;
 import database.Statement;
 import database.metaentities.Column;
-import database.statements.BaseStatement;
-import database.statements.CreateTable;
-import database.statements.SelectFrom;
-import database.statements.SelectFromWhere;
+import database.querys.BaseQuery;
+import database.querys.CreateTable;
+import database.querys.SelectFrom;
+import database.querys.SelectFromWhere;
 import models.metamodels.MetaField;
 import models.metamodels.MetaFieldList;
 import models.metamodels.MetaModel;
@@ -45,8 +45,8 @@ public class  ModelManager {
     public EntityTable selectAll() {
         try {
             DbConnection connection = new DbConnection();
-            BaseStatement baseStatement = new SelectFrom(metaModel.getTableName());
-            Statement statement = connection.getStatement(baseStatement);
+            BaseQuery baseQuery = new SelectFrom(metaModel.getTableName());
+            Statement statement = connection.getStatement(baseQuery);
             return statement.executeQuery();
         } catch (SQLException e) {
             return null;
@@ -56,8 +56,8 @@ public class  ModelManager {
     protected EntityTable select(int id) {
         try {
             DbConnection connection = new DbConnection();
-            BaseStatement baseStatement = new SelectFromWhere(metaModel.getTableName(), "id", id);
-            Statement statement = connection.getStatement(baseStatement);
+            BaseQuery baseQuery = new SelectFromWhere(metaModel.getTableName(), "id", id);
+            Statement statement = connection.getStatement(baseQuery);
             return statement.executeQuery();
         } catch (SQLException e) {
             return null;

@@ -1,13 +1,11 @@
-package database.statements;
+package database.querys;
 
 import database.metaentities.Column;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateTable implements BaseStatement {
+public class CreateTable implements BaseQuery {
 
     private final String tableName;
     private final List<Column> columns;
