@@ -6,12 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ExecutableStatement {
+public class Statement {
 
     private final PreparedStatement preparedStatement;
     public final BaseStatement baseStatement;
 
-    public ExecutableStatement(PreparedStatement preparedStatement, BaseStatement baseStatement) {
+    public Statement(PreparedStatement preparedStatement, BaseStatement baseStatement) {
         this.preparedStatement = preparedStatement;
         this.baseStatement = baseStatement;
     }

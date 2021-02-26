@@ -2,7 +2,7 @@ package models.utils;
 
 import database.entities.EntityTable;
 import database.DbConnection;
-import database.ExecutableStatement;
+import database.Statement;
 import database.QueryResult;
 import database.metaentities.Column;
 import database.statements.BaseStatement;
@@ -35,8 +35,8 @@ public class  ModelManager {
                         metaField.column.notNull(),
                         metaField.column.primaryKey()));
             }
-            ExecutableStatement executableStatement = connection.getStatement(createTableStatement);
-            executableStatement.execute();
+            Statement statement = connection.getStatement(createTableStatement);
+            statement.execute();
             return true;
         } catch (Exception e) {
             return false;
@@ -47,8 +47,8 @@ public class  ModelManager {
         try {
             DbConnection connection = new DbConnection();
             BaseStatement baseStatement = new SelectFrom(metaModel.getTableName());
-            ExecutableStatement executableStatement = connection.getStatement(baseStatement);
-            QueryResult result = executableStatement.executeQuery();
+            Statement statement = connection.getStatement(baseStatement);
+            QueryResult result = statement.executeQuery();
             return result.getAll();
         } catch (SQLException e) {
             return null;
@@ -59,8 +59,8 @@ public class  ModelManager {
         try {
             DbConnection connection = new DbConnection();
             BaseStatement baseStatement = new SelectFromWhere(metaModel.getTableName(), "id", id);
-            ExecutableStatement executableStatement = connection.getStatement(baseStatement);
-            QueryResult result = executableStatement.executeQuery();
+            Statement statement = connection.getStatement(baseStatement);
+            QueryResult result = statement.executeQuery();
             return result.getNext();
         } catch (SQLException e) {
             return null;

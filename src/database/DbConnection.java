@@ -16,10 +16,10 @@ public class DbConnection {
         this.connection = DriverManager.getConnection("jdbc:sqlite:" + path);
     }
 
-    public ExecutableStatement getStatement(BaseStatement baseStatement) throws SQLException {
+    public Statement getStatement(BaseStatement baseStatement) throws SQLException {
         String query = baseStatement.getQuery();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
-        return new ExecutableStatement(preparedStatement, baseStatement);
+        return new Statement(preparedStatement, baseStatement);
     }
 
     public void finalize() {
