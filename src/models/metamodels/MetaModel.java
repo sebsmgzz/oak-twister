@@ -1,7 +1,7 @@
 package models.metamodels;
 
 import annotations.Table;
-import models.BaseModel;
+import models.BaseDataModel;
 
 import java.lang.reflect.Field;
 
@@ -18,7 +18,7 @@ public class MetaModel {
         return metaFieldList;
     }
 
-    public MetaModel(Class<? extends BaseModel> type) {
+    public MetaModel(Class<? extends BaseDataModel> type) {
         this.table = type.getAnnotation(Table.class);
         Field[] fields = type.getDeclaredFields();
         this.metaFieldList = new MetaFieldList(fields);

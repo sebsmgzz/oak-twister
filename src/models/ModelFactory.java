@@ -20,7 +20,7 @@ public class ModelFactory {
         return new Platform();
     }
 
-    public <T extends BaseModel> T get(Class<T> type) {
+    public <T extends BaseDataModel> T get(Class<T> type) {
         try {
             return type.getDeclaredConstructor().newInstance();
         } catch (InstantiationException | InvocationTargetException |

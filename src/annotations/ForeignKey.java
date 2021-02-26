@@ -1,6 +1,6 @@
 package annotations;
 
-import models.BaseModel;
+import models.BaseDataModel;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.RetentionPolicy;
@@ -11,7 +11,7 @@ import java.lang.annotation.Retention;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ForeignKey {
 
-    Class<? extends BaseModel> model();
+    Class<? extends BaseDataModel> model();
     String column() default "id";
 
 }

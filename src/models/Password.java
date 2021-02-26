@@ -8,7 +8,7 @@ import database.metaentities.Type;
 import java.util.Date;
 
 @Table(name = "passwords")
-public class Password extends BaseModel {
+public class Password extends BaseDataModel {
 
     @Column(name = "id", type = Type.INTEGER, primaryKey = true)
     public int id;

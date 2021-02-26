@@ -4,11 +4,14 @@ import annotations.Column;
 import annotations.ForeignKey;
 import annotations.Table;
 import database.metaentities.Type;
+import models.BaseDataModel;
+import models.Identity;
+import models.Platform;
 
 import java.util.Date;
 
 @Table(name = "accounts")
-public class Account extends BaseModel {
+public class Account extends BaseDataModel {
 
     @Column(name = "id", type = Type.INTEGER, primaryKey = true)
     private int id;

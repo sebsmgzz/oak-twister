@@ -3,12 +3,12 @@ package models.utils;
 import models.metamodels.MetaField;
 import models.metamodels.MetaFieldList;
 import models.metamodels.MetaModel;
-import models.BaseModel;
+import models.BaseDataModel;
 import models.ModelFactory;
 
 import java.util.HashMap;
 
-public class ModelSerializer<T extends BaseModel> {
+public class ModelSerializer<T extends BaseDataModel> {
 
     private final Class<T> type;
     private final ModelFactory modelFactory;

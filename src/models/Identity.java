@@ -5,7 +5,7 @@ import annotations.Table;
 import database.metaentities.Type;
 
 @Table(name = "identities")
-public class Identity extends BaseModel {
+public class Identity extends BaseDataModel {
 
     @Column(name = "id", type = Type.INTEGER, primaryKey = true)
     private int id;

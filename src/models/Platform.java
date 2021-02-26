@@ -7,7 +7,7 @@ import database.metaentities.Type;
 import java.awt.Image;
 
 @Table(name = "platforms")
-public class Platform extends BaseModel {
+public class Platform extends BaseDataModel {
 
     @Column(name = "id", type = Type.INTEGER, primaryKey = true)
     private int id;
