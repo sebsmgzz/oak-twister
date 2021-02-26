@@ -7,6 +7,6 @@ public interface BaseStatement {
 
     String getQuery();
 
-    void setParameters(PreparedStatement statement) throws SQLException;
+    default void setParameters(PreparedStatement statement) throws SQLException { };
 
 }

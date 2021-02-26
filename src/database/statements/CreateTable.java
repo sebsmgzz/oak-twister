@@ -32,7 +32,4 @@ public class CreateTable implements BaseStatement {
         return "CREATE TABLE " + tableName + " (" + String.join(", ", strColumns) + ");";
     }
 
-    @Override
-    public void setParameters(PreparedStatement statement) throws SQLException { }
-
 }
