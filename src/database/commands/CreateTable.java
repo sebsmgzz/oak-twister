@@ -1,11 +1,11 @@
-package database.querys;
+package database.commands;
 
 import database.metaentities.Column;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateTable implements BaseQuery {
+public class CreateTable implements BaseCommand {
 
     private final String tableName;
     private final List<Column> columns;
