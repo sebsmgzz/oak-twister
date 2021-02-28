@@ -3,7 +3,7 @@ package models;
 import database.QuerySet;
 import middleware.callers.CreateTable;
 import middleware.callers.SelectAll;
-import middleware.callers.SelectFromWhere;
+import middleware.callers.SelectWhere;
 import middleware.metadata.MetaModel;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public abstract class Manager<T extends Model> {
     }
 
     protected T selectWhere(String columnName, int value) {
-        SelectFromWhere command = new SelectFromWhere(metaModel);
+        SelectWhere command = new SelectWhere(metaModel);
         command.setColumnName(columnName);
         command.setValue(value);
         QuerySet querySet = command.execute();

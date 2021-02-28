@@ -3,18 +3,18 @@ package database.commands;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class SelectFromWhere implements BaseCommand {
+public class SelectWhere implements BaseCommand {
 
     private final String[] columnNames;
     private final String tableName;
     private final String columnName;
     private final int columnValue;
 
-    public SelectFromWhere(String tableName, String columnName, int columnValue) {
+    public SelectWhere(String tableName, String columnName, int columnValue) {
         this(new String[]{"*"}, tableName, columnName, columnValue);
     }
 
-    public SelectFromWhere(String[] columnNames, String tableName, String columnName, int columnValue) {
+    public SelectWhere(String[] columnNames, String tableName, String columnName, int columnValue) {
         this.columnNames = columnNames;
         this.tableName = tableName;
         this.columnName = columnName;

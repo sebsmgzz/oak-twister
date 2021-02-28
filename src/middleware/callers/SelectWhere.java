@@ -4,11 +4,12 @@ import database.DbConnection;
 import database.QuerySet;
 import database.Statement;
 import database.commands.BaseCommand;
+import database.commands.SelectWhere;
 import middleware.metadata.MetaModel;
 
 import java.sql.SQLException;
 
-public class SelectFromWhere {
+public class SelectWhere {
 
     private MetaModel metaModel;
     private String columnName;
@@ -22,14 +23,14 @@ public class SelectFromWhere {
         this.value = value;
     }
 
-    public SelectFromWhere(MetaModel metaModel) {
+    public SelectWhere(MetaModel metaModel) {
         this.metaModel = metaModel;
     }
 
     public QuerySet execute() {
         try {
             DbConnection connection = new DbConnection();
-            BaseCommand baseCommand = new database.commands.SelectFromWhere(metaModel.getTableName(), columnName, value);
+            BaseCommand baseCommand = new database.commands.SelectWhere(metaModel.getTableName(), columnName, value);
             Statement statement = connection.getStatement(baseCommand);
             return statement.executeQuery();
         } catch (SQLException e) {
