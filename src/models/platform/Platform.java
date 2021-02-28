@@ -1,14 +1,14 @@
 package models.platform;
 
-import annotations.Column;
-import annotations.Table;
+import middleware.annotations.Column;
+import middleware.annotations.Table;
 import database.entities.DataType;
-import models.BaseDataModel;
+import models.Model;
 
 import java.awt.Image;
 
 @Table(name = "platforms")
-public class Platform extends BaseDataModel {
+public class Platform extends Model {
 
     @Column(name = "id", type = DataType.INTEGER, primaryKey = true)
     private int id;

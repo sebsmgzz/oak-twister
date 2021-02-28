@@ -1,7 +1,7 @@
-package metadata;
+package middleware.metadata;
 
-import annotations.Column;
-import annotations.ForeignKey;
+import middleware.annotations.Column;
+import middleware.annotations.ForeignKey;
 
 import java.lang.reflect.Field;
 

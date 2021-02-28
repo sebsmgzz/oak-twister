@@ -1,9 +1,9 @@
 package models;
 
-import annotations.Table;
+import middleware.annotations.Table;
 
 @Table(name = "")
-public abstract class BaseDataModel {
+public abstract class Model {
 
     @Override
     public abstract String toString();

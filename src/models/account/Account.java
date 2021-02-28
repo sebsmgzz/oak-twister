@@ -1,17 +1,17 @@
 package models.account;
 
-import annotations.Column;
-import annotations.ForeignKey;
-import annotations.Table;
+import middleware.annotations.Column;
+import middleware.annotations.ForeignKey;
+import middleware.annotations.Table;
 import database.entities.DataType;
-import models.BaseDataModel;
+import models.Model;
 import models.identity.Identity;
 import models.platform.Platform;
 
 import java.util.Date;
 
 @Table(name = "accounts")
-public class Account extends BaseDataModel {
+public class Account extends Model {
 
     @Column(name = "id", type = DataType.INTEGER, primaryKey = true)
     private int id;

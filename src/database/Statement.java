@@ -1,7 +1,6 @@
 package database;
 
 import database.commands.BaseCommand;
-import database.entities.Entity;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,12 +26,10 @@ public class Statement {
         return preparedStatement.executeUpdate();
     }
 
-    public Entity executeQuery() throws SQLException {
+    public QuerySet executeQuery() throws SQLException {
         baseCommand.setParameters(preparedStatement);
         ResultSet resultSet = preparedStatement.executeQuery();
-        Entity entity = new Entity();
-        entity.populate(resultSet);
-        return entity;
+        return new QuerySet(resultSet);
     }
 
     public void finalize() {

@@ -1,34 +1,41 @@
 package models.identity;
 
-public class IdentityFactory {
+import middleware.metadata.MetaModel;
+import models.Wrapper;
 
-    private IdentityMetaModel metaModel;
+public class IdentityWrapper extends Wrapper {
+
+    private MetaModel metaModel;
     private IdentitySerializer serializer;
     private IdentityManager manager;
 
-    public Identity getDataModel() {
+    @Override
+    public Identity getData() {
         return new Identity();
     }
 
-    public IdentityMetaModel getMetaModel() {
+    @Override
+    public MetaModel getMetaModel() {
         if(metaModel == null) {
-            metaModel = new IdentityMetaModel();
+            metaModel = new MetaModel(Identity.class);
         }
         return metaModel;
     }
 
+    @Override
     public IdentitySerializer getSerializer() {
         if(serializer == null) {
-            serializer = new IdentitySerializer();
+            serializer = new IdentitySerializer(getMetaModel(), this::getData);
         }
         return serializer;
     }
 
+    @Override
     public IdentityManager getManager() {
         if(manager == null) {
             manager = new IdentityManager(getMetaModel(), getSerializer());
         }
         return manager;
     }
-    
+
 }

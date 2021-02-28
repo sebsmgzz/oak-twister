@@ -1,15 +1,16 @@
 package models.password;
 
-import models.BaseManager;
+import middleware.metadata.MetaModel;
+import models.Manager;
 
-public class PasswordManager extends BaseManager<Password> {
+public class PasswordManager extends Manager<Password> {
 
-    public PasswordManager(PasswordMetaModel metaModel, PasswordSerializer serializer) {
+    public PasswordManager(MetaModel metaModel, PasswordSerializer serializer) {
         super(metaModel, serializer);
     }
 
     public Password selectById(int id) {
-        return super.select("id", id);
+        return selectWhere("id", id);
     }
 
 }

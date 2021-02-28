@@ -1,23 +1,14 @@
 package models.account;
 
-import models.BaseSerializer;
+import middleware.metadata.MetaModel;
+import models.Serializer;
 
-import java.util.HashMap;
+import java.util.concurrent.Callable;
 
-public class AccountSerializer extends BaseSerializer<Account> {
+public class AccountSerializer extends Serializer<Account> {
 
-    public AccountSerializer() {
-        super();
-    }
-
-    public Account serialize(HashMap<String, Object> map) {
-        // TODO: serialize
-        return null;
-    }
-
-    public HashMap<String, Object> deserialize(Account model) {
-        // TODO: deserialize
-        return null;
+    public AccountSerializer(MetaModel metaModel, Callable<Account> factory) {
+        super(metaModel, factory);
     }
 
 }

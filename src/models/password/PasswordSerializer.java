@@ -1,23 +1,14 @@
 package models.password;
 
-import models.BaseSerializer;
+import middleware.metadata.MetaModel;
+import models.Serializer;
 
-import java.util.HashMap;
+import java.util.concurrent.Callable;
 
-public class PasswordSerializer extends BaseSerializer<Password> {
+public class PasswordSerializer extends Serializer<Password> {
 
-    public PasswordSerializer() {
-        super();
-    }
-
-    public Password serialize(HashMap<String, Object> map) {
-        // TODO: serialize
-        return null;
-    }
-
-    public HashMap<String, Object> deserialize(Password model) {
-        // TODO: deserialize
-        return null;
+    public PasswordSerializer(MetaModel metaModel, Callable<Password> factory) {
+        super(metaModel, factory);
     }
 
 }

@@ -1,15 +1,16 @@
 package models.account;
 
-import models.BaseManager;
+import middleware.metadata.MetaModel;
+import models.Manager;
 
-public class AccountManager extends BaseManager<Account> {
+public class AccountManager extends Manager<Account> {
 
-    public AccountManager(AccountMetaModel metaModel, AccountSerializer serializer) {
+    public AccountManager(MetaModel metaModel, AccountSerializer serializer) {
         super(metaModel, serializer);
     }
 
     public Account selectById(int id) {
-        return super.select("id", id);
+        return super.selectWhere("id", id);
     }
 
 }

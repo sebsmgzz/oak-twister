@@ -1,12 +1,12 @@
-package metadata;
+package middleware.metadata;
 
-import annotations.Table;
+import middleware.annotations.Table;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MetaModelBase {
+public class MetaModel {
 
     private final Table table;
     public final List<MetaField> metaFields;
@@ -15,7 +15,7 @@ public class MetaModelBase {
         return table.name();
     }
 
-    public MetaModelBase(Class<?> type) {
+    public MetaModel(Class<?> type) {
         this.table = type.getAnnotation(Table.class);
         this.metaFields = new ArrayList<>();
         for (Field field: type.getFields()) {

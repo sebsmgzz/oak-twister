@@ -9,6 +9,6 @@
     <Label text="OakTwister" />
     <Separator />
     <Hyperlink fx:id="identities" text="Identities" />
-    <Hyperlink fx:id="accounts" text="Accounts" />
+    <Hyperlink fx:id="account" text="Accounts" />
     <Hyperlink fx:id="passwords" text="Passwords" />
 </VBox>

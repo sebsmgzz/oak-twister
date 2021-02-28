@@ -1,16 +1,16 @@
 package models.password;
 
-import annotations.Column;
-import annotations.ForeignKey;
-import annotations.Table;
+import middleware.annotations.Column;
+import middleware.annotations.ForeignKey;
+import middleware.annotations.Table;
 import database.entities.DataType;
-import models.BaseDataModel;
+import models.Model;
 import models.account.Account;
 
 import java.util.Date;
 
 @Table(name = "passwords")
-public class Password extends BaseDataModel {
+public class Password extends Model {
 
     @Column(name = "id", type = DataType.INTEGER, primaryKey = true)
     public int id;

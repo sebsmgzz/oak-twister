@@ -1,29 +1,36 @@
 package models.account;
 
-public class AccountFactory {
+import middleware.metadata.MetaModel;
+import models.Wrapper;
 
-    private AccountMetaModel metaModel;
+public class AccountWrapper extends Wrapper {
+
+    private MetaModel metaModel;
     private AccountSerializer serializer;
     private AccountManager manager;
 
-    public Account getDataModel() {
+    @Override
+    public Account getData() {
         return new Account();
     }
 
-    public AccountMetaModel getMetaModel() {
+    @Override
+    public MetaModel getMetaModel() {
         if(metaModel == null) {
-            metaModel = new AccountMetaModel();
+            metaModel = new MetaModel(Account.class);
         }
         return metaModel;
     }
 
+    @Override
     public AccountSerializer getSerializer() {
         if(serializer == null) {
-            serializer = new AccountSerializer();
+            serializer = new AccountSerializer(getMetaModel(), this::getData);
         }
         return serializer;
     }
 
+    @Override
     public AccountManager getManager() {
         if(manager == null) {
             manager = new AccountManager(getMetaModel(), getSerializer());

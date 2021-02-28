@@ -1,4 +1,4 @@
-package annotations;
+package middleware.annotations;
 
 import java.lang.annotation.*;
 

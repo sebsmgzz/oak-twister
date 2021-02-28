@@ -1,15 +1,16 @@
 package models.identity;
 
-import models.BaseManager;
+import middleware.metadata.MetaModel;
+import models.Manager;
 
-public class IdentityManager extends BaseManager<Identity> {
+public class IdentityManager extends Manager<Identity> {
 
-    public IdentityManager(IdentityMetaModel metaModel, IdentitySerializer serializer) {
+    public IdentityManager(MetaModel metaModel, IdentitySerializer serializer) {
         super(metaModel, serializer);
     }
 
     public Identity selectById(int id) {
-        return super.select("id", id);
+        return selectWhere("id", id);
     }
 
 }

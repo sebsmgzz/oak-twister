@@ -1,34 +1,41 @@
 package models.platform;
 
-public class PlatformFactory {
+import middleware.metadata.MetaModel;
+import models.Wrapper;
 
-    private PlatformMetaModel metaModel;
+public class PlatformWrapper extends Wrapper {
+
+    private MetaModel metaModel;
     private PlatformSerializer serializer;
     private PlatformManager manager;
 
-    public Platform getDataModel() {
+    @Override
+    public Platform getData() {
         return new Platform();
     }
 
-    public PlatformMetaModel getMetaModel() {
+    @Override
+    public MetaModel getMetaModel() {
         if(metaModel == null) {
-            metaModel = new PlatformMetaModel();
+            metaModel = new MetaModel(Platform.class);
         }
         return metaModel;
     }
 
+    @Override
     public PlatformSerializer getSerializer() {
         if(serializer == null) {
-            serializer = new PlatformSerializer();
+            serializer = new PlatformSerializer(getMetaModel(), this::getData);
         }
         return serializer;
     }
 
+    @Override
     public PlatformManager getManager() {
         if(manager == null) {
             manager = new PlatformManager(getMetaModel(), getSerializer());
         }
         return manager;
     }
-    
+
 }

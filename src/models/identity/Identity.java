@@ -1,12 +1,12 @@
 package models.identity;
 
-import annotations.Column;
-import annotations.Table;
+import middleware.annotations.Column;
+import middleware.annotations.Table;
 import database.entities.DataType;
-import models.BaseDataModel;
+import models.Model;
 
 @Table(name = "identities")
-public class Identity extends BaseDataModel {
+public class Identity extends Model {
 
     @Column(name = "id", type = DataType.INTEGER, primaryKey = true)
     private int id;

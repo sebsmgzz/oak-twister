@@ -1,11 +1,13 @@
-package commands;
+package utilities;
 
-import models.BaseManager;
-import models.ManagerFactory;
+import models.Wrapper;
+import models.WrapperFactory;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 public class ImportDatabase {
@@ -13,14 +15,15 @@ public class ImportDatabase {
     private final static String CSV_PATH = "C:\\Users\\SMaronas\\Repos\\OakTwister\\data\\csv";
     private final static String SQLITE_PATH = "C:\\Users\\SMaronas\\Repos\\OakTwister\\data\\db.sqlite";
 
-    private final HashMap<String, BaseManager> managersMap;
+    private final List<Wrapper> wrappers;
 
-    public ImportDatabase(ManagerFactory managerFactory) {
-        this.managersMap = new HashMap<>();
-        this.managersMap.put("accounts", managerFactory.getAccountManager());
-        this.managersMap.put("identities", managerFactory.getIdentityManager());
-        this.managersMap.put("passwords", managerFactory.getPasswordManager());
-        this.managersMap.put("platforms", managerFactory.getPlatformManager());
+    public ImportDatabase() {
+        this.wrappers = new ArrayList<>();
+        WrapperFactory wrapperFactory = new WrapperFactory();
+        wrappers.add(wrapperFactory.getAccount());
+        wrappers.add(wrapperFactory.getIdentity());
+        wrappers.add(wrapperFactory.getPassword());
+        wrappers.add(wrapperFactory.getPlatform());
     }
 
     public void execute() {
@@ -39,23 +42,23 @@ public class ImportDatabase {
     }
 
     public void createTables() {
-        for(String key : managersMap.keySet()) {
-            System.out.print("Creating " + key + "...");
-            boolean created = managersMap.get(key).createTable();
+        for(Wrapper wrapper : wrappers) {
+            String tableName = wrapper.getMetaModel().getTableName();
+            System.out.print("Creating " + tableName + "...");
+            boolean created = wrapper.getManager().createTable();
             if(created) {
                 System.out.println("success");
-                fillTable(key);
+                fillTable(tableName, wrapper);
             } else {
                 System.out.println("failed");
             }
         }
     }
 
-    public void fillTable(String key) {
-        BaseManager manager = managersMap.get(key);
-        System.out.print("Filling " + key + "...");
+    public void fillTable(String tableName, Wrapper wrapper) {
+        System.out.print("Filling " + tableName + "...");
         try {
-            getValues(key);
+            getValues(tableName);
             System.out.println("success");
         } catch (Exception e) {
             System.out.println("failed");

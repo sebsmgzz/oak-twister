@@ -1,15 +1,16 @@
 package models.platform;
 
-import models.BaseManager;
+import middleware.metadata.MetaModel;
+import models.Manager;
 
-public class PlatformManager extends BaseManager<Platform> {
+public class PlatformManager extends Manager<Platform> {
 
-    public PlatformManager(PlatformMetaModel metaModel, PlatformSerializer serializer) {
+    public PlatformManager(MetaModel metaModel, PlatformSerializer serializer) {
         super(metaModel, serializer);
     }
 
     public Platform selectById(int id) {
-        return super.select("id", id);
+        return selectWhere("id", id);
     }
 
 }

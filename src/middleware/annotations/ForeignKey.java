@@ -1,4 +1,4 @@
-package annotations;
+package middleware.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.RetentionPolicy;
@@ -7,16 +7,9 @@ import java.lang.annotation.Retention;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Column {
+public @interface ForeignKey {
 
-    boolean primaryKey() default false;
-
-    String name();
-
-    int type();
-
-    boolean notNull() default true;
-
-    boolean unique() default false;
+    Class<?> model();
+    String column() default "id";
 
 }

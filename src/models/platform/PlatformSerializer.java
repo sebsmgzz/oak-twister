@@ -1,23 +1,14 @@
 package models.platform;
 
-import models.BaseSerializer;
+import middleware.metadata.MetaModel;
+import models.Serializer;
 
-import java.util.HashMap;
+import java.util.concurrent.Callable;
 
-public class PlatformSerializer extends BaseSerializer<Platform> {
+public class PlatformSerializer extends Serializer<Platform> {
 
-    public PlatformSerializer() {
-        super();
-    }
-
-    public Platform serialize(HashMap<String, Object> map) {
-        // TODO: serialize
-        return null;
-    }
-
-    public HashMap<String, Object> deserialize(Platform model) {
-        // TODO: deserialize
-        return null;
+    public PlatformSerializer(MetaModel metaModel, Callable<Platform> factory) {
+        super(metaModel, factory);
     }
 
 }

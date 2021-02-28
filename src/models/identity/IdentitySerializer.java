@@ -1,23 +1,14 @@
 package models.identity;
 
-import models.BaseSerializer;
+import middleware.metadata.MetaModel;
+import models.Serializer;
 
-import java.util.HashMap;
+import java.util.concurrent.Callable;
 
-public class IdentitySerializer extends BaseSerializer<Identity> {
+public class IdentitySerializer extends Serializer<Identity> {
 
-    public IdentitySerializer() {
-        super();
-    }
-
-    public Identity serialize(HashMap<String, Object> map) {
-        // TODO: serialize
-        return null;
-    }
-
-    public HashMap<String, Object> deserialize(Identity model) {
-        // TODO: deserialize
-        return null;
+    public IdentitySerializer(MetaModel metaModel, Callable<Identity> factory) {
+        super(metaModel, factory);
     }
 
 }
