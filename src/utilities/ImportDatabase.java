@@ -58,8 +58,7 @@ public class ImportDatabase {
     public void fillTable(String tableName, Wrapper wrapper) {
         System.out.print("Filling " + tableName + "...");
         try {
-            getValues(tableName);
-            System.out.println("success");
+            System.out.println("pending");
         } catch (Exception e) {
             System.out.println("failed");
         }

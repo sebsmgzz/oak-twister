@@ -18,7 +18,7 @@ public class MetaModel {
     public MetaModel(Class<?> type) {
         this.table = type.getAnnotation(Table.class);
         this.metaFields = new ArrayList<>();
-        for (Field field: type.getFields()) {
+        for (Field field: type.getDeclaredFields()) {
             metaFields.add(new MetaField(field));
         }
     }
