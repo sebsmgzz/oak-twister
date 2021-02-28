@@ -1,6 +1,6 @@
 package models.utils;
 
-import database.entities.Entity;
+import database.Entity;
 import database.DbConnection;
 import database.Statement;
 import database.commands.BaseCommand;
