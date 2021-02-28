@@ -1,14 +1,24 @@
 package models.identity;
 
-import middleware.metadata.MetaModel;
+import database.QueryResult;
 import models.Serializer;
 
-import java.util.concurrent.Callable;
+import java.sql.SQLException;
 
 public class IdentitySerializer extends Serializer<Identity> {
 
-    public IdentitySerializer(MetaModel metaModel, Callable<Identity> factory) {
-        super(metaModel, factory);
+    @Override
+    public Identity serialize(QueryResult result) {
+        try {
+            Identity identity = new Identity();
+            identity.setId(result.getInt("id"));
+            identity.setEmail(result.getString("email"));
+            identity.setFirstName(result.getString("first_name"));
+            identity.setLastName(result.getString("last_name"));
+            return identity;
+        } catch (SQLException e) {
+            return null;
+        }
     }
 
 }

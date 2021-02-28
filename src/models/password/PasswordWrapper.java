@@ -25,7 +25,7 @@ public class PasswordWrapper extends Wrapper {
     @Override
     public PasswordSerializer getSerializer() {
         if(serializer == null) {
-            serializer = new PasswordSerializer(getMetaModel(), this::getData);
+            serializer = new PasswordSerializer();
         }
         return serializer;
     }

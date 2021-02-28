@@ -25,7 +25,7 @@ public class IdentityWrapper extends Wrapper {
     @Override
     public IdentitySerializer getSerializer() {
         if(serializer == null) {
-            serializer = new IdentitySerializer(getMetaModel(), this::getData);
+            serializer = new IdentitySerializer();
         }
         return serializer;
     }

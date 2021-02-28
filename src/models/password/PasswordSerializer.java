@@ -1,14 +1,26 @@
 package models.password;
 
-import middleware.metadata.MetaModel;
+import database.QueryResult;
 import models.Serializer;
+import models.account.Account;
 
-import java.util.concurrent.Callable;
+import java.sql.SQLException;
 
 public class PasswordSerializer extends Serializer<Password> {
 
-    public PasswordSerializer(MetaModel metaModel, Callable<Password> factory) {
-        super(metaModel, factory);
+    @Override
+    public Password serialize(QueryResult result) {
+        try {
+            Password password = new Password();
+            password.setId(result.getInt("id"));
+            password.setCreated(result.getDate("created"));
+            password.setAccount(new Account());
+            password.getAccount().setId(result.getInt("account"));
+            password.setValue(result.getString("value"));
+            return password;
+        } catch (SQLException e) {
+            return null;
+        }
     }
 
 }

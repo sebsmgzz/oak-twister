@@ -25,7 +25,7 @@ public class AccountWrapper extends Wrapper {
     @Override
     public AccountSerializer getSerializer() {
         if(serializer == null) {
-            serializer = new AccountSerializer(getMetaModel(), this::getData);
+            serializer = new AccountSerializer();
         }
         return serializer;
     }

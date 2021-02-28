@@ -25,7 +25,7 @@ public class PlatformWrapper extends Wrapper {
     @Override
     public PlatformSerializer getSerializer() {
         if(serializer == null) {
-            serializer = new PlatformSerializer(getMetaModel(), this::getData);
+            serializer = new PlatformSerializer();
         }
         return serializer;
     }

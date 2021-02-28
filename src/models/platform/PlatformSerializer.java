@@ -1,14 +1,22 @@
 package models.platform;
 
-import middleware.metadata.MetaModel;
+import database.QueryResult;
 import models.Serializer;
 
-import java.util.concurrent.Callable;
+import java.sql.SQLException;
 
 public class PlatformSerializer extends Serializer<Platform> {
 
-    public PlatformSerializer(MetaModel metaModel, Callable<Platform> factory) {
-        super(metaModel, factory);
+    @Override
+    public Platform serialize(QueryResult result) {
+        try {
+            Platform platform = new Platform();
+            platform.setId(result.getInt("id"));
+            platform.setImage(result.getImage("image"));
+            return platform;
+        } catch (SQLException e) {
+            return null;
+        }
     }
 
 }
