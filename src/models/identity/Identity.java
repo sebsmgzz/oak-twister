@@ -2,7 +2,7 @@ package models.identity;
 
 import annotations.Column;
 import annotations.Table;
-import database.DataType;
+import database.entities.DataType;
 import models.BaseDataModel;
 
 @Table(name = "identities")

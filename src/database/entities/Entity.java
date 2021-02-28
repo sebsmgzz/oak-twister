@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -19,6 +20,18 @@ public class Entity implements Iterable<Object[]> {
 
     public int columnCount() {
         return columnNames.size();
+    }
+
+    public HashMap<String, Object> getMap(int rowIndex) {
+        if(-1 < rowIndex && rowIndex < columnValues.size()) {
+            HashMap<String, Object> map = new HashMap<>();
+            Object[] values = columnValues.get(rowIndex);
+            for (int i = 0; i < values.length; i++) {
+                map.put(columnNames.get(i), values[i]);
+            }
+            return map;
+        }
+        return null;
     }
 
     public Entity() {

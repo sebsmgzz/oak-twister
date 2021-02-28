@@ -1,8 +1,6 @@
 package commands;
 
-import models.*;
-import models.utils.ModelManager;
-import models.utils.ModelSerializer;
+import models.BaseManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,7 +12,7 @@ public class ImportDatabase {
     private final static String CSV_PATH = "C:\\Users\\SMaronas\\Repos\\OakTwister\\data\\csv";
     private final static String SQLITE_PATH = "C:\\Users\\SMaronas\\Repos\\OakTwister\\data\\db.sqlite";
 
-    private final HashMap<String, ModelManager> managersMap;
+    private final HashMap<String, BaseManager> managersMap;
 
     public ImportDatabase() {
         ManagerFactory managerFactory = new ManagerFactory(new MetaModelFactory());
@@ -54,7 +52,7 @@ public class ImportDatabase {
     }
 
     public void fillTable(String key) {
-        ModelManager manager = managersMap.get(key);
+        BaseManager manager = managersMap.get(key);
         System.out.print("Filling " + key + "...");
         try {
             getValues(key);

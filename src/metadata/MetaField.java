@@ -1,4 +1,4 @@
-package models.metamodels;
+package metadata;
 
 import annotations.Column;
 import annotations.ForeignKey;

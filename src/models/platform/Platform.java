@@ -2,7 +2,7 @@ package models.platform;
 
 import annotations.Column;
 import annotations.Table;
-import database.DataType;
+import database.entities.DataType;
 import models.BaseDataModel;
 
 import java.awt.Image;

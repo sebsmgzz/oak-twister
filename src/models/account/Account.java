@@ -3,7 +3,7 @@ package models.account;
 import annotations.Column;
 import annotations.ForeignKey;
 import annotations.Table;
-import database.DataType;
+import database.entities.DataType;
 import models.BaseDataModel;
 import models.identity.Identity;
 import models.platform.Platform;

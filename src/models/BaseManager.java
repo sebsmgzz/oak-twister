@@ -1,32 +1,34 @@
-package models.utils;
+package models;
 
-import database.Entity;
+import database.entities.Entity;
 import database.DbConnection;
 import database.Statement;
 import database.commands.BaseCommand;
 import database.commands.CreateTable;
 import database.commands.SelectFrom;
 import database.commands.SelectFromWhere;
-import models.metamodels.MetaField;
-import models.metamodels.MetaFieldList;
-import models.metamodels.MetaModel;
+import metadata.MetaField;
+import metadata.MetaModelBase;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class  ModelManager {
+public abstract class BaseManager<T extends BaseDataModel> {
 
-    private final MetaModel metaModel;
+    private final MetaModelBase metaModel;
+    private final BaseSerializer<T> serializer;
 
-    public ModelManager(MetaModel metaModel) {
+    public BaseManager(MetaModelBase metaModel, BaseSerializer<T> serializer) {
         this.metaModel = metaModel;
+        this.serializer = serializer;
     }
 
     public boolean createTable() {
         try {
             DbConnection connection = new DbConnection();
             CreateTable createTableStatement = new CreateTable(metaModel.getTableName());
-            MetaFieldList metaFields = metaModel.getMetaFieldList();
-            for (MetaField metaField : metaFields.getColumns()) {
+            for (MetaField metaField : metaModel.metaFields) {
                 createTableStatement.addColumn(
                     metaField.column.name(),
                     metaField.column.type(),
@@ -41,26 +43,38 @@ public class  ModelManager {
         }
     }
 
-    public Entity selectAll() {
+    public List<T> selectAll() {
+        List<T> models = new ArrayList<>();
         try {
             DbConnection connection = new DbConnection();
             BaseCommand baseCommand = new SelectFrom(metaModel.getTableName());
             Statement statement = connection.getStatement(baseCommand);
-            return statement.executeQuery();
+            Entity entity = statement.executeQuery();
+            if(entity != null) {
+                for (int i = 0; i < entity.rowCount(); i++) {
+                    T model = serializer.serialize(entity.getMap(i));
+                    models.add(model);
+                }
+            }
         } catch (SQLException e) {
             return null;
         }
+        return models;
     }
 
-    protected Entity select(int id) {
+    protected T select(String columnName, int value) {
         try {
             DbConnection connection = new DbConnection();
-            BaseCommand baseCommand = new SelectFromWhere(metaModel.getTableName(), "id", id);
+            BaseCommand baseCommand = new SelectFromWhere(metaModel.getTableName(), columnName, value);
             Statement statement = connection.getStatement(baseCommand);
-            return statement.executeQuery();
+            Entity entity = statement.executeQuery();
+            if(entity != null) {
+                return serializer.serialize(entity.getMap(0));
+            }
         } catch (SQLException e) {
             return null;
         }
+        return null;
     }
 
 }

@@ -1,10 +1,8 @@
 package viewmodels;
 
-import models.ModelFactory;
-
 public class ViewModelFactory {
 
-    private final ModelFactory modelFactory;
+    private final DataModelFactory dataModelFactory;
     private HomeViewModel homeViewModel;
     private LateralPaneViewModel lateralPaneViewModel;
 
@@ -26,8 +24,8 @@ public class ViewModelFactory {
         return new PaneViewModel();
     }
 
-    public ViewModelFactory(ModelFactory modelFactory) {
-        this.modelFactory = modelFactory;
+    public ViewModelFactory(DataModelFactory dataModelFactory) {
+        this.dataModelFactory = dataModelFactory;
     }
 
 }
