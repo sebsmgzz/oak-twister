@@ -1,5 +1,6 @@
 package database;
 
+import java.awt.*;
 import java.sql.*;
 
 public class QuerySet implements QueryResult {
@@ -18,19 +19,35 @@ public class QuerySet implements QueryResult {
         }
     }
 
+    @Override
     public int getInt(String columnName) throws SQLException {
         return resultSet.getInt(columnName);
     }
 
+    @Override
     public String getString(String columnName) throws SQLException {
         return resultSet.getString(columnName);
+    }
+
+    @Override
+    public Object getObject(String columnName) throws SQLException {
+        return resultSet.getObject(columnName);
+    }
+
+    @Override
+    public Date getDate(String columnName) throws SQLException {
+        return resultSet.getDate(columnName);
+    }
+
+    @Override
+    public Image getImage(String columnName) throws SQLException {
+        return null; // TODO: retrieve image
     }
 
     public void finalize() {
         try {
             resultSet.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException ignored) {
         }
     }
 
