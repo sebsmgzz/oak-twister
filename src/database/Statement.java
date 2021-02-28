@@ -1,6 +1,7 @@
 package database;
 
 import database.commands.BaseCommand;
+import database.entities.Entity;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

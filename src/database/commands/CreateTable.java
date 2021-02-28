@@ -1,6 +1,6 @@
 package database.commands;
 
-import database.DataType;
+import database.entities.DataType;
 
 import java.util.ArrayList;
 import java.util.List;
