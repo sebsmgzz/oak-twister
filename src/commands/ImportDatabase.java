@@ -1,6 +1,7 @@
 package commands;
 
 import models.BaseManager;
+import models.ManagerFactory;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,8 +15,7 @@ public class ImportDatabase {
 
     private final HashMap<String, BaseManager> managersMap;
 
-    public ImportDatabase() {
-        ManagerFactory managerFactory = new ManagerFactory(new MetaModelFactory());
+    public ImportDatabase(ManagerFactory managerFactory) {
         this.managersMap = new HashMap<>();
         this.managersMap.put("accounts", managerFactory.getAccountManager());
         this.managersMap.put("identities", managerFactory.getIdentityManager());

@@ -9,16 +9,18 @@ public class OakTwister extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        setupDatabase();
         DataModelFactory dataModelFactory = new DataModelFactory();
+        MetaModelFactory metaModelFactory = new MetaModelFactory();
+        SerializerFactory serializerFactory = new SerializerFactory();
+        ManagerFactory managerFactory = new ManagerFactory(metaModelFactory, serializerFactory);
+        setupDatabase(managerFactory);
         ViewModelFactory viewModelFactory = new ViewModelFactory(dataModelFactory);
         ControllerFactory controllerFactory = new ControllerFactory(viewModelFactory);
         ViewHandler viewHandler = new ViewHandler(primaryStage, controllerFactory);
         viewHandler.start();
     }
 
-    public void setupDatabase() {
-        ManagerFactory managerFactory = new ManagerFactory(new MetaModelFactory());
+    public void setupDatabase(ManagerFactory managerFactory) {
         managerFactory.getAccountManager().createTable();
         managerFactory.getIdentityManager().createTable();
         managerFactory.getPasswordManager().createTable();

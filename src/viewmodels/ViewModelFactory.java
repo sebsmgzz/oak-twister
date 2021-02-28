@@ -1,5 +1,7 @@
 package viewmodels;
 
+import models.DataModelFactory;
+
 public class ViewModelFactory {
 
     private final DataModelFactory dataModelFactory;
