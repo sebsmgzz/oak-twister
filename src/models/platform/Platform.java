@@ -2,7 +2,7 @@ package models.platform;
 
 import annotations.Column;
 import annotations.Table;
-import database.metaentities.Type;
+import database.DataType;
 import models.BaseDataModel;
 
 import java.awt.Image;
@@ -10,13 +10,13 @@ import java.awt.Image;
 @Table(name = "platforms")
 public class Platform extends BaseDataModel {
 
-    @Column(name = "id", type = Type.INTEGER, primaryKey = true)
+    @Column(name = "id", type = DataType.INTEGER, primaryKey = true)
     private int id;
 
-    @Column(name = "name", type = Type.TEXT)
+    @Column(name = "name", type = DataType.TEXT)
     private String name;
 
-    @Column(name = "image", type = Type.BLOB)
+    @Column(name = "image", type = DataType.BLOB)
     private Image image;
 
     public int getId() {

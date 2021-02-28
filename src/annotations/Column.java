@@ -1,7 +1,5 @@
 package annotations;
 
-import database.metaentities.Type;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
@@ -15,7 +13,7 @@ public @interface Column {
 
     String name();
 
-    Type type();
+    int type();
 
     boolean notNull() default true;
 

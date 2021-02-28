@@ -1,6 +1,6 @@
 package database.commands;
 
-import database.metaentities.Column;
+import database.DataType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,26 +8,41 @@ import java.util.List;
 public class CreateTable implements BaseCommand {
 
     private final String tableName;
-    private final List<Column> columns;
+    private final List<String> columnNames;
+    private final List<Integer> columnTypes;
+    private final List<Boolean> columnNotNull;
+    private final List<Boolean> columnPK;
+
+    public String getTableName() {
+        return tableName;
+    }
 
     public CreateTable(String tableName) {
         this.tableName = tableName;
-        this.columns = new ArrayList<Column>();
+        this.columnNames = new ArrayList<String>();
+        this.columnTypes = new ArrayList<Integer>();
+        this.columnNotNull = new ArrayList<Boolean>();
+        this.columnPK = new ArrayList<Boolean>();
     }
 
-    public boolean addColumn(Column column) {
-        return columns.add(column);
-    }
-
-    public boolean removeColumn(Column column) {
-        return columns.remove(column);
+    public void addColumn(String name, int type, boolean notNull, boolean isPK) {
+        columnNames.add(name);
+        columnTypes.add(type);
+        columnNotNull.add(notNull);
+        columnPK.add(isPK);
     }
 
     @Override
     public String getQuery() {
-        List<String> strColumns = new ArrayList<>();
-        columns.forEach(c -> strColumns.add(c.toString()));
-        return "CREATE TABLE " + tableName + " (" + String.join(", ", strColumns) + ");";
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < columnNames.size(); i++) {
+            builder.append(columnNames.get(i)).append(" ");
+            builder.append(DataType.toString(columnTypes.get(i))).append(" ");
+            builder.append(columnPK.get(i)? "PRIMARY KEY" : "").append(" ");
+            builder.append(columnNotNull.get(i) ? "" : "NOT NULL").append(" ");
+            builder.append(1 + i == columnNames.size() ? "" : ", ");
+        }
+        return "CREATE TABLE " + tableName + " (" + builder.toString() + ");";
     }
 
 }

@@ -3,7 +3,7 @@ package models.account;
 import annotations.Column;
 import annotations.ForeignKey;
 import annotations.Table;
-import database.metaentities.Type;
+import database.DataType;
 import models.BaseDataModel;
 import models.identity.Identity;
 import models.platform.Platform;
@@ -13,18 +13,18 @@ import java.util.Date;
 @Table(name = "accounts")
 public class Account extends BaseDataModel {
 
-    @Column(name = "id", type = Type.INTEGER, primaryKey = true)
+    @Column(name = "id", type = DataType.INTEGER, primaryKey = true)
     private int id;
 
-    @Column(name = "platform", type = Type.INTEGER)
+    @Column(name = "platform", type = DataType.INTEGER)
     @ForeignKey(model = Platform.class)
     private Platform platform;
 
-    @Column(name = "identity", type = Type.INTEGER)
+    @Column(name = "identity", type = DataType.INTEGER)
     @ForeignKey(model = Identity.class)
     private Identity identity;
 
-    @Column(name = "created", type = Type.TEXT)
+    @Column(name = "created", type = DataType.TEXT)
     private Date created;
 
     public int getId() {

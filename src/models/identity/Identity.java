@@ -2,22 +2,22 @@ package models.identity;
 
 import annotations.Column;
 import annotations.Table;
-import database.metaentities.Type;
+import database.DataType;
 import models.BaseDataModel;
 
 @Table(name = "identities")
 public class Identity extends BaseDataModel {
 
-    @Column(name = "id", type = Type.INTEGER, primaryKey = true)
+    @Column(name = "id", type = DataType.INTEGER, primaryKey = true)
     private int id;
 
-    @Column(name = "first_name", type = Type.TEXT)
+    @Column(name = "first_name", type = DataType.TEXT)
     private String firstName;
 
-    @Column(name = "last_name", type = Type.TEXT)
+    @Column(name = "last_name", type = DataType.TEXT)
     private String lastName;
 
-    @Column(name = "email", type = Type.TEXT)
+    @Column(name = "email", type = DataType.TEXT)
     private String email;
 
     public int getId() {
