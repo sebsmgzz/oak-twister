@@ -33,4 +33,13 @@ public class Statement {
         return new Entity(resultSet);
     }
 
+    public void finalize() {
+        // TODO: fix obsolete destructor
+        try {
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
