@@ -22,6 +22,16 @@ public class DbConnection {
         return new Statement(preparedStatement, baseCommand);
     }
 
+    public PrepStatement getPrepStatement(String query) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(query);
+        return new PrepStatement(statement);
+    }
+
+    public PrepStatement getPrepStatement(String query, GeneratedKey generatedKeys) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(query, generatedKeys.getValue());
+        return new PrepStatement(statement);
+    }
+
     public void finalize() {
         // TODO: fix obsolete destructor
         try {
