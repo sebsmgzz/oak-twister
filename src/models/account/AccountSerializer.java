@@ -1,6 +1,6 @@
 package models.account;
 
-import database.QueryResult;
+import database.representations.QueryResult;
 import models.Serializer;
 import models.identity.Identity;
 import models.platform.Platform;

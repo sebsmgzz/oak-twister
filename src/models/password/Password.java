@@ -1,28 +1,15 @@
 package models.password;
 
-import middleware.annotations.Column;
-import middleware.annotations.ForeignKey;
-import middleware.annotations.Table;
-import database.entities.DataType;
 import models.Model;
 import models.account.Account;
 
 import java.util.Date;
 
-@Table(name = "passwords")
 public class Password extends Model {
 
-    @Column(name = "id", type = DataType.INTEGER, primaryKey = true)
     public int id;
-
-    @Column(name = "account", type = DataType.INTEGER)
-    @ForeignKey(model = Account.class)
     public Account account;
-
-    @Column(name = "created", type = DataType.TEXT)
     public Date created;
-
-    @Column(name = "value", type = DataType.TEXT)
     public String value;
 
     public int getId() {

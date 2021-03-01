@@ -1,4 +1,4 @@
-package database;
+package database.representations;
 
 import java.awt.Image;
 import java.sql.SQLException;

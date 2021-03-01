@@ -1,35 +1,49 @@
 package database;
 
-import database.commands.BaseCommand;
+import database.representations.QuerySet;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Statement {
 
     private final PreparedStatement preparedStatement;
-    public final BaseCommand baseCommand;
 
-    public Statement(PreparedStatement preparedStatement, BaseCommand baseCommand) {
+    public QuerySet getGeneratedKeys() throws SQLException {
+        return new QuerySet(preparedStatement.getGeneratedKeys());
+    }
+
+    public Statement(PreparedStatement preparedStatement) {
         this.preparedStatement = preparedStatement;
-        this.baseCommand = baseCommand;
+    }
+
+    public void set(int index, int value) throws SQLException {
+        preparedStatement.setInt(index, value);
+    }
+
+    public void set(int index, String value) throws SQLException {
+        preparedStatement.setString(index, value);
+    }
+
+    public void set(int index, Date value) throws SQLException {
+        preparedStatement.setDate(index, value);
+    }
+
+    public void set(int index, Object object) throws SQLException {
+        preparedStatement.setObject(index, object);
     }
 
     public boolean execute() throws SQLException {
-        baseCommand.setParameters(preparedStatement);
         return preparedStatement.execute();
     }
 
     public int executeUpdate() throws SQLException {
-        baseCommand.setParameters(preparedStatement);
         return preparedStatement.executeUpdate();
     }
 
     public QuerySet executeQuery() throws SQLException {
-        baseCommand.setParameters(preparedStatement);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        return new QuerySet(resultSet);
+        return new QuerySet(preparedStatement.executeQuery());
     }
 
     public void finalize() {
@@ -42,3 +56,4 @@ public class Statement {
     }
 
 }
+

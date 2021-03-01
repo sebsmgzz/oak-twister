@@ -1,16 +1,84 @@
 package models.platform;
 
-import middleware.metadata.MetaModel;
+import database.DbConnection;
+import database.Statement;
+import database.representations.QueryResult;
+import database.representations.QuerySet;
 import models.Manager;
+
+import java.sql.SQLException;
 
 public class PlatformManager extends Manager<Platform> {
 
-    public PlatformManager(MetaModel metaModel, PlatformSerializer serializer) {
-        super(metaModel, serializer);
+    public PlatformManager(PlatformSerializer serializer) {
+        super(serializer);
     }
 
-    public Platform selectById(int id) {
-        return selectWhere("id", id);
+    @Override
+    protected String getCreateTableQuery() {
+        return "CREATE TABLE platforms (" +
+                "id    INTEGER NOT NULL," +
+                "name  TEXT    NOT NULL," +
+                "image BLOB    NOT NULL," +
+                "PRIMARY KEY (id)" + ");";
+    }
+
+    @Override
+    protected String getSelectAllQuery() {
+        return "SELECT * FROM platforms;";
+    }
+
+    @Override
+    protected String getInsertQuery() {
+        return "INSERT INTO platforms (name, image) VALUES (?, ?);";
+    }
+
+    @Override
+    protected void setInsertQueryParameters(Statement statement, Platform model) throws SQLException {
+        statement.set(1, model.getName());
+        statement.set(2, model.getImage());
+    }
+
+    @Override
+    protected void setPrimaryKey(QueryResult queryResult, Platform model) throws SQLException {
+        model.setId(queryResult.getInt("id"));
+    }
+
+    @Override
+    protected String getUpdateQuery() {
+        return "UPDATE platforms SET name = ?, image = ? WHERE id = ?;";
+    }
+
+    @Override
+    protected void setUpdateQueryParameters(Statement statement, Platform model) throws SQLException {
+        statement.set(1, model.getName());
+        statement.set(2, model.getImage());
+        statement.set(3, model.getId());
+    }
+
+    @Override
+    protected String getDeleteQuery() {
+        return "DELETE FROM platforms WHERE id = ?;";
+    }
+
+    @Override
+    protected void setDeleteQueryParameters(Statement statement, Platform model) throws SQLException {
+        statement.set(1, model.getId());
+    }
+
+    public Platform select(int id) {
+        try {
+            DbConnection connection = new DbConnection();
+            Statement statement = connection.getStatement("SELECT * FROM platforms WHERE id = ?;");
+            statement.set(1, id);
+            QuerySet querySet = statement.executeQuery();
+            if(querySet.next()) {
+                return serializer.serialize(querySet);
+            }
+        } catch (SQLException e) {
+            return null;
+        }
+        return null;
     }
 
 }

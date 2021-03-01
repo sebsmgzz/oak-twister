@@ -1,7 +1,5 @@
 package database;
 
-import database.commands.BaseCommand;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,20 +14,14 @@ public class DbConnection {
         this.connection = DriverManager.getConnection("jdbc:sqlite:" + path);
     }
 
-    public Statement getStatement(BaseCommand baseCommand) throws SQLException {
-        String query = baseCommand.getQuery();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        return new Statement(preparedStatement, baseCommand);
-    }
-
-    public PrepStatement getPrepStatement(String query) throws SQLException {
+    public Statement getStatement(String query) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(query);
-        return new PrepStatement(statement);
+        return new Statement(statement);
     }
 
-    public PrepStatement getPrepStatement(String query, GeneratedKey generatedKeys) throws SQLException {
+    public Statement getStatement(String query, GeneratedKey generatedKeys) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(query, generatedKeys.getValue());
-        return new PrepStatement(statement);
+        return new Statement(statement);
     }
 
     public void finalize() {

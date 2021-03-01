@@ -2,7 +2,7 @@ package database;
 
 import java.sql.Statement;
 
-public class GeneratedKey {
+public final class GeneratedKey {
 
     public static final GeneratedKey RETURN_GENERATED_KEYS = new GeneratedKey(Statement.RETURN_GENERATED_KEYS);
     public static final GeneratedKey NO_GENERATED_KEYS = new GeneratedKey(Statement.NO_GENERATED_KEYS);

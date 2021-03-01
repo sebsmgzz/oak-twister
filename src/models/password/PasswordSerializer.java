@@ -1,6 +1,6 @@
 package models.password;
 
-import database.QueryResult;
+import database.representations.QueryResult;
 import models.Serializer;
 import models.account.Account;
 

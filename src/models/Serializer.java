@@ -1,6 +1,6 @@
 package models;
 
-import database.QueryResult;
+import database.representations.QueryResult;
 
 public abstract class Serializer<T extends Model> {
 

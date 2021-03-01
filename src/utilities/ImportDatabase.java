@@ -43,12 +43,11 @@ public class ImportDatabase {
 
     public void createTables() {
         for(Wrapper wrapper : wrappers) {
-            String tableName = wrapper.getMetaModel().getTableName();
-            System.out.print("Creating " + tableName + "...");
+            System.out.print("Creating ...");
             boolean created = wrapper.getManager().createTable();
             if(created) {
                 System.out.println("success");
-                fillTable(tableName, wrapper);
+                fillTable("", wrapper);
             } else {
                 System.out.println("failed");
             }

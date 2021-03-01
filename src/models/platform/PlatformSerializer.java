@@ -1,6 +1,6 @@
 package models.platform;
 
-import database.QueryResult;
+import database.representations.QueryResult;
 import models.Serializer;
 
 import java.sql.SQLException;
