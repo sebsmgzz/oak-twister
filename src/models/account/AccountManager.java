@@ -17,11 +17,10 @@ public class AccountManager extends Manager<Account> {
     @Override
     protected String getCreateTableQuery() {
         return "CREATE TABLE accounts (" +
-                "id       INTEGER NOT NULL," +
+                "id       INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                 "platform INTEGER NOT NULL," +
                 "identity INTEGER NOT NULL," +
                 "created  TEXT    NOT NULL," +
-                "PRIMARY KEY(id)," +
                 "FOREIGN KEY(platform) REFERENCES platforms(id)," +
                 "FOREIGN KEY(identity) REFERENCES identities(id)" + ");";
     }
@@ -45,7 +44,7 @@ public class AccountManager extends Manager<Account> {
 
     @Override
     protected void setPrimaryKey(QueryResult queryResult, Account model) throws SQLException {
-        model.setId(queryResult.getInt("id"));
+        model.setId(queryResult.getInt("last_insert_rowid()"));
     }
 
     @Override

@@ -17,10 +17,9 @@ public class PlatformManager extends Manager<Platform> {
     @Override
     protected String getCreateTableQuery() {
         return "CREATE TABLE platforms (" +
-                "id    INTEGER NOT NULL," +
+                "id    INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                 "name  TEXT    NOT NULL," +
-                "image BLOB    NOT NULL," +
-                "PRIMARY KEY (id)" + ");";
+                "image BLOB    NOT NULL " + ");";
     }
 
     @Override
@@ -41,7 +40,7 @@ public class PlatformManager extends Manager<Platform> {
 
     @Override
     protected void setPrimaryKey(QueryResult queryResult, Platform model) throws SQLException {
-        model.setId(queryResult.getInt("id"));
+        model.setId(queryResult.getInt("last_insert_rowid()"));
     }
 
     @Override

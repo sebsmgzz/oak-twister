@@ -18,11 +18,10 @@ public class IdentityManager extends Manager<Identity> {
     @Override
     protected String getCreateTableQuery() {
         return "CREATE TABLE identities (" +
-                "id        TEXT NOT NULL," +
-                "firstName TEXT NOT NULL," +
-                "lastName  TEXT NOT NULL," +
-                "email     TEXT NOT NULL," +
-                "PRIMARY KEY(id)" + ");";
+                "id        INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                "firstName TEXT     NOT NULL," +
+                "lastName  TEXT     NOT NULL," +
+                "email     TEXT     NOT NULL " + ");";
     }
 
     @Override
@@ -44,7 +43,8 @@ public class IdentityManager extends Manager<Identity> {
 
     @Override
     protected void setPrimaryKey(QueryResult queryResult, Identity model) throws SQLException {
-        model.setId(queryResult.getInt("id"));
+
+        model.setId(queryResult.getInt("last_insert_rowid()"));
     }
 
     @Override

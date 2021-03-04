@@ -17,11 +17,10 @@ public class PasswordManager extends Manager<Password> {
     @Override
     protected String getCreateTableQuery() {
         return "CREATE TABLE passwords (" +
-                "id        INTEGER  NOT NULL," +
+                "id        INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL," +
                 "account   INTEGER  NOT NULL," +
                 "created   TEXT     NOT NULL," +
                 "value     TEXT     NOT NULL," +
-                "PRIMARY KEY(id)" +
                 "FOREIGN KEY(account) REFERENCES accounts(id)" + ");";
     }
 
@@ -44,7 +43,7 @@ public class PasswordManager extends Manager<Password> {
 
     @Override
     protected void setPrimaryKey(QueryResult queryResult, Password model) throws SQLException {
-        model.setId(queryResult.getInt("id"));
+        model.setId(queryResult.getInt("last_insert_rowid()"));
     }
 
     @Override
