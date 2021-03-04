@@ -7,6 +7,10 @@ public class QuerySet implements QueryResult {
 
     private final ResultSet resultSet;
 
+    public String getColumnNames(int index) throws SQLException {
+        return resultSet.getMetaData().getColumnName(index);
+    }
+
     public QuerySet(ResultSet resultSet) {
         this.resultSet = resultSet;
     }
