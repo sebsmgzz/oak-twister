@@ -1,6 +1,9 @@
-package models.identity;
+package models;
 
+import database.representations.QueryResult;
 import models.Model;
+
+import java.sql.SQLException;
 
 public class Identity extends Model {
 
@@ -39,6 +42,16 @@ public class Identity extends Model {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public void serialize(QueryResult result) {
+        try {
+            id = result.getInt("id");
+            email = result.getString("email");
+            firstName = result.getString("firstName");
+            lastName = result.getString("lastName");
+        } catch (SQLException ignored) { }
     }
 
     @Override

@@ -1,8 +1,6 @@
-package models.account;
+package models;
 
-import models.Model;
-import models.identity.Identity;
-import models.platform.Platform;
+import database.representations.QueryResult;
 
 import java.util.Date;
 
@@ -43,6 +41,18 @@ public class Account extends Model {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    @Override
+    public void serialize(QueryResult result) {
+        try {
+            id = result.getInt("id");
+            created = result.getDate("created");
+            identity = new Identity();
+            identity.setId(result.getInt("identity"));
+            platform = new Platform();
+            platform.setId(result.getInt("platform"));
+        } catch (Exception ignored) { }
     }
 
     @Override

@@ -6,7 +6,6 @@ import database.Statement;
 import database.representations.QueryResult;
 import database.representations.QuerySet;
 import models.Model;
-import models.Serializer;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

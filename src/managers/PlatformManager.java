@@ -4,8 +4,7 @@ import database.DbConnection;
 import database.Statement;
 import database.representations.QueryResult;
 import database.representations.QuerySet;
-import managers.Manager;
-import models.platform.Platform;
+import models.Platform;
 import models.platform.PlatformSerializer;
 
 import java.sql.SQLException;

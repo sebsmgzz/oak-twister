@@ -1,8 +1,8 @@
-package models.password;
+package models;
 
-import models.Model;
-import models.account.Account;
+import database.representations.QueryResult;
 
+import java.sql.SQLException;
 import java.util.Date;
 
 public class Password extends Model {
@@ -42,6 +42,17 @@ public class Password extends Model {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    @Override
+    public void serialize(QueryResult result) {
+        try {
+            id = result.getInt("id");
+            created = result.getDate("created");
+            account = new Account();
+            account.setId(result.getInt("account"));
+            value = result.getString("value");
+        } catch (SQLException ignored) { }
     }
 
     @Override

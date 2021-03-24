@@ -1,8 +1,9 @@
-package models.platform;
+package models;
 
-import models.Model;
+import database.representations.QueryResult;
 
 import java.awt.Image;
+import java.sql.SQLException;
 
 public class Platform extends Model {
 
@@ -32,6 +33,15 @@ public class Platform extends Model {
 
     public void setImage(Image image) {
         this.image = image;
+    }
+
+    @Override
+    public void serialize(QueryResult result) {
+        try {
+            id = result.getInt("id");
+            name = result.getString("name");
+            image = result.getImage("image");
+        } catch (SQLException ignored) { }
     }
 
     @Override

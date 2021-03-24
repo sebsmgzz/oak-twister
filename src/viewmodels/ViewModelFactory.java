@@ -1,7 +1,5 @@
 package viewmodels;
 
-import models.WrapperFactory;
-
 public class ViewModelFactory {
 
     private final WrapperFactory wrapperFactory;
