@@ -1,5 +1,6 @@
 package models.platform;
 
+import managers.PlatformManager;
 import models.Wrapper;
 
 public class PlatformWrapper extends Wrapper {

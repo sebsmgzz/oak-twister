@@ -4,14 +4,13 @@ import models.Model;
 import models.Wrapper;
 import models.WrapperFactory;
 import models.account.Account;
-import models.account.AccountManager;
+import managers.AccountManager;
 import models.identity.Identity;
-import models.identity.IdentityManager;
+import managers.IdentityManager;
 import models.password.Password;
-import models.password.PasswordManager;
+import managers.PasswordManager;
 import models.platform.Platform;
-import models.platform.PlatformManager;
-import org.sqlite.util.StringUtils;
+import managers.PlatformManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;

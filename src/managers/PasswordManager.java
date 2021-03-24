@@ -1,10 +1,12 @@
-package models.password;
+package managers;
 
 import database.DbConnection;
 import database.Statement;
 import database.representations.QueryResult;
 import database.representations.QuerySet;
-import models.Manager;
+import managers.Manager;
+import models.password.Password;
+import models.password.PasswordSerializer;
 
 import java.sql.SQLException;
 

@@ -1,5 +1,7 @@
 package models;
 
+import managers.Manager;
+
 public abstract class Wrapper {
 
     public abstract Model getData();

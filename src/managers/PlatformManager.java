@@ -1,10 +1,12 @@
-package models.platform;
+package managers;
 
 import database.DbConnection;
 import database.Statement;
 import database.representations.QueryResult;
 import database.representations.QuerySet;
-import models.Manager;
+import managers.Manager;
+import models.platform.Platform;
+import models.platform.PlatformSerializer;
 
 import java.sql.SQLException;
 

@@ -1,11 +1,12 @@
-package models.identity;
+package managers;
 
 import database.DbConnection;
 import database.Statement;
 import database.representations.QueryResult;
 import database.representations.QuerySet;
-import models.Manager;
-import models.account.Account;
+import managers.Manager;
+import models.identity.Identity;
+import models.identity.IdentitySerializer;
 
 import java.sql.SQLException;
 

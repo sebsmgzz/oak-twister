@@ -1,5 +1,6 @@
 package models.account;
 
+import managers.AccountManager;
 import models.Wrapper;
 
 public class AccountWrapper extends Wrapper {

@@ -1,10 +1,12 @@
-package models.account;
+package managers;
 
 import database.DbConnection;
 import database.Statement;
 import database.representations.QueryResult;
 import database.representations.QuerySet;
-import models.Manager;
+import managers.Manager;
+import models.account.Account;
+import models.account.AccountSerializer;
 
 import java.sql.SQLException;
 

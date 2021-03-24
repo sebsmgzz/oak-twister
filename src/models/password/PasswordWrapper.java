@@ -1,5 +1,6 @@
 package models.password;
 
+import managers.PasswordManager;
 import models.Wrapper;
 
 public class PasswordWrapper extends Wrapper {

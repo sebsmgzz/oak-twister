@@ -1,5 +1,6 @@
 package models.identity;
 
+import managers.IdentityManager;
 import models.Wrapper;
 
 public class IdentityWrapper extends Wrapper {
