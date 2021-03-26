@@ -20,11 +20,14 @@ public final class Manager {
 
     public Manager() {
         try(Connection connection = getConnection()) {
+            connection.setAutoCommit(false);
             Statement statement = connection.createStatement();
             statement.addBatch(Queries.CREATE_PLATFORMS);
             statement.addBatch(Queries.CREATE_ACCOUNTS);
             statement.addBatch(Queries.CREATE_METAS);
             statement.addBatch(Queries.CREATE_FIELDS);
+            statement.executeBatch();
+            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }
