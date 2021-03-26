@@ -1,22 +1,13 @@
 package models;
 
-import database.representations.QueryResult;
-
-import java.awt.Image;
-import java.sql.SQLException;
-
 public class Platform extends Model {
 
-    private int id;
+    private final int id;
     private String name;
-    private Image image;
+    private byte[] image;
 
-    public int getId() {
+    public Integer getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -27,21 +18,20 @@ public class Platform extends Model {
         this.name = name;
     }
 
-    public Image getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(Image image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 
-    @Override
-    public void serialize(QueryResult result) {
-        try {
-            id = result.getInt("id");
-            name = result.getString("name");
-            image = result.getImage("image");
-        } catch (SQLException ignored) { }
+    public Platform(int id) {
+        this.id = id;
+    }
+
+    public Platform() {
+        this(-1);
     }
 
     @Override

@@ -1,3 +1,4 @@
+import management.Manager;
 import viewmodels.ViewModelFactory;
 import views.ControllerFactory;
 import views.ViewHandler;
@@ -8,19 +9,11 @@ public class OakTwister extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        WrapperFactory wrapperFactory = new WrapperFactory();
-        setupDatabase(wrapperFactory);
-        ViewModelFactory viewModelFactory = new ViewModelFactory(wrapperFactory);
+        Manager manager = Manager.getInstance();
+        ViewModelFactory viewModelFactory = new ViewModelFactory(manager);
         ControllerFactory controllerFactory = new ControllerFactory(viewModelFactory);
         ViewHandler viewHandler = new ViewHandler(primaryStage, controllerFactory);
         viewHandler.start();
-    }
-
-    public void setupDatabase(WrapperFactory wrapperFactory) {
-        wrapperFactory.getIdentity().getManager().createTable();
-        wrapperFactory.getPlatform().getManager().createTable();
-        wrapperFactory.getPassword().getManager().createTable();
-        wrapperFactory.getAccount().getManager().createTable();
     }
 
 }

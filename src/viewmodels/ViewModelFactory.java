@@ -1,8 +1,10 @@
 package viewmodels;
 
+import management.Manager;
+
 public class ViewModelFactory {
 
-    private final WrapperFactory wrapperFactory;
+    private final Manager manager;
 
     private HomeViewModel homeViewModel;
     private LateralPaneViewModel lateralPaneViewModel;
@@ -25,8 +27,8 @@ public class ViewModelFactory {
         return new PaneViewModel();
     }
 
-    public ViewModelFactory(WrapperFactory wrapperFactory) {
-        this.wrapperFactory = wrapperFactory;
+    public ViewModelFactory(Manager manager) {
+        this.manager = manager;
     }
 
 }
