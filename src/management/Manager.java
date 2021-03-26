@@ -8,15 +8,7 @@ import java.util.List;
 
 public final class Manager {
 
-    private static Manager instance;
     private Connection connection;
-
-    public static Manager getInstance() {
-        if(instance == null) {
-            instance = new Manager();
-        }
-        return instance;
-    }
 
     private Connection getConnection() throws SQLException {
         if(connection == null || connection.isClosed()) {
@@ -26,7 +18,7 @@ public final class Manager {
         return connection;
     }
 
-    private Manager() {
+    public Manager() {
         try(Connection connection = getConnection()) {
             Statement statement = connection.createStatement();
             statement.addBatch(Queries.CREATE_PLATFORMS);

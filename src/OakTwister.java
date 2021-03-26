@@ -9,7 +9,7 @@ public class OakTwister extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Manager manager = Manager.getInstance();
+        Manager manager = new Manager();
         ViewModelFactory viewModelFactory = new ViewModelFactory(manager);
         ControllerFactory controllerFactory = new ControllerFactory(viewModelFactory);
         ViewHandler viewHandler = new ViewHandler(primaryStage, controllerFactory);
