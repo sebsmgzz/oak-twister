@@ -42,9 +42,8 @@ public final class Queries {
             "type INTEGER," +
             "name TEXT," +
             "description TEXT," +
-            "PRIMARY KEY (account, meta)," +
-            "FOREIGN KEY (account) REFERENCES accounts (id)," +
-            "FOREIGN KEY (meta) REFERENCES metas (id);";
+            "PRIMARY KEY (id)," +
+            "FOREIGN KEY (platform) REFERENCES platforms (id) );";
 
     public static final String INSERT_METAS = "INSERT INTO metas (platform, type, name, description) VALUES (?, ?, ?, ?);";
 
