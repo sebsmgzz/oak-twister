@@ -13,13 +13,10 @@ public final class LateralPaneController extends Controller {
     private LateralPaneViewModel viewModel;
 
     @FXML
-    private Hyperlink identities;
+    private Hyperlink platforms;
 
     @FXML
     private Hyperlink accounts;
-
-    @FXML
-    private Hyperlink passwords;
 
     @Override
     public Parent getNode() {

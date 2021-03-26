@@ -8,7 +8,6 @@
       fx:controller="views.lateralpane.LateralPaneController" minWidth="100.0">
     <Label text="OakTwister" />
     <Separator />
-    <Hyperlink fx:id="identities" text="Identities" />
-    <Hyperlink fx:id="account" text="Accounts" />
-    <Hyperlink fx:id="passwords" text="Passwords" />
+    <Hyperlink fx:id="platforms" text="Platforms" />
+    <Hyperlink fx:id="accounts" text="Accounts" />
 </VBox>
