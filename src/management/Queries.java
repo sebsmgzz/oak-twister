@@ -2,7 +2,7 @@ package management;
 
 public final class Queries {
 
-    public static final String CREATE_PLATFORMS = "CREATE TABLE platforms (" +
+    public static final String CREATE_PLATFORMS = "CREATE TABLE IF NOT EXISTS platforms (" +
             "id INTEGER NOT NULL," +
             "name TEXT NOT NULL," +
             "image BLOB NOT NULL," +
@@ -19,7 +19,7 @@ public final class Queries {
 
     public static final String SELECT_PLATFORMS_BY_ID = "SELECT * FROM platforms WHERE id = ?;";
 
-    public static final String CREATE_ACCOUNTS = "CREATE TABLE accounts (" +
+    public static final String CREATE_ACCOUNTS = "CREATE TABLE IF NOT EXISTS accounts (" +
             "id INTEGER NOT NULL," +
             "name TEXT NOT NULL," +
             "platform INTEGER NOT NULL," +
@@ -36,7 +36,7 @@ public final class Queries {
 
     public static final String SELECT_ACCOUNTS_BY_PLATFORM = "SELECT * FROM accounts WHERE platform = ?;";
 
-    public static final String CREATE_METAS = "CREATE TABLE metas (" +
+    public static final String CREATE_METAS = "CREATE TABLE IF NOT EXISTS metas (" +
             "id INTEGER," +
             "platform INTEGER," +
             "type INTEGER," +
@@ -55,7 +55,7 @@ public final class Queries {
 
     public static final String SELECT_METAS_BY_PLATFORM = "SELECT * FROM metas WHERE platform = ?;";
 
-    public static final String CREATE_FIELDS = "CREATE TABLE fields (" +
+    public static final String CREATE_FIELDS = "CREATE TABLE IF NOT EXISTS fields (" +
             "account INTEGER," +
             "meta INTEGER," +
             "created TEXT," +
