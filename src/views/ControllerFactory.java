@@ -1,59 +1,54 @@
 package views;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import viewmodels.*;
+import javafx.util.Callback;
+import viewmodels.ViewModelFactory;
 import views.home.HomeController;
 import views.lateralpane.LateralPaneController;
-import views.pane.PaneController;
+import views.platforms.PlatformsController;
 
-import java.io.IOException;
-import java.net.URL;
-
-public class ControllerFactory {
+public final class ControllerFactory implements Callback<Class<?>, Object> {
 
     private final ViewModelFactory viewModelFactory;
+
     private HomeController homeController;
     private LateralPaneController lateralPaneController;
+    private PlatformsController platformsController;
 
-    public HomeController getHomeController() throws IOException {
+    public ControllerFactory(ViewModelFactory viewModelFactory) {
+        this.viewModelFactory= viewModelFactory;
+    }
+
+    public HomeController getHomeController() {
         if(homeController == null) {
-            FXMLLoader loader = getLoader(HomeController.SOURCE);
-            Parent node = loader.load();
-            homeController = loader.getController();
-            homeController.setup(node, viewModelFactory.getHomeViewModel());
-            homeController.populate(this);
+            homeController = new HomeController(viewModelFactory.getHomeViewModel());
         }
         return homeController;
     }
 
-    public LateralPaneController getLateralPaneController() throws IOException {
+    public LateralPaneController getLateralPaneController() {
         if(lateralPaneController == null) {
-            FXMLLoader loader = getLoader(LateralPaneController.SOURCE);
-            Parent node = loader.load();
-            lateralPaneController = loader.getController();
-            lateralPaneController.setup(node, viewModelFactory.getLateralPaneViewModel());
+            lateralPaneController = new LateralPaneController(viewModelFactory.getLateralPaneViewModel());
         }
         return lateralPaneController;
     }
 
-    public PaneController getPaneController() throws IOException {
-        FXMLLoader loader = getLoader(PaneController.SOURCE);
-        Parent node = loader.load();
-        PaneController paneController = loader.getController();
-        paneController.setup(node, viewModelFactory.getPaneViewModel());
-        return paneController;
+    public PlatformsController getPlatformsController() {
+        if(platformsController == null) {
+            platformsController = new PlatformsController(viewModelFactory.getPlatformsViewModel());
+        }
+        return platformsController;
     }
 
-    public ControllerFactory(ViewModelFactory viewModelFactory) {
-        this.viewModelFactory = viewModelFactory;
-    }
-
-    private FXMLLoader getLoader(String resourcePath) {
-        FXMLLoader loader = new FXMLLoader();
-        URL url = getClass().getResource(resourcePath);
-        loader.setLocation(url);
-        return loader;
+    @Override
+    public Object call(Class<?> aClass) {
+        if(aClass.equals(HomeController.class)) {
+            return getHomeController();
+        } else if(aClass.equals(LateralPaneController.class)) {
+            return getLateralPaneController();
+        } else if(aClass.equals(PlatformsController.class)) {
+            return getPlatformsController();
+        }
+        return null;
     }
 
 }

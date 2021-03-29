@@ -3,7 +3,7 @@ package viewmodels;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class HomeViewModel implements ViewModel {
+public class PlatformsViewModel implements ViewModel {
 
     private StringProperty output;
     private StringProperty input;
@@ -16,7 +16,7 @@ public class HomeViewModel implements ViewModel {
         return input;
     }
 
-    public HomeViewModel() {
+    public PlatformsViewModel() {
         this.output = new SimpleStringProperty();
         this.input = new SimpleStringProperty();
     }

@@ -1,4 +1,4 @@
 package viewmodels;
 
-public final class PaneViewModel implements BaseViewModel {
+public class PaneViewModel implements ViewModel {
 }

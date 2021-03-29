@@ -2,7 +2,6 @@ package views.pane;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
@@ -14,10 +13,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 
-public final class PaneController extends Controller {
+public class PaneController extends Controller {
 
-    public static final String SOURCE =  "/views/pane/PaneView.fxml";
-    private Parent node;
+    public final static String VIEW_SOURCE = "/views/pane/PaneView.fxml";
     private PaneViewModel viewModel;
 
     @FXML
@@ -26,16 +24,8 @@ public final class PaneController extends Controller {
     @FXML
     private Label label;
 
-    @Override
-    public Parent getNode() {
-        return node;
-    }
-
-    public void setup(Parent node, PaneViewModel viewModel) {
-        this.node = node;
+    public PaneController(PaneViewModel viewModel) {
         this.viewModel = viewModel;
-        this.imageView.setImage(getRandomImage());
-        this.label.setText("Placeholder");
     }
 
     public WritableImage getRandomImage() {

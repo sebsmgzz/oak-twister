@@ -8,6 +8,7 @@ public class ViewModelFactory {
 
     private HomeViewModel homeViewModel;
     private LateralPaneViewModel lateralPaneViewModel;
+    private PlatformsViewModel platformsViewModel;
 
     public HomeViewModel getHomeViewModel() {
         if(homeViewModel == null) {
@@ -21,6 +22,13 @@ public class ViewModelFactory {
             lateralPaneViewModel = new LateralPaneViewModel();
         }
         return lateralPaneViewModel;
+    }
+
+    public PlatformsViewModel getPlatformsViewModel() {
+        if(platformsViewModel == null) {
+            platformsViewModel = new PlatformsViewModel();
+        }
+        return platformsViewModel;
     }
 
     public PaneViewModel getPaneViewModel() {
