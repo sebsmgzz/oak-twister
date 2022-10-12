@@ -1,5 +1,6 @@
 package com.oaktwister.core;
 
+import com.oaktwister.services.DriveFactory;
 import com.oaktwister.viewmodels.landing.LandingViewModel;
 import com.oaktwister.viewmodels.main.AccountsViewModel;
 import com.oaktwister.viewmodels.main.IdentitiesViewModel;
@@ -16,7 +17,7 @@ public class ViewModelFactory {
 
     public LandingViewModel getLandingViewModel() {
         if(landingViewModel == null) {
-            landingViewModel = new LandingViewModel();
+            landingViewModel = new LandingViewModel(new DriveFactory());
         }
         return landingViewModel;
     }

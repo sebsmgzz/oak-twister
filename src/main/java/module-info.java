@@ -21,4 +21,7 @@ module com.oaktwister.oaktwister {
     exports com.oaktwister.viewmodels.main;
     opens com.oaktwister.viewmodels.main to javafx.fxml;
 
+    exports com.oaktwister.models;
+    opens com.oaktwister.models to javafx.fxml;
+
 }
