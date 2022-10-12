@@ -1,0 +1,12 @@
+
+.background {
+    -fx-background-color: #EEEDE7;
+}
+
+.label {
+    -fx-font-family: 'monospace';
+}
+
+.button {
+    -fx-font-weight: bold;
+}

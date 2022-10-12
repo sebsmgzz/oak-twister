@@ -1,0 +1,22 @@
+{
+    "images": [
+        {
+            "path": "/images/social-network/*",
+            "url": "https://www.flaticon.com/packs/social-network-24",
+            "platform": "Flaticon",
+            "author": "Freepik"
+        },
+        {
+            "path": "/images/help-support/*",
+            "url": "https://www.flaticon.com/packs/help-support",
+            "platform": "Flaticon",
+            "author": "Freepik"
+        },
+        {
+            "path": "/images/cyberpunk/*",
+            "url": "https://www.flaticon.com/packs/cyberpunk",
+            "platform": "Flaticon",
+            "author": "Freepik"
+        }
+    ]
+}
