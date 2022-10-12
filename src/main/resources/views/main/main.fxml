@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<?import com.oaktwister.views.main.LateralButtonControl?>
+
+<BorderPane
+        fx:id="borderPane"
+        xmlns="http://javafx.com/javafx/8"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="com.oaktwister.views.main.MainViewController"
+        maxHeight="-Infinity" maxWidth="-Infinity"
+        minHeight="-Infinity" minWidth="-Infinity"
+        prefHeight="240.0" prefWidth="320.0">
+    <left>
+        <VBox prefHeight="400.0" prefWidth="130.0" BorderPane.alignment="CENTER">
+            <LateralButtonControl fx:id="identitiesButtonControl" text="Identities"/>
+            <LateralButtonControl fx:id="platformsButtonControl" text="Platforms"/>
+            <LateralButtonControl fx:id="accountsButtonControl" text="Accounts"/>
+        </VBox>
+    </left>
+    <bottom>
+        <HBox>
+            <Button onAction="#onBackButtonAction" text="go back" />
+        </HBox>
+    </bottom>
+</BorderPane>
