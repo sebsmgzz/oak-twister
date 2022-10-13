@@ -8,6 +8,7 @@
 <VBox xmlns="http://javafx.com/javafx/8"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.oaktwister.views.landing.LandingViewController"
+      stylesheets="/styles/landing.css"
       styleClass="background">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
@@ -17,35 +18,27 @@
             <Insets left="10.0" right="10.0" bottom="10.0"/>
         </padding>
         <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../../images/vikings/oak.png"/>
+            <Image url="/images/vikings/oak.png"/>
         </ImageView>
         <Label text="Oak Twister"
                alignment="CENTER" contentDisplay="CENTER"
-               HBox.hgrow="NEVER" />
+               HBox.hgrow="NEVER" styleClass="title"/>
     </HBox>
     <TableView fx:id="tableView" VBox.vgrow="ALWAYS">
       <columns>
-          <TableColumn fx:id="nameColumn" prefWidth="150.0" minWidth="150.0" text="Name"/>
-          <TableColumn fx:id="pathColumn" prefWidth="150.0" minWidth="150.0" text="Path"/>
-          <TableColumn fx:id="fileSystemColumn" prefWidth="150.0" minWidth="150.0" text="File system"/>
-          <TableColumn fx:id="capacityColumn" prefWidth="150.0" minWidth="150.0" text="Capacity"/>
-          <TableColumn fx:id="spaceColumn" prefWidth="150.0" minWidth="150.0" text="Space"/>
+          <TableColumn fx:id="idColumn" prefWidth="150.0" minWidth="150.0" text="Id" styleClass="column"/>
+          <TableColumn fx:id="pathColumn" prefWidth="150.0" minWidth="150.0" text="Path" styleClass="column"/>
+          <TableColumn fx:id="capacityColumn" prefWidth="150.0" minWidth="150.0" text="Capacity" styleClass="column"/>
+          <TableColumn fx:id="spaceColumn" prefWidth="150.0" minWidth="150.0" text="Space" styleClass="column"/>
       </columns>
     </TableView>
-    <HBox alignment="CENTER_RIGHT"  VBox.vgrow="NEVER">
+    <HBox alignment="CENTER_RIGHT"  VBox.vgrow="NEVER" spacing="10.0">
         <padding>
             <Insets left="10.0" right="10.0" top="10.0"/>
         </padding>
-        <Pane>
-            <padding>
-                <Insets right="10" />
-            </padding>
-            <Button onAction="#onLoadButtonClick" styleClass="button"
-                    text="Load" HBox.hgrow="NEVER" prefWidth="100"/>
-        </Pane>
-        <Pane>
-            <Button onAction="#onRefreshButtonClick" styleClass="button"
-                    text="Refresh" HBox.hgrow="NEVER" prefWidth="100"/>
-        </Pane>
+        <Button onAction="#onLoadButtonClick" styleClass="button"
+                text="Load" HBox.hgrow="NEVER" prefWidth="100"/>
+        <Button onAction="#onRefreshButtonClick" styleClass="button"
+                text="Refresh" HBox.hgrow="NEVER" prefWidth="100"/>
     </HBox>
 </VBox>

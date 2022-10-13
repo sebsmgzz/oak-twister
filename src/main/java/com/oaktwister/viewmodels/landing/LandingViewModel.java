@@ -2,12 +2,10 @@ package com.oaktwister.viewmodels.landing;
 
 import com.oaktwister.models.Drive;
 import com.oaktwister.services.DriveFactory;
-import com.oaktwister.views.landing.DriveViewModel;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 

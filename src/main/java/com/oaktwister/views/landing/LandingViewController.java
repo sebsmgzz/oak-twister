@@ -1,7 +1,7 @@
 package com.oaktwister.views.landing;
 
 import com.oaktwister.core.ViewFactory;
-import com.oaktwister.models.Drive;
+import com.oaktwister.viewmodels.landing.DriveViewModel;
 import com.oaktwister.viewmodels.landing.LandingViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +12,7 @@ import javafx.scene.control.TableView;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 public class LandingViewController implements Initializable {
 
@@ -21,15 +22,13 @@ public class LandingViewController implements Initializable {
     @FXML
     private TableView<DriveViewModel> tableView;
     @FXML
-    private TableColumn<DriveViewModel, String> nameColumn;
+    private TableColumn<DriveViewModel, UUID> idColumn;
     @FXML
     private TableColumn<DriveViewModel, String> pathColumn;
     @FXML
-    private TableColumn<DriveViewModel, String> fileSystemColumn;
+    private TableColumn<DriveViewModel, String> capacityColumn;
     @FXML
-    private TableColumn<DriveViewModel, Number> capacityColumn;
-    @FXML
-    private TableColumn<DriveViewModel, Number> spaceColumn;
+    private TableColumn<DriveViewModel, String> spaceColumn;
 
     public LandingViewController(ViewFactory viewFactory, LandingViewModel viewModel) {
         this.viewFactory = viewFactory;
@@ -39,9 +38,8 @@ public class LandingViewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         viewModel.loadDrives();
-        nameColumn.setCellValueFactory(c -> c.getValue().nameProperty());
+        idColumn.setCellValueFactory(c -> c.getValue().idProperty());
         pathColumn.setCellValueFactory(c -> c.getValue().pathProperty());
-        fileSystemColumn.setCellValueFactory(c -> c.getValue().fileSystemProperty());
         capacityColumn.setCellValueFactory(c -> c.getValue().capacityProperty());
         spaceColumn.setCellValueFactory(c -> c.getValue().spaceProperty());
         tableView.itemsProperty().bindBidirectional(viewModel.drivesProperty());

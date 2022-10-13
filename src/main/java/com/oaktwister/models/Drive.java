@@ -1,19 +1,20 @@
 package com.oaktwister.models;
 
+import java.util.UUID;
+
 public class Drive {
 
-    private String name;
+    private UUID id;
     private String path;
-    private String fileSystem;
-    private double capacity;
-    private double space;
+    private DataSize capacity;
+    private DataSize space;
 
-    public String getName() {
-        return name;
+    public UUID getId() {
+        return id;
     }
 
-    public void setName(String value) {
-        name = value;
+    public void setId(UUID value) {
+        id = value;
     }
 
     public String getPath() {
@@ -24,36 +25,35 @@ public class Drive {
         path = value;
     }
 
-    public String getFileSystem() {
-        return fileSystem;
-    }
-
-    public void setFileSystem(String value) {
-        fileSystem = value;
-    }
-
-    public double getCapacity() {
+    public DataSize getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(double value) {
+    public void setCapacity(DataSize value) {
         capacity = value;
     }
 
-    public double getSpace() {
+    public DataSize getSpace() {
         return space;
     }
 
-    public void setSpace(double value) {
+    public void setSpace(DataSize value) {
         space = value;
     }
 
-    public Drive(String name, String path, String fileSystem, double capacity, double space) {
-        this.name = name;
+    public Drive(UUID id, String path, DataSize capacity, DataSize space) {
+        this.id = id;
         this.path = path;
-        this.fileSystem = fileSystem;
         this.capacity = capacity;
         this.space = space;
+    }
+
+    public Drive(UUID id, String path, long capacity, long space) {
+        this(id, path, new DataSize(capacity), new DataSize(space));
+    }
+
+    public boolean isPersistenceCapable() {
+        return id != null;
     }
 
 }
