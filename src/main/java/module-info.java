@@ -1,27 +1,16 @@
-module com.oaktwister.oaktwister {
+module oaktwister.main {
     requires javafx.controls;
     requires javafx.fxml;
     requires org.jetbrains.annotations;
+    requires org.json;
 
-    exports com.oaktwister;
-    opens com.oaktwister to javafx.fxml;
-
+    opens com.oaktwister.core to javafx.graphics;
     exports com.oaktwister.core;
-    opens com.oaktwister.core to javafx.fxml;
 
-    exports com.oaktwister.views.landing;
     opens com.oaktwister.views.landing to javafx.fxml;
+    exports com.oaktwister.views.landing;
 
-    exports com.oaktwister.views.main;
     opens com.oaktwister.views.main to javafx.fxml;
-
-    exports com.oaktwister.viewmodels.landing;
-    opens com.oaktwister.viewmodels.landing to javafx.fxml;
-
-    exports com.oaktwister.viewmodels.main;
-    opens com.oaktwister.viewmodels.main to javafx.fxml;
-
-    exports com.oaktwister.models;
-    opens com.oaktwister.models to javafx.fxml;
+    exports com.oaktwister.views.main;
 
 }

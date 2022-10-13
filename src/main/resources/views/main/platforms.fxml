@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.FlowPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.oaktwister.views.main.PlatformsViewController"
-            prefHeight="400.0" prefWidth="600.0">
-    <Label text="PLATFORMS VIEW" />
-</AnchorPane>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.oaktwister.views.main.PlatformsViewController"
+      prefHeight="400.0" prefWidth="600.0">
+    <Label text="Platforms"/>
+    <ScrollPane>
+        <FlowPane fx:id="flowPane" />
+    </ScrollPane>
+</VBox>

@@ -1,11 +1,12 @@
 package com.oaktwister.views.landing;
 
 import com.oaktwister.core.ViewFactory;
-import com.oaktwister.viewmodels.landing.DriveViewModel;
+import com.oaktwister.viewmodels.models.DriveViewModel;
 import com.oaktwister.viewmodels.landing.LandingViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
@@ -43,11 +44,27 @@ public class LandingViewController implements Initializable {
         capacityColumn.setCellValueFactory(c -> c.getValue().capacityProperty());
         spaceColumn.setCellValueFactory(c -> c.getValue().spaceProperty());
         tableView.itemsProperty().bindBidirectional(viewModel.drivesProperty());
+        tableView.getSelectionModel().selectedItemProperty().addListener(
+            (observable, oldValue, newValue) -> viewModel.setSelectedDrive(newValue));
     }
 
     @FXML
-    public void onLoadButtonClick(ActionEvent actionEvent) throws IOException {
-        viewFactory.showMainView();
+    public void onLoadButtonClick(ActionEvent actionEvent) {
+        try {
+            viewModel.loadContext();
+            viewFactory.showMainView();
+        } catch (IllegalArgumentException ex) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error loading context");
+            alert.setContentText(ex.getMessage());
+            // TODO: Include options to format the drive in the alert's buttons
+            alert.show();
+        } catch (IOException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("UI error");
+            alert.setContentText(ex.getMessage());
+            alert.show();
+        }
     }
 
     @FXML

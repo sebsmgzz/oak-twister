@@ -31,13 +31,20 @@ public class DriveFactory {
                 String line = scanner.nextLine();
                 Pattern pattern = Pattern.compile("(?<key>[^=]+?)=(?<value>.+)");
                 Matcher matcher = pattern.matcher(line);
-                oakProps.put(
-                        matcher.group("key"),
-                        matcher.group("value"));
+                if(matcher.find()) {
+                    oakProps.put(
+                            matcher.group("key"),
+                            matcher.group("value"));
+                }
             }
             scanner.close();
-            return UUID.fromString(oakProps.get("ID"));
-        } catch (Exception e) {
+            if(oakProps.containsKey("ID")) {
+                return UUID.fromString(oakProps.get("ID"));
+            } else {
+                return null;
+            }
+        } catch (Exception ex) {
+            //ex.printStackTrace();
             return null;
         }
     }

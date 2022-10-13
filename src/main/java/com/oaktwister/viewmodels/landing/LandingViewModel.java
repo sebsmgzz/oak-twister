@@ -1,8 +1,11 @@
 package com.oaktwister.viewmodels.landing;
 
 import com.oaktwister.models.Drive;
+import com.oaktwister.services.Context;
 import com.oaktwister.services.DriveFactory;
+import com.oaktwister.viewmodels.models.DriveViewModel;
 import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -11,8 +14,10 @@ import java.util.List;
 
 public class LandingViewModel {
 
+    private final Context context;
     private final DriveFactory driveFactory;
     private final SimpleListProperty<DriveViewModel> drives;
+    private final SimpleObjectProperty<DriveViewModel> selectedDrive;
 
     public ObservableList<DriveViewModel> getDrives() {
         return drivesProperty().get();
@@ -22,13 +27,27 @@ public class LandingViewModel {
         drivesProperty().setAll(drives);
     }
 
-    public LandingViewModel(DriveFactory driveFactory) {
+    public DriveViewModel getSelectedDrive() {
+        return selectedDriveProperty().get();
+    }
+
+    public void setSelectedDrive(DriveViewModel selectedDrive) {
+        selectedDriveProperty().set(selectedDrive);
+    }
+
+    public LandingViewModel(Context context, DriveFactory driveFactory) {
+        this.context = context;
         this.driveFactory = driveFactory;
         drives = new SimpleListProperty<DriveViewModel>(FXCollections.observableArrayList());
+        selectedDrive = new SimpleObjectProperty<DriveViewModel>();
     }
 
     public SimpleListProperty<DriveViewModel> drivesProperty() {
         return drives;
+    }
+
+    public SimpleObjectProperty<DriveViewModel> selectedDriveProperty() {
+        return selectedDrive;
     }
 
     public void loadDrives() {
@@ -36,8 +55,23 @@ public class LandingViewModel {
         List<Drive> drives = driveFactory.getAllDrives();
         for(Drive drive : drives) {
             DriveViewModel driveViewModel = new DriveViewModel(drive);
-            this.drives.add(driveViewModel);
+            drivesProperty().add(driveViewModel);
         }
+    }
+
+    public void loadContext() throws IllegalArgumentException {
+        if(selectedDrive == null) {
+            throw new IllegalArgumentException(
+                "There is no current selected drive. " +
+                "Please select a persistence capable drive first.");
+        }
+        Drive drive = selectedDrive.get().getDrive();
+        if(!drive.isPersistenceCapable()) {
+            throw new IllegalArgumentException(
+                "The current drive selection must be persistence capable. " +
+                "Try selecting a different drive or formatting this drive first.");
+        }
+        context.setDrive(drive);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.oaktwister.viewmodels.landing;
+package com.oaktwister.viewmodels.models;
 
 import com.oaktwister.models.Drive;
 import javafx.beans.property.*;
@@ -7,20 +7,24 @@ import java.util.UUID;
 
 public class DriveViewModel {
 
-    private final Drive driver;
+    private final Drive drive;
     private final ObjectProperty<UUID> uuid;
     private final SimpleStringProperty path;
     private final ReadOnlyStringProperty capacity;
     private final ReadOnlyStringProperty space;
 
     public DriveViewModel(Drive drive) {
-        this.driver = drive;
+        this.drive = drive;
         uuid = new SimpleObjectProperty<UUID>(drive.getId());
-        uuid.addListener((observable, oldValue, newValue) -> driver.setId(newValue));
+        uuid.addListener((observable, oldValue, newValue) -> this.drive.setId(newValue));
         path = new SimpleStringProperty(drive.getPath());
-        path.addListener((observable, oldValue, newValue) -> driver.setPath(newValue));
-        capacity = new SimpleStringProperty(driver.getCapacity().toString());
-        space = new SimpleStringProperty(driver.getSpace().toString());
+        path.addListener((observable, oldValue, newValue) -> this.drive.setPath(newValue));
+        capacity = new SimpleStringProperty(this.drive.getCapacity().toString());
+        space = new SimpleStringProperty(this.drive.getSpace().toString());
+    }
+
+    public Drive getDrive() {
+        return drive;
     }
 
     public ObjectProperty<UUID> idProperty() {

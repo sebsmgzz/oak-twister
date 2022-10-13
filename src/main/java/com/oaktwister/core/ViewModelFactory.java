@@ -1,6 +1,9 @@
 package com.oaktwister.core;
 
+import com.oaktwister.services.Context;
 import com.oaktwister.services.DriveFactory;
+import com.oaktwister.services.JsonParser;
+import com.oaktwister.services.PlatformRepository;
 import com.oaktwister.viewmodels.landing.LandingViewModel;
 import com.oaktwister.viewmodels.main.AccountsViewModel;
 import com.oaktwister.viewmodels.main.IdentitiesViewModel;
@@ -17,7 +20,9 @@ public class ViewModelFactory {
 
     public LandingViewModel getLandingViewModel() {
         if(landingViewModel == null) {
-            landingViewModel = new LandingViewModel(new DriveFactory());
+            landingViewModel = new LandingViewModel(
+                    Context.getInstance(),
+                    new DriveFactory());
         }
         return landingViewModel;
     }
@@ -45,7 +50,10 @@ public class ViewModelFactory {
 
     public PlatformsViewModel getPlatformsViewModel() {
         if(platformsViewModel == null) {
-            platformsViewModel = new PlatformsViewModel();
+            platformsViewModel = new PlatformsViewModel(
+                    new PlatformRepository(
+                            Context.getInstance(),
+                            new JsonParser()));
         }
         return platformsViewModel;
     }
