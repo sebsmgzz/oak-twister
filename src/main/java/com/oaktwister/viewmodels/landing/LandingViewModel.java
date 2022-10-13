@@ -1,23 +1,43 @@
 package com.oaktwister.viewmodels.landing;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import com.oaktwister.models.Drive;
+import com.oaktwister.services.DriveFactory;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.util.Collection;
+import java.util.List;
 
 public class LandingViewModel {
 
-    public static final String MESSAGE = "Welcome to JavaFX Application!";
-    private final StringProperty message;
+    private final DriveFactory driveFactory;
+    private final SimpleListProperty<DriveViewModel> drives;
 
-    public StringProperty getMessage() {
-        return message;
+    public ObservableList<DriveViewModel> getDrives() {
+        return drivesProperty().get();
     }
 
-    public LandingViewModel() {
-        message = new SimpleStringProperty();
+    public void setDrives(Collection<DriveViewModel> drives) {
+        drivesProperty().setAll(drives);
     }
 
-    public void greet() {
-        message.set(MESSAGE);
+    public LandingViewModel(DriveFactory driveFactory) {
+        this.driveFactory = driveFactory;
+        drives = new SimpleListProperty<DriveViewModel>(FXCollections.observableArrayList());
+    }
+
+    public SimpleListProperty<DriveViewModel> drivesProperty() {
+        return drives;
+    }
+
+    public void loadDrives() {
+        drivesProperty().clear();
+        List<Drive> drives = driveFactory.getAllDrives();
+        for(Drive drive : drives) {
+            DriveViewModel driveViewModel = new DriveViewModel(drive);
+            this.drives.add(driveViewModel);
+        }
     }
 
 }

@@ -17,6 +17,12 @@
             "url": "https://www.flaticon.com/packs/cyberpunk",
             "platform": "Flaticon",
             "author": "Freepik"
+        },
+        {
+            "path": "/images/viking/*",
+            "url": "https://www.flaticon.com/packs/viking-71",
+            "platform": "Flaticon",
+            "author": "Assia Benkerroum"
         }
     ]
 }

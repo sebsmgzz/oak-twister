@@ -33,6 +33,10 @@ public interface Resources {
             String USER = "/images/social-network/user.png";
         }
 
+        interface Vikings {
+            String OAK = "/images/vikings/oak.png";
+        }
+
     }
 
     interface Styles {
