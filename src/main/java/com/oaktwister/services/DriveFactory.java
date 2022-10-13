@@ -10,7 +10,6 @@ import java.util.regex.Pattern;
 public class DriveFactory {
 
     public List<Drive> getAllDrives() {
-        Randomizer randomizer = new Randomizer();
         List<Drive> drives = new ArrayList<Drive>();
         for(File rootDrive : File.listRoots()) {
             Drive drive = new Drive(

@@ -40,8 +40,16 @@ public interface Resources {
     }
 
     interface Styles {
-        String LANDING = "/styles/landing.css";
-        String MAIN = "/styles/landing.css";
+
+        interface Landing {
+            String LANDING = "/styles/landing/landing.css";
+        }
+
+        interface Main {
+            String MAIN = "/styles/main/landing.css";
+            String LATERAL_BUTTON = "/styles/main/lateral-button.css";
+        }
+
     }
 
     interface Views {
@@ -56,6 +64,7 @@ public interface Resources {
             String PLATFORMS = "/views/main/platforms.fxml";
             String ACCOUNTS = "/views/main/accounts.fxml";
             String LATERAL_BUTTON = "/views/main/lateral-button.fxml";
+            String PAGE = "/views/main/page.fxml";
         }
 
     }

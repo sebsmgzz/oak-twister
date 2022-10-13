@@ -3,9 +3,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.oaktwister.views.main.AccountsViewController"
-            prefHeight="400.0" prefWidth="600.0">
-    <Label text="ACCOUNTS VIEW" />
-</AnchorPane>
+<VBox xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.oaktwister.views.main.AccountsViewController">
+    <Label text="Accounts" VBox.vgrow="NEVER"/>
+    <ScrollPane VBox.vgrow="ALWAYS">
+        <FlowPane fx:id="flowPane" />
+    </ScrollPane>
+</VBox>

@@ -1,23 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.image.*?>
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <VBox xmlns="http://javafx.com/javafx/8"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.oaktwister.views.landing.LandingViewController"
-      stylesheets="/styles/landing.css"
+      stylesheets="/styles/landing/landing.css"
       styleClass="background">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
-    <HBox alignment="CENTER_LEFT" VBox.vgrow="NEVER">
-        <padding>
-            <Insets left="10.0" right="10.0" bottom="10.0"/>
-        </padding>
-        <ImageView fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+    <HBox styleClass="topContent" VBox.vgrow="NEVER">
+        <ImageView styleClass="logo" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
             <Image url="/images/vikings/oak.png"/>
         </ImageView>
         <Label text="Oak Twister"
@@ -26,16 +19,13 @@
     </HBox>
     <TableView fx:id="tableView" VBox.vgrow="ALWAYS">
       <columns>
-          <TableColumn fx:id="idColumn" prefWidth="150.0" minWidth="150.0" text="Id" styleClass="column"/>
-          <TableColumn fx:id="pathColumn" prefWidth="150.0" minWidth="150.0" text="Path" styleClass="column"/>
-          <TableColumn fx:id="capacityColumn" prefWidth="150.0" minWidth="150.0" text="Capacity" styleClass="column"/>
-          <TableColumn fx:id="spaceColumn" prefWidth="150.0" minWidth="150.0" text="Space" styleClass="column"/>
+          <TableColumn fx:id="idColumn" text="Id" styleClass="column"/>
+          <TableColumn fx:id="pathColumn" text="Path" styleClass="column"/>
+          <TableColumn fx:id="capacityColumn" text="Capacity" styleClass="column"/>
+          <TableColumn fx:id="spaceColumn" text="Space" styleClass="column"/>
       </columns>
     </TableView>
-    <HBox alignment="CENTER_RIGHT"  VBox.vgrow="NEVER" spacing="10.0">
-        <padding>
-            <Insets left="10.0" right="10.0" top="10.0"/>
-        </padding>
+    <HBox styleClass="bottomContent" VBox.vgrow="NEVER">
         <Button onAction="#onLoadButtonClick" styleClass="button"
                 text="Load" HBox.hgrow="NEVER" prefWidth="100"/>
         <Button onAction="#onRefreshButtonClick" styleClass="button"
