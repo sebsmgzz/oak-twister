@@ -1,14 +1,14 @@
 package com.oaktwister.views.controls;
 
+import com.oaktwister.core.ViewHandler;
 import com.oaktwister.services.Resources;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
+import com.oaktwister.views.View;
 import com.oaktwister.views.util.UUIDStringConverter;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
@@ -19,7 +19,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-public class IdentityCell extends ListCell<IdentityViewModel> implements Initializable {
+public class IdentityCell extends ListCell<IdentityViewModel> implements View {
+
+    private final ViewHandler viewHandler;
 
     @FXML private Label identifier;
     @FXML private ImageView genderImage;
@@ -27,14 +29,16 @@ public class IdentityCell extends ListCell<IdentityViewModel> implements Initial
 
     private final SimpleObjectProperty<UUID> id;
 
-    public IdentityCell() throws IOException {
+    @Override
+    public String getViewLocation() {
+        return Resources.Views.Controls.IDENTITY_CELL;
+    }
+
+    public IdentityCell(ViewHandler viewHandler) throws IOException {
         super();
+        this.viewHandler = viewHandler;
         id = new SimpleObjectProperty<>(UUID.randomUUID());
-        URL resourceUrl = IdentityCell.class.getResource(Resources.Views.Controls.IDENTITY_CELL);
-        FXMLLoader fxmlLoader = new FXMLLoader(resourceUrl);
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setControllerFactory(aClass -> this);
-        fxmlLoader.load();
+        viewHandler.loadCustomView(this);
     }
 
     @Override

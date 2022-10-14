@@ -1,16 +1,15 @@
 package com.oaktwister.views.layouts;
 
+import com.oaktwister.core.ViewHandler;
 import com.oaktwister.services.Resources;
 import com.oaktwister.viewmodels.models.AccountViewModel;
-import com.oaktwister.views.controls.AccountCell;
+import com.oaktwister.views.View;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -20,19 +19,23 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AccountsPane extends Pane implements Initializable {
+public class AccountsPane extends Pane implements View {
+
+    private final ViewHandler viewHandler;
 
     @FXML private Label titleLabel;
     @FXML private ListView<AccountViewModel> listView;
     @FXML private Button addButton;
 
-    public AccountsPane() throws IOException {
+    @Override
+    public String getViewLocation() {
+        return Resources.Views.Layouts.ACCOUNTS_PANE;
+    }
+
+    public AccountsPane(ViewHandler viewHandler) throws IOException {
         super();
-        URL resourceUrl = AccountsPane.class.getResource(Resources.Views.Layouts.ACCOUNTS_PANE);
-        FXMLLoader fxmlLoader = new FXMLLoader(resourceUrl);
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setControllerFactory(aClass -> this);
-        fxmlLoader.load();
+        this.viewHandler = viewHandler;
+        viewHandler.loadCustomView(this);
     }
 
     @Override
@@ -43,7 +46,7 @@ public class AccountsPane extends Pane implements Initializable {
                 listView.setPrefHeight(newValue.doubleValue())));
         listView.setCellFactory(listView -> {
             try {
-                return new AccountCell();
+                return viewHandler.getAccountCell();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

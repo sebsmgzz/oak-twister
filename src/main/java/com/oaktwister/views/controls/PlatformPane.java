@@ -1,13 +1,14 @@
 package com.oaktwister.views.controls;
 
+import com.oaktwister.core.ViewHandler;
 import com.oaktwister.services.Resources;
+import com.oaktwister.viewmodels.models.PlatformViewModel;
+import com.oaktwister.views.View;
 import com.oaktwister.views.util.UUIDStringConverter;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,7 +19,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-public class PlatformPane extends VBox implements Initializable {
+public class PlatformPane extends VBox implements View {
+
+    private final ViewHandler viewHandler;
+    private final PlatformViewModel viewModel;
 
     @FXML private Label identifier;
     @FXML private ImageView image;
@@ -26,19 +30,26 @@ public class PlatformPane extends VBox implements Initializable {
 
     private final SimpleObjectProperty<UUID> id;
 
-    public PlatformPane() throws IOException {
+    @Override
+    public String getViewLocation() {
+        return Resources.Views.Controls.PLATFORM_PANE;
+    }
+
+    public PlatformPane(ViewHandler viewHandler, PlatformViewModel viewModel) throws IOException {
         super();
+        this.viewHandler = viewHandler;
+        this.viewModel = viewModel;
         id = new SimpleObjectProperty<>(UUID.randomUUID());
-        URL resourceUrl = PlatformPane.class.getResource(Resources.Views.Controls.PLATFORM_PANE);
-        FXMLLoader fxmlLoader = new FXMLLoader(resourceUrl);
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setControllerFactory(aClass -> this);
-        fxmlLoader.load();
+        viewHandler.loadCustomView(this);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         identifier.textProperty().bindBidirectional(id, new UUIDStringConverter());
+    }
+
+    public PlatformViewModel getViewModel() {
+        return viewModel;
     }
 
     public ObjectProperty<UUID> identifierProperty() {

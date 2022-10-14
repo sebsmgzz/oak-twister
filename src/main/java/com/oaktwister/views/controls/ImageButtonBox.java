@@ -1,13 +1,13 @@
 package com.oaktwister.views.controls;
 
+import com.oaktwister.core.ViewHandler;
 import com.oaktwister.services.Resources;
+import com.oaktwister.views.View;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,22 +16,23 @@ import javafx.scene.layout.HBox;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.function.Consumer;
 
-public class ImageButtonBox extends HBox implements Initializable {
+public class ImageButtonBox extends HBox implements View {
+
+    private final ViewHandler viewHandler;
 
     @FXML private Button button;
     @FXML private ImageView imageView;
 
+    @Override
+    public String getViewLocation() {
+        return Resources.Views.Controls.IMAGE_BUTTON_BOX;
+    }
 
-
-    public ImageButtonBox() throws IOException {
+    public ImageButtonBox(ViewHandler viewHandler) throws IOException {
         super();
-        URL resourceUrl = ImageButtonBox.class.getResource(Resources.Views.Controls.IMAGE_BUTTON_BOX);
-        FXMLLoader fxmlLoader = new FXMLLoader(resourceUrl);
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setControllerFactory(aClass -> this);
-        fxmlLoader.load();
+        this.viewHandler = viewHandler;
+        viewHandler.loadCustomView(this);
     }
 
     @Override

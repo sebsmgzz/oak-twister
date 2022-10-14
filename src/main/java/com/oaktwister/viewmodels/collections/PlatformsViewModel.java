@@ -21,6 +21,7 @@ public class PlatformsViewModel {
 
     public void loadPlatforms() {
         List<Platform> platforms = platformRepository.findAllPlatforms();
+        System.out.println("Loading " + platforms.size() + " platforms");
         for(Platform platform : platforms) {
             this.platforms.add(new PlatformViewModel(platform));
         }

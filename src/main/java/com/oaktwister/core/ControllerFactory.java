@@ -4,6 +4,8 @@ import com.oaktwister.views.roots.LandingViewController;
 import com.oaktwister.views.roots.MainViewController;
 import javafx.util.Callback;
 
+import java.io.IOException;
+
 public class ControllerFactory implements Callback<Class<?>, Object> {
 
     private final ViewHandler viewHandler;
@@ -16,11 +18,16 @@ public class ControllerFactory implements Callback<Class<?>, Object> {
 
     @Override
     public Object call(Class<?> aClass) {
-        if(aClass.equals(LandingViewController.class)) {
-            return new LandingViewController(viewHandler, viewModelFactory.getLandingViewModel());
-        } else if (aClass.equals(MainViewController.class)) {
-            return new MainViewController(viewHandler, viewModelFactory.getMainViewModel());
-        } else {
+        try {
+            if(aClass.equals(LandingViewController.class)) {
+                return new LandingViewController(viewHandler, viewModelFactory.getLandingViewModel());
+            } else if (aClass.equals(MainViewController.class)) {
+                return new MainViewController(viewHandler, viewModelFactory.getMainViewModel());
+            } else {
+                return null;
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
             return null;
         }
     }

@@ -4,7 +4,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Button?>
-<?import com.oaktwister.views.controls.ImageButtonBox?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1"
@@ -13,11 +12,7 @@
             stylesheets="/styles/main/main.css"
             styleClass="background">
     <left>
-        <VBox BorderPane.alignment="CENTER">
-            <ImageButtonBox fx:id="identitiesButton" text="Identities"/>
-            <ImageButtonBox fx:id="platformsButton" text="Platforms"/>
-            <ImageButtonBox fx:id="accountsButton" text="Accounts"/>
-        </VBox>
+        <VBox fx:id="vBox" BorderPane.alignment="CENTER" />
     </left>
     <bottom>
         <HBox>

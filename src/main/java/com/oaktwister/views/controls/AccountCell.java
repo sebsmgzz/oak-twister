@@ -1,13 +1,13 @@
 package com.oaktwister.views.controls;
 
+import com.oaktwister.core.ViewHandler;
 import com.oaktwister.services.Resources;
 import com.oaktwister.viewmodels.models.AccountViewModel;
+import com.oaktwister.views.View;
 import com.oaktwister.views.util.NumberStringConverter;
 import com.oaktwister.views.util.UUIDStringConverter;
 import javafx.beans.property.*;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
@@ -18,25 +18,29 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-public class AccountCell extends ListCell<AccountViewModel> implements Initializable {
+public class AccountCell extends ListCell<AccountViewModel> implements View {
+
+    private final ViewHandler viewHandler;
 
     @FXML private ImageView imageView;
     @FXML private Label platformNameLabel;
     @FXML private Label accountIdentifierLabel;
     @FXML private Label claimsCountLabel;
 
-    private ObjectProperty<UUID> accountIdentifier;
-    private SimpleIntegerProperty claimsCount;
+    private final ObjectProperty<UUID> accountIdentifier;
+    private final SimpleIntegerProperty claimsCount;
 
-    public AccountCell() throws IOException {
+    @Override
+    public String getViewLocation() {
+        return Resources.Views.Controls.ACCOUNT_CELL;
+    }
+
+    public AccountCell(ViewHandler viewHandler) throws IOException {
         super();
+        this.viewHandler = viewHandler;
         accountIdentifier = new SimpleObjectProperty<>();
         claimsCount = new SimpleIntegerProperty();
-        URL resourceUrl = AccountCell.class.getResource(Resources.Views.Controls.ACCOUNT_CELL);
-        FXMLLoader fxmlLoader = new FXMLLoader(resourceUrl);
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setControllerFactory(aClass -> this);
-        fxmlLoader.load();
+        viewHandler.loadCustomView(this);
     }
 
     @Override

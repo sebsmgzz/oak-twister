@@ -3,9 +3,14 @@ package com.oaktwister.services;
 public interface Resources {
 
     interface Strings {
+        String IDENTITIES_BUTTON_TEXT = "Identities";
+        String PLATFORMS_BUTTON_TEXT = "Platforms";
+        String ACCOUNTS_BUTTON_TEXT = "Accounts";
+
         interface App {
             String TITLE = "OakTwister";
         }
+
     }
 
     interface Images {
