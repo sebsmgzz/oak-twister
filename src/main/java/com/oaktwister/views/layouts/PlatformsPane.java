@@ -12,19 +12,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class PlatformsPane extends Pane implements Initializable {
+public class PlatformsPane extends VBox implements Initializable {
 
-    @FXML private Pane root;
     @FXML private Label titleLabel;
     @FXML private FlowPane flowPane;
+    @FXML private ScrollPane scrollPane;
 
     private final ObservableList<PlatformPane> platformPanes;
 
@@ -40,6 +41,12 @@ public class PlatformsPane extends Pane implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        this.widthProperty().addListener(((observable, oldValue, newValue) ->
+                scrollPane.setPrefWidth(newValue.doubleValue())));
+        this.heightProperty().addListener(((observable, oldValue, newValue) ->
+                scrollPane.setPrefHeight(newValue.doubleValue())));
+
         platformPanes.addListener((ListChangeListener<PlatformPane>) change -> {
             List<Node> children = flowPane.getChildren();
             while (change.next()) {
@@ -51,6 +58,7 @@ public class PlatformsPane extends Pane implements Initializable {
                 }
             }
         });
+
     }
 
     public StringProperty titleProperty() {

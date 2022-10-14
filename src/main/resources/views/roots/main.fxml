@@ -7,9 +7,9 @@
 <?import com.oaktwister.views.controls.ImageButtonBox?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8"
-            fx:id="borderPane"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.oaktwister.views.roots.MainViewController"
+            fx:id="borderPane"
             stylesheets="/styles/main/main.css"
             styleClass="background">
     <left>

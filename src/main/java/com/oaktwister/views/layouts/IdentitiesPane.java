@@ -21,7 +21,6 @@ import java.util.ResourceBundle;
 
 public class IdentitiesPane extends Pane implements Initializable {
 
-    @FXML private Pane root;
     @FXML private Label titleLabel;
     @FXML private ListView<IdentityViewModel> listView;
     @FXML private Button addButton;
@@ -37,9 +36,9 @@ public class IdentitiesPane extends Pane implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        root.widthProperty().addListener(((observable, oldValue, newValue) ->
+        this.widthProperty().addListener(((observable, oldValue, newValue) ->
                 listView.setPrefWidth(newValue.doubleValue())));
-        root.heightProperty().addListener(((observable, oldValue, newValue) ->
+        this.heightProperty().addListener(((observable, oldValue, newValue) ->
                 listView.setPrefHeight(newValue.doubleValue())));
         listView.setCellFactory(listView -> {
             try {

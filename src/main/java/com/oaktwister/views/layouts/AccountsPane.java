@@ -6,6 +6,8 @@ import com.oaktwister.views.controls.AccountCell;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,7 +22,6 @@ import java.util.ResourceBundle;
 
 public class AccountsPane extends Pane implements Initializable {
 
-    @FXML private Pane root;
     @FXML private Label titleLabel;
     @FXML private ListView<AccountViewModel> listView;
     @FXML private Button addButton;
@@ -36,9 +37,9 @@ public class AccountsPane extends Pane implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        root.widthProperty().addListener(((observable, oldValue, newValue) ->
+        this.widthProperty().addListener(((observable, oldValue, newValue) ->
                 listView.setPrefWidth(newValue.doubleValue())));
-        root.heightProperty().addListener(((observable, oldValue, newValue) ->
+        this.heightProperty().addListener(((observable, oldValue, newValue) ->
                 listView.setPrefHeight(newValue.doubleValue())));
         listView.setCellFactory(listView -> {
             try {
@@ -72,6 +73,18 @@ public class AccountsPane extends Pane implements Initializable {
 
     public void setAccounts(ObservableList<AccountViewModel> accounts) {
         accountsProperty().set(accounts);
+    }
+
+    public ObjectProperty<EventHandler<ActionEvent>> onAddActionProperty() {
+        return addButton.onActionProperty();
+    }
+
+    public EventHandler<ActionEvent> getOnAddAction() {
+        return onAddActionProperty().get();
+    }
+
+    public void setOnAddAction(EventHandler<ActionEvent> onAddAction) {
+        onAddActionProperty().set(onAddAction);
     }
 
 }

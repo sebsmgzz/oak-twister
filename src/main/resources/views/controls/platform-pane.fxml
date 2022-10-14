@@ -7,14 +7,12 @@
 
 <fx:root xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
-         type="javafx.scene.layout.Pane"
+         type="javafx.scene.layout.VBox"
          fx:controller="com.oaktwister.views.controls.PlatformPane"
          prefHeight="400.0" prefWidth="600.0">
-    <VBox>
-        <Label fx:id="identifier" text="72370fd8-3a46-469f-aee8-05570ae3e4a3" />
-        <ImageView fx:id="image" preserveRatio="true" fitHeight="150.0" fitWidth="150.0">
-            <Image url="/images/placeholders/image.png"/>
-        </ImageView>
-        <Label fx:id="name" text="title" />
-    </VBox>
+    <Label fx:id="identifier" text="72370fd8-3a46-469f-aee8-05570ae3e4a3" />
+    <ImageView fx:id="image" preserveRatio="true" fitHeight="150.0" fitWidth="150.0">
+        <Image url="/images/placeholders/image.png"/>
+    </ImageView>
+    <Label fx:id="name" text="title" />
 </fx:root>

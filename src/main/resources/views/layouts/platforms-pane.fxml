@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+
 <fx:root xmlns="http://javafx.com/javafx/8"
          xmlns:fx="http://javafx.com/fxml/1"
-         type="javafx.scene.layout.Pane"
+         type="javafx.scene.layout.VBox"
          fx:controller="com.oaktwister.views.layouts.PlatformsPane"
-         fx:id="root"
          prefHeight="400.0" prefWidth="600.0">
-    <VBox>
-        <Label fx:id="titleLabel" text="Title" />
-        <ScrollPane>
-            <FlowPane fx:id="flowPane" />
-        </ScrollPane>
-    </VBox>
+    <Label fx:id="titleLabel" text="Title" />
+    <ScrollPane fx:id="scrollPane">
+        <FlowPane fx:id="flowPane" />
+    </ScrollPane>
 </fx:root>

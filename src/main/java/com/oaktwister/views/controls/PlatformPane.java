@@ -11,14 +11,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-public class PlatformPane extends Pane implements Initializable {
+public class PlatformPane extends VBox implements Initializable {
 
     @FXML private Label identifier;
     @FXML private ImageView image;
