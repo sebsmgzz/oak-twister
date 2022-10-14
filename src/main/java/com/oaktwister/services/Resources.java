@@ -20,6 +20,14 @@ public interface Resources {
             String SETTINGS = "/images/help-support/settings.png";
         }
 
+        interface Placeholders {
+            String IMAGE = "/images/placeholders/image.png";
+        }
+
+        interface Social {
+            String FACEBOOK = "/images/social/facebook.png";
+        }
+
         interface SocialNetwork {
             String ADD = "/images/social-network/add.png";
             String FAVOURITE = "/images/social-network/favourite.png";
@@ -54,17 +62,22 @@ public interface Resources {
 
     interface Views {
 
-        interface Landing {
-            String LANDING = "/views/landing/landing.fxml";
+        interface Controls {
+            String ACCOUNT_CELL = "/views/controls/account-cell.fxml";
+            String IDENTITY_CELL = "/views/controls/identity-cell.fxml";
+            String IMAGE_BUTTON_BOX = "/views/controls/image-button-box.fxml";
+            String PLATFORM_PANE = "/views/controls/platform-pane.fxml";
         }
 
-        interface Main {
-            String MAIN = "/views/main/main.fxml";
-            String IDENTITIES = "/views/main/identities.fxml";
-            String PLATFORMS = "/views/main/platforms.fxml";
-            String ACCOUNTS = "/views/main/accounts.fxml";
-            String LATERAL_BUTTON = "/views/main/lateral-button.fxml";
-            String PAGE = "/views/main/page.fxml";
+        interface Layouts {
+            String ACCOUNTS_PANE = "/views/layouts/accounts-pane.fxml";
+            String IDENTITIES_PANE = "/views/layouts/identities-pane.fxml";
+            String PLATFORMS_PANE = "/views/layouts/platforms-pane.fxml";
+        }
+
+        interface Roots {
+            String LANDING = "/views/roots/landing.fxml";
+            String MAIN = "/views/roots/main.fxml";
         }
 
     }

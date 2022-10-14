@@ -23,6 +23,12 @@
             "url": "https://www.flaticon.com/packs/viking-71",
             "platform": "Flaticon",
             "author": "Assia Benkerroum"
+        },
+        {
+            "path": "/images/social/*",
+            "url": "https://www.flaticon.com/packs/social-15",
+            "platform": "Flaticon",
+            "author": "Pixel perfect"
         }
     ]
 }

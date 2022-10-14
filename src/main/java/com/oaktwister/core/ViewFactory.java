@@ -1,8 +1,9 @@
 package com.oaktwister.core;
 
 import com.oaktwister.services.Resources;
-import com.oaktwister.views.landing.LandingViewController;
+import com.oaktwister.views.roots.LandingViewController;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -21,7 +22,7 @@ public class ViewFactory {
         this.controllerFactory = new ControllerFactory(this, viewModelFactory);
     }
 
-    public Parent getView(@NotNull Class<?> resourceClass, String viewLocation) throws IOException {
+    public <T extends Node> T getView(@NotNull Class<?> resourceClass, String viewLocation) throws IOException {
         URL resourceUrl = resourceClass.getResource(viewLocation);
         FXMLLoader fxmlLoader = new FXMLLoader(resourceUrl);
         fxmlLoader.setControllerFactory(controllerFactory);
@@ -29,7 +30,7 @@ public class ViewFactory {
     }
 
     public void showLandingView() throws IOException {
-        Parent view = getView(LandingViewController.class, Resources.Views.Landing.LANDING);
+        Parent view = getView(LandingViewController.class, Resources.Views.Roots.LANDING);
         Scene scene = new Scene(view);
         primaryStage.setTitle(Resources.Strings.App.TITLE);
         primaryStage.setScene(scene);
@@ -37,7 +38,7 @@ public class ViewFactory {
     }
 
     public void showMainView() throws IOException {
-        Parent view = getView(LandingViewController.class, Resources.Views.Main.MAIN);
+        Parent view = getView(LandingViewController.class, Resources.Views.Roots.MAIN);
         Scene scene = new Scene(view);
         primaryStage.setScene(scene);
         primaryStage.show();

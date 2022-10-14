@@ -1,10 +1,7 @@
 package com.oaktwister.core;
 
-import com.oaktwister.views.landing.LandingViewController;
-import com.oaktwister.views.main.AccountsViewController;
-import com.oaktwister.views.main.IdentitiesViewController;
-import com.oaktwister.views.main.MainViewController;
-import com.oaktwister.views.main.PlatformsViewController;
+import com.oaktwister.views.roots.LandingViewController;
+import com.oaktwister.views.roots.MainViewController;
 import javafx.util.Callback;
 
 public class ControllerFactory implements Callback<Class<?>, Object> {
@@ -23,12 +20,6 @@ public class ControllerFactory implements Callback<Class<?>, Object> {
             return new LandingViewController(viewFactory, viewModelFactory.getLandingViewModel());
         } else if (aClass.equals(MainViewController.class)) {
             return new MainViewController(viewFactory, viewModelFactory.getMainViewModel());
-        } else if (aClass.equals(IdentitiesViewController.class)) {
-            return new IdentitiesViewController(viewFactory, viewModelFactory.getIdentitiesViewModel());
-        } else if (aClass.equals(PlatformsViewController.class)) {
-            return new PlatformsViewController(viewFactory, viewModelFactory.getPlatformsViewModel());
-        } else if (aClass.equals(AccountsViewController.class)) {
-            return new AccountsViewController(viewFactory, viewModelFactory.getAccountsViewModel());
         } else {
             return null;
         }

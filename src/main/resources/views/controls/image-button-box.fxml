@@ -7,6 +7,7 @@
 <fx:root type="javafx.scene.layout.HBox"
          xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
+         fx:controller="com.oaktwister.views.controls.ImageButtonBox"
          stylesheets="/styles/main/lateral-button.css"
          styleClass="background">
     <Button fx:id="button" styleClass="button">

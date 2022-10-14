@@ -7,10 +7,13 @@ module oaktwister.main {
     opens com.oaktwister.core to javafx.graphics;
     exports com.oaktwister.core;
 
-    opens com.oaktwister.views.landing to javafx.fxml;
-    exports com.oaktwister.views.landing;
+    opens com.oaktwister.views.roots to javafx.fxml;
+    exports com.oaktwister.views.roots;
 
-    opens com.oaktwister.views.main to javafx.fxml;
-    exports com.oaktwister.views.main;
+    opens com.oaktwister.views.layouts to javafx.fxml;
+    exports com.oaktwister.views.layouts;
+
+    opens com.oaktwister.views.controls to javafx.fxml;
+    exports com.oaktwister.views.controls;
 
 }

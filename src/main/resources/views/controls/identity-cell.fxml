@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Label?>
+
+<fx:root xmlns="http://javafx.com/javafx"
+         xmlns:fx="http://javafx.com/fxml"
+         type="javafx.scene.control.ListCell"
+         fx:controller="com.oaktwister.views.controls.IdentityCell"
+         prefHeight="400.0" prefWidth="600.0">
+    <HBox>
+        <Label fx:id="identifier" text="4cca2abc-2c27-453e-930a-180da533093a" />
+        <ImageView fx:id="genderImage" preserveRatio="true" fitHeight="50.0" fitWidth="50.0">
+            <Image url="/images/placeholders/image.png"/>
+        </ImageView>
+        <Label fx:id="email" text="Email" />
+    </HBox>
+</fx:root>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListCell?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+
+<fx:root xmlns="http://javafx.com/javafx/8"
+         xmlns:fx="http://javafx.com/fxml/1"
+         type="javafx.scene.control.ListCell"
+         fx:controller="com.oaktwister.views.controls.AccountCell"
+         prefHeight="400.0" prefWidth="600.0">
+    <HBox>
+        <ImageView fx:id="imageView">
+            <Image url="/images/placeholders/image.png" />
+        </ImageView>
+        <Label fx:id="platformNameLabel" />
+        <VBox>
+            <HBox>
+                <Label text="Account: " />
+                <Label fx:id="accountIdentifierLabel" />
+            </HBox>
+            <HBox>
+                <Label text="Claims: " />
+                <Label fx:id="claimsCountLabel" />
+            </HBox>
+        </VBox>
+    </HBox>
+</fx:root>

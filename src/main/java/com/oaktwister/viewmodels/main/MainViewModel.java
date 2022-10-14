@@ -1,6 +1,6 @@
 package com.oaktwister.viewmodels.main;
 
-import com.oaktwister.views.main.Section;
+import com.oaktwister.views.roots.Section;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 

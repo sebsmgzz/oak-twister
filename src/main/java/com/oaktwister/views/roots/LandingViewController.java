@@ -1,4 +1,4 @@
-package com.oaktwister.views.landing;
+package com.oaktwister.views.roots;
 
 import com.oaktwister.core.ViewFactory;
 import com.oaktwister.viewmodels.models.DriveViewModel;
@@ -20,16 +20,11 @@ public class LandingViewController implements Initializable {
     private final ViewFactory viewFactory;
     private final LandingViewModel viewModel;
 
-    @FXML
-    private TableView<DriveViewModel> tableView;
-    @FXML
-    private TableColumn<DriveViewModel, UUID> idColumn;
-    @FXML
-    private TableColumn<DriveViewModel, String> pathColumn;
-    @FXML
-    private TableColumn<DriveViewModel, String> capacityColumn;
-    @FXML
-    private TableColumn<DriveViewModel, String> spaceColumn;
+    @FXML private TableView<DriveViewModel> tableView;
+    @FXML private TableColumn<DriveViewModel, UUID> idColumn;
+    @FXML private TableColumn<DriveViewModel, String> pathColumn;
+    @FXML private TableColumn<DriveViewModel, String> capacityColumn;
+    @FXML private TableColumn<DriveViewModel, String> spaceColumn;
 
     public LandingViewController(ViewFactory viewFactory, LandingViewModel viewModel) {
         this.viewFactory = viewFactory;
@@ -54,12 +49,14 @@ public class LandingViewController implements Initializable {
             viewModel.loadContext();
             viewFactory.showMainView();
         } catch (IllegalArgumentException ex) {
+            ex.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Error loading context");
             alert.setContentText(ex.getMessage());
             // TODO: Include options to format the drive in the alert's buttons
             alert.show();
         } catch (IOException ex) {
+            ex.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("UI error");
             alert.setContentText(ex.getMessage());
