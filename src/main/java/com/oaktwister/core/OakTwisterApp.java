@@ -15,8 +15,8 @@ public class OakTwisterApp extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        ViewFactory viewFactory = new ViewFactory(stage, viewModelFactory);
-        viewFactory.showLandingView();
+        ViewHandler viewHandler = new ViewHandler(stage, viewModelFactory);
+        viewHandler.showLandingView();
     }
 
 }

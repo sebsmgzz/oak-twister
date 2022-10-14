@@ -1,4 +1,4 @@
-package com.oaktwister.viewmodels.landing;
+package com.oaktwister.viewmodels.main;
 
 import com.oaktwister.models.Drive;
 import com.oaktwister.services.Context;

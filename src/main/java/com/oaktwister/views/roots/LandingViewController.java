@@ -1,8 +1,8 @@
 package com.oaktwister.views.roots;
 
-import com.oaktwister.core.ViewFactory;
+import com.oaktwister.core.ViewHandler;
 import com.oaktwister.viewmodels.models.DriveViewModel;
-import com.oaktwister.viewmodels.landing.LandingViewModel;
+import com.oaktwister.viewmodels.main.LandingViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,7 +17,7 @@ import java.util.UUID;
 
 public class LandingViewController implements Initializable {
 
-    private final ViewFactory viewFactory;
+    private final ViewHandler viewHandler;
     private final LandingViewModel viewModel;
 
     @FXML private TableView<DriveViewModel> tableView;
@@ -26,8 +26,8 @@ public class LandingViewController implements Initializable {
     @FXML private TableColumn<DriveViewModel, String> capacityColumn;
     @FXML private TableColumn<DriveViewModel, String> spaceColumn;
 
-    public LandingViewController(ViewFactory viewFactory, LandingViewModel viewModel) {
-        this.viewFactory = viewFactory;
+    public LandingViewController(ViewHandler viewHandler, LandingViewModel viewModel) {
+        this.viewHandler = viewHandler;
         this.viewModel = viewModel;
     }
 
@@ -47,7 +47,7 @@ public class LandingViewController implements Initializable {
     public void onLoadButtonClick(ActionEvent actionEvent) {
         try {
             viewModel.loadContext();
-            viewFactory.showMainView();
+            viewHandler.showMainView();
         } catch (IllegalArgumentException ex) {
             ex.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.WARNING);

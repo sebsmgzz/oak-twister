@@ -9,7 +9,7 @@
          fx:controller="com.oaktwister.views.layouts.AccountsPane"
          prefHeight="400.0" prefWidth="600.0">
     <VBox>
-        <Label fx:id="titleLabel" text="Title" />
+        <Label fx:id="titleLabel" text="Accounts" />
         <ListView fx:id="listView" />
         <HBox>
             <Button fx:id="addButton" text="Add" />

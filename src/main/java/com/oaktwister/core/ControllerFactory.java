@@ -6,20 +6,20 @@ import javafx.util.Callback;
 
 public class ControllerFactory implements Callback<Class<?>, Object> {
 
-    private final ViewFactory viewFactory;
+    private final ViewHandler viewHandler;
     private final ViewModelFactory viewModelFactory;
 
-    public ControllerFactory(ViewFactory viewFactory, ViewModelFactory viewModelFactory) {
-        this.viewFactory = viewFactory;
+    public ControllerFactory(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
+        this.viewHandler = viewHandler;
         this.viewModelFactory = viewModelFactory;
     }
 
     @Override
     public Object call(Class<?> aClass) {
         if(aClass.equals(LandingViewController.class)) {
-            return new LandingViewController(viewFactory, viewModelFactory.getLandingViewModel());
+            return new LandingViewController(viewHandler, viewModelFactory.getLandingViewModel());
         } else if (aClass.equals(MainViewController.class)) {
-            return new MainViewController(viewFactory, viewModelFactory.getMainViewModel());
+            return new MainViewController(viewHandler, viewModelFactory.getMainViewModel());
         } else {
             return null;
         }

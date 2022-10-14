@@ -1,18 +1,17 @@
-package com.oaktwister.viewmodels.main;
+package com.oaktwister.viewmodels.collections;
 
 import com.oaktwister.models.Platform;
 import com.oaktwister.services.PlatformRepository;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
-import javafx.beans.property.Property;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
-import javafx.scene.Node;
 
 import java.util.List;
 
 public class PlatformsViewModel {
 
     private final PlatformRepository platformRepository;
+
     private final SimpleListProperty<PlatformViewModel> platforms;
 
     public PlatformsViewModel(PlatformRepository platformRepository) {

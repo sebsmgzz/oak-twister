@@ -4,11 +4,11 @@ import com.oaktwister.services.Context;
 import com.oaktwister.services.DriveFactory;
 import com.oaktwister.services.JsonParser;
 import com.oaktwister.services.PlatformRepository;
-import com.oaktwister.viewmodels.landing.LandingViewModel;
-import com.oaktwister.viewmodels.main.AccountsViewModel;
-import com.oaktwister.viewmodels.main.IdentitiesViewModel;
+import com.oaktwister.viewmodels.collections.AccountsViewModel;
+import com.oaktwister.viewmodels.collections.IdentitiesViewModel;
+import com.oaktwister.viewmodels.collections.PlatformsViewModel;
+import com.oaktwister.viewmodels.main.LandingViewModel;
 import com.oaktwister.viewmodels.main.MainViewModel;
-import com.oaktwister.viewmodels.main.PlatformsViewModel;
 
 public class ViewModelFactory {
 

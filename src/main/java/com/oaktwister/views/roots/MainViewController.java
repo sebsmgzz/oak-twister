@@ -1,12 +1,12 @@
 package com.oaktwister.views.roots;
 
-import com.oaktwister.core.ViewFactory;
+import com.oaktwister.core.ViewHandler;
 import com.oaktwister.services.Resources;
 import com.oaktwister.viewmodels.main.MainViewModel;
 import com.oaktwister.views.controls.ImageButtonBox;
 import com.oaktwister.views.layouts.AccountsPane;
 import com.oaktwister.views.layouts.IdentitiesPane;
-import com.oaktwister.views.layouts.PlatformsPane;
+import com.oaktwister.views.util.Section;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 
 public class MainViewController implements Initializable {
 
-    private final ViewFactory viewFactory;
+    private final ViewHandler viewHandler;
     private final MainViewModel viewModel;
 
     @FXML private BorderPane borderPane;
@@ -31,36 +31,19 @@ public class MainViewController implements Initializable {
 
     private final Property<Node> centerNodeProperty;
 
-    public MainViewController(ViewFactory viewFactory, MainViewModel viewModel) {
-        this.viewFactory = viewFactory;
+    public MainViewController(ViewHandler viewHandler, MainViewModel viewModel) {
+        this.viewHandler = viewHandler;
         this.viewModel = viewModel;
         centerNodeProperty = new SimpleObjectProperty<Node>(getSection());
     }
 
     private Node getSection() {
         try {
-            Node node = null;
-            switch (viewModel.getSection()) {
-                case ACCOUNTS -> {
-                    AccountsPane accountsPane = new AccountsPane();
-                    accountsPane.setTitle("Accounts");
-                    // TODO: Bind accountsPane to viewModel.accounts()
-                    node = accountsPane;
-                }
-                case PLATFORMS -> {
-                    PlatformsPane platformsPane = new PlatformsPane();
-                    platformsPane.setTitle("Platforms");
-                    // TODO: Bind platformsPane to viewModel.platforms()
-                    node = platformsPane;
-                }
-                case IDENTITIES -> {
-                    IdentitiesPane identitiesPane = new IdentitiesPane();
-                    identitiesPane.setTitle("Identities");
-                    // TODO: Bind identitiesPane to viewModel.identities()
-                    node = identitiesPane;
-                }
-            }
-            return node;
+            return switch (viewModel.getSection()) {
+                case ACCOUNTS -> new AccountsPane();
+                case PLATFORMS -> viewHandler.viewLayoutsFactory().getPlatformsPane();
+                case IDENTITIES -> new IdentitiesPane();
+            };
         } catch (IOException ex) {
             ex.printStackTrace();
             // TODO: Raise alert?
@@ -92,7 +75,7 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void onBackButtonAction(ActionEvent actionEvent) throws IOException {
-        viewFactory.showLandingView();
+        viewHandler.showLandingView();
     }
 
 }
