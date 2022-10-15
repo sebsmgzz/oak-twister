@@ -9,7 +9,7 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.oaktwister.views.roots.MainViewController"
             fx:id="borderPane"
-            stylesheets="/styles/main/main.css"
+            stylesheets="/styles/roots/main.css"
             styleClass="background">
     <left>
         <VBox fx:id="vBox" BorderPane.alignment="CENTER" />

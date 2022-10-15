@@ -1,0 +1,30 @@
+{
+    "id": "304deb9e-f7cc-4be8-897a-6049239f85a4",
+    "platformId": "04a9e445-ed36-474a-a268-bb6fba24d381",
+    "identityId": "89fc8e7b-efa2-4ff4-a2c6-431c9ccda89e",
+    "claimAssignments": [
+        {
+            "name": "Password",
+            "type": "SecretClaimDef",
+            "value": {
+                "value": "123",
+                "hint": "one two three"
+            }
+        },
+        {
+            "name": "Birthday",
+            "type": "DateTimeClaimDef",
+            "value": ""
+        },
+        {
+            "name": "Username",
+            "type": "TextClaimDef",
+            "optional": "jDoe"
+        },
+        {
+            "name": "Location",
+            "type": "TextClaimDef",
+            "optional": "Mexico City"
+        }
+    ]
+}

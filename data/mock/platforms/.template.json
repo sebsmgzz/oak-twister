@@ -1,0 +1,29 @@
+{
+    "id": "",
+    "name": "",
+    "url": "",
+    "imageUrl": "",
+    "createdAt": "",
+    "claimDefinitions": [
+        {
+            "name": "First name",
+            "type": "TextClaimDef"
+        },
+        {
+            "name": "Last name",
+            "type": "TextClaimDef"
+        },
+        {
+            "name": "Email",
+            "type": "TextClaimDef"
+        },
+        {
+            "name": "Password",
+            "type": "SecretClaimDef"
+        },
+        {
+            "name": "Birthday",
+            "type": "DateTimeClaimDef"
+        }
+    ]
+}

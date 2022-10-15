@@ -8,7 +8,7 @@
          xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
          fx:controller="com.oaktwister.views.controls.ImageButtonBox"
-         stylesheets="/styles/main/lateral-button.css"
+         stylesheets="/styles/controls/image-button-box.css"
          styleClass="background">
     <Button fx:id="button" styleClass="button">
         <graphic>

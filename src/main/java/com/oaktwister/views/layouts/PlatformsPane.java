@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -52,10 +53,10 @@ public class PlatformsPane extends VBox implements View {
     public void initialize(URL location, ResourceBundle resources) {
 
         // Bindings
-        this.widthProperty().addListener(((observable, oldValue, newValue) ->
-                scrollPane.setPrefWidth(newValue.doubleValue())));
-        this.heightProperty().addListener(((observable, oldValue, newValue) ->
-                scrollPane.setPrefHeight(newValue.doubleValue())));
+        this.widthProperty().addListener((observable, oldValue, newValue) ->
+                scrollPane.setPrefWidth(newValue.doubleValue()));
+        this.heightProperty().addListener((observable, oldValue, newValue) ->
+                scrollPane.setPrefHeight(newValue.doubleValue()));
         addButton.setOnAction(this::onAddButtonClick);
         viewModel.platformsProperty().addListener(this::onPlatformsChange);
 

@@ -1,0 +1,25 @@
+{
+    "id": "89fc8e7b-efa2-4ff4-a2c6-431c9ccda89e",
+    "claimAssignment": [
+        {
+            "name": "First name",
+            "type": "TextClaimDef",
+            "value": "Jane"
+        },
+        {
+            "name": "Last name",
+            "type": "TextClaimDef",
+            "value": "Doe"
+        },
+        {
+            "name": "Email",
+            "type": "TextClaimDef",
+            "value": "jane.doe@outlook.com"
+        },
+        {
+            "name": "Gender",
+            "type": "TextClaimDef",
+            "value": "female"
+        }
+    ]
+}

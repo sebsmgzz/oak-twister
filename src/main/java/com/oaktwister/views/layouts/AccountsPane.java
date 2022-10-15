@@ -10,16 +10,17 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AccountsPane extends Pane implements View {
+public class AccountsPane extends VBox implements View {
 
     private final ViewHandler viewHandler;
 
@@ -40,10 +41,14 @@ public class AccountsPane extends Pane implements View {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        // Bindings
         this.widthProperty().addListener(((observable, oldValue, newValue) ->
                 listView.setPrefWidth(newValue.doubleValue())));
         this.heightProperty().addListener(((observable, oldValue, newValue) ->
                 listView.setPrefHeight(newValue.doubleValue())));
+
+        // Data loaders
         listView.setCellFactory(listView -> {
             try {
                 return viewHandler.getAccountCell();
@@ -52,6 +57,7 @@ public class AccountsPane extends Pane implements View {
             }
         });
         // TODO: How is the AccountCell reading the AccountViewModel?
+
     }
 
     public StringProperty titleProperty() {

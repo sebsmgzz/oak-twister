@@ -54,13 +54,13 @@ public interface Resources {
 
     interface Styles {
 
-        interface Landing {
-            String LANDING = "/styles/landing/landing.css";
+        interface Controls {
+            String IMAGE_BUTTON_BOX = "/styles/controls/image-button-box.css";
         }
 
-        interface Main {
-            String MAIN = "/styles/main/landing.css";
-            String LATERAL_BUTTON = "/styles/main/lateral-button.css";
+        interface Roots {
+            String MAIN = "/styles/roots/landing.css";
+            String LANDING = "/styles/roots/landing.css";
         }
 
     }

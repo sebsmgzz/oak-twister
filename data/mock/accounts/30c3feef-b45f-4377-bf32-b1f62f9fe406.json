@@ -1,0 +1,20 @@
+{
+    "id": "30c3feef-b45f-4377-bf32-b1f62f9fe406",
+    "platformId": "30c3feef-b45f-4377-bf32-b1f62f9fe406",
+    "identityId": "bf4e7d77-ae42-4916-8d70-1bcac7063b93",
+    "claimAssignments": [
+        {
+            "name": "Password",
+            "type": "SecretClaimDef",
+            "value": {
+                "value": "password",
+                "hint": "The most common password"
+            }
+        },
+        {
+            "name": "Birthday",
+            "type": "DateTimeClaimDef",
+            "value": ""
+        }
+    ]
+}

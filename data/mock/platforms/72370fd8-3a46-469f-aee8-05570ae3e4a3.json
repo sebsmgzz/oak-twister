@@ -1,0 +1,34 @@
+{
+    "id": "72370fd8-3a46-469f-aee8-05570ae3e4a3",
+    "name": "Reddit",
+    "url": "www.reddit.com",
+    "imageUrl": "reddit.png",
+    "createdAt": "2021-12-07T05:20:37Z",
+    "claimDefinitions": [
+        {
+            "name": "First name",
+            "type": "TextClaimDef",
+            "optional": true
+        },
+        {
+            "name": "Last name",
+            "type": "TextClaimDef",
+            "optional": true
+        },
+        {
+            "name": "Email",
+            "type": "TextClaimDef",
+            "optional": false
+        },
+        {
+            "name": "Password",
+            "type": "SecretClaimDef",
+            "optional": false
+        },
+        {
+            "name": "Username",
+            "type": "TextClaimDef",
+            "optional": false
+        }
+    ]
+}

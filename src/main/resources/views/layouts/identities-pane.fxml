@@ -7,14 +7,13 @@
 
 <fx:root xmlns="http://javafx.com/javafx/8"
          xmlns:fx="http://javafx.com/fxml/1"
-         type="javafx.scene.layout.Pane"
+         type="javafx.scene.layout.VBox"
          fx:controller="com.oaktwister.views.layouts.IdentitiesPane"
+         alignment="CENTER"
          prefHeight="400.0" prefWidth="600.0">
-    <VBox>
-        <Label fx:id="titleLabel" text="Identities" />
-        <ListView fx:id="listView" />
-        <HBox>
-            <Button fx:id="addButton" text="Add" />
-        </HBox>
-    </VBox>
+    <Label fx:id="titleLabel" text="Identities" />
+    <ListView fx:id="listView" VBox.vgrow="ALWAYS" />
+    <HBox alignment="CENTER_RIGHT">
+        <Button fx:id="addButton" text="Add" />
+    </HBox>
 </fx:root>

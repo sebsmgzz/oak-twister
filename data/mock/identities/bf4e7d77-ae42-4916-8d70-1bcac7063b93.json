@@ -1,0 +1,20 @@
+{
+    "id": "bf4e7d77-ae42-4916-8d70-1bcac7063b93",
+    "claimAssignment": [
+        {
+            "name": "First name",
+            "type": "TextClaimDef",
+            "value": "John"
+        },
+        {
+            "name": "Last name",
+            "type": "TextClaimDef",
+            "value": "Smith"
+        },
+        {
+            "name": "Email",
+            "type": "TextClaimDef",
+            "value": "john.smith@gmail.com"
+        }
+    ]
+}
