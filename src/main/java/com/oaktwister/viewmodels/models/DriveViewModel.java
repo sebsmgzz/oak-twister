@@ -1,6 +1,6 @@
 package com.oaktwister.viewmodels.models;
 
-import com.oaktwister.models.Drive;
+import com.oaktwister.models.aggregators.drives.Drive;
 import javafx.beans.property.*;
 
 import java.util.UUID;
@@ -15,8 +15,12 @@ public class DriveViewModel {
 
     public DriveViewModel(Drive drive) {
         this.drive = drive;
-        uuid = new SimpleObjectProperty<UUID>(drive.getId());
-        uuid.addListener((observable, oldValue, newValue) -> this.drive.setId(newValue));
+        if(drive.isPersistenceCapable()) {
+            uuid = new SimpleObjectProperty<UUID>(drive.props().getId());
+        } else {
+            uuid = new SimpleObjectProperty<>(null);
+        }
+        uuid.addListener((observable, oldValue, newValue) -> this.drive.props().setId(newValue));
         path = new SimpleStringProperty(drive.getPath());
         path.addListener((observable, oldValue, newValue) -> this.drive.setPath(newValue));
         capacity = new SimpleStringProperty(this.drive.getCapacity().toString());

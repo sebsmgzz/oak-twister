@@ -1,5 +1,6 @@
 package com.oaktwister.core;
 
+import com.oaktwister.services.AppConfig;
 import com.oaktwister.services.Context;
 import com.oaktwister.services.DriveFactory;
 import com.oaktwister.services.repos.PlatformsRepo;
@@ -21,7 +22,7 @@ public class ViewModelFactory {
         if(landingViewModel == null) {
             landingViewModel = new LandingViewModel(
                     Context.getInstance(),
-                    new DriveFactory());
+                    new DriveFactory(AppConfig.getInstance()));
         }
         return landingViewModel;
     }

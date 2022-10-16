@@ -1,6 +1,6 @@
 package com.oaktwister.services;
 
-import com.oaktwister.models.Drive;
+import com.oaktwister.models.aggregators.drives.Drive;
 
 public class Context {
 

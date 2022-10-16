@@ -1,4 +1,4 @@
-package com.oaktwister.models;
+package com.oaktwister.models.aggregators.drives;
 
 public class DataSize {
 

@@ -1,6 +1,6 @@
 package com.oaktwister.viewmodels.main;
 
-import com.oaktwister.models.Drive;
+import com.oaktwister.models.aggregators.drives.Drive;
 import com.oaktwister.services.Context;
 import com.oaktwister.services.DriveFactory;
 import com.oaktwister.viewmodels.models.DriveViewModel;
@@ -60,7 +60,7 @@ public class LandingViewModel {
     }
 
     public void loadContext() throws IllegalArgumentException {
-        if(selectedDrive == null) {
+        if(selectedDrive.get() == null) {
             throw new IllegalArgumentException(
                 "There is no current selected drive. " +
                 "Please select a persistence capable drive first.");
