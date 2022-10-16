@@ -6,6 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 public class AccountSerializer implements Serializer<Account> {
@@ -14,8 +16,13 @@ public class AccountSerializer implements Serializer<Account> {
     private final static String IDENTITY_ID_KEY = "identityId";
     private final static String CREATED_AT_KEY = "createdAt";
     private final static String CLAIMS_KEY = "claims";
+    private final static String DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+    private final static String DATE_TIME_ZONE = "UTC";
 
     private final ClaimSerializer claimsStrategy = new ClaimSerializer();
+    private final DateTimeFormatter formatter = DateTimeFormatter
+            .ofPattern(DATE_TIME_FORMAT)
+            .withZone(ZoneId.of(DATE_TIME_ZONE));
 
     @Override
     public Account deserialize(JSONObject json) {
@@ -23,7 +30,7 @@ public class AccountSerializer implements Serializer<Account> {
             UUID.fromString(json.get(ID_KEY).toString()),
             UUID.fromString(json.get(PLATFORM_ID_KEY).toString()),
             UUID.fromString(json.get(IDENTITY_ID_KEY).toString()),
-            LocalDateTime.parse(json.get(CREATED_AT_KEY).toString()));
+            LocalDateTime.parse(json.getString(CREATED_AT_KEY), formatter));
         for (Object obj : json.getJSONArray(CLAIMS_KEY)) {
             JSONObject jsonClaim = new JSONObject(obj);
             Claim<?> claim = claimsStrategy.deserialize(jsonClaim);

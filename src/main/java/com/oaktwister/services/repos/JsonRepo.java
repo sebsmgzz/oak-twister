@@ -28,6 +28,10 @@ public abstract class JsonRepo<T extends Entity> {
 
     protected abstract String getRepoLocation();
 
+    private Path getFullRepoLocation() {
+        return Paths.get(context.getDrive().getPath(), getRepoLocation());
+    }
+
     private JSONObject rawJsonRead(String jsonLocation) throws IOException {
         FileReader reader = new FileReader(jsonLocation);
         BufferedReader buffer = new BufferedReader(reader);
@@ -44,16 +48,16 @@ public abstract class JsonRepo<T extends Entity> {
     }
 
     public Path getEntityLocation(UUID id) {
-        Path repoLocation = Paths.get(context.getDrive().getPath(), getRepoLocation());
         String fileName = id + FILE_EXTENSION;
-        return Paths.get(repoLocation.toString(), fileName);
+        return Paths.get(getFullRepoLocation().toString(), fileName);
     }
 
     public ArrayList<T> findAll() {
         ArrayList<T> entities = new ArrayList<>();
         try {
-            File repoDirectory = new File(getRepoLocation());
+            File repoDirectory = new File(getFullRepoLocation().toString());
             File[] repoFiles = repoDirectory.listFiles();
+            System.out.println(repoDirectory);
             assert repoFiles != null;
             for (File repoFile : repoFiles) {
                 String fileName = repoFile.getName();
