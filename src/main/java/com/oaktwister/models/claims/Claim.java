@@ -1,9 +1,29 @@
 package com.oaktwister.models.claims;
 
-public interface Claim<T> {
+public abstract class Claim<T> {
 
-    String getName();
+    private String name;
+    private T value;
 
-    T getValue();
+    public Claim(String name, T value) {
+        this.name = name;
+        this.value = value;
+    }
+
+    public Claim(String name) {
+        this(name, null);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public T getValue() {
+        return value;
+    }
+
+    public void setValue(T value) {
+        this.value = value;
+    }
 
 }

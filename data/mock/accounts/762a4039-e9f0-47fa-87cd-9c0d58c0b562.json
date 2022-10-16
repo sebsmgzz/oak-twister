@@ -2,7 +2,8 @@
     "id": "762a4039-e9f0-47fa-87cd-9c0d58c0b562",
     "platformId": "36afe83b-c1fc-4502-824e-ad6385d92d42",
     "identityId": "bf4e7d77-ae42-4916-8d70-1bcac7063b93",
-    "claimAssignments": [
+    "createdAt": "",
+    "claims": [
         {
             "name": "Password",
             "type": "SecretClaimDef",

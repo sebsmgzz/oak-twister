@@ -1,6 +1,7 @@
 {
     "id": "",
-    "claimAssignment": [
+    "createdAt": "",
+    "claims": [
         {
             "name": "First name",
             "type": "TextClaimDef",

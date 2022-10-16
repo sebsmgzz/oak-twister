@@ -2,6 +2,11 @@
     "id": "",
     "platformId": "",
     "identityId": "",
-    "claimAssignments": [
+    "claims": [
+        {
+            "name": "Password",
+            "type": "SecretClaimDef",
+            "value": {}
+        }
     ]
 }

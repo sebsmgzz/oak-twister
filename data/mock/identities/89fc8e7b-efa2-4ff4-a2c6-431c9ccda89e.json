@@ -1,6 +1,7 @@
 {
     "id": "89fc8e7b-efa2-4ff4-a2c6-431c9ccda89e",
-    "claimAssignment": [
+    "createdAt": "",
+    "claims": [
         {
             "name": "First name",
             "type": "TextClaimDef",

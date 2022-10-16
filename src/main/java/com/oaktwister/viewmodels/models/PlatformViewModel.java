@@ -1,6 +1,6 @@
 package com.oaktwister.viewmodels.models;
 
-import com.oaktwister.models.Platform;
+import com.oaktwister.models.aggregators.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
@@ -25,8 +25,8 @@ public class PlatformViewModel {
         id.addListener((observable, oldValue, newValue) -> platform.setId(newValue));
         name = new SimpleStringProperty(platform.getName());
         name.addListener((observable, oldValue, newValue) -> platform.setName(newValue));
-        image = new SimpleObjectProperty<>(decodeImage(platform.getImage()));
-        image.addListener((observable, oldValue, newValue) -> platform.setImage(encodeImage(newValue)));
+        image = new SimpleObjectProperty<>(decodeImage(platform.getImageUrl()));
+        image.addListener((observable, oldValue, newValue) -> platform.setImageUrl(encodeImage(newValue)));
         url = new SimpleStringProperty(platform.getUrl());
         url.addListener((observable, oldValue, newValue) -> platform.setUrl(newValue));
     }

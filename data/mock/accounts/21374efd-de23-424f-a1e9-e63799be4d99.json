@@ -2,7 +2,8 @@
     "id": "21374efd-de23-424f-a1e9-e63799be4d99",
     "platformId": "72370fd8-3a46-469f-aee8-05570ae3e4a3",
     "identityId": null,
-    "claimAssignments": [
+    "createdAt": "",
+    "claims": [
         {
             "name": "Email",
             "type": "TextClaimDef",
