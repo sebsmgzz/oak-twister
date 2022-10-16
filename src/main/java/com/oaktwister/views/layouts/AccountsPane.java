@@ -28,15 +28,15 @@ public class AccountsPane extends VBox implements View {
     @FXML private ListView<AccountViewModel> listView;
     @FXML private Button addButton;
 
-    @Override
-    public String getViewLocation() {
-        return Resources.Views.Layouts.ACCOUNTS_PANE;
-    }
-
     public AccountsPane(ViewHandler viewHandler) throws IOException {
         super();
         this.viewHandler = viewHandler;
         viewHandler.loadCustomView(this);
+    }
+
+    @Override
+    public String getViewLocation() {
+        return Resources.Views.Layouts.ACCOUNTS_PANE;
     }
 
     @Override

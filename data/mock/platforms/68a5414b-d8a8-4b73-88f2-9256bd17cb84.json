@@ -2,33 +2,33 @@
     "id": "68a5414b-d8a8-4b73-88f2-9256bd17cb84",
     "name": "Facebook",
     "url": "www.facebook.com",
-    "imageUrl": "facebook.png",
+    "imageId": "404f15e4-c733-4eb4-93a6-2d5f805f5aa3",
     "createdAt": "2022-01-18T02:55:07Z",
     "claimDefinitions": [
         {
             "name": "First name",
             "type": "TextClaimDef",
-            "optional": false
+            "isOptional": false
         },
         {
             "name": "Last name",
             "type": "TextClaimDef",
-            "optional": false
+            "isOptional": false
         },
         {
             "name": "Email",
             "type": "TextClaimDef",
-            "optional": false
+            "isOptional": false
         },
         {
             "name": "Password",
             "type": "SecretClaimDef",
-            "optional": false
+            "isOptional": false
         },
         {
             "name": "Birthday",
             "type": "DateTimeClaimDef",
-            "optional": false
+            "isOptional": false
         }
     ]
 }

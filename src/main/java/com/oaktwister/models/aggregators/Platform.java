@@ -9,21 +9,21 @@ import java.util.UUID;
 public class Platform extends Entity {
 
     private String name;
-    private String imageUrl;
+    private UUID imageId;
     private String url;
     private LocalDateTime createdAt;
     private final ClaimDefinitionMap claimDefinitions;
 
-    public Platform(UUID id, String name, String imageUrl, String url, LocalDateTime createdAt) {
+    public Platform(UUID id, String name, UUID imageId, String url, LocalDateTime createdAt) {
         super(id);
         this.name = name;
-        this.imageUrl = imageUrl;
+        this.imageId = imageId;
         this.url = url;
         claimDefinitions = new ClaimDefinitionMap();
     }
 
-    public Platform(String name, String imageUrl, String url) {
-        this(null, name, imageUrl, url, LocalDateTime.now());
+    public Platform(String name, UUID imageId, String url) {
+        this(null, name, imageId, url, LocalDateTime.now());
     }
 
     public String getName() {
@@ -34,12 +34,12 @@ public class Platform extends Entity {
         this.name = name;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public UUID getImageId() {
+        return imageId;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageId(UUID imageId) {
+        this.imageId = imageId;
     }
 
     public String getUrl() {

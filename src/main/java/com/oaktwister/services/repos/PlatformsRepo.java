@@ -5,6 +5,7 @@ import com.oaktwister.services.Context;
 import com.oaktwister.services.json.PlatformSerializer;
 
 public class PlatformsRepo extends JsonRepo<Platform> {
+
     public static final String LOCATION = "platforms";
 
     public PlatformsRepo(Context context) {

@@ -5,6 +5,7 @@ import com.oaktwister.services.Context;
 import com.oaktwister.services.json.AccountSerializer;
 
 public class AccountsRepo extends JsonRepo<Account> {
+
     public static final String LOCATION = "accounts";
 
     public AccountsRepo(Context context) {

@@ -29,16 +29,16 @@ public class IdentityCell extends ListCell<IdentityViewModel> implements View {
 
     private final SimpleObjectProperty<UUID> id;
 
-    @Override
-    public String getViewLocation() {
-        return Resources.Views.Controls.IDENTITY_CELL;
-    }
-
     public IdentityCell(ViewHandler viewHandler) throws IOException {
         super();
         this.viewHandler = viewHandler;
         id = new SimpleObjectProperty<>(UUID.randomUUID());
         viewHandler.loadCustomView(this);
+    }
+
+    @Override
+    public String getViewLocation() {
+        return Resources.Views.Controls.IDENTITY_CELL;
     }
 
     @Override

@@ -27,15 +27,15 @@ public class IdentitiesPane extends VBox implements View {
     @FXML private ListView<IdentityViewModel> listView;
     @FXML private Button addButton;
 
-    @Override
-    public String getViewLocation() {
-        return Resources.Views.Layouts.IDENTITIES_PANE;
-    }
-
     public IdentitiesPane(ViewHandler viewHandler) throws IOException {
         super();
         this.viewHandler = viewHandler;
         viewHandler.loadCustomView(this);
+    }
+
+    @Override
+    public String getViewLocation() {
+        return Resources.Views.Layouts.IDENTITIES_PANE;
     }
 
     @Override

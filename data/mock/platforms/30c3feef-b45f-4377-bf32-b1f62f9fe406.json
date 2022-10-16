@@ -2,33 +2,33 @@
     "id": "30c3feef-b45f-4377-bf32-b1f62f9fe406",
     "name": "LinkedIn",
     "url": "www.linkedin.com",
-    "imageUrl": "linkedin.png",
+    "imageId": "77f63954-3ba5-443f-8e1c-b9451805627a",
     "createdAt": "2022-08-10T02:11:45Z",
     "claimDefinitions": [
         {
             "name": "First name",
             "type": "TextClaimDef",
-            "optional": false
+            "isOptional": false
         },
         {
             "name": "Last name",
             "type": "TextClaimDef",
-            "optional": false
+            "isOptional": false
         },
         {
             "name": "Email",
             "type": "TextClaimDef",
-            "optional": false
+            "isOptional": false
         },
         {
             "name": "Password",
             "type": "SecretClaimDef",
-            "optional": false
+            "isOptional": false
         },
         {
             "name": "Birthday",
             "type": "DateTimeClaimDef",
-            "optional": false
+            "isOptional": false
         }
     ]
 }

@@ -36,17 +36,17 @@ public class PlatformsPane extends VBox implements View {
 
     private final SimpleListProperty<PlatformPane> platforms;
 
-    @Override
-    public String getViewLocation() {
-        return Resources.Views.Layouts.PLATFORMS_PANE;
-    }
-
     public PlatformsPane(ViewHandler viewHandler, PlatformsViewModel viewModel) throws IOException {
         super();
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
         platforms = new SimpleListProperty<>(FXCollections.observableArrayList());
         viewHandler.loadCustomView(this);
+    }
+
+    @Override
+    public String getViewLocation() {
+        return Resources.Views.Layouts.PLATFORMS_PANE;
     }
 
     @Override

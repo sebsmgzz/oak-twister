@@ -3,6 +3,7 @@ package com.oaktwister.core;
 import com.oaktwister.services.AppConfig;
 import com.oaktwister.services.Context;
 import com.oaktwister.services.DriveFactory;
+import com.oaktwister.services.repos.ImagesRepo;
 import com.oaktwister.services.repos.PlatformsRepo;
 import com.oaktwister.viewmodels.collections.AccountsViewModel;
 import com.oaktwister.viewmodels.collections.IdentitiesViewModel;
@@ -50,7 +51,10 @@ public class ViewModelFactory {
 
     public PlatformsViewModel getPlatformsViewModel() {
         if(platformsViewModel == null) {
-            platformsViewModel = new PlatformsViewModel(new PlatformsRepo(Context.getInstance()));
+            Context context = Context.getInstance();
+            platformsViewModel = new PlatformsViewModel(
+                new ImagesRepo(context),
+                new PlatformsRepo(context));
         }
         return platformsViewModel;
     }

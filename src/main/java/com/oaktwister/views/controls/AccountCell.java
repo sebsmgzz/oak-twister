@@ -30,17 +30,17 @@ public class AccountCell extends ListCell<AccountViewModel> implements View {
     private final ObjectProperty<UUID> accountIdentifier;
     private final SimpleIntegerProperty claimsCount;
 
-    @Override
-    public String getViewLocation() {
-        return Resources.Views.Controls.ACCOUNT_CELL;
-    }
-
     public AccountCell(ViewHandler viewHandler) throws IOException {
         super();
         this.viewHandler = viewHandler;
         accountIdentifier = new SimpleObjectProperty<>();
         claimsCount = new SimpleIntegerProperty();
         viewHandler.loadCustomView(this);
+    }
+
+    @Override
+    public String getViewLocation() {
+        return Resources.Views.Controls.ACCOUNT_CELL;
     }
 
     @Override

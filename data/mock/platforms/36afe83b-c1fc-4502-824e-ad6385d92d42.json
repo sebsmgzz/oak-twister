@@ -2,38 +2,38 @@
     "id": "36afe83b-c1fc-4502-824e-ad6385d92d42",
     "name": "GitHub",
     "url": "www.github.com",
-    "imageUrl": "github.png",
+    "imageId": "1bfd8a58-f456-43be-9534-d54f35325a0c",
     "createdAt": "2022-07-23T02:14:46Z",
     "claimDefinitions": [
         {
             "name": "First name",
             "type": "TextClaimDef",
-            "optional": false
+            "isOptional": false
         },
         {
             "name": "Last name",
             "type": "TextClaimDef",
-            "optional": false
+            "isOptional": false
         },
         {
             "name": "Email",
             "type": "TextClaimDef",
-            "optional": false
+            "isOptional": false
         },
         {
             "name": "Password",
             "type": "SecretClaimDef",
-            "optional": false
+            "isOptional": false
         },
         {
             "name": "Birthday",
             "type": "DateTimeClaimDef",
-            "optional": true
+            "isOptional": true
         },
         {
             "name": "Username",
             "type": "TextClaimDef",
-            "optional": false
+            "isOptional": false
         }
     ]
 }

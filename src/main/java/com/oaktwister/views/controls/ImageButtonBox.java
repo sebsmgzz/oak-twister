@@ -24,15 +24,15 @@ public class ImageButtonBox extends HBox implements View {
     @FXML private Button button;
     @FXML private ImageView imageView;
 
-    @Override
-    public String getViewLocation() {
-        return Resources.Views.Controls.IMAGE_BUTTON_BOX;
-    }
-
     public ImageButtonBox(ViewHandler viewHandler) throws IOException {
         super();
         this.viewHandler = viewHandler;
         viewHandler.loadCustomView(this);
+    }
+
+    @Override
+    public String getViewLocation() {
+        return Resources.Views.Controls.IMAGE_BUTTON_BOX;
     }
 
     @Override

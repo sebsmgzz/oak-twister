@@ -30,11 +30,6 @@ public class PlatformPane extends VBox implements View {
 
     private final SimpleObjectProperty<UUID> id;
 
-    @Override
-    public String getViewLocation() {
-        return Resources.Views.Controls.PLATFORM_PANE;
-    }
-
     public PlatformPane(ViewHandler viewHandler, PlatformViewModel viewModel) throws IOException {
         super();
         this.viewHandler = viewHandler;
@@ -44,8 +39,16 @@ public class PlatformPane extends VBox implements View {
     }
 
     @Override
+    public String getViewLocation() {
+        return Resources.Views.Controls.PLATFORM_PANE;
+    }
+
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
+        id.bindBidirectional(viewModel.idProperty());
         identifier.textProperty().bindBidirectional(id, new UUIDStringConverter());
+        name.textProperty().bindBidirectional(viewModel.nameProperty());
+        image.imageProperty().bindBidirectional(viewModel.imageProperty());
     }
 
     public PlatformViewModel getViewModel() {

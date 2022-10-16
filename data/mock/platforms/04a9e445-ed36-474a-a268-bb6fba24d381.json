@@ -2,43 +2,43 @@
     "id": "04a9e445-ed36-474a-a268-bb6fba24d381",
     "name": "Twitter",
     "url": "www.twitter.com",
-    "imageUrl": "twitter.png",
+    "imageId": "743ac7a1-634a-4aec-9771-150f096e2caa",
     "createdAt": "2022-08-28T06:17:04Z",
     "claimDefinitions": [
         {
             "name": "First name",
             "type": "TextClaimDef",
-            "optional": false
+            "isOptional": false
         },
         {
             "name": "Last name",
             "type": "TextClaimDef",
-            "optional": false
+            "isOptional": false
         },
         {
             "name": "Email",
             "type": "TextClaimDef",
-            "optional": false
+            "isOptional": false
         },
         {
             "name": "Password",
             "type": "SecretClaimDef",
-            "optional": false
+            "isOptional": false
         },
         {
             "name": "Birthday",
             "type": "DateTimeClaimDef",
-            "optional": false
+            "isOptional": false
         },
         {
             "name": "Username",
             "type": "TextClaimDef",
-            "optional": false
+            "isOptional": false
         },
         {
             "name": "Location",
             "type": "TextClaimDef",
-            "optional": true
+            "isOptional": true
         }
     ]
 }
