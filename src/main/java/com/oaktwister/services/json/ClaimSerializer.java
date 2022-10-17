@@ -1,12 +1,19 @@
 package com.oaktwister.services.json;
 
 import com.oaktwister.models.claims.*;
+import com.oaktwister.services.logging.Logger;
 import org.json.JSONObject;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class ClaimSerializer implements Serializer<Claim<?>> {
+public class ClaimSerializer implements JsonObjectSerializer<Claim<?>> {
+
+    private final Logger logger;
+
+    public ClaimSerializer(Logger logger) {
+        this.logger = logger;
+    }
 
     @Override
     public Claim<?> deserialize(JSONObject json) {
@@ -30,6 +37,7 @@ public class ClaimSerializer implements Serializer<Claim<?>> {
             String value = json.getString("value");
             return new TextClaim(value);
         } else {
+            logger.critical(String.format("Claim of type %s not found", type));
             return null;
         }
     }
@@ -58,6 +66,8 @@ public class ClaimSerializer implements Serializer<Claim<?>> {
         } else if (TextClaim.class.equals(type)) {
             TextClaim claim = (TextClaim)entity;
             json.put("value", claim.getValue());
+        } else {
+            logger.critical(String.format("Claim of type %s not found", type));
         }
         return json;
     }

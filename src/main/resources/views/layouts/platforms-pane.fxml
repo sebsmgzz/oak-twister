@@ -13,8 +13,9 @@
          alignment="CENTER"
          prefHeight="400.0" prefWidth="600.0">
     <Label fx:id="titleLabel" text="Platforms" />
-    <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER">
-        <FlowPane fx:id="flowPane" />
+    <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" hvalue="0.5" vvalue="0.5"
+                fitToHeight="true" fitToWidth="true">
+        <FlowPane fx:id="flowPane" alignment="TOP_CENTER" />
     </ScrollPane>
     <HBox alignment="CENTER_RIGHT">
         <Button fx:id="addButton" text="Add" />

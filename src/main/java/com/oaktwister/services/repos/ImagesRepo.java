@@ -1,6 +1,7 @@
 package com.oaktwister.services.repos;
 
 import com.oaktwister.services.Context;
+import com.oaktwister.services.logging.Logger;
 import javafx.scene.image.Image;
 
 import java.nio.file.Path;
@@ -13,9 +14,11 @@ public class ImagesRepo {
     public static final String FILE_EXTENSION = ".png";
 
     private final Context context;
+    private final Logger logger;
 
-    public ImagesRepo(Context context) {
+    public ImagesRepo(Context context, Logger logger) {
         this.context = context;
+        this.logger = logger;
     }
 
     private Path getFullRepoLocation() {

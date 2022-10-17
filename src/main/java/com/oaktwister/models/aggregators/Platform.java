@@ -12,7 +12,7 @@ public class Platform extends Entity {
     private UUID imageId;
     private String url;
     private LocalDateTime createdAt;
-    private final ClaimDefinitionMap claimDefinitions;
+    private ClaimDefinitionMap claimDefinitions;
 
     public Platform(UUID id, String name, UUID imageId, String url, LocalDateTime createdAt) {
         super(id);
@@ -58,8 +58,12 @@ public class Platform extends Entity {
         this.createdAt = createdAt;
     }
 
-    public ClaimDefinitionMap claimDefinitions() {
+    public ClaimDefinitionMap getClaimDefinitions() {
         return claimDefinitions;
+    }
+
+    public void setClaimDefinitions(ClaimDefinitionMap claimDefinitions) {
+        this.claimDefinitions = claimDefinitions;
     }
 
     @Override

@@ -3,6 +3,9 @@ package com.oaktwister.core;
 import com.oaktwister.services.AppConfig;
 import com.oaktwister.services.Context;
 import com.oaktwister.services.DriveFactory;
+import com.oaktwister.services.json.*;
+import com.oaktwister.services.logging.Logger;
+import com.oaktwister.services.repos.AccountsRepo;
 import com.oaktwister.services.repos.ImagesRepo;
 import com.oaktwister.services.repos.PlatformsRepo;
 import com.oaktwister.viewmodels.collections.AccountsViewModel;
@@ -21,30 +24,44 @@ public class ViewModelFactory {
 
     public LandingViewModel getLandingViewModel() {
         if(landingViewModel == null) {
-            landingViewModel = new LandingViewModel(
-                    Context.getInstance(),
-                    new DriveFactory(AppConfig.getInstance()));
+            Context context = Context.getInstance();
+            AppConfig appConfig = AppConfig.getInstance();
+            DriveFactory driveFactory = new DriveFactory(appConfig);
+            landingViewModel = new LandingViewModel(context, driveFactory);
         }
         return landingViewModel;
     }
 
     public MainViewModel getMainViewModel() {
         if(mainViewModel == null) {
-            mainViewModel = new MainViewModel();
+            Logger logger = new Logger(MainViewModel.class);
+            mainViewModel = new MainViewModel(logger);
         }
         return mainViewModel;
     }
 
     public IdentitiesViewModel getIdentitiesViewModel() {
         if(identitiesViewModel == null) {
-            identitiesViewModel = new IdentitiesViewModel();
+            Logger logger = new Logger(IdentitiesViewModel.class);
+            identitiesViewModel = new IdentitiesViewModel(logger);
         }
         return identitiesViewModel;
     }
 
     public AccountsViewModel getAccountsViewModel() {
         if(accountsViewModel == null) {
-            accountsViewModel = new AccountsViewModel();
+            Context context = Context.getInstance();
+
+            Logger claimSerializerLogger = new Logger(ClaimSerializer.class);
+            ClaimSerializer claimSerializer = new ClaimSerializer(claimSerializerLogger);
+            ClaimMapSerializer claimMapSerializer = new ClaimMapSerializer(claimSerializer);
+            AccountSerializer accountSerializer = new AccountSerializer(claimMapSerializer);
+
+            Logger accountsRepoLogger = new Logger(AccountsRepo.class);
+            AccountsRepo accountsRepo = new AccountsRepo(context, accountSerializer, accountsRepoLogger);
+
+            Logger viewModelLogger = new Logger(AccountsViewModel.class);
+            accountsViewModel = new AccountsViewModel(accountsRepo, viewModelLogger);
         }
         return accountsViewModel;
     }
@@ -52,9 +69,19 @@ public class ViewModelFactory {
     public PlatformsViewModel getPlatformsViewModel() {
         if(platformsViewModel == null) {
             Context context = Context.getInstance();
-            platformsViewModel = new PlatformsViewModel(
-                new ImagesRepo(context),
-                new PlatformsRepo(context));
+
+            Logger imagesRepoLogger = new Logger(ImagesRepo.class);
+            ImagesRepo imagesRepo = new ImagesRepo(context, imagesRepoLogger);
+
+            Logger platformsRepoLogger = new Logger(PlatformsRepo.class);
+            ClaimDefinitionSerializer claimDefinitionSerializer = new ClaimDefinitionSerializer();
+            ClaimDefinitionMapSerializer claimDefinitionMapSerializer =
+                    new ClaimDefinitionMapSerializer(claimDefinitionSerializer);
+            PlatformSerializer platformSerializer = new PlatformSerializer(claimDefinitionMapSerializer);
+            PlatformsRepo platformsRepo = new PlatformsRepo(context, platformSerializer, platformsRepoLogger);
+
+            Logger viewModelLogger = new Logger(PlatformsViewModel.class);
+            platformsViewModel = new PlatformsViewModel(imagesRepo, platformsRepo, viewModelLogger);
         }
         return platformsViewModel;
     }

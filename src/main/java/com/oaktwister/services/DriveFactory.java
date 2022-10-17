@@ -38,10 +38,8 @@ public class DriveFactory {
             Path workingDir = pathToExecutingProgram.getParent().getParent().getParent();
             Path pathToMockData = Paths.get(workingDir.toString(), "data", "mock");
             File f = new File(pathToMockData.toString());
-            System.out.println(f);
             driveRoots.add(f);
         }
-        System.out.println(appConfig.isDevelopmentEnv());
 
         // Add the drive model for each drive loaded
         for(File rootDrive : driveRoots) {

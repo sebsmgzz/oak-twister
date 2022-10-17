@@ -1,7 +1,7 @@
 package com.oaktwister.services.json;
 
 import com.oaktwister.models.aggregators.Account;
-import com.oaktwister.models.claims.Claim;
+import com.oaktwister.models.claims.ClaimMap;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -10,7 +10,8 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
-public class AccountSerializer implements Serializer<Account> {
+public class AccountSerializer implements JsonObjectSerializer<Account> {
+
     private final static String ID_KEY = "id";
     private final static String PLATFORM_ID_KEY = "platformId";
     private final static String IDENTITY_ID_KEY = "identityId";
@@ -19,23 +20,28 @@ public class AccountSerializer implements Serializer<Account> {
     private final static String DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
     private final static String DATE_TIME_ZONE = "UTC";
 
-    private final ClaimSerializer claimsStrategy = new ClaimSerializer();
-    private final DateTimeFormatter formatter = DateTimeFormatter
-            .ofPattern(DATE_TIME_FORMAT)
-            .withZone(ZoneId.of(DATE_TIME_ZONE));
+    private final ClaimMapSerializer claimMapSerializer;
+    private final DateTimeFormatter formatter;
+
+    public AccountSerializer(ClaimMapSerializer claimMapSerializer) {
+        this.claimMapSerializer = claimMapSerializer;
+        formatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT).withZone(ZoneId.of(DATE_TIME_ZONE));
+    }
 
     @Override
     public Account deserialize(JSONObject json) {
+        UUID identityId = null;
+        if(!json.isNull(IDENTITY_ID_KEY)) {
+            identityId = UUID.fromString(json.getString(IDENTITY_ID_KEY));
+        }
         Account account = new Account(
             UUID.fromString(json.get(ID_KEY).toString()),
             UUID.fromString(json.get(PLATFORM_ID_KEY).toString()),
-            UUID.fromString(json.get(IDENTITY_ID_KEY).toString()),
+            identityId,
             LocalDateTime.parse(json.getString(CREATED_AT_KEY), formatter));
-        for (Object obj : json.getJSONArray(CLAIMS_KEY)) {
-            JSONObject jsonClaim = new JSONObject(obj);
-            Claim<?> claim = claimsStrategy.deserialize(jsonClaim);
-            account.claims().add(claim);
-        }
+        JSONArray jsonArray = json.getJSONArray(CLAIMS_KEY);
+        ClaimMap claimMap = claimMapSerializer.deserialize(jsonArray);
+        account.setClaims(claimMap);
         return account;
     }
 
@@ -46,12 +52,7 @@ public class AccountSerializer implements Serializer<Account> {
         json.put(PLATFORM_ID_KEY, account.getPlatformId());
         json.put(IDENTITY_ID_KEY, account.getIdentityId());
         json.put(CREATED_AT_KEY, account.getCreatedAt());
-        JSONArray jClaims = new JSONArray();
-        for(Claim<?> claim : account.claims()) {
-            JSONObject jClaim = claimsStrategy.serialize(claim);
-            jClaims.put(jClaim);
-        }
-        json.put(CLAIMS_KEY, jClaims);
+        json.put(CLAIMS_KEY, claimMapSerializer.serialize(account.getClaims()));
         return json;
     }
 

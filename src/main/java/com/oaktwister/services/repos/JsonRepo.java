@@ -2,7 +2,8 @@ package com.oaktwister.services.repos;
 
 import com.oaktwister.models.seedwork.Entity;
 import com.oaktwister.services.Context;
-import com.oaktwister.services.json.Serializer;
+import com.oaktwister.services.json.JsonObjectSerializer;
+import com.oaktwister.services.logging.Logger;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -16,14 +17,17 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public abstract class JsonRepo<T extends Entity> {
+
     public final static String FILE_EXTENSION = ".json";
 
     private final Context context;
-    private final Serializer<T> serializer;
+    private final JsonObjectSerializer<T> jsonObjectSerializer;
+    private final Logger logger;
 
-    public JsonRepo(Context context, Serializer<T> serializer) {
+    public JsonRepo(Context context, JsonObjectSerializer<T> jsonObjectSerializer, Logger logger) {
         this.context = context;
-        this.serializer = serializer;
+        this.jsonObjectSerializer = jsonObjectSerializer;
+        this.logger = logger;
     }
 
     protected abstract String getRepoLocation();
@@ -57,7 +61,6 @@ public abstract class JsonRepo<T extends Entity> {
         try {
             File repoDirectory = new File(getFullRepoLocation().toString());
             File[] repoFiles = repoDirectory.listFiles();
-            System.out.println(repoDirectory);
             assert repoFiles != null;
             for (File repoFile : repoFiles) {
                 String fileName = repoFile.getName();
@@ -66,18 +69,19 @@ public abstract class JsonRepo<T extends Entity> {
                 entities.add(entity);
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error(ex, ex.getMessage());
         }
         return entities;
     }
 
     public T findById(UUID id) {
+        logger.debug(String.format("Searching entity %s", id));
         try {
             String fileLocation = getEntityLocation(id).toString();
             JSONObject json = rawJsonRead(fileLocation);
-            return serializer.deserialize(json);
+            return jsonObjectSerializer.deserialize(json);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.error(ex, ex.getMessage());
             return null;
         }
     }
@@ -86,11 +90,11 @@ public abstract class JsonRepo<T extends Entity> {
         try {
             entity.setId(UUID.randomUUID());
             Path fileLocation = getEntityLocation(entity.getId());
-            JSONObject json = serializer.serialize(entity);
+            JSONObject json = jsonObjectSerializer.serialize(entity);
             Files.writeString(fileLocation, json.toString());
             return true;
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ex) {
+            logger.error(ex, ex.getMessage());
             return false;
         }
     }
@@ -100,8 +104,8 @@ public abstract class JsonRepo<T extends Entity> {
             Path fileLocation = getEntityLocation(entity.getId());
             Files.delete(fileLocation);
             return true;
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ex) {
+            logger.error(ex, ex.getMessage());
             return false;
         }
     }

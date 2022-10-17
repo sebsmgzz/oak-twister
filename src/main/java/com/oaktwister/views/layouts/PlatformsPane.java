@@ -78,7 +78,6 @@ public class PlatformsPane extends VBox implements View {
     }
 
     private void onAddButtonClick(ActionEvent actionEvent) {
-        System.out.println("TODO");
         // TODO: Add PlatformPane to the platforms field
     }
 

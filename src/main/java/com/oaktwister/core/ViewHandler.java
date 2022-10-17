@@ -80,7 +80,7 @@ public class ViewHandler {
     }
 
     public AccountsPane getAccountsPane() throws IOException {
-        return new AccountsPane(this);
+        return new AccountsPane(this, viewModelFactory.getAccountsViewModel());
     }
 
     public IdentityCell getIdentityCell() throws IOException {

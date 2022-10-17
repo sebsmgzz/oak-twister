@@ -2,7 +2,7 @@ package com.oaktwister.services.json;
 
 import org.json.JSONObject;
 
-public interface Serializer<T> {
+public interface JsonObjectSerializer<T> {
 
     T deserialize(JSONObject json);
 

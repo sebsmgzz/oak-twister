@@ -5,7 +5,8 @@ import org.json.JSONObject;
 
 import java.util.Objects;
 
-public class ClaimDefinitionSerializer implements Serializer<ClaimDefinition> {
+public class ClaimDefinitionSerializer implements JsonObjectSerializer<ClaimDefinition> {
+
     private final static String NAME_KEY = "name";
     private final static String TYPE_KEY = "type";
     private final static String IS_OPTIONAL_KEY = "isOptional";

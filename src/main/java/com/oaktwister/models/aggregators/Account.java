@@ -11,7 +11,7 @@ public class Account extends Entity {
     private UUID platformId;
     private UUID identityId;
     private LocalDateTime createdAt;
-    private final ClaimMap claims;
+    private ClaimMap claims;
 
     public Account(UUID id, UUID platformId, UUID identityId, LocalDateTime createdAt) {
         super(id);
@@ -57,8 +57,12 @@ public class Account extends Entity {
         this.createdAt = createdAt;
     }
 
-    public ClaimMap claims() {
+    public ClaimMap getClaims() {
         return claims;
+    }
+
+    public void setClaims(ClaimMap claims) {
+        this.claims = claims;
     }
 
 }

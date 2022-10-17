@@ -2,6 +2,7 @@ package com.oaktwister.views.layouts;
 
 import com.oaktwister.core.ViewHandler;
 import com.oaktwister.services.Resources;
+import com.oaktwister.viewmodels.collections.AccountsViewModel;
 import com.oaktwister.viewmodels.models.AccountViewModel;
 import com.oaktwister.views.View;
 import javafx.beans.property.ObjectProperty;
@@ -23,14 +24,16 @@ import java.util.ResourceBundle;
 public class AccountsPane extends VBox implements View {
 
     private final ViewHandler viewHandler;
+    private final AccountsViewModel viewModel;
 
     @FXML private Label titleLabel;
     @FXML private ListView<AccountViewModel> listView;
     @FXML private Button addButton;
 
-    public AccountsPane(ViewHandler viewHandler) throws IOException {
+    public AccountsPane(ViewHandler viewHandler, AccountsViewModel viewModel) throws IOException {
         super();
         this.viewHandler = viewHandler;
+        this.viewModel = viewModel;
         viewHandler.loadCustomView(this);
     }
 
@@ -57,6 +60,9 @@ public class AccountsPane extends VBox implements View {
             }
         });
         // TODO: How is the AccountCell reading the AccountViewModel?
+
+        // Load data
+        viewModel.loadAccounts();
 
     }
 
