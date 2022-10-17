@@ -52,7 +52,13 @@ public class AccountsPane extends VBox implements View {
                 listView.setPrefHeight(newValue.doubleValue())));
 
         // Data loaders
-        listView.setCellFactory(listView -> viewHandler.getAccountCell());
+        listView.setCellFactory(listView -> {
+            int accountIndex = listView.getItems().size() - 1;
+            AccountViewModel account = viewModel.getAccount(accountIndex);
+            return viewHandler.getAccountCell(account);
+        });
+        listView.setItems(viewModel.accountsProperty());
+
         // TODO: How is the AccountCell reading the AccountViewModel?
 
         // Load data

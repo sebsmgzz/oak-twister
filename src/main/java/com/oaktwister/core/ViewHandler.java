@@ -95,8 +95,8 @@ public class ViewHandler {
         return new IdentityCell(this);
     }
 
-    public AccountCell getAccountCell() {
-        return new AccountCell(this);
+    public AccountCell getAccountCell(AccountViewModel viewModel) {
+        return new AccountCell(this, viewModel);
     }
 
     public ImageButtonBox getImageButtonBox() {

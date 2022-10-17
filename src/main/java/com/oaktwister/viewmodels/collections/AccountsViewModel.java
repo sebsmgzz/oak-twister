@@ -22,6 +22,14 @@ public class AccountsViewModel {
         accounts = new SimpleListProperty<>(FXCollections.observableArrayList());
     }
 
+    public SimpleListProperty<AccountViewModel> accountsProperty() {
+        return accounts;
+    }
+
+    public AccountViewModel getAccount(int index) {
+        return accounts.get(index);
+    }
+
     public void loadAccounts() {
         logger.debug("Loading accounts");
         List<Account> accounts = accountsRepo.findAll();

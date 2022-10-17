@@ -55,12 +55,6 @@ public class LandingViewController implements Initializable {
             alert.setContentText(ex.getMessage());
             // TODO: Include options to format the drive in the alert's buttons
             alert.show();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("UI error");
-            alert.setContentText(ex.getMessage());
-            alert.show();
         }
     }
 

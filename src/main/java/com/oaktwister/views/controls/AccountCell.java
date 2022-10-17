@@ -21,6 +21,7 @@ import java.util.UUID;
 public class AccountCell extends ListCell<AccountViewModel> implements View {
 
     private final ViewHandler viewHandler;
+    private final AccountViewModel viewModel;
 
     @FXML private ImageView imageView;
     @FXML private Label platformNameLabel;
@@ -30,10 +31,11 @@ public class AccountCell extends ListCell<AccountViewModel> implements View {
     private final ObjectProperty<UUID> accountIdentifier;
     private final SimpleIntegerProperty claimsCount;
 
-    public AccountCell(ViewHandler viewHandler) {
+    public AccountCell(ViewHandler viewHandler, AccountViewModel viewModel) {
         super();
         this.viewHandler = viewHandler;
-        accountIdentifier = new SimpleObjectProperty<>();
+        this.viewModel = viewModel;
+        accountIdentifier = new SimpleObjectProperty<>(viewModel.getId());
         claimsCount = new SimpleIntegerProperty();
         viewHandler.loadCustomView(this);
     }

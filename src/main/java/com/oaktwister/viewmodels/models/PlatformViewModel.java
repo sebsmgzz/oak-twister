@@ -51,16 +51,48 @@ public class PlatformViewModel {
         return id;
     }
 
+    public UUID getId() {
+        return idProperty().get();
+    }
+
+    public void setId(UUID id) {
+        idProperty().set(id);
+    }
+
     public SimpleStringProperty nameProperty() {
         return name;
+    }
+
+    public String getName() {
+        return nameProperty().get();
+    }
+
+    public void setName(String name) {
+        nameProperty().set(name);
     }
 
     public SimpleObjectProperty<Image> imageProperty() {
         return image;
     }
 
+    public Image getImage() {
+        return imageProperty().get();
+    }
+
+    public void setImage(Image image) {
+        imageProperty().set(image);
+    }
+
     public SimpleStringProperty urlProperty() {
         return url;
+    }
+
+    public String getUrl() {
+        return urlProperty().get();
+    }
+
+    public void setUrl(String url) {
+        urlProperty().set(url);
     }
 
 }

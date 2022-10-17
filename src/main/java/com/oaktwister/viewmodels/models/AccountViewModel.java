@@ -30,20 +30,52 @@ public class AccountViewModel {
         createAt.addListener((observable, oldValue, newValue) -> account.setCreatedAt(newValue));
     }
 
-    public SimpleObjectProperty<UUID> id() {
+    public SimpleObjectProperty<UUID> idProperty() {
         return id;
     }
 
-    public SimpleObjectProperty<UUID> platformId() {
+    public UUID getId() {
+        return idProperty().get();
+    }
+
+    public void setId(UUID id) {
+        idProperty().set(id);
+    }
+
+    public SimpleObjectProperty<UUID> platformIdProperty() {
         return platformId;
     }
 
-    public SimpleObjectProperty<UUID> identityId() {
+    public UUID getPlatformId() {
+        return platformIdProperty().get();
+    }
+
+    public void setPlatformId(UUID id) {
+        platformIdProperty().set(id);
+    }
+
+    public SimpleObjectProperty<UUID> identityIdProperty() {
         return identityId;
     }
 
-    public SimpleObjectProperty<LocalDateTime> createAt() {
+    public UUID getIdentityId() {
+        return identityIdProperty().get();
+    }
+
+    public void setIdentityId(UUID id) {
+        identityIdProperty().set(id);
+    }
+
+    public SimpleObjectProperty<LocalDateTime> createAtProperty() {
         return createAt;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createAtProperty().get();
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        createAtProperty().set(createdAt);
     }
 
 }

@@ -34,7 +34,7 @@ public class PlatformPane extends VBox implements View {
         super();
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
-        id = new SimpleObjectProperty<>(UUID.randomUUID());
+        id = new SimpleObjectProperty<>(viewModel.getId());
         viewHandler.loadCustomView(this);
     }
 

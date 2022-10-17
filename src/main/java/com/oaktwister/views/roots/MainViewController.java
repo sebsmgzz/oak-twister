@@ -42,17 +42,11 @@ public class MainViewController implements Initializable {
     }
 
     private Node getSection() {
-        try {
-            return switch (viewModel.getSection()) {
-                case ACCOUNTS -> viewHandler.getAccountsPane();
-                case PLATFORMS -> viewHandler.getPlatformsPane();
-                case IDENTITIES -> viewHandler.getIdentitiesPane();
-            };
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            // TODO: Raise alert?
-            return null;
-        }
+        return switch (viewModel.getSection()) {
+            case ACCOUNTS -> viewHandler.getAccountsPane();
+            case PLATFORMS -> viewHandler.getPlatformsPane();
+            case IDENTITIES -> viewHandler.getIdentitiesPane();
+        };
     }
 
     @Override
