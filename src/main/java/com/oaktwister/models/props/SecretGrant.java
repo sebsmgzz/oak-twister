@@ -1,15 +1,15 @@
-package com.oaktwister.models.claims;
+package com.oaktwister.models.props;
 
-public class SecretClaim extends Claim<String> {
+public class SecretGrant extends Grant<String> {
 
     private String hint;
 
-    public SecretClaim(String name, String value, String hint) {
+    public SecretGrant(String name, String value, String hint) {
         super(name, value);
         this.hint = hint;
     }
 
-    public SecretClaim(String name) {
+    public SecretGrant(String name) {
         super(name);
     }
 

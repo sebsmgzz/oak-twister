@@ -1,75 +1,46 @@
 package com.oaktwister.services.json;
 
-import com.oaktwister.models.claims.*;
-import com.oaktwister.services.logging.Logger;
+import com.oaktwister.models.exceptions.UnknownGrantTypeException;
+import com.oaktwister.models.props.*;
 import org.json.JSONObject;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class ClaimSerializer implements JsonObjectSerializer<Claim<?>> {
+public class ClaimSerializer implements JsonObjectSerializer<Claim> {
 
-    private final Logger logger;
+    private final static String NAME_KEY = "name";
+    private final static String GRANT_TYPE_KEY = "grantType";
+    private final static String IS_OPTIONAL_KEY = "isOptional";
 
-    public ClaimSerializer(Logger logger) {
-        this.logger = logger;
+    @Override
+    public Claim deserialize(JSONObject claimJson) throws UnknownGrantTypeException {
+        return new Claim(
+            claimJson.getString(NAME_KEY),
+            getGrantType(claimJson.getString(GRANT_TYPE_KEY)),
+            claimJson.getBoolean(IS_OPTIONAL_KEY));
     }
 
     @Override
-    public Claim<?> deserialize(JSONObject json) {
-        String name = json.getString("name");
-        String type = json.getString("type");
-        if(Objects.equals(type, DateTimeClaim.class.getTypeName())) {
-            String value = json.getString("value");
-            return new DateTimeClaim(name, LocalDateTime.parse(value));
-        } else if (Objects.equals(type, FlagClaim.class.getTypeName())) {
-            boolean value = json.getBoolean("value");
-            return new FlagClaim(name, value);
-        } else if (Objects.equals(type, NumberClaim.class.getTypeName())) {
-            double value = json.getDouble("value");
-            return new NumberClaim(name, value);
-        } else if (Objects.equals(type, SecretClaim.class.getTypeName())) {
-            JSONObject jsonValue = json.getJSONObject("value");
-            String value = jsonValue.getString("value");
-            String hint = jsonValue.getString("hint");
-            return new SecretClaim(name, value, hint);
-        } else if (Objects.equals(type, TextClaim.class.getTypeName())) {
-            String value = json.getString("value");
-            return new TextClaim(value);
-        } else {
-            logger.critical(String.format("Claim of type %s not found", type));
-            return null;
-        }
+    public JSONObject serialize(Claim claim) {
+        JSONObject claimJson = new JSONObject();
+        claimJson.put(NAME_KEY, claim.getName());
+        claimJson.put(GRANT_TYPE_KEY, claim.getGrantType().getTypeName());
+        claimJson.put(IS_OPTIONAL_KEY, claim.getIsOptional());
+        return claimJson;
     }
 
-    @Override
-    public JSONObject serialize(Claim<?> entity) {
-        Class<?> type = entity.getClass();
-        JSONObject json = new JSONObject();
-        json.put("name", entity.getName());
-        json.put("type", type.getName());
-        if(DateTimeClaim.class.equals(type)) {
-            DateTimeClaim claim = (DateTimeClaim)entity;
-            json.put("value", claim.getValue().toString());
-        } else if (FlagClaim.class.equals(type)) {
-            FlagClaim claim = (FlagClaim)entity;
-            json.put("value", claim.getValue().booleanValue());
-        } else if (NumberClaim.class.equals(type)) {
-            NumberClaim claim = (NumberClaim)entity;
-            json.put("value", claim.getValue().doubleValue());
-        } else if (SecretClaim.class.equals(type)) {
-            SecretClaim claim = (SecretClaim)entity;
-            JSONObject claimJson = new JSONObject();
-            claimJson.put("value", claim.getValue());
-            claimJson.put("hint", claim.getHint());
-            json.put("value", claimJson);
-        } else if (TextClaim.class.equals(type)) {
-            TextClaim claim = (TextClaim)entity;
-            json.put("value", claim.getValue());
+    private Class<? extends Grant<?>> getGrantType(String grantTypeName) throws UnknownGrantTypeException {
+        if(Objects.equals(grantTypeName, DateTimeGrant.class.getTypeName())) {
+            return DateTimeGrant.class;
+        } else if (Objects.equals(grantTypeName, FlagGrant.class.getTypeName())) {
+            return FlagGrant.class;
+        } else if (Objects.equals(grantTypeName, NumberGrant.class.getTypeName())) {
+            return NumberGrant.class;
+        } else if (Objects.equals(grantTypeName, SecretGrant.class.getTypeName())) {
+            return SecretGrant.class;
         } else {
-            logger.critical(String.format("Claim of type %s not found", type));
+            throw new UnknownGrantTypeException(grantTypeName);
         }
-        return json;
     }
 
 }

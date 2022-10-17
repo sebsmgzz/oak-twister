@@ -4,30 +4,30 @@
     "url": "www.linkedin.com",
     "imageId": "77f63954-3ba5-443f-8e1c-b9451805627a",
     "createdAt": "2022-08-10T02:11:45Z",
-    "claimDefinitions": [
+    "claims": [
         {
             "name": "First name",
-            "type": "TextClaimDef",
+            "grantType": "com.oaktwister.models.props.TextGrant",
             "isOptional": false
         },
         {
             "name": "Last name",
-            "type": "TextClaimDef",
+            "grantType": "com.oaktwister.models.props.TextGrant",
             "isOptional": false
         },
         {
             "name": "Email",
-            "type": "TextClaimDef",
+            "grantType": "com.oaktwister.models.props.TextGrant",
             "isOptional": false
         },
         {
             "name": "Password",
-            "type": "SecretClaimDef",
+            "grantType": "com.oaktwister.models.props.SecretGrant",
             "isOptional": false
         },
         {
             "name": "Birthday",
-            "type": "DateTimeClaimDef",
+            "grantType": "com.oaktwister.models.props.DateTimeGrant",
             "isOptional": false
         }
     ]

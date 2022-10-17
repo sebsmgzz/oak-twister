@@ -8,6 +8,7 @@ import com.oaktwister.services.logging.Logger;
 import com.oaktwister.services.repos.AccountsRepo;
 import com.oaktwister.services.repos.ImagesRepo;
 import com.oaktwister.services.repos.PlatformsRepo;
+import com.oaktwister.services.util.LocalDateTimeUtil;
 import com.oaktwister.viewmodels.collections.AccountsViewModel;
 import com.oaktwister.viewmodels.collections.IdentitiesViewModel;
 import com.oaktwister.viewmodels.collections.PlatformsViewModel;
@@ -52,10 +53,13 @@ public class ViewModelFactory {
         if(accountsViewModel == null) {
             Context context = Context.getInstance();
 
-            Logger claimSerializerLogger = new Logger(ClaimSerializer.class);
-            ClaimSerializer claimSerializer = new ClaimSerializer(claimSerializerLogger);
-            ClaimMapSerializer claimMapSerializer = new ClaimMapSerializer(claimSerializer);
-            AccountSerializer accountSerializer = new AccountSerializer(claimMapSerializer);
+            LocalDateTimeUtil localDateTimeUtil = new LocalDateTimeUtil();
+            Logger claimSerializerLogger = new Logger(GrantSerializer.class);
+            GrantSerializer grantSerializer = new GrantSerializer(localDateTimeUtil, claimSerializerLogger);
+            Logger claimMapSerializerLogger = new Logger(ClaimMapSerializer.class);
+            GrantMapSerializer grantMapSerializer = new GrantMapSerializer(grantSerializer, claimMapSerializerLogger);
+
+            AccountSerializer accountSerializer = new AccountSerializer(grantMapSerializer, localDateTimeUtil);
 
             Logger accountsRepoLogger = new Logger(AccountsRepo.class);
             AccountsRepo accountsRepo = new AccountsRepo(context, accountSerializer, accountsRepoLogger);
@@ -73,11 +77,14 @@ public class ViewModelFactory {
             Logger imagesRepoLogger = new Logger(ImagesRepo.class);
             ImagesRepo imagesRepo = new ImagesRepo(context, imagesRepoLogger);
 
+            ClaimSerializer claimSerializer = new ClaimSerializer();
+            Logger claimMapSerializerLogger = new Logger(ClaimMapSerializer.class);
+            ClaimMapSerializer claimMapSerializer = new ClaimMapSerializer(claimSerializer, claimMapSerializerLogger);
+
+            LocalDateTimeUtil localDateTimeUtil = new LocalDateTimeUtil();
+            PlatformSerializer platformSerializer = new PlatformSerializer(claimMapSerializer, localDateTimeUtil);
+
             Logger platformsRepoLogger = new Logger(PlatformsRepo.class);
-            ClaimDefinitionSerializer claimDefinitionSerializer = new ClaimDefinitionSerializer();
-            ClaimDefinitionMapSerializer claimDefinitionMapSerializer =
-                    new ClaimDefinitionMapSerializer(claimDefinitionSerializer);
-            PlatformSerializer platformSerializer = new PlatformSerializer(claimDefinitionMapSerializer);
             PlatformsRepo platformsRepo = new PlatformsRepo(context, platformSerializer, platformsRepoLogger);
 
             Logger viewModelLogger = new Logger(PlatformsViewModel.class);

@@ -1,16 +1,16 @@
-package com.oaktwister.models.claims;
+package com.oaktwister.models.props;
 
-public abstract class Claim<T> {
+public abstract class Grant<T> {
 
     private String name;
     private T value;
 
-    public Claim(String name, T value) {
+    public Grant(String name, T value) {
         this.name = name;
         this.value = value;
     }
 
-    public Claim(String name) {
+    public Grant(String name) {
         this(name, null);
     }
 

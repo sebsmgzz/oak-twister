@@ -4,26 +4,26 @@
     "url": "",
     "imageUrl": "",
     "createdAt": "",
-    "claimDefinitions": [
+    "claims": [
         {
             "name": "First name",
-            "type": "TextClaimDef"
+            "type": "com.oaktwister.models.props.TextGrant"
         },
         {
             "name": "Last name",
-            "type": "TextClaimDef"
+            "type": "com.oaktwister.models.props.TextGrant"
         },
         {
             "name": "Email",
-            "type": "TextClaimDef"
+            "type": "com.oaktwister.models.props.TextGrant"
         },
         {
             "name": "Password",
-            "type": "SecretClaimDef"
+            "type": "com.oaktwister.models.props.SecretGrant"
         },
         {
             "name": "Birthday",
-            "type": "DateTimeClaimDef"
+            "type": "com.oaktwister.models.props.DateTimeGrant"
         }
     ]
 }

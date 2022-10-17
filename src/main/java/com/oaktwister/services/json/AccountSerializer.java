@@ -1,13 +1,10 @@
 package com.oaktwister.services.json;
 
 import com.oaktwister.models.aggregators.Account;
-import com.oaktwister.models.claims.ClaimMap;
-import org.json.JSONArray;
+import com.oaktwister.models.exceptions.UnknownGrantTypeException;
+import com.oaktwister.services.util.LocalDateTimeUtil;
 import org.json.JSONObject;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 public class AccountSerializer implements JsonObjectSerializer<Account> {
@@ -16,44 +13,43 @@ public class AccountSerializer implements JsonObjectSerializer<Account> {
     private final static String PLATFORM_ID_KEY = "platformId";
     private final static String IDENTITY_ID_KEY = "identityId";
     private final static String CREATED_AT_KEY = "createdAt";
-    private final static String CLAIMS_KEY = "claims";
-    private final static String DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
-    private final static String DATE_TIME_ZONE = "UTC";
+    private final static String GRANTS_KEY = "grants";
 
-    private final ClaimMapSerializer claimMapSerializer;
-    private final DateTimeFormatter formatter;
+    private final GrantMapSerializer grantMapSerializer;
+    private final LocalDateTimeUtil localDateTimeUtil;
 
-    public AccountSerializer(ClaimMapSerializer claimMapSerializer) {
-        this.claimMapSerializer = claimMapSerializer;
-        formatter = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT).withZone(ZoneId.of(DATE_TIME_ZONE));
+    public AccountSerializer(GrantMapSerializer grantMapSerializer, LocalDateTimeUtil localDateTimeUtil) {
+        this.grantMapSerializer = grantMapSerializer;
+        this.localDateTimeUtil = localDateTimeUtil;
     }
 
     @Override
-    public Account deserialize(JSONObject json) {
+    public Account deserialize(JSONObject json) throws UnknownGrantTypeException {
+
         UUID identityId = null;
         if(!json.isNull(IDENTITY_ID_KEY)) {
             identityId = UUID.fromString(json.getString(IDENTITY_ID_KEY));
         }
+
         Account account = new Account(
             UUID.fromString(json.get(ID_KEY).toString()),
             UUID.fromString(json.get(PLATFORM_ID_KEY).toString()),
             identityId,
-            LocalDateTime.parse(json.getString(CREATED_AT_KEY), formatter));
-        JSONArray jsonArray = json.getJSONArray(CLAIMS_KEY);
-        ClaimMap claimMap = claimMapSerializer.deserialize(jsonArray);
-        account.setClaims(claimMap);
+            localDateTimeUtil.fromIso8601(json.getString(CREATED_AT_KEY)));
+        account.setGrants(grantMapSerializer.deserialize(json.getJSONArray(GRANTS_KEY)));
         return account;
+
     }
 
     @Override
     public JSONObject serialize(Account account) {
-        JSONObject json = new JSONObject();
-        json.put(ID_KEY, account.getId());
-        json.put(PLATFORM_ID_KEY, account.getPlatformId());
-        json.put(IDENTITY_ID_KEY, account.getIdentityId());
-        json.put(CREATED_AT_KEY, account.getCreatedAt());
-        json.put(CLAIMS_KEY, claimMapSerializer.serialize(account.getClaims()));
-        return json;
+        JSONObject accountJson = new JSONObject();
+        accountJson.put(ID_KEY, account.getId());
+        accountJson.put(PLATFORM_ID_KEY, account.getPlatformId());
+        accountJson.put(IDENTITY_ID_KEY, account.getIdentityId());
+        accountJson.put(CREATED_AT_KEY, localDateTimeUtil.toIso8601(account.getCreatedAt()));
+        accountJson.put(GRANTS_KEY, grantMapSerializer.serialize(account.getGrants()));
+        return accountJson;
     }
 
 }

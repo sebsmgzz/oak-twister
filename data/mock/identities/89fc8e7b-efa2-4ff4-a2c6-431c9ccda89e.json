@@ -1,25 +1,25 @@
 {
     "id": "89fc8e7b-efa2-4ff4-a2c6-431c9ccda89e",
     "createdAt": "2022-05-22T22:37:58Z",
-    "claims": [
+    "grants": [
         {
             "name": "First name",
-            "type": "TextClaimDef",
+            "type": "com.oaktwister.models.props.TextGrant",
             "value": "Jane"
         },
         {
             "name": "Last name",
-            "type": "TextClaimDef",
+            "type": "com.oaktwister.models.props.TextGrant",
             "value": "Doe"
         },
         {
             "name": "Email",
-            "type": "TextClaimDef",
+            "type": "com.oaktwister.models.props.TextGrant",
             "value": "jane.doe@outlook.com"
         },
         {
             "name": "Gender",
-            "type": "TextClaimDef",
+            "type": "com.oaktwister.models.props.TextGrant",
             "value": "female"
         }
     ]

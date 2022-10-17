@@ -33,7 +33,6 @@ public class Logger {
 
     public void error(Exception ex, String message) {
         error(message);
-        ex.printStackTrace();
     }
 
     public void debug(String message) {

@@ -1,14 +1,14 @@
-package com.oaktwister.models.claims;
+package com.oaktwister.models.props;
 
-public class ClaimDefinition {
+public class Claim {
 
     private String name;
-    private Class<?> type;
+    private Class<? extends Grant<?>> grantType;
     private boolean isOptional;
 
-    public ClaimDefinition(String name, Class<?> type, boolean isOptional) {
+    public Claim(String name, Class<? extends Grant<?>> grantType, boolean isOptional) {
         this.name = name;
-        this.type = type;
+        this.grantType = grantType;
         this.isOptional = isOptional;
     }
 
@@ -20,12 +20,12 @@ public class ClaimDefinition {
         this.name = name;
     }
 
-    public Class<?> getType() {
-        return type;
+    public Class<?> getGrantType() {
+        return grantType;
     }
 
-    public void setType(Class<?> type) {
-        this.type = type;
+    public void setGrantType(Class<? extends Grant<?>> grantType) {
+        this.grantType = grantType;
     }
 
     public boolean getIsOptional() {

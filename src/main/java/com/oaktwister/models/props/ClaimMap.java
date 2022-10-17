@@ -1,23 +1,23 @@
-package com.oaktwister.models.claims;
+package com.oaktwister.models.props;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class ClaimMap implements Iterable<Claim<?>> {
+public class ClaimMap implements Iterable<Claim> {
 
-    private HashMap<String, Claim<?>> claims = new HashMap<>();
+    private HashMap<String, Claim> claims = new HashMap<>();
 
-    public Claim<?> get(String name) {
+    public Claim get(String name) {
         return claims.get(name);
     }
 
-    public void add(Claim<?> claim) {
+    public void add(Claim claim) {
         claims.put(claim.getName(), claim);
     }
 
-    public Claim<?> remove(String name) {
+    public Claim remove(String name) {
         return claims.remove(name);
     }
 
@@ -27,7 +27,7 @@ public class ClaimMap implements Iterable<Claim<?>> {
 
     @NotNull
     @Override
-    public Iterator<Claim<?>> iterator() {
+    public Iterator<Claim> iterator() {
         return claims.values().iterator();
     }
 

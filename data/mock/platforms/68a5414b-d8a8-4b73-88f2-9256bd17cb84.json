@@ -4,30 +4,30 @@
     "url": "www.facebook.com",
     "imageId": "404f15e4-c733-4eb4-93a6-2d5f805f5aa3",
     "createdAt": "2022-01-18T02:55:07Z",
-    "claimDefinitions": [
+    "claims": [
         {
             "name": "First name",
-            "type": "TextClaimDef",
+            "grantType": "com.oaktwister.models.props.TextGrant",
             "isOptional": false
         },
         {
             "name": "Last name",
-            "type": "TextClaimDef",
+            "grantType": "com.oaktwister.models.props.TextGrant",
             "isOptional": false
         },
         {
             "name": "Email",
-            "type": "TextClaimDef",
+            "grantType": "com.oaktwister.models.props.TextGrant",
             "isOptional": false
         },
         {
             "name": "Password",
-            "type": "SecretClaimDef",
+            "grantType": "com.oaktwister.models.props.SecretGrant",
             "isOptional": false
         },
         {
             "name": "Birthday",
-            "type": "DateTimeClaimDef",
+            "grantType": "com.oaktwister.models.props.DateTimeGrant",
             "isOptional": false
         }
     ]

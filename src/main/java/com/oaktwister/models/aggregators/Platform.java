@@ -1,6 +1,6 @@
 package com.oaktwister.models.aggregators;
 
-import com.oaktwister.models.claims.ClaimDefinitionMap;
+import com.oaktwister.models.props.ClaimMap;
 import com.oaktwister.models.seedwork.Entity;
 
 import java.time.LocalDateTime;
@@ -12,14 +12,14 @@ public class Platform extends Entity {
     private UUID imageId;
     private String url;
     private LocalDateTime createdAt;
-    private ClaimDefinitionMap claimDefinitions;
+    private ClaimMap claims;
 
     public Platform(UUID id, String name, UUID imageId, String url, LocalDateTime createdAt) {
         super(id);
         this.name = name;
         this.imageId = imageId;
         this.url = url;
-        claimDefinitions = new ClaimDefinitionMap();
+        claims = new ClaimMap();
     }
 
     public Platform(String name, UUID imageId, String url) {
@@ -58,12 +58,12 @@ public class Platform extends Entity {
         this.createdAt = createdAt;
     }
 
-    public ClaimDefinitionMap getClaimDefinitions() {
-        return claimDefinitions;
+    public ClaimMap getClaims() {
+        return claims;
     }
 
-    public void setClaimDefinitions(ClaimDefinitionMap claimDefinitions) {
-        this.claimDefinitions = claimDefinitions;
+    public void setClaims(ClaimMap claims) {
+        this.claims = claims;
     }
 
     @Override

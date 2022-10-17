@@ -3,24 +3,24 @@
     "platformId": "72370fd8-3a46-469f-aee8-05570ae3e4a3",
     "identityId": null,
     "createdAt": "2022-09-01T15:09:24Z",
-    "claims": [
+    "grants": [
         {
             "name": "Email",
-            "type": "TextClaimDef",
-            "optional": "someone.else@gmail.com"
+            "type": "com.oaktwister.models.props.TextGrant",
+            "value": "someone.else@gmail.com"
         },
         {
             "name": "Password",
-            "type": "SecretClaimDef",
-            "optional": {
+            "type": "com.oaktwister.models.props.SecretGrant",
+            "value": {
                 "value": "123456",
                 "hint": "one...six"
             }
         },
         {
             "name": "Username",
-            "type": "TextClaimDef",
-            "optional": "anonUser123"
+            "type": "com.oaktwister.models.props.TextGrant",
+            "value": "anonUser123"
         }
     ]
 }

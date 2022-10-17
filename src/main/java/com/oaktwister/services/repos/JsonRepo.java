@@ -1,5 +1,6 @@
 package com.oaktwister.services.repos;
 
+import com.oaktwister.models.exceptions.UnknownGrantTypeException;
 import com.oaktwister.models.seedwork.Entity;
 import com.oaktwister.services.Context;
 import com.oaktwister.services.json.JsonObjectSerializer;
@@ -58,18 +59,14 @@ public abstract class JsonRepo<T extends Entity> {
 
     public ArrayList<T> findAll() {
         ArrayList<T> entities = new ArrayList<>();
-        try {
-            File repoDirectory = new File(getFullRepoLocation().toString());
-            File[] repoFiles = repoDirectory.listFiles();
-            assert repoFiles != null;
-            for (File repoFile : repoFiles) {
-                String fileName = repoFile.getName();
-                UUID id = UUID.fromString(fileName.replace(FILE_EXTENSION, ""));
-                T entity = findById(id);
-                entities.add(entity);
-            }
-        } catch (Exception ex) {
-            logger.error(ex, ex.getMessage());
+        File repoDirectory = new File(getFullRepoLocation().toString());
+        File[] repoFiles = repoDirectory.listFiles();
+        assert repoFiles != null;
+        for (File repoFile : repoFiles) {
+            String fileName = repoFile.getName();
+            UUID id = UUID.fromString(fileName.replace(FILE_EXTENSION, ""));
+            T entity = findById(id);
+            entities.add(entity);
         }
         return entities;
     }
@@ -80,8 +77,9 @@ public abstract class JsonRepo<T extends Entity> {
             String fileLocation = getEntityLocation(id).toString();
             JSONObject json = rawJsonRead(fileLocation);
             return jsonObjectSerializer.deserialize(json);
-        } catch (Exception ex) {
+        } catch (IOException | UnknownGrantTypeException ex) {
             logger.error(ex, ex.getMessage());
+            ex.printStackTrace();
             return null;
         }
     }
@@ -93,8 +91,9 @@ public abstract class JsonRepo<T extends Entity> {
             JSONObject json = jsonObjectSerializer.serialize(entity);
             Files.writeString(fileLocation, json.toString());
             return true;
-        } catch (IOException ex) {
+        } catch (IOException | UnknownGrantTypeException ex) {
             logger.error(ex, ex.getMessage());
+            ex.printStackTrace();
             return false;
         }
     }
@@ -106,6 +105,7 @@ public abstract class JsonRepo<T extends Entity> {
             return true;
         } catch (IOException ex) {
             logger.error(ex, ex.getMessage());
+            ex.printStackTrace();
             return false;
         }
     }

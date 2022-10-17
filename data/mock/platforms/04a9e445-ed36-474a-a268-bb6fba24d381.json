@@ -4,40 +4,40 @@
     "url": "www.twitter.com",
     "imageId": "743ac7a1-634a-4aec-9771-150f096e2caa",
     "createdAt": "2022-08-28T06:17:04Z",
-    "claimDefinitions": [
+    "claims": [
         {
             "name": "First name",
-            "type": "TextClaimDef",
+            "grantType": "com.oaktwister.models.props.TextGrant",
             "isOptional": false
         },
         {
             "name": "Last name",
-            "type": "TextClaimDef",
+            "grantType": "com.oaktwister.models.props.TextGrant",
             "isOptional": false
         },
         {
             "name": "Email",
-            "type": "TextClaimDef",
+            "grantType": "com.oaktwister.models.props.TextGrant",
             "isOptional": false
         },
         {
             "name": "Password",
-            "type": "SecretClaimDef",
+            "grantType": "com.oaktwister.models.props.SecretGrant",
             "isOptional": false
         },
         {
             "name": "Birthday",
-            "type": "DateTimeClaimDef",
+            "grantType": "com.oaktwister.models.props.DateTimeGrant",
             "isOptional": false
         },
         {
             "name": "Username",
-            "type": "TextClaimDef",
+            "grantType": "com.oaktwister.models.props.TextGrant",
             "isOptional": false
         },
         {
             "name": "Location",
-            "type": "TextClaimDef",
+            "grantType": "com.oaktwister.models.props.TextGrant",
             "isOptional": true
         }
     ]

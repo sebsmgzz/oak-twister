@@ -3,10 +3,10 @@
     "platformId": "30c3feef-b45f-4377-bf32-b1f62f9fe406",
     "identityId": "bf4e7d77-ae42-4916-8d70-1bcac7063b93",
     "createdAt": "2022-03-14T21:38:00Z",
-    "claims": [
+    "grants": [
         {
             "name": "Password",
-            "type": "SecretClaimDef",
+            "type": "com.oaktwister.models.props.SecretGrant",
             "value": {
                 "value": "password",
                 "hint": "The most common password"
@@ -14,8 +14,8 @@
         },
         {
             "name": "Birthday",
-            "type": "DateTimeClaimDef",
-            "value": ""
+            "type": "com.oaktwister.models.props.DateTimeGrant",
+            "value": "2022-08-07T21:48:59Z"
         }
     ]
 }

@@ -3,10 +3,10 @@
     "platformId": "04a9e445-ed36-474a-a268-bb6fba24d381",
     "identityId": "89fc8e7b-efa2-4ff4-a2c6-431c9ccda89e",
     "createdAt": "2022-08-05T01:20:10Z",
-    "claims": [
+    "grants": [
         {
             "name": "Password",
-            "type": "SecretClaimDef",
+            "type": "com.oaktwister.models.props.SecretGrant",
             "value": {
                 "value": "123",
                 "hint": "one two three"
@@ -14,18 +14,18 @@
         },
         {
             "name": "Birthday",
-            "type": "DateTimeClaimDef",
-            "value": ""
+            "type": "com.oaktwister.models.props.DateTimeGrant",
+            "value": "2022-08-07T21:48:59Z"
         },
         {
             "name": "Username",
-            "type": "TextClaimDef",
-            "optional": "jDoe"
+            "type": "com.oaktwister.models.props.TextGrant",
+            "value": "jDoe"
         },
         {
             "name": "Location",
-            "type": "TextClaimDef",
-            "optional": "Mexico City"
+            "type": "com.oaktwister.models.props.TextGrant",
+            "value": "Mexico City"
         }
     ]
 }

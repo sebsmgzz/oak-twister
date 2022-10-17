@@ -4,35 +4,35 @@
     "url": "www.github.com",
     "imageId": "1bfd8a58-f456-43be-9534-d54f35325a0c",
     "createdAt": "2022-07-23T02:14:46Z",
-    "claimDefinitions": [
+    "claims": [
         {
             "name": "First name",
-            "type": "TextClaimDef",
+            "grantType": "com.oaktwister.models.props.TextGrant",
             "isOptional": false
         },
         {
             "name": "Last name",
-            "type": "TextClaimDef",
+            "grantType": "com.oaktwister.models.props.TextGrant",
             "isOptional": false
         },
         {
             "name": "Email",
-            "type": "TextClaimDef",
+            "grantType": "com.oaktwister.models.props.TextGrant",
             "isOptional": false
         },
         {
             "name": "Password",
-            "type": "SecretClaimDef",
+            "grantType": "com.oaktwister.models.props.SecretGrant",
             "isOptional": false
         },
         {
             "name": "Birthday",
-            "type": "DateTimeClaimDef",
+            "grantType": "com.oaktwister.models.props.DateTimeGrant",
             "isOptional": true
         },
         {
             "name": "Username",
-            "type": "TextClaimDef",
+            "grantType": "com.oaktwister.models.props.TextGrant",
             "isOptional": false
         }
     ]

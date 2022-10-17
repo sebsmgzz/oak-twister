@@ -1,6 +1,6 @@
 package com.oaktwister.models.aggregators;
 
-import com.oaktwister.models.claims.ClaimMap;
+import com.oaktwister.models.props.GrantMap;
 import com.oaktwister.models.seedwork.Entity;
 
 import java.time.LocalDateTime;
@@ -11,14 +11,14 @@ public class Account extends Entity {
     private UUID platformId;
     private UUID identityId;
     private LocalDateTime createdAt;
-    private ClaimMap claims;
+    private GrantMap claims;
 
     public Account(UUID id, UUID platformId, UUID identityId, LocalDateTime createdAt) {
         super(id);
         this.platformId = platformId;
         this.identityId = identityId;
         this.createdAt = createdAt;
-        claims = new ClaimMap();
+        claims = new GrantMap();
     }
 
     public Account(UUID platformId) {
@@ -57,11 +57,11 @@ public class Account extends Entity {
         this.createdAt = createdAt;
     }
 
-    public ClaimMap getClaims() {
+    public GrantMap getGrants() {
         return claims;
     }
 
-    public void setClaims(ClaimMap claims) {
+    public void setGrants(GrantMap claims) {
         this.claims = claims;
     }
 

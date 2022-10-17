@@ -1,11 +1,12 @@
 package com.oaktwister.services.json;
 
+import com.oaktwister.models.exceptions.UnknownGrantTypeException;
 import org.json.JSONObject;
 
 public interface JsonObjectSerializer<T> {
 
-    T deserialize(JSONObject json);
+    T deserialize(JSONObject json) throws UnknownGrantTypeException;
 
-    JSONObject serialize(T entity);
+    JSONObject serialize(T entity) throws UnknownGrantTypeException;
 
 }

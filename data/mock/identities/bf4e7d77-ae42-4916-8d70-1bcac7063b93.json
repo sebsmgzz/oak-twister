@@ -1,20 +1,20 @@
 {
     "id": "bf4e7d77-ae42-4916-8d70-1bcac7063b93",
     "createdAt": "2022-09-12T17:53:30Z",
-    "claims": [
+    "grants": [
         {
             "name": "First name",
-            "type": "TextClaimDef",
+            "type": "com.oaktwister.models.props.TextGrant",
             "value": "John"
         },
         {
             "name": "Last name",
-            "type": "TextClaimDef",
+            "type": "com.oaktwister.models.props.TextGrant",
             "value": "Smith"
         },
         {
             "name": "Email",
-            "type": "TextClaimDef",
+            "type": "com.oaktwister.models.props.TextGrant",
             "value": "john.smith@gmail.com"
         }
     ]
