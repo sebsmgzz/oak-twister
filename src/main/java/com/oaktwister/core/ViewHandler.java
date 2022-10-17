@@ -37,22 +37,30 @@ public class ViewHandler {
         this.controllerFactory = new ControllerFactory(this, viewModelFactory);
     }
 
-    public <T extends Parent> T loadRootView(@NotNull Class<?> resourceClass, String viewLocation) throws IOException {
-        URL resourceUrl = resourceClass.getResource(viewLocation);
-        FXMLLoader fxmlLoader = new FXMLLoader(resourceUrl);
-        fxmlLoader.setControllerFactory(controllerFactory);
-        return fxmlLoader.load();
+    public <T extends Parent> T loadRootView(@NotNull Class<?> resourceClass, String viewLocation) {
+        try {
+            URL resourceUrl = resourceClass.getResource(viewLocation);
+            FXMLLoader fxmlLoader = new FXMLLoader(resourceUrl);
+            fxmlLoader.setControllerFactory(controllerFactory);
+            return fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void loadCustomView(View view) throws IOException {
-        URL resourceUrl = view.getClass().getResource(view.getViewLocation());
-        FXMLLoader fxmlLoader = new FXMLLoader(resourceUrl);
-        fxmlLoader.setRoot(view);
-        fxmlLoader.setControllerFactory(aClass -> view);
-        fxmlLoader.load();
+    public void loadCustomView(View view) {
+        try {
+            URL resourceUrl = view.getClass().getResource(view.getViewLocation());
+            FXMLLoader fxmlLoader = new FXMLLoader(resourceUrl);
+            fxmlLoader.setRoot(view);
+            fxmlLoader.setControllerFactory(aClass -> view);
+            fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void showLandingView() throws IOException {
+    public void showLandingView() {
         Parent view = loadRootView(LandingViewController.class, Resources.Views.Roots.LANDING);
         Scene scene = new Scene(view);
         primaryStage.setTitle(Resources.Strings.App.TITLE);
@@ -60,38 +68,38 @@ public class ViewHandler {
         primaryStage.show();
     }
 
-    public void showMainView() throws IOException {
+    public void showMainView() {
         Parent view = loadRootView(MainViewController.class, Resources.Views.Roots.MAIN);
         Scene scene = new Scene(view);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
-    public PlatformsPane getPlatformsPane() throws IOException {
+    public PlatformsPane getPlatformsPane() {
         return new PlatformsPane(this, viewModelFactory.getPlatformsViewModel());
     }
 
-    public PlatformPane getPlatformPane(PlatformViewModel viewModel) throws IOException {
+    public PlatformPane getPlatformPane(PlatformViewModel viewModel) {
         return new PlatformPane(this, viewModel);
     }
 
-    public IdentitiesPane getIdentitiesPane() throws IOException {
+    public IdentitiesPane getIdentitiesPane() {
         return new IdentitiesPane(this);
     }
 
-    public AccountsPane getAccountsPane() throws IOException {
+    public AccountsPane getAccountsPane() {
         return new AccountsPane(this, viewModelFactory.getAccountsViewModel());
     }
 
-    public IdentityCell getIdentityCell() throws IOException {
+    public IdentityCell getIdentityCell() {
         return new IdentityCell(this);
     }
 
-    public AccountCell getAccountCell() throws IOException {
+    public AccountCell getAccountCell() {
         return new AccountCell(this);
     }
 
-    public ImageButtonBox getImageButtonBox() throws IOException {
+    public ImageButtonBox getImageButtonBox() {
         return new ImageButtonBox(this);
     }
 

@@ -30,7 +30,7 @@ public class AccountCell extends ListCell<AccountViewModel> implements View {
     private final ObjectProperty<UUID> accountIdentifier;
     private final SimpleIntegerProperty claimsCount;
 
-    public AccountCell(ViewHandler viewHandler) throws IOException {
+    public AccountCell(ViewHandler viewHandler) {
         super();
         this.viewHandler = viewHandler;
         accountIdentifier = new SimpleObjectProperty<>();

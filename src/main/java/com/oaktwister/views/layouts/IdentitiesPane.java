@@ -27,7 +27,7 @@ public class IdentitiesPane extends VBox implements View {
     @FXML private ListView<IdentityViewModel> listView;
     @FXML private Button addButton;
 
-    public IdentitiesPane(ViewHandler viewHandler) throws IOException {
+    public IdentitiesPane(ViewHandler viewHandler) {
         super();
         this.viewHandler = viewHandler;
         viewHandler.loadCustomView(this);
@@ -48,13 +48,7 @@ public class IdentitiesPane extends VBox implements View {
                 listView.setPrefHeight(newValue.doubleValue())));
 
         // Data loaders
-        listView.setCellFactory(listView -> {
-            try {
-                return viewHandler.getIdentityCell();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        listView.setCellFactory(listView -> viewHandler.getIdentityCell());
         // TODO: How is the IdentityCell reading the IdentityViewModel?
 
     }

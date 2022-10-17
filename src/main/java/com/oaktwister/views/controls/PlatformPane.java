@@ -30,7 +30,7 @@ public class PlatformPane extends VBox implements View {
 
     private final SimpleObjectProperty<UUID> id;
 
-    public PlatformPane(ViewHandler viewHandler, PlatformViewModel viewModel) throws IOException {
+    public PlatformPane(ViewHandler viewHandler, PlatformViewModel viewModel) {
         super();
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;

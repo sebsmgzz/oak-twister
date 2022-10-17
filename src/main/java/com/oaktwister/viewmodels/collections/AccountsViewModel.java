@@ -28,6 +28,7 @@ public class AccountsViewModel {
         for(Account account : accounts) {
             this.accounts.add(new AccountViewModel(account));
         }
+        logger.debug("Loaded %s accounts", accounts.size());
     }
 
 }

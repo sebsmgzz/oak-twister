@@ -29,7 +29,7 @@ public class IdentityCell extends ListCell<IdentityViewModel> implements View {
 
     private final SimpleObjectProperty<UUID> id;
 
-    public IdentityCell(ViewHandler viewHandler) throws IOException {
+    public IdentityCell(ViewHandler viewHandler) {
         super();
         this.viewHandler = viewHandler;
         id = new SimpleObjectProperty<>(UUID.randomUUID());

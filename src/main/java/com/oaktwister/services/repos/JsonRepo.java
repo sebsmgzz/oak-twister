@@ -79,7 +79,6 @@ public abstract class JsonRepo<T extends Entity> {
             return jsonObjectSerializer.deserialize(json);
         } catch (IOException | UnknownGrantTypeException ex) {
             logger.error(ex, ex.getMessage());
-            ex.printStackTrace();
             return null;
         }
     }
@@ -93,7 +92,6 @@ public abstract class JsonRepo<T extends Entity> {
             return true;
         } catch (IOException | UnknownGrantTypeException ex) {
             logger.error(ex, ex.getMessage());
-            ex.printStackTrace();
             return false;
         }
     }
@@ -105,7 +103,6 @@ public abstract class JsonRepo<T extends Entity> {
             return true;
         } catch (IOException ex) {
             logger.error(ex, ex.getMessage());
-            ex.printStackTrace();
             return false;
         }
     }

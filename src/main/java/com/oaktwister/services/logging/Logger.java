@@ -31,20 +31,37 @@ public class Logger {
         log(ERROR_PREFIX, message);
     }
 
+    public void error(String message, Object... args) {
+        error(String.format(message, args));
+    }
+
     public void error(Exception ex, String message) {
         error(message);
+        ex.printStackTrace();
     }
 
     public void debug(String message) {
         log(DEBUG_PREFIX, message);
     }
 
+    public void debug(String message, Object... args) {
+        debug(String.format(message, args));
+    }
+
     public void trace(String message) {
         log(TRACE_PREFIX, message);
     }
 
+    public void trace(String message, Object... args) {
+        trace(String.format(message, args));
+    }
+
     public void critical(String message) {
         log(CRITICAL_PREFIX, message);
+    }
+
+    public void critical(String message, Object... args) {
+        critical(String.format(message, args));
     }
 
 }

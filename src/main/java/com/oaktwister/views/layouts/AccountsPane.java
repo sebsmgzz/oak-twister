@@ -30,7 +30,7 @@ public class AccountsPane extends VBox implements View {
     @FXML private ListView<AccountViewModel> listView;
     @FXML private Button addButton;
 
-    public AccountsPane(ViewHandler viewHandler, AccountsViewModel viewModel) throws IOException {
+    public AccountsPane(ViewHandler viewHandler, AccountsViewModel viewModel) {
         super();
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
@@ -52,13 +52,7 @@ public class AccountsPane extends VBox implements View {
                 listView.setPrefHeight(newValue.doubleValue())));
 
         // Data loaders
-        listView.setCellFactory(listView -> {
-            try {
-                return viewHandler.getAccountCell();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        listView.setCellFactory(listView -> viewHandler.getAccountCell());
         // TODO: How is the AccountCell reading the AccountViewModel?
 
         // Load data

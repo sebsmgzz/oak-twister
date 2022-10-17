@@ -11,7 +11,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -36,7 +35,7 @@ public class PlatformsPane extends VBox implements View {
 
     private final SimpleListProperty<PlatformPane> platforms;
 
-    public PlatformsPane(ViewHandler viewHandler, PlatformsViewModel viewModel) throws IOException {
+    public PlatformsPane(ViewHandler viewHandler, PlatformsViewModel viewModel) {
         super();
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
@@ -89,11 +88,7 @@ public class PlatformsPane extends VBox implements View {
             // add it to the flowPane's children
             if (change.wasAdded()) {
                 for (PlatformViewModel pViewModel : change.getAddedSubList()) {
-                    try {
-                        children.add(viewHandler.getPlatformPane(pViewModel));
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
+                    children.add(viewHandler.getPlatformPane(pViewModel));
                 }
             }
 

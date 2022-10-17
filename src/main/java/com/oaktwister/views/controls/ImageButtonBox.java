@@ -24,7 +24,7 @@ public class ImageButtonBox extends HBox implements View {
     @FXML private Button button;
     @FXML private ImageView imageView;
 
-    public ImageButtonBox(ViewHandler viewHandler) throws IOException {
+    public ImageButtonBox(ViewHandler viewHandler) {
         super();
         this.viewHandler = viewHandler;
         viewHandler.loadCustomView(this);

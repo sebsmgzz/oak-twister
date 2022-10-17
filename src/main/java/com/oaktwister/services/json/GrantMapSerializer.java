@@ -38,7 +38,6 @@ public class GrantMapSerializer implements JsonArraySerializer<GrantMap> {
                 grantMapJson.put(grantJson);
             } catch (UnknownGrantTypeException ex) {
                 logger.error(ex, ex.getMessage());
-                ex.printStackTrace();
             }
         }
         return grantMapJson;
