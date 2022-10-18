@@ -10,12 +10,13 @@
          xmlns:fx="http://javafx.com/fxml/1"
          type="javafx.scene.layout.HBox"
          fx:controller="com.oaktwister.views.controls.AccountBox"
-         stylesheets="/styles/controls/account-box.css">
+         stylesheets="/styles/controls/account-box.css"
+         styleClass="root">
     <ImageView fx:id="imageView" fitWidth="50" fitHeight="50">
         <Image url="/images/placeholders/image.png" />
     </ImageView>
     <Label fx:id="platformNameLabel" />
-    <VBox>
+    <VBox styleClass="vbox">
         <HBox>
             <Label text="Account: " />
             <Label fx:id="accountIdentifierLabel" />

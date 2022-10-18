@@ -3,6 +3,8 @@ package com.oaktwister.viewmodels.models;
 import com.oaktwister.models.aggregators.Platform;
 import com.oaktwister.services.Context;
 import com.oaktwister.services.repos.ImagesRepo;
+import com.oaktwister.services.util.LocalDateTimeUtil;
+import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
@@ -10,6 +12,7 @@ import javafx.scene.image.PixelFormat;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.UUID;
 
@@ -22,6 +25,7 @@ public class PlatformViewModel {
     private final SimpleStringProperty name;
     private final SimpleObjectProperty<Image> image;
     private final SimpleStringProperty url;
+    private final SimpleObjectProperty<LocalDateTime> createdAt;
 
     public PlatformViewModel(ImagesRepo imagesRepo, Platform platform) {
         this.imagesRepo = imagesRepo;
@@ -30,6 +34,7 @@ public class PlatformViewModel {
         name = new SimpleStringProperty(platform.getName());
         image = new SimpleObjectProperty<>(imagesRepo.findById(platform.getImageId()));
         url = new SimpleStringProperty(platform.getUrl());
+        createdAt = new SimpleObjectProperty<>(platform.getCreatedAt());
         initialize();
     }
 
@@ -41,6 +46,7 @@ public class PlatformViewModel {
             platform.setImageId(imageId);
         });
         url.addListener((observable, oldValue, newValue) -> platform.setUrl(newValue));
+        createdAt.addListener((observable, oldValue, newValue) -> platform.setCreatedAt(newValue));
     }
 
     public Platform getPlatform() {
@@ -93,6 +99,10 @@ public class PlatformViewModel {
 
     public void setUrl(String url) {
         urlProperty().set(url);
+    }
+
+    public SimpleObjectProperty<LocalDateTime> createdAtProperty() {
+        return createdAt;
     }
 
 }

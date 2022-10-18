@@ -17,7 +17,7 @@
     </left>
     <bottom>
         <HBox>
-            <Button onAction="#onBackButtonAction" text="go back" />
+            <Button onAction="#onBackButtonAction" text="go back" styleClass="back-button" />
         </HBox>
     </bottom>
 </BorderPane>

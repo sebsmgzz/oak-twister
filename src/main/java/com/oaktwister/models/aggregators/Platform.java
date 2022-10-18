@@ -19,6 +19,7 @@ public class Platform extends Entity {
         this.name = name;
         this.imageId = imageId;
         this.url = url;
+        this.createdAt = createdAt;
         claims = new ClaimMap();
     }
 

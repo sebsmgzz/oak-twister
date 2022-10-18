@@ -4,6 +4,7 @@ import com.oaktwister.core.ViewHandler;
 import com.oaktwister.services.Resources;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
 import com.oaktwister.views.View;
+import com.oaktwister.views.util.DateTimeStringConverter;
 import com.oaktwister.views.util.UUIDStringConverter;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -13,13 +14,13 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
 public class PlatformPane extends VBox implements View {
+
+    private static final String DATE_TIME_PREFIX = "Created at: ";
 
     private final ViewHandler viewHandler;
     private final PlatformViewModel viewModel;
@@ -27,6 +28,7 @@ public class PlatformPane extends VBox implements View {
     @FXML private Label identifier;
     @FXML private ImageView image;
     @FXML private Label name;
+    @FXML private Label createdAtLabel;
 
     private final SimpleObjectProperty<UUID> id;
 
@@ -49,6 +51,9 @@ public class PlatformPane extends VBox implements View {
         identifier.textProperty().bindBidirectional(id, new UUIDStringConverter());
         name.textProperty().bindBidirectional(viewModel.nameProperty());
         image.imageProperty().bindBidirectional(viewModel.imageProperty());
+        createdAtLabel.textProperty().bindBidirectional(
+                viewModel.createdAtProperty(),
+                new DateTimeStringConverter(DATE_TIME_PREFIX));
     }
 
     public PlatformViewModel getViewModel() {

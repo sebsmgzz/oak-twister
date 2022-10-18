@@ -7,12 +7,13 @@
          xmlns:fx="http://javafx.com/fxml/1"
          type="javafx.scene.layout.VBox"
          fx:controller="com.oaktwister.views.layouts.AccountsPane"
-         alignment="CENTER"
+         alignment="TOP_CENTER"
          prefHeight="400.0" prefWidth="600.0"
-         stylesheets="/styles/layouts/accounts-pane.css">
+         stylesheets="/styles/layouts/accounts-pane.css"
+         styleClass="root">
     <Label fx:id="titleLabel" text="Accounts"/>
-    <ScrollPane fx:id="scrollPane" VBox.vgrow="ALWAYS" style="-fx-background-color: red;">
-        <VBox fx:id="vbox"/>
+    <ScrollPane fx:id="scrollPane" VBox.vgrow="ALWAYS" style="-fx-background-color: red;" styleClass="scroll-pane">
+        <VBox fx:id="vbox" styleClass="vbox"/>
     </ScrollPane>
     <HBox alignment="CENTER_RIGHT">
         <Button fx:id="addButton" text="Add" />

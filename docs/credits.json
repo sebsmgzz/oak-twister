@@ -29,6 +29,12 @@
             "url": "https://www.flaticon.com/packs/social-15",
             "platform": "Flaticon",
             "author": "Pixel perfect"
-        }
+        },
+        {
+            "path": "/images/font-awesome/*",
+            "url": "https://fontawesome.com/icons",
+            "platform": "FontAwesome",
+            "author": "FontAwesome"
+        }    
     ]
 }
