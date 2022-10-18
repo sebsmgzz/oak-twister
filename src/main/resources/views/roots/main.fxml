@@ -11,7 +11,7 @@
             fx:controller="com.oaktwister.views.roots.MainViewController"
             fx:id="borderPane"
             stylesheets="/styles/roots/main.css"
-            styleClass="background"
+            styleClass="root"
             prefWidth="1000" prefHeight="600">
     <left>
         <VBox styleClass="vbox-out" prefWidth="200">
@@ -19,8 +19,8 @@
                 <Label styleClass="title" text="OakTwister" alignment="CENTER" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
             </HBox>
             <VBox fx:id="vbox" styleClass="vbox-in" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS"/>
-            <Button styleClass="button" text="Back" onAction="#onBackButtonAction" maxWidth="Infinity"/>
-            <Button styleClass="button" text="Settings" maxWidth="Infinity" VBox.vgrow="NEVER"/>
+            <Button styleClass="clickable" text="Back" onAction="#onBackButtonAction" maxWidth="Infinity"/>
+            <Button styleClass="clickable" text="Settings" maxWidth="Infinity" VBox.vgrow="NEVER"/>
         </VBox>
     </left>
 </BorderPane>

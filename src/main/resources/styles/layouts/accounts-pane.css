@@ -3,12 +3,24 @@
     -fx-border-width: 0px;
 }
 
+.title {
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 0 30px 0;
+    -fx-background-color: #A2C6BB;
+}
+
 .scroll-pane {
-    -fx-border-width: 0px;
+    -fx-padding: 10px;
+    -fx-background-color: transparent;
+    -fx-control-inner-background: transparent;
 }
-.scroll-pane:hover {
-    -fx-border-width: 0px;
+
+.scroll-pane > .viewport {
+    -fx-background-color: #FDF8F8;
 }
-.scroll-pane:focused {
-    -fx-border-width: 0px;
+
+.hbox {
+    -fx-padding: 10px;
 }

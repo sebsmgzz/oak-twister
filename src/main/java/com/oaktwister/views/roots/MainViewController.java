@@ -32,18 +32,18 @@ public class MainViewController implements Initializable {
     @FXML private BorderPane borderPane;
     @FXML private VBox vbox;
 
-    private final ImageButtonBox identitiesButton;
-    private final ImageButtonBox platformsButton;
     private final ImageButtonBox accountsButton;
+    private final ImageButtonBox platformsButton;
+    private final ImageButtonBox identitiesButton;
 
     private final Property<Node> centerNodeProperty;
 
     public MainViewController(ViewHandler viewHandler, MainViewModel viewModel) throws IOException {
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
-        identitiesButton = viewHandler.getImageButtonBox();
-        platformsButton = viewHandler.getImageButtonBox();
         accountsButton = viewHandler.getImageButtonBox();
+        platformsButton = viewHandler.getImageButtonBox();
+        identitiesButton = viewHandler.getImageButtonBox();
         centerNodeProperty = new SimpleObjectProperty<Node>(getSection());
     }
 
@@ -66,20 +66,20 @@ public class MainViewController implements Initializable {
         borderPane.centerProperty().bind(centerNodeProperty);
 
         // Mount buttons
-        vbox.getChildren().add(identitiesButton);
-        vbox.getChildren().add(platformsButton);
         vbox.getChildren().add(accountsButton);
+        vbox.getChildren().add(platformsButton);
+        vbox.getChildren().add(identitiesButton);
         identitiesButton.setMaxWidth(Double.MAX_VALUE);
 
         // Bind button's actions to change the view model section accordingly
-        identitiesButton.setOnAction(e -> viewModel.setSection(Section.IDENTITIES));
-        platformsButton.setOnAction(e -> viewModel.setSection(Section.PLATFORMS));
         accountsButton.setOnAction(e -> viewModel.setSection(Section.ACCOUNTS));
+        platformsButton.setOnAction(e -> viewModel.setSection(Section.PLATFORMS));
+        identitiesButton.setOnAction(e -> viewModel.setSection(Section.IDENTITIES));
 
         // Set button's texts
-        identitiesButton.setText(Resources.Strings.IDENTITIES_BUTTON_TEXT);
-        platformsButton.setText(Resources.Strings.PLATFORMS_BUTTON_TEXT);
         accountsButton.setText(Resources.Strings.ACCOUNTS_BUTTON_TEXT);
+        platformsButton.setText(Resources.Strings.PLATFORMS_BUTTON_TEXT);
+        identitiesButton.setText(Resources.Strings.IDENTITIES_BUTTON_TEXT);
 
         // Set button's images
         identitiesButton.setImage(Resources.Images.FontAwesome.FINGERPRINT_SOLID);

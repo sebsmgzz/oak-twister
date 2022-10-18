@@ -12,7 +12,7 @@ public class MainViewModel {
     private final Logger logger;
 
     public MainViewModel(Logger logger) {
-        section = new SimpleObjectProperty<Section>(Section.IDENTITIES);
+        section = new SimpleObjectProperty<Section>(Section.ACCOUNTS);
         this.logger = logger;
     }
 

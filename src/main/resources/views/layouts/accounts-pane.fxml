@@ -11,11 +11,11 @@
          prefHeight="400.0" prefWidth="600.0"
          stylesheets="/styles/layouts/accounts-pane.css"
          styleClass="root">
-    <Label fx:id="titleLabel" text="Accounts"/>
-    <ScrollPane fx:id="scrollPane" VBox.vgrow="ALWAYS" style="-fx-background-color: red;" styleClass="scroll-pane">
+    <Label fx:id="titleLabel" styleClass="title" text="Accounts" maxWidth="Infinity" alignment="CENTER"/>
+    <ScrollPane fx:id="scrollPane" styleClass="scroll-pane" VBox.vgrow="ALWAYS">
         <VBox fx:id="vbox" styleClass="vbox"/>
     </ScrollPane>
-    <HBox alignment="CENTER_RIGHT">
-        <Button fx:id="addButton" text="Add" />
+    <HBox styleClass="hbox" alignment="CENTER_RIGHT">
+        <Button fx:id="addButton" text="Add" styleClass="none" minWidth="100" />
     </HBox>
 </fx:root>

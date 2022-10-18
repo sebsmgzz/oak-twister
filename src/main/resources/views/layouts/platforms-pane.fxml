@@ -17,7 +17,7 @@
                 fitToHeight="true" fitToWidth="true">
         <FlowPane fx:id="flowPane" styleClass="flow-pane" alignment="TOP_CENTER" vgap="10" hgap="10"/>
     </ScrollPane>
-    <HBox alignment="CENTER_RIGHT">
-        <Button fx:id="addButton" text="Add" />
+    <HBox styleClass="hbox" alignment="CENTER_RIGHT">
+        <Button fx:id="addButton" text="Add" styleClass="none" minWidth="100"/>
     </HBox>
 </fx:root>

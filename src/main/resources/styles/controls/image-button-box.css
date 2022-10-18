@@ -3,13 +3,15 @@
     -fx-alignment: center;
 }
 
-.button {
+.clickable {
     -fx-background-radius: 0;
     -fx-background-color: transparent;
     -fx-padding: 10px 5px 10px 0;
 }
 
-.button:hover {
-    -fx-border-color: red;
+.clickable:hover {
+    -fx-border-color: #c12126;
+    -fx-background-color: #E8CFB5;
+    -fx-cursor: hand;
     -fx-border-width: 0 0 0 5px;
 }
