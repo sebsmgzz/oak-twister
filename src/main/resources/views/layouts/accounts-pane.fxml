@@ -13,7 +13,7 @@
          styleClass="root">
     <Label fx:id="titleLabel" styleClass="title" text="Accounts" maxWidth="Infinity" alignment="CENTER"/>
     <ScrollPane fx:id="scrollPane" styleClass="scroll-pane" VBox.vgrow="ALWAYS">
-        <VBox fx:id="vbox" styleClass="vbox"/>
+        <VBox fx:id="vbox" styleClass="vbox" spacing="10"/>
     </ScrollPane>
     <HBox styleClass="hbox" alignment="CENTER_RIGHT">
         <Button fx:id="addButton" text="Add" styleClass="none" minWidth="100" />

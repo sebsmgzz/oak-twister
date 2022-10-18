@@ -10,6 +10,10 @@ public class DateTimeStringConverter extends StringConverter<LocalDateTime> {
     private final LocalDateTimeUtil util = new LocalDateTimeUtil(); // TODO: DI?
     private final String prefix;
 
+    public DateTimeStringConverter() {
+        this(null);
+    }
+
     public DateTimeStringConverter(String prefix) {
         this.prefix = prefix;
     }

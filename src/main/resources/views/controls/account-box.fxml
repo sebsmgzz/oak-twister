@@ -16,7 +16,7 @@
         <Image url="/images/placeholders/image.png" />
     </ImageView>
     <Label fx:id="platformNameLabel" />
-    <VBox styleClass="vbox">
+    <VBox styleClass="vbox" prefWidth="300">
         <HBox>
             <Label text="Account: " />
             <Label fx:id="accountIdentifierLabel" />
@@ -24,6 +24,10 @@
         <HBox>
             <Label text="Claims: " />
             <Label fx:id="grantsCountLabel" />
+        </HBox>
+        <HBox>
+            <Label text="Created at: " />
+            <Label fx:id="createdAtLabel" />
         </HBox>
     </VBox>
 </fx:root>

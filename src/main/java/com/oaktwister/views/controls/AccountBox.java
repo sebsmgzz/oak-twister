@@ -4,6 +4,7 @@ import com.oaktwister.core.ViewHandler;
 import com.oaktwister.services.Resources;
 import com.oaktwister.viewmodels.models.AccountViewModel;
 import com.oaktwister.views.View;
+import com.oaktwister.views.util.DateTimeStringConverter;
 import com.oaktwister.views.util.NumberStringConverter;
 import com.oaktwister.views.util.UUIDStringConverter;
 import javafx.beans.property.*;
@@ -11,9 +12,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
@@ -26,9 +29,11 @@ public class AccountBox extends HBox implements View {
     @FXML private Label platformNameLabel;
     @FXML private Label accountIdentifierLabel;
     @FXML private Label grantsCountLabel;
+    @FXML private Label createdAtLabel;
 
     private final ObjectProperty<UUID> accountIdentifier;
     private final SimpleIntegerProperty grantsCount;
+    private final ObjectProperty<LocalDateTime> createdAt;
 
     public AccountBox(ViewHandler viewHandler, AccountViewModel viewModel) {
         super();
@@ -36,6 +41,7 @@ public class AccountBox extends HBox implements View {
         this.viewModel = viewModel;
         accountIdentifier = new SimpleObjectProperty<>(viewModel.getId());
         grantsCount = new SimpleIntegerProperty();
+        createdAt = new SimpleObjectProperty<>(viewModel.getCreatedAt());
         viewHandler.loadCustomView(this);
     }
 
@@ -48,6 +54,7 @@ public class AccountBox extends HBox implements View {
     public void initialize(URL location, ResourceBundle resources) {
         accountIdentifierLabel.textProperty().bindBidirectional(accountIdentifier, new UUIDStringConverter());
         grantsCountLabel.textProperty().bindBidirectional(grantsCount, new NumberStringConverter(Integer.class));
+        createdAtLabel.textProperty().bindBidirectional(createdAt, new DateTimeStringConverter());
     }
 
     public ObjectProperty<Image> imageProperty() {

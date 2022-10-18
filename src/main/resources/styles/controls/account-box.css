@@ -1,0 +1,9 @@
+
+.root {
+    -fx-padding: 10px 5px;
+}
+
+.vbox {
+    -fx-border-color: #E8CFB5;
+    -fx-border-width: 0 0 1px 0;
+}
