@@ -6,6 +6,7 @@ import com.oaktwister.services.repos.AccountsRepo;
 import com.oaktwister.viewmodels.models.AccountViewModel;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class AccountsViewModel {
     private final AccountsRepo accountsRepo;
     private final Logger logger;
 
-    private final SimpleListProperty<AccountViewModel> accounts;
+    private final ObservableList<AccountViewModel> accounts;
 
     public AccountsViewModel(AccountsRepo accountsRepo, Logger logger) {
         this.accountsRepo = accountsRepo;
@@ -22,7 +23,7 @@ public class AccountsViewModel {
         accounts = new SimpleListProperty<>(FXCollections.observableArrayList());
     }
 
-    public SimpleListProperty<AccountViewModel> accountsProperty() {
+    public ObservableList<AccountViewModel> accountsProperty() {
         return accounts;
     }
 

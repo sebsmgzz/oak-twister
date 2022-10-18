@@ -3,12 +3,16 @@ package com.oaktwister.views.roots;
 import com.oaktwister.core.ViewHandler;
 import com.oaktwister.viewmodels.models.DriveViewModel;
 import com.oaktwister.viewmodels.main.LandingViewModel;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,6 +24,7 @@ public class LandingViewController implements Initializable {
     private final ViewHandler viewHandler;
     private final LandingViewModel viewModel;
 
+    @FXML private BorderPane root;
     @FXML private TableView<DriveViewModel> tableView;
     @FXML private TableColumn<DriveViewModel, UUID> idColumn;
     @FXML private TableColumn<DriveViewModel, String> pathColumn;

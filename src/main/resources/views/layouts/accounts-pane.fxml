@@ -8,9 +8,12 @@
          type="javafx.scene.layout.VBox"
          fx:controller="com.oaktwister.views.layouts.AccountsPane"
          alignment="CENTER"
-         prefHeight="400.0" prefWidth="600.0">
-    <Label fx:id="titleLabel" text="Accounts" />
-    <ListView fx:id="listView" VBox.vgrow="ALWAYS" style="-fx-background-color: red;" />
+         prefHeight="400.0" prefWidth="600.0"
+         stylesheets="/styles/layouts/accounts-pane.css">
+    <Label fx:id="titleLabel" text="Accounts"/>
+    <ScrollPane fx:id="scrollPane" VBox.vgrow="ALWAYS" style="-fx-background-color: red;">
+        <VBox fx:id="vbox"/>
+    </ScrollPane>
     <HBox alignment="CENTER_RIGHT">
         <Button fx:id="addButton" text="Add" />
     </HBox>

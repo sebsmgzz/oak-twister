@@ -5,12 +5,12 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.oaktwister.views.roots.LandingViewController"
-      fx:id="root"
-      stylesheets="/styles/roots/landing.css"
-      styleClass="background"
-      prefWidth="1000" prefHeight="600">
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.oaktwister.views.roots.LandingViewController"
+            fx:id="root"
+            stylesheets="/styles/roots/landing.css"
+            styleClass="background"
+            prefHeight="400" prefWidth="600">
     <top>
         <HBox styleClass="topContent" VBox.vgrow="NEVER">
             <ImageView styleClass="logo" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">

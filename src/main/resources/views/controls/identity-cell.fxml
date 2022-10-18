@@ -9,6 +9,7 @@
          xmlns:fx="http://javafx.com/fxml"
          type="javafx.scene.control.ListCell"
          fx:controller="com.oaktwister.views.controls.IdentityCell"
+         stylesheets="/styles/controls/identity-cell.css"
          prefHeight="400.0" prefWidth="600.0">
     <HBox>
         <Label fx:id="identifier" text="4cca2abc-2c27-453e-930a-180da533093a" />

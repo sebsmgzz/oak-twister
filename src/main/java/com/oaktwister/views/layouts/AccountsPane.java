@@ -4,20 +4,21 @@ import com.oaktwister.core.ViewHandler;
 import com.oaktwister.services.Resources;
 import com.oaktwister.viewmodels.collections.AccountsViewModel;
 import com.oaktwister.viewmodels.models.AccountViewModel;
+import com.oaktwister.viewmodels.models.PlatformViewModel;
 import com.oaktwister.views.View;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -27,7 +28,8 @@ public class AccountsPane extends VBox implements View {
     private final AccountsViewModel viewModel;
 
     @FXML private Label titleLabel;
-    @FXML private ListView<AccountViewModel> listView;
+    @FXML private ScrollPane scrollPane;
+    @FXML private VBox vbox;
     @FXML private Button addButton;
 
     public AccountsPane(ViewHandler viewHandler, AccountsViewModel viewModel) {
@@ -47,19 +49,27 @@ public class AccountsPane extends VBox implements View {
 
         // Bindings
         this.widthProperty().addListener(((observable, oldValue, newValue) ->
-                listView.setPrefWidth(newValue.doubleValue())));
+                scrollPane.setPrefWidth(newValue.doubleValue())));
         this.heightProperty().addListener(((observable, oldValue, newValue) ->
-                listView.setPrefHeight(newValue.doubleValue())));
+                scrollPane.setPrefHeight(newValue.doubleValue())));
 
         // Data loaders
-        listView.setCellFactory(listView -> {
-            int accountIndex = listView.getItems().size() - 1;
-            AccountViewModel account = viewModel.getAccount(accountIndex);
-            return viewHandler.getAccountCell(account);
-        });
-        listView.setItems(viewModel.accountsProperty());
+        viewModel.accountsProperty().addListener((ListChangeListener<AccountViewModel>) change -> {
+            ObservableList<Node> children = vbox.getChildren();
+            while (change.next()) {
+                if (change.wasAdded()) {
+                    for (AccountViewModel accountViewModel : change.getAddedSubList()) {
+                        children.add(viewHandler.getAccountBox(accountViewModel));
+                    }
+                }
+                if (change.wasRemoved()) {
+                    for (AccountViewModel accountViewModel : change.getRemoved()) {
+                        // TODO: Look up the AccountBox that references this accountViewModel and remove it
+                    }
+                }
 
-        // TODO: How is the AccountCell reading the AccountViewModel?
+            }
+        });
 
         // Load data
         viewModel.loadAccounts();
@@ -76,18 +86,6 @@ public class AccountsPane extends VBox implements View {
 
     public void setTitle(String title) {
         titleProperty().set(title);
-    }
-
-    public ObjectProperty<ObservableList<AccountViewModel>> accountsProperty() {
-        return listView.itemsProperty();
-    }
-
-    public ObservableList<AccountViewModel> getAccounts() {
-        return accountsProperty().get();
-    }
-
-    public void setAccounts(ObservableList<AccountViewModel> accounts) {
-        accountsProperty().set(accounts);
     }
 
     public ObjectProperty<EventHandler<ActionEvent>> onAddActionProperty() {

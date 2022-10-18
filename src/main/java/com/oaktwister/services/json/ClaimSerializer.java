@@ -38,6 +38,8 @@ public class ClaimSerializer implements JsonObjectSerializer<Claim> {
             return NumberGrant.class;
         } else if (Objects.equals(grantTypeName, SecretGrant.class.getTypeName())) {
             return SecretGrant.class;
+        } else if (Objects.equals(grantTypeName, TextGrant.class.getTypeName())) {
+            return TextGrant.class;
         } else {
             throw new UnknownGrantTypeException(grantTypeName);
         }

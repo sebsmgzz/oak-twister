@@ -2,10 +2,9 @@ package com.oaktwister.core;
 
 import com.oaktwister.services.Resources;
 import com.oaktwister.viewmodels.models.AccountViewModel;
-import com.oaktwister.viewmodels.models.IdentityViewModel;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
 import com.oaktwister.views.View;
-import com.oaktwister.views.controls.AccountCell;
+import com.oaktwister.views.controls.AccountBox;
 import com.oaktwister.views.controls.IdentityCell;
 import com.oaktwister.views.controls.ImageButtonBox;
 import com.oaktwister.views.controls.PlatformPane;
@@ -15,10 +14,8 @@ import com.oaktwister.views.layouts.PlatformsPane;
 import com.oaktwister.views.roots.LandingViewController;
 import com.oaktwister.views.roots.MainViewController;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListCell;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
@@ -95,8 +92,8 @@ public class ViewHandler {
         return new IdentityCell(this);
     }
 
-    public AccountCell getAccountCell(AccountViewModel viewModel) {
-        return new AccountCell(this, viewModel);
+    public AccountBox getAccountBox(AccountViewModel viewModel) {
+        return new AccountBox(this, viewModel);
     }
 
     public ImageButtonBox getImageButtonBox() {

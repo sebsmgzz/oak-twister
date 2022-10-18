@@ -11,7 +11,7 @@
             fx:id="borderPane"
             stylesheets="/styles/roots/main.css"
             styleClass="background"
-            prefWidth="600" prefHeight="400">
+            prefWidth="1000" prefHeight="600">
     <left>
         <VBox fx:id="vBox" BorderPane.alignment="CENTER" />
     </left>

@@ -6,11 +6,6 @@ import com.oaktwister.models.props.ClaimMap;
 import com.oaktwister.services.util.LocalDateTimeUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 public class PlatformSerializer implements JsonObjectSerializer<Platform> {
@@ -20,7 +15,7 @@ public class PlatformSerializer implements JsonObjectSerializer<Platform> {
     public final static String URL_KEY = "url";
     public final static String IMAGE_ID_KEY = "imageId";
     public final static String CREATED_AT_KEY = "createdAt";
-    public final static String CLAIMS_KEY = "claimDefinitions";
+    public final static String CLAIMS_KEY = "claims";
 
     private final ClaimMapSerializer claimMapSerializer;
     private final LocalDateTimeUtil localDateTimeUtil;

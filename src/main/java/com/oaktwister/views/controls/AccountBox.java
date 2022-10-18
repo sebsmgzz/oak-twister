@@ -9,16 +9,15 @@ import com.oaktwister.views.util.UUIDStringConverter;
 import javafx.beans.property.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-public class AccountCell extends ListCell<AccountViewModel> implements View {
+public class AccountBox extends HBox implements View {
 
     private final ViewHandler viewHandler;
     private final AccountViewModel viewModel;
@@ -26,17 +25,17 @@ public class AccountCell extends ListCell<AccountViewModel> implements View {
     @FXML private ImageView imageView;
     @FXML private Label platformNameLabel;
     @FXML private Label accountIdentifierLabel;
-    @FXML private Label claimsCountLabel;
+    @FXML private Label grantsCountLabel;
 
     private final ObjectProperty<UUID> accountIdentifier;
-    private final SimpleIntegerProperty claimsCount;
+    private final SimpleIntegerProperty grantsCount;
 
-    public AccountCell(ViewHandler viewHandler, AccountViewModel viewModel) {
+    public AccountBox(ViewHandler viewHandler, AccountViewModel viewModel) {
         super();
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
         accountIdentifier = new SimpleObjectProperty<>(viewModel.getId());
-        claimsCount = new SimpleIntegerProperty();
+        grantsCount = new SimpleIntegerProperty();
         viewHandler.loadCustomView(this);
     }
 
@@ -48,7 +47,7 @@ public class AccountCell extends ListCell<AccountViewModel> implements View {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         accountIdentifierLabel.textProperty().bindBidirectional(accountIdentifier, new UUIDStringConverter());
-        claimsCountLabel.textProperty().bindBidirectional(claimsCount, new NumberStringConverter(Integer.class));
+        grantsCountLabel.textProperty().bindBidirectional(grantsCount, new NumberStringConverter(Integer.class));
     }
 
     public ObjectProperty<Image> imageProperty() {
@@ -87,16 +86,12 @@ public class AccountCell extends ListCell<AccountViewModel> implements View {
         accountIdentifierProperty().set(accountIdentifier);
     }
 
-    public IntegerProperty claimsCountProperty() {
-        return claimsCount;
+    public IntegerProperty grantsCountProperty() {
+        return grantsCount;
     }
 
-    public Integer getClaimsCount() {
-        return claimsCountProperty().get();
-    }
-
-    public void setClaimsCount(Integer claimsCount) {
-        claimsCountProperty().set(claimsCount);
+    public Integer getGrantsCount() {
+        return grantsCountProperty().get();
     }
 
 }

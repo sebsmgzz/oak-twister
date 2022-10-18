@@ -55,7 +55,16 @@ public interface Resources {
     interface Styles {
 
         interface Controls {
+            String ACCOUNT_BOX = "/styles/controls/account-box.css";
+            String IDENTITY_CELL = "/styles/controls/identity-cell.css";
             String IMAGE_BUTTON_BOX = "/styles/controls/image-button-box.css";
+            String PLATFORM_PANE = "/styles/controls/platform-pane.css";
+        }
+
+        interface Layouts {
+            String ACCOUNTS_PANE = "/styles/layouts/accounts-pane.css";
+            String IDENTITIES_PANE = "/styles/layouts/identities-pane.css";
+            String PLATFORMS_PANE = "/styles/layouts/platforms-pane.css";
         }
 
         interface Roots {
@@ -68,7 +77,7 @@ public interface Resources {
     interface Views {
 
         interface Controls {
-            String ACCOUNT_CELL = "/views/controls/account-cell.fxml";
+            String ACCOUNT_CELL = "/views/controls/account-box.fxml";
             String IDENTITY_CELL = "/views/controls/identity-cell.fxml";
             String IMAGE_BUTTON_BOX = "/views/controls/image-button-box.fxml";
             String PLATFORM_PANE = "/views/controls/platform-pane.fxml";
