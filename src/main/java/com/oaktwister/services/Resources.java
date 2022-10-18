@@ -19,6 +19,14 @@ public interface Resources {
             String PLATFORM = "/images/cyberpunk/platform.png";
         }
 
+        interface FontAwesome {
+            String FINGERPRINT_SOLID = "/images/font-awesome/fingerprint-solid.png";
+            String HOUSE_SOLID = "/images/font-awesome/house-solid.png";
+            String LAYER_GROUP_SOLID = "/images/font-awesome/layer-group-solid.png";
+            String USER_SOLID = "/images/font-awesome/user-solid.png";
+            String USERS_SOLID = "/images/font-awesome/users-solid.png";
+        }
+
         interface HelpSupport {
             String INFORMATION = "/images/help-support/information.png";
             String KEY = "/images/help-support/key.png";

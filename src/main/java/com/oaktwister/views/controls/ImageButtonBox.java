@@ -37,7 +37,6 @@ public class ImageButtonBox extends HBox implements View {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
     }
 
     public StringProperty textProperty() {

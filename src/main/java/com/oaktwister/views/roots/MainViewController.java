@@ -10,11 +10,17 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.SVGPath;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -24,7 +30,7 @@ public class MainViewController implements Initializable {
     private final MainViewModel viewModel;
 
     @FXML private BorderPane borderPane;
-    @FXML private VBox vBox;
+    @FXML private VBox vbox;
 
     private final ImageButtonBox identitiesButton;
     private final ImageButtonBox platformsButton;
@@ -60,9 +66,10 @@ public class MainViewController implements Initializable {
         borderPane.centerProperty().bind(centerNodeProperty);
 
         // Mount buttons
-        vBox.getChildren().add(identitiesButton);
-        vBox.getChildren().add(platformsButton);
-        vBox.getChildren().add(accountsButton);
+        vbox.getChildren().add(identitiesButton);
+        vbox.getChildren().add(platformsButton);
+        vbox.getChildren().add(accountsButton);
+        identitiesButton.setMaxWidth(Double.MAX_VALUE);
 
         // Bind button's actions to change the view model section accordingly
         identitiesButton.setOnAction(e -> viewModel.setSection(Section.IDENTITIES));
@@ -75,9 +82,9 @@ public class MainViewController implements Initializable {
         accountsButton.setText(Resources.Strings.ACCOUNTS_BUTTON_TEXT);
 
         // Set button's images
-        identitiesButton.setImage(Resources.Images.SocialNetwork.FRIENDS);
-        platformsButton.setImage(Resources.Images.Cyberpunk.PLATFORM);
-        accountsButton.setImage(Resources.Images.HelpSupport.KEY);
+        identitiesButton.setImage(Resources.Images.FontAwesome.FINGERPRINT_SOLID);
+        platformsButton.setImage(Resources.Images.FontAwesome.LAYER_GROUP_SOLID);
+        accountsButton.setImage(Resources.Images.FontAwesome.USERS_SOLID);
 
     }
 

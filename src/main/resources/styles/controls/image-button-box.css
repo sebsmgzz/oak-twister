@@ -1,13 +1,15 @@
 
 .background {
     -fx-alignment: center;
-    -fx-padding: 5px;
 }
 
 .button {
+    -fx-background-radius: 0;
     -fx-background-color: transparent;
+    -fx-padding: 10px 5px 10px 0;
 }
 
 .button:hover {
-    -fx-background-color: #00FFFF;
+    -fx-border-color: red;
+    -fx-border-width: 0 0 0 5px;
 }

@@ -9,10 +9,11 @@
          xmlns:fx="http://javafx.com/fxml"
          fx:controller="com.oaktwister.views.controls.ImageButtonBox"
          stylesheets="/styles/controls/image-button-box.css"
-         styleClass="background">
-    <Button fx:id="button" styleClass="button">
+         styleClass="background"
+         alignment="CENTER_LEFT">
+    <Button fx:id="button" styleClass="button" HBox.hgrow="ALWAYS" maxWidth="Infinity">
         <graphic>
-            <ImageView fx:id="imageView" fitHeight="50" fitWidth="50"/>
+            <ImageView fx:id="imageView" fitHeight="30" fitWidth="30"/>
         </graphic>
     </Button>
 </fx:root>

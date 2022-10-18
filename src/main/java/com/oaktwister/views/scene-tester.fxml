@@ -4,39 +4,19 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8"
+<VBox xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.oaktwister.views.roots.LandingViewController"
             fx:id="root"
             stylesheets="/styles/roots/landing.css"
             styleClass="background"
             prefHeight="400" prefWidth="600">
-    <top>
-        <HBox styleClass="topContent" VBox.vgrow="NEVER">
-            <ImageView styleClass="logo" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
-                <Image url="/images/vikings/oak.png"/>
-            </ImageView>
-            <Label text="Oak Twister"
-                   alignment="CENTER" contentDisplay="CENTER"
-                   HBox.hgrow="NEVER" styleClass="title"/>
-        </HBox>
-    </top>
-    <center>
-        <TableView fx:id="tableView" VBox.vgrow="ALWAYS">
-            <columns>
-                <TableColumn fx:id="idColumn" text="Id" styleClass="column"/>
-                <TableColumn fx:id="pathColumn" text="Path" styleClass="column"/>
-                <TableColumn fx:id="capacityColumn" text="Capacity" styleClass="column"/>
-                <TableColumn fx:id="spaceColumn" text="Space" styleClass="column"/>
-            </columns>
-        </TableView>
-    </center>
-    <bottom>
-        <HBox styleClass="bottomContent" VBox.vgrow="NEVER">
-            <Button onAction="#onLoadButtonClick" styleClass="button"
-                    text="Load" HBox.hgrow="NEVER" prefWidth="100"/>
-            <Button onAction="#onRefreshButtonClick" styleClass="button"
-                    text="Refresh" HBox.hgrow="NEVER" prefWidth="100"/>
-        </HBox>
-    </bottom>
-</BorderPane>
+    <Label fx:id="titleLabel" text="Platforms" />
+    <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" hvalue="0.5" vvalue="0.5"
+                fitToHeight="true" fitToWidth="true" styleClass="edge-to-edge">
+        <FlowPane fx:id="flowPane" alignment="TOP_CENTER" vgap="10" hgap="10" styleClass="flowPane"/>
+    </ScrollPane>
+    <HBox alignment="CENTER_RIGHT">
+        <Button fx:id="addButton" text="Add" />
+    </HBox>
+</VBox>
