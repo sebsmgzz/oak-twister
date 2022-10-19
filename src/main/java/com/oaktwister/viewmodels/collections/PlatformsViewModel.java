@@ -5,6 +5,7 @@ import com.oaktwister.services.logging.Logger;
 import com.oaktwister.services.repos.ImagesRepo;
 import com.oaktwister.services.repos.PlatformsRepo;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
+import javafx.beans.property.ReadOnlyListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 
@@ -26,16 +27,19 @@ public class PlatformsViewModel {
         platforms = new SimpleListProperty<>(FXCollections.observableArrayList());
     }
 
+    public ReadOnlyListProperty<PlatformViewModel> platformsProperty() {
+        return platforms;
+    }
+
     public void loadPlatforms() {
         logger.debug("Loading platforms");
         List<Platform> platforms = platformsRepo.findAll();
         for(Platform platform : platforms) {
-            this.platforms.add(new PlatformViewModel(imagesRepo, platform));
+            PlatformViewModel platformViewModel = new PlatformViewModel(imagesRepo);
+            this.platforms.add(platformViewModel);
+            platformViewModel.bind(platform);
         }
-    }
-
-    public SimpleListProperty<PlatformViewModel> platformsProperty() {
-        return platforms;
+        logger.debug("Loaded %s platforms", platforms.size());
     }
 
     public boolean addPlatform(String name, UUID image, String url) {
@@ -43,7 +47,9 @@ public class PlatformsViewModel {
         Platform platform = new Platform(name, image, url);
         boolean success = platformsRepo.add(platform);
         if(success) {
-            platformsProperty().add(new PlatformViewModel(imagesRepo, platform));
+            PlatformViewModel platformViewModel = new PlatformViewModel(imagesRepo);
+            this.platforms.add(platformViewModel);
+            platformViewModel.bind(platform);
         }
         return success;
     }

@@ -4,7 +4,9 @@ import com.oaktwister.models.aggregators.Platform;
 import com.oaktwister.services.Context;
 import com.oaktwister.services.repos.ImagesRepo;
 import com.oaktwister.services.util.LocalDateTimeUtil;
+import com.oaktwister.views.util.UUIDStringConverter;
 import javafx.beans.property.Property;
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
@@ -20,89 +22,68 @@ public class PlatformViewModel {
 
     private final ImagesRepo imagesRepo;
 
-    private final Platform platform;
+    private Platform platform;
+
     private final SimpleObjectProperty<UUID> id;
     private final SimpleStringProperty name;
     private final SimpleObjectProperty<Image> image;
     private final SimpleStringProperty url;
     private final SimpleObjectProperty<LocalDateTime> createdAt;
+    private final ClaimMapViewModel claims;
 
-    public PlatformViewModel(ImagesRepo imagesRepo, Platform platform) {
+    public PlatformViewModel(ImagesRepo imagesRepo) {
         this.imagesRepo = imagesRepo;
+        id = new SimpleObjectProperty<>(UUIDStringConverter.empty());
+        name = new SimpleStringProperty(null);
+        image = new SimpleObjectProperty<>(null);
+        url = new SimpleStringProperty(null);
+        createdAt = new SimpleObjectProperty<>(LocalDateTime.MIN);
+        claims = new ClaimMapViewModel();
+    }
+
+    public void bind(Platform platform) {
         this.platform = platform;
-        id = new SimpleObjectProperty<>(platform.getId());
-        name = new SimpleStringProperty(platform.getName());
-        image = new SimpleObjectProperty<>(imagesRepo.findById(platform.getImageId()));
-        url = new SimpleStringProperty(platform.getUrl());
-        createdAt = new SimpleObjectProperty<>(platform.getCreatedAt());
-        initialize();
+
+        id.set(platform.getId());
+        id.addListener((observable, oldValue, newValue) -> this.platform.setId(newValue));
+
+        name.set(platform.getName());
+        name.addListener((observable, oldValue, newValue) -> this.platform.setName(newValue));
+
+        image.set(imagesRepo.findById(platform.getImageId()));
+        image.addListener((observable, oldValue, newValue) -> this.platform.setImageId(imagesRepo.add(newValue)));
+
+        url.set(platform.getUrl());
+        url.addListener((observable, oldValue, newValue) -> this.platform.setUrl(newValue));
+
+        createdAt.set(platform.getCreatedAt());
+        createdAt.addListener((observable, oldValue, newValue) -> this.platform.setCreatedAt(newValue));
+
+        claims.bind(platform.getClaims());
     }
 
-    private void initialize() {
-        id.addListener((observable, oldValue, newValue) -> platform.setId(newValue));
-        name.addListener((observable, oldValue, newValue) -> platform.setName(newValue));
-        image.addListener((observable, oldValue, newValue) -> {
-            UUID imageId = imagesRepo.add(newValue);
-            platform.setImageId(imageId);
-        });
-        url.addListener((observable, oldValue, newValue) -> platform.setUrl(newValue));
-        createdAt.addListener((observable, oldValue, newValue) -> platform.setCreatedAt(newValue));
-    }
-
-    public Platform getPlatform() {
-        return platform;
-    }
-
-    public SimpleObjectProperty<UUID> idProperty() {
+    public ReadOnlyObjectProperty<UUID> idProperty() {
         return id;
-    }
-
-    public UUID getId() {
-        return idProperty().get();
-    }
-
-    public void setId(UUID id) {
-        idProperty().set(id);
     }
 
     public SimpleStringProperty nameProperty() {
         return name;
     }
 
-    public String getName() {
-        return nameProperty().get();
-    }
-
-    public void setName(String name) {
-        nameProperty().set(name);
-    }
-
     public SimpleObjectProperty<Image> imageProperty() {
         return image;
-    }
-
-    public Image getImage() {
-        return imageProperty().get();
-    }
-
-    public void setImage(Image image) {
-        imageProperty().set(image);
     }
 
     public SimpleStringProperty urlProperty() {
         return url;
     }
 
-    public String getUrl() {
-        return urlProperty().get();
-    }
-
-    public void setUrl(String url) {
-        urlProperty().set(url);
-    }
-
-    public SimpleObjectProperty<LocalDateTime> createdAtProperty() {
+    public ReadOnlyObjectProperty<LocalDateTime> createdAtProperty() {
         return createdAt;
+    }
+
+    public ClaimMapViewModel claims() {
+        return claims;
     }
 
 }

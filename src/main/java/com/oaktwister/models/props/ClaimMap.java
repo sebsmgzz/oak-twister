@@ -2,6 +2,7 @@ package com.oaktwister.models.props;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -21,8 +22,20 @@ public class ClaimMap implements Iterable<Claim> {
         return claims.remove(name);
     }
 
+    public Claim remove(Claim claim) {
+        return remove(claim.getName());
+    }
+
     public boolean contains(String name) {
         return claims.containsKey(name);
+    }
+
+    public int size() {
+        return claims.size();
+    }
+
+    public Collection<Claim> claims() {
+        return claims.values();
     }
 
     @NotNull
