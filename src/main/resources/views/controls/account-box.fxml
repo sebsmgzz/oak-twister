@@ -19,7 +19,7 @@
     <VBox styleClass="vbox" prefWidth="300">
         <HBox>
             <Label text="Account: " />
-            <Label fx:id="accountIdentifierLabel" />
+            <Label fx:id="idLabel" />
         </HBox>
         <HBox>
             <Label text="Grants: " />

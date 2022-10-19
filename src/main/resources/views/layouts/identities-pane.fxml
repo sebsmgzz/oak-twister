@@ -15,8 +15,8 @@
     <VBox alignment="CENTER"
           AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0"
           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
-        <Label fx:id="titleLabel" styleClass="title" text="Identities" maxWidth="Infinity" alignment="CENTER" VBox.vgrow="NEVER"/>
-        <AnchorPane fx:id="anchorPane" styleClass="scroll-pane" VBox.vgrow="ALWAYS">
+        <Label styleClass="title" text="Identities" maxWidth="Infinity" alignment="CENTER" VBox.vgrow="NEVER"/>
+        <AnchorPane styleClass="scroll-pane" VBox.vgrow="ALWAYS">
             <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER"
                         AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0"
                         AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
@@ -28,7 +28,7 @@
             </ScrollPane>
         </AnchorPane>
         <HBox styleClass="hbox" alignment="CENTER_RIGHT" VBox.vgrow="NEVER">
-            <Button fx:id="addButton" text="Add" minWidth="100"/>
+            <Button text="Add" onAction="#onAddButtonClick" minWidth="100"/>
         </HBox>
     </VBox>
 </fx:root>

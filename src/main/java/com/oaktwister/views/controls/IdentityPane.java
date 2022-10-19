@@ -1,7 +1,6 @@
 package com.oaktwister.views.controls;
 
 import com.oaktwister.core.ViewHandler;
-import com.oaktwister.models.props.GrantMap;
 import com.oaktwister.services.Resources;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
 import com.oaktwister.views.View;
@@ -14,30 +13,23 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 
 import java.net.URL;
-import java.time.LocalDateTime;
 import java.util.ResourceBundle;
-import java.util.UUID;
 
 public class IdentityPane extends StackPane implements View {
 
     private final ViewHandler viewHandler;
     private final IdentityViewModel viewModel;
 
-    @FXML private Button button;
+    @FXML private Button mainButton;
     @FXML private Label identifierLabel;
     @FXML private Label grantsLabel;
     @FXML private Label createdAtLabel;
-    @FXML private Button closeButton;
-
-    private final SimpleIntegerProperty grantsCountProperty;
-    private final SimpleObjectProperty<GrantMap> grantsProperty;
+    @FXML private Button deleteButton;
 
     public IdentityPane(ViewHandler viewHandler, IdentityViewModel viewModel) {
         super();
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
-        this.grantsCountProperty = new SimpleIntegerProperty(-1);
-        this.grantsProperty = new SimpleObjectProperty<GrantMap>();
         viewHandler.loadCustomView(this);
     }
 
@@ -48,38 +40,28 @@ public class IdentityPane extends StackPane implements View {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        // Styling
+        this.setOnMouseEntered(event -> deleteButton.setVisible(true));
+        this.setOnMouseExited(event -> deleteButton.setVisible(false));
+
+        // Property bindings
         viewModel.idProperty().addListener((observable, oldValue, newValue) ->
                 identifierLabel.setText(newValue.toString()));
         viewModel.createdAtProperty().addListener((observable, oldValue, newValue) ->
                 createdAtLabel.setText(newValue.toString())); // TODO: Use date time formatter
         viewModel.grantMap().grantCountProperty().addListener((observable, oldValue, newValue) ->
                 grantsLabel.setText(String.valueOf(newValue.intValue())));
-        this.setOnMouseEntered(event -> closeButton.setVisible(true));
-        this.setOnMouseExited(event -> closeButton.setVisible(false));
+        deleteButton.onActionProperty().set(event -> viewModel.delete());
+
     }
 
     public IdentityViewModel getViewModel() {
         return viewModel;
     }
 
-    public ObjectProperty<EventHandler<ActionEvent>> onActionProperty() {
-        return button.onActionProperty();
-    }
-
-    public ObjectProperty<EventHandler<ActionEvent>> onCloseProperty() {
-        return closeButton.onActionProperty();
-    }
-
-    public ReadOnlyObjectProperty<UUID> identifierProperty() {
-        return viewModel.idProperty();
-    }
-
-    public IntegerProperty grantsCountProperty() {
-        return grantsCountProperty;
-    }
-
-    public ReadOnlyObjectProperty<LocalDateTime> createdAtProperty() {
-        return viewModel.createdAtProperty();
+    public ObjectProperty<EventHandler<ActionEvent>> onMainActionProperty() {
+        return mainButton.onActionProperty();
     }
 
 }

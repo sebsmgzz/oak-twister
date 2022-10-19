@@ -1,11 +1,12 @@
 package com.oaktwister.viewmodels.models;
 
 import com.oaktwister.models.aggregators.Identity;
-import com.oaktwister.models.props.Grant;
 import com.oaktwister.services.repos.IdentitiesRepo;
+import com.oaktwister.events.DeleteIdentityEvent;
 import com.oaktwister.views.util.UUIDStringConverter;
-import javafx.beans.property.*;
-import javafx.collections.FXCollections;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.event.EventHandler;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -16,19 +17,17 @@ public class IdentityViewModel {
 
     private Identity identity;
 
-    private final GrantMapViewModel grantMap;
     private final SimpleObjectProperty<UUID> idProperty;
     private final SimpleObjectProperty<LocalDateTime> createdAtProperty;
-    private final SimpleIntegerProperty grantCountProperty;
-    private final SimpleListProperty<Grant<?>> grantsProperty;
+    private final SimpleObjectProperty<EventHandler<DeleteIdentityEvent>> onDeleteIdentityProperty;
+    private final GrantMapViewModel grantMap;
 
     public IdentityViewModel(IdentitiesRepo identitiesRepo) {
         this.identitiesRepo = identitiesRepo;
         grantMap = new GrantMapViewModel();
         idProperty = new SimpleObjectProperty<>(UUIDStringConverter.empty());
         createdAtProperty = new SimpleObjectProperty<>(LocalDateTime.MIN);
-        grantCountProperty = new SimpleIntegerProperty(-1);
-        grantsProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
+        onDeleteIdentityProperty = new SimpleObjectProperty<>();
     }
 
     public void bind(Identity identity) {
@@ -51,12 +50,25 @@ public class IdentityViewModel {
         return createdAtProperty;
     }
 
+    public SimpleObjectProperty<EventHandler<DeleteIdentityEvent>> onDeleteIdentityProperty() {
+        return onDeleteIdentityProperty;
+    }
+
     public GrantMapViewModel grantMap() {
         return grantMap;
     }
 
     public boolean delete() {
         if(identity == null) {
+            // TODO: Throw exception?
+            return false;
+        }
+        DeleteIdentityEvent event = new DeleteIdentityEvent(this);
+        EventHandler<DeleteIdentityEvent> eventHandler = onDeleteIdentityProperty.get();
+        if(eventHandler != null) {
+            eventHandler.handle(event);
+        }
+        if(event.isCanceled()) {
             return false;
         }
         return identitiesRepo.remove(identity);

@@ -48,13 +48,13 @@ public class AccountsPane extends VBox implements View {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        // View bindings
+        // Styles
         this.widthProperty().addListener(((observable, oldValue, newValue) ->
                 scrollPane.setPrefWidth(newValue.doubleValue())));
         this.heightProperty().addListener(((observable, oldValue, newValue) ->
                 scrollPane.setPrefHeight(newValue.doubleValue())));
 
-        // Data bindings
+        // Property bindings
         viewModel.accountsProperty().addListener(new DualChangeListener<>(
             accountViewModel -> vbox.getChildren().add(viewHandler.getAccountBox(accountViewModel)),
             accountViewModel -> {

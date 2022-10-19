@@ -15,6 +15,7 @@ import com.oaktwister.viewmodels.collections.IdentitiesViewModel;
 import com.oaktwister.viewmodels.collections.PlatformsViewModel;
 import com.oaktwister.viewmodels.main.LandingViewModel;
 import com.oaktwister.viewmodels.main.MainViewModel;
+import com.oaktwister.viewmodels.models.AccountViewModel;
 
 public class ViewModelFactory {
 
@@ -80,7 +81,7 @@ public class ViewModelFactory {
             AccountsRepo accountsRepo = new AccountsRepo(context, accountSerializer, accountsRepoLogger);
 
             Logger viewModelLogger = new Logger(AccountsViewModel.class);
-            accountsViewModel = new AccountsViewModel(accountsRepo, viewModelLogger);
+            accountsViewModel = new AccountsViewModel(this, accountsRepo, viewModelLogger);
         }
         return accountsViewModel;
     }
@@ -106,6 +107,39 @@ public class ViewModelFactory {
             platformsViewModel = new PlatformsViewModel(imagesRepo, platformsRepo, viewModelLogger);
         }
         return platformsViewModel;
+    }
+
+    public AccountViewModel getAccountViewModel() {
+        Context context = Context.getInstance();
+
+        LocalDateTimeUtil localDateTimeUtil = new LocalDateTimeUtil();
+        Logger grantSerializerLogger = new Logger(GrantSerializer.class);
+        GrantSerializer grantSerializer = new GrantSerializer(localDateTimeUtil, grantSerializerLogger);
+
+        Logger grantMapSerializerLogger = new Logger(GrantMapSerializer.class);
+        GrantMapSerializer grantMapSerializer = new GrantMapSerializer(grantSerializer, grantMapSerializerLogger);
+
+        AccountSerializer accountSerializer = new AccountSerializer(grantMapSerializer, localDateTimeUtil);
+        Logger accountsRepoLogger = new Logger(AccountsRepo.class);
+        AccountsRepo accountsRepo = new AccountsRepo(context, accountSerializer, accountsRepoLogger);
+
+        Logger imagesRepoLogger = new Logger(ImagesRepo.class);
+        ImagesRepo imagesRepo = new ImagesRepo(context, imagesRepoLogger);
+
+        ClaimSerializer claimSerializer = new ClaimSerializer();
+        Logger claimMapSerializerLogger = new Logger(ClaimMapSerializer.class);
+        ClaimMapSerializer claimMapSerializer = new ClaimMapSerializer(claimSerializer, claimMapSerializerLogger);
+
+        PlatformSerializer platformSerializer = new PlatformSerializer(claimMapSerializer, localDateTimeUtil);
+        Logger platformsRepoLogger = new Logger(PlatformsRepo.class);
+        PlatformsRepo platformsRepo = new PlatformsRepo(context, platformSerializer, platformsRepoLogger);
+
+        IdentitySerializer identitySerializer = new IdentitySerializer(grantMapSerializer, localDateTimeUtil);
+
+        Logger identitiesRepoLogger = new Logger(IdentitiesRepo.class);
+        IdentitiesRepo identitiesRepo = new IdentitiesRepo(context, identitySerializer, identitiesRepoLogger);
+
+        return new AccountViewModel(accountsRepo, platformsRepo, identitiesRepo, imagesRepo);
     }
 
 }

@@ -1,6 +1,9 @@
 package com.oaktwister.viewmodels.collections;
 
+import com.oaktwister.core.ViewModelFactory;
 import com.oaktwister.models.aggregators.Account;
+import com.oaktwister.services.Context;
+import com.oaktwister.services.json.AccountSerializer;
 import com.oaktwister.services.logging.Logger;
 import com.oaktwister.services.repos.AccountsRepo;
 import com.oaktwister.viewmodels.models.AccountViewModel;
@@ -13,12 +16,14 @@ import java.util.List;
 
 public class AccountsViewModel {
 
+    private final ViewModelFactory viewModelFactory;
     private final AccountsRepo accountsRepo;
     private final Logger logger;
 
     private final SimpleListProperty<AccountViewModel> accountsProperty;
 
-    public AccountsViewModel(AccountsRepo accountsRepo, Logger logger) {
+    public AccountsViewModel(ViewModelFactory viewModelFactory, AccountsRepo accountsRepo, Logger logger) {
+        this.viewModelFactory = viewModelFactory;
         this.accountsRepo = accountsRepo;
         this.logger = logger;
         accountsProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
@@ -32,7 +37,7 @@ public class AccountsViewModel {
         logger.debug("Loading accounts");
         List<Account> accounts = accountsRepo.findAll();
         for(Account account : accounts) {
-            AccountViewModel accountViewModel = new AccountViewModel();
+            AccountViewModel accountViewModel = viewModelFactory.getAccountViewModel();
             this.accountsProperty.add(accountViewModel);
             accountViewModel.bind(account);
         }

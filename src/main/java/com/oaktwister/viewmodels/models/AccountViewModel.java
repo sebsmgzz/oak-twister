@@ -1,6 +1,10 @@
 package com.oaktwister.viewmodels.models;
 
 import com.oaktwister.models.aggregators.Account;
+import com.oaktwister.services.repos.AccountsRepo;
+import com.oaktwister.services.repos.IdentitiesRepo;
+import com.oaktwister.services.repos.ImagesRepo;
+import com.oaktwister.services.repos.PlatformsRepo;
 import com.oaktwister.views.util.UUIDStringConverter;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -12,37 +16,53 @@ import java.util.UUID;
 
 public class AccountViewModel {
 
-    private Account account;
+    private final AccountsRepo accountsRepo;
+    private final PlatformsRepo platformsRepo;
+    private final IdentitiesRepo identitiesRepo;
 
-    private final GrantMapViewModel grants;
     private final SimpleObjectProperty<UUID> id;
     private final SimpleObjectProperty<UUID> platformId;
     private final SimpleObjectProperty<UUID> identityId;
     private final SimpleObjectProperty<LocalDateTime> createdAt;
+    private final IdentityViewModel identity;
+    private final PlatformViewModel platform;
+    private final GrantMapViewModel grants;
 
-    public AccountViewModel() {
-        grants = new GrantMapViewModel();
+    private Account account;
+
+    public AccountViewModel(AccountsRepo accountsRepo, PlatformsRepo platformsRepo,
+                            IdentitiesRepo identitiesRepo, ImagesRepo imagesRepo) {
+        this.accountsRepo = accountsRepo;
+        this.platformsRepo = platformsRepo;
+        this.identitiesRepo = identitiesRepo;
         this.id = new SimpleObjectProperty<>(UUIDStringConverter.empty());
         this.platformId = new SimpleObjectProperty<>(UUIDStringConverter.empty());
         this.identityId = new SimpleObjectProperty<>(UUIDStringConverter.empty());
         this.createdAt = new SimpleObjectProperty<>(LocalDateTime.MIN);
+        identity = new IdentityViewModel(identitiesRepo);
+        platform = new PlatformViewModel(imagesRepo);
+        grants = new GrantMapViewModel();
     }
 
     public void bind(Account account) {
         this.account = account;
 
         id.set(account.getId());
-        id.addListener((observable, oldValue, newValue) -> account.setId(newValue));
+        id.addListener((observable, oldValue, newValue) -> this.account.setId(newValue));
 
         platformId.set(account.getPlatformId());
-        platformId.addListener((observable, oldValue, newValue) -> account.setPlatformId(newValue));
+        platformId.addListener((observable, oldValue, newValue) -> this.account.setPlatformId(newValue));
 
         identityId.set(account.getIdentityId());
-        identityId.addListener((observable, oldValue, newValue) -> account.setIdentityId(newValue));
+        identityId.addListener((observable, oldValue, newValue) -> this.account.setIdentityId(newValue));
 
         createdAt.set(account.getCreatedAt());
-        createdAt.addListener((observable, oldValue, newValue) -> account.setCreatedAt(newValue));
+        createdAt.addListener((observable, oldValue, newValue) -> this.account.setCreatedAt(newValue));
 
+        if(account.hasIdentity()) {
+            identity.bind(identitiesRepo.findById(account.getIdentityId()));
+        }
+        platform.bind(platformsRepo.findById(account.getPlatformId()));
         grants.bind(account.getGrants());
     }
 
@@ -62,8 +82,20 @@ public class AccountViewModel {
         return createdAt;
     }
 
+    public IdentityViewModel identity() {
+        return identity;
+    }
+
+    public PlatformViewModel platform() {
+        return platform;
+    }
+
     public GrantMapViewModel grants() {
         return grants;
+    }
+
+    public boolean delete() {
+        return accountsRepo.remove(account);
     }
 
 }
