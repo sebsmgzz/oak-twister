@@ -6,6 +6,7 @@ import com.oaktwister.services.DriveFactory;
 import com.oaktwister.services.json.*;
 import com.oaktwister.services.logging.Logger;
 import com.oaktwister.services.repos.AccountsRepo;
+import com.oaktwister.services.repos.IdentitiesRepo;
 import com.oaktwister.services.repos.ImagesRepo;
 import com.oaktwister.services.repos.PlatformsRepo;
 import com.oaktwister.services.util.LocalDateTimeUtil;
@@ -43,8 +44,22 @@ public class ViewModelFactory {
 
     public IdentitiesViewModel getIdentitiesViewModel() {
         if(identitiesViewModel == null) {
+            Context context = Context.getInstance();
+
+            LocalDateTimeUtil localDateTimeUtil = new LocalDateTimeUtil();
+            Logger grantSerializerLogger = new Logger(GrantSerializer.class);
+            GrantSerializer grantSerializer = new GrantSerializer(localDateTimeUtil, grantSerializerLogger);
+
+            Logger grantMapSerializerLogger = new Logger(GrantMapSerializer.class);
+            GrantMapSerializer grantMapSerializer = new GrantMapSerializer(grantSerializer, grantMapSerializerLogger);
+
+            IdentitySerializer identitySerializer = new IdentitySerializer(grantMapSerializer, localDateTimeUtil);
+
+            Logger identitiesRepoLogger = new Logger(IdentitiesRepo.class);
+            IdentitiesRepo identitiesRepo = new IdentitiesRepo(context, identitySerializer, identitiesRepoLogger);
+
             Logger logger = new Logger(IdentitiesViewModel.class);
-            identitiesViewModel = new IdentitiesViewModel(logger);
+            identitiesViewModel = new IdentitiesViewModel(identitiesRepo, logger);
         }
         return identitiesViewModel;
     }

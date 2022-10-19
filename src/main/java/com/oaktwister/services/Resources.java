@@ -86,7 +86,7 @@ public interface Resources {
 
         interface Controls {
             String ACCOUNT_CELL = "/views/controls/account-box.fxml";
-            String IDENTITY_CELL = "/views/controls/identity-cell.fxml";
+            String IDENTITY_CELL = "/views/controls/identity-pane.fxml";
             String IMAGE_BUTTON_BOX = "/views/controls/image-button-box.fxml";
             String PLATFORM_PANE = "/views/controls/platform-pane.fxml";
         }

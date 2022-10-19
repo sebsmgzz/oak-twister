@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public class UUIDStringConverter extends StringConverter<UUID> {
 
-    private final static String EMPTY_UUID = "00000000-0000-0000-0000-000000000000";
+    public final static String EMPTY_UUID = "00000000-0000-0000-0000-000000000000";
 
     @Override
     public String toString(UUID uuid) {
@@ -22,6 +22,10 @@ public class UUIDStringConverter extends StringConverter<UUID> {
             string = EMPTY_UUID;
         }
         return UUID.fromString(string);
+    }
+
+    public final static UUID empty() {
+        return UUID.fromString(EMPTY_UUID);
     }
 
 }

@@ -7,12 +7,12 @@
     -fx-background-color: #A2C6BB;
 }
 
-.list-view {
+.scroll-pane {
     -fx-background-color: transparent;
     -fx-control-inner-background: transparent;
 }
 
-.list-view > .viewport {
+.scroll-pane > .viewport {
     -fx-background-color: #FDF8F8;
 }
 

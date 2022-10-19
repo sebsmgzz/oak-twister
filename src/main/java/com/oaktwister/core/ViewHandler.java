@@ -81,7 +81,7 @@ public class ViewHandler {
     }
 
     public IdentitiesPane getIdentitiesPane() {
-        return new IdentitiesPane(this);
+        return new IdentitiesPane(this, viewModelFactory.getIdentitiesViewModel());
     }
 
     public AccountsPane getAccountsPane() {

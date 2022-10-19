@@ -2,6 +2,7 @@ package com.oaktwister.views.layouts;
 
 import com.oaktwister.core.ViewHandler;
 import com.oaktwister.services.Resources;
+import com.oaktwister.viewmodels.collections.IdentitiesViewModel;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
 import com.oaktwister.views.View;
 import javafx.beans.property.ObjectProperty;
@@ -13,6 +14,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -22,14 +25,17 @@ import java.util.ResourceBundle;
 public class IdentitiesPane extends VBox implements View {
 
     private final ViewHandler viewHandler;
+    private final IdentitiesViewModel viewModel;
 
     @FXML private Label titleLabel;
-    @FXML private ListView<IdentityViewModel> listView;
+    @FXML private ScrollPane scrollPane;
+    @FXML private FlowPane flowPane;
     @FXML private Button addButton;
 
-    public IdentitiesPane(ViewHandler viewHandler) {
+    public IdentitiesPane(ViewHandler viewHandler, IdentitiesViewModel viewModel) {
         super();
         this.viewHandler = viewHandler;
+        this.viewModel = viewModel;
         viewHandler.loadCustomView(this);
     }
 
@@ -43,13 +49,12 @@ public class IdentitiesPane extends VBox implements View {
 
         // Bindings
         this.widthProperty().addListener(((observable, oldValue, newValue) ->
-                listView.setPrefWidth(newValue.doubleValue())));
+                scrollPane.setPrefWidth(newValue.doubleValue())));
         this.heightProperty().addListener(((observable, oldValue, newValue) ->
-                listView.setPrefHeight(newValue.doubleValue())));
+                scrollPane.setPrefHeight(newValue.doubleValue())));
 
         // Data loaders
-        listView.setCellFactory(listView -> viewHandler.getIdentityCell());
-        // TODO: How is the IdentityCell reading the IdentityViewModel?
+        viewModel.loadIdentities();
 
     }
 
