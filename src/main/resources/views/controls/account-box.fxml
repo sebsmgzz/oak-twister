@@ -22,7 +22,7 @@
             <Label fx:id="accountIdentifierLabel" />
         </HBox>
         <HBox>
-            <Label text="Claims: " />
+            <Label text="Grants: " />
             <Label fx:id="grantsCountLabel" />
         </HBox>
         <HBox>

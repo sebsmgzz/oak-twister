@@ -15,8 +15,8 @@ public class IdentityViewModel {
     private final IdentitiesRepo identitiesRepo;
 
     private Identity identity;
-    private GrantMapViewModel grantMap;
 
+    private final GrantMapViewModel grantMap;
     private final SimpleObjectProperty<UUID> idProperty;
     private final SimpleObjectProperty<LocalDateTime> createdAtProperty;
     private final SimpleIntegerProperty grantCountProperty;

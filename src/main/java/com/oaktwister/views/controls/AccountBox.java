@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
 import java.net.URL;
@@ -31,17 +30,17 @@ public class AccountBox extends HBox implements View {
     @FXML private Label grantsCountLabel;
     @FXML private Label createdAtLabel;
 
-    private final ObjectProperty<UUID> accountIdentifier;
-    private final SimpleIntegerProperty grantsCount;
+    private final ObjectProperty<UUID> idProperty;
+    private final SimpleIntegerProperty grantsCountProperty;
     private final ObjectProperty<LocalDateTime> createdAt;
 
     public AccountBox(ViewHandler viewHandler, AccountViewModel viewModel) {
         super();
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
-        accountIdentifier = new SimpleObjectProperty<>(viewModel.getId());
-        grantsCount = new SimpleIntegerProperty();
-        createdAt = new SimpleObjectProperty<>(viewModel.getCreatedAt());
+        idProperty = new SimpleObjectProperty<>(UUIDStringConverter.empty());
+        grantsCountProperty = new SimpleIntegerProperty(-1);
+        createdAt = new SimpleObjectProperty<>(LocalDateTime.MIN);
         viewHandler.loadCustomView(this);
     }
 
@@ -52,9 +51,12 @@ public class AccountBox extends HBox implements View {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        accountIdentifierLabel.textProperty().bindBidirectional(accountIdentifier, new UUIDStringConverter());
-        grantsCountLabel.textProperty().bindBidirectional(grantsCount, new NumberStringConverter(Integer.class));
-        createdAtLabel.textProperty().bindBidirectional(createdAt, new DateTimeStringConverter());
+        viewModel.idProperty().addListener((observable, oldValue, newValue) ->
+                accountIdentifierLabel.setText(newValue.toString()));
+        viewModel.grants().grantCountProperty().addListener((observable, oldValue, newValue) ->
+                grantsCountLabel.setText(String.valueOf(newValue.intValue())));
+        viewModel.createdAtProperty().addListener((observable, oldValue, newValue) ->
+                createdAtLabel.textProperty().set(newValue.toString())); // TODO: Use date time formatter
     }
 
     public ObjectProperty<Image> imageProperty() {
@@ -81,24 +83,24 @@ public class AccountBox extends HBox implements View {
         platformNameProperty().set(platformName);
     }
 
-    public ObjectProperty<UUID> accountIdentifierProperty() {
-        return accountIdentifier;
+    public ObjectProperty<UUID> idPropertyProperty() {
+        return idProperty;
     }
 
-    public UUID getAccountIdentifier() {
-        return accountIdentifierProperty().get();
+    public UUID getIdProperty() {
+        return idPropertyProperty().get();
     }
 
-    public void setAccountIdentifier(UUID accountIdentifier) {
-        accountIdentifierProperty().set(accountIdentifier);
+    public void setIdProperty(UUID idProperty) {
+        idPropertyProperty().set(idProperty);
     }
 
-    public IntegerProperty grantsCountProperty() {
-        return grantsCount;
+    public IntegerProperty grantsCountPropertyProperty() {
+        return grantsCountProperty;
     }
 
-    public Integer getGrantsCount() {
-        return grantsCountProperty().get();
+    public Integer getGrantsCountProperty() {
+        return grantsCountPropertyProperty().get();
     }
 
 }
