@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -24,13 +25,14 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class IdentitiesPane extends VBox implements View {
+public class IdentitiesPane extends AnchorPane implements View {
 
     private final ViewHandler viewHandler;
     private final IdentitiesViewModel viewModel;
 
     @FXML private Label titleLabel;
     @FXML private AnchorPane anchorPane;
+    @FXML private ScrollPane scrollPane;
     @FXML private FlowPane flowPane;
     @FXML private Button addButton;
 
@@ -49,6 +51,11 @@ public class IdentitiesPane extends VBox implements View {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        scrollPane.widthProperty().addListener((observable, oldValue, newValue) ->
+                flowPane.setPrefWidth(newValue.doubleValue()));
+        scrollPane.heightProperty().addListener((observable, oldValue, newValue) ->
+                flowPane.setPrefHeight(newValue.doubleValue()));
+
         // Bindings
         viewModel.identitiesProperty().addListener(this::onIdentitiesChange);
 
@@ -65,7 +72,17 @@ public class IdentitiesPane extends VBox implements View {
             // add it to the flowPane's children
             if (change.wasAdded()) {
                 for (IdentityViewModel identityViewModel : change.getAddedSubList()) {
-                    children.add(viewHandler.getIdentityPane(identityViewModel)); // TODO: Bind viewModel
+                    IdentityPane identityPane = viewHandler.getIdentityPane(identityViewModel);
+                    identityPane.onCloseProperty().set(event -> {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setTitle("Delete identity");
+                        alert.setContentText(String.format(
+                            "Do you really want to delete identity %s?%n" +
+                            "This action cannot be undone.",
+                            identityPane.identifierProperty().get().toString()));
+                        alert.show();
+                    });
+                    children.add(identityPane);
                 }
             }
 

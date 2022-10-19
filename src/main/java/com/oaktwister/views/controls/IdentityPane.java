@@ -1,6 +1,8 @@
 package com.oaktwister.views.controls;
 
 import com.oaktwister.core.ViewHandler;
+import com.oaktwister.models.props.Grant;
+import com.oaktwister.models.props.GrantMap;
 import com.oaktwister.services.Resources;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
 import com.oaktwister.views.View;
@@ -8,13 +10,16 @@ import com.oaktwister.views.util.DateTimeStringConverter;
 import com.oaktwister.views.util.NumberStringConverter;
 import com.oaktwister.views.util.UUIDStringConverter;
 import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.beans.value.WeakChangeListener;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
 import java.net.URL;
@@ -33,13 +38,15 @@ public class IdentityPane extends StackPane implements View {
     @FXML private Label createdAtLabel;
     @FXML private Button closeButton;
 
-    private final SimpleIntegerProperty grantsProperty;
+    private final SimpleIntegerProperty grantsCountProperty;
+    private final SimpleObjectProperty<GrantMap> grantsProperty;
 
     public IdentityPane(ViewHandler viewHandler, IdentityViewModel viewModel) {
         super();
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
-        this.grantsProperty = new SimpleIntegerProperty(-1);
+        this.grantsCountProperty = new SimpleIntegerProperty(-1);
+        this.grantsProperty = new SimpleObjectProperty<GrantMap>();
         viewHandler.loadCustomView(this);
     }
 
@@ -51,9 +58,7 @@ public class IdentityPane extends StackPane implements View {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         identifierLabel.textProperty().bindBidirectional(viewModel.idProperty(), new UUIDStringConverter());
-        grantsLabel.textProperty().bindBidirectional(grantsProperty, new NumberStringConverter(Integer.class));
-        viewModel.grantsProperty().addListener((observable, oldValue, newValue) ->
-                grantsProperty.set(viewModel.grantsProperty().getSize()));
+        grantsLabel.textProperty().bindBidirectional(grantsCountProperty, new NumberStringConverter(Integer.class));
         createdAtLabel.textProperty().bindBidirectional(viewModel.createdAtProperty(), new DateTimeStringConverter());
         this.setOnMouseEntered(event -> closeButton.setVisible(true));
         this.setOnMouseExited(event -> closeButton.setVisible(false));
@@ -75,8 +80,8 @@ public class IdentityPane extends StackPane implements View {
         return viewModel.idProperty();
     }
 
-    public IntegerProperty grantsProperty() {
-        return grantsProperty;
+    public IntegerProperty grantsCountProperty() {
+        return grantsCountProperty;
     }
 
     public SimpleObjectProperty<LocalDateTime> createdAtProperty() {
