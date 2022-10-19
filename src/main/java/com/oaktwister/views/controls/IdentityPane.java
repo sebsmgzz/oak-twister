@@ -1,20 +1,11 @@
 package com.oaktwister.views.controls;
 
 import com.oaktwister.core.ViewHandler;
-import com.oaktwister.models.props.Grant;
 import com.oaktwister.models.props.GrantMap;
 import com.oaktwister.services.Resources;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
 import com.oaktwister.views.View;
-import com.oaktwister.views.util.DateTimeStringConverter;
-import com.oaktwister.views.util.NumberStringConverter;
-import com.oaktwister.views.util.UUIDStringConverter;
 import javafx.beans.property.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.beans.value.WeakChangeListener;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -57,9 +48,12 @@ public class IdentityPane extends StackPane implements View {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        identifierLabel.textProperty().bindBidirectional(viewModel.idProperty(), new UUIDStringConverter());
-        grantsLabel.textProperty().bindBidirectional(grantsCountProperty, new NumberStringConverter(Integer.class));
-        createdAtLabel.textProperty().bindBidirectional(viewModel.createdAtProperty(), new DateTimeStringConverter());
+        viewModel.idProperty().addListener((observable, oldValue, newValue) ->
+                identifierLabel.setText(newValue.toString()));
+        viewModel.createdAtProperty().addListener((observable, oldValue, newValue) ->
+                createdAtLabel.setText(newValue.toString())); // TODO: Use date time formatter
+        viewModel.grantMap().grantCountProperty().addListener((observable, oldValue, newValue) ->
+                grantsLabel.setText(String.valueOf(newValue.intValue())));
         this.setOnMouseEntered(event -> closeButton.setVisible(true));
         this.setOnMouseExited(event -> closeButton.setVisible(false));
     }
@@ -76,7 +70,7 @@ public class IdentityPane extends StackPane implements View {
         return closeButton.onActionProperty();
     }
 
-    public SimpleObjectProperty<UUID> identifierProperty() {
+    public ReadOnlyObjectProperty<UUID> identifierProperty() {
         return viewModel.idProperty();
     }
 
@@ -84,7 +78,7 @@ public class IdentityPane extends StackPane implements View {
         return grantsCountProperty;
     }
 
-    public SimpleObjectProperty<LocalDateTime> createdAtProperty() {
+    public ReadOnlyObjectProperty<LocalDateTime> createdAtProperty() {
         return viewModel.createdAtProperty();
     }
 

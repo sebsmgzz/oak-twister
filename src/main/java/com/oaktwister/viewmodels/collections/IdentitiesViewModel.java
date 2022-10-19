@@ -31,7 +31,9 @@ public class IdentitiesViewModel {
         logger.debug("Loading identities");
         ArrayList<Identity> identities = identitiesRepo.findAll();
         for(Identity identity : identities) {
-            this.identitiesProperty.add(new IdentityViewModel(identity));
+            IdentityViewModel identityViewModel = new IdentityViewModel(identitiesRepo);
+            identitiesProperty.add(identityViewModel);
+            identityViewModel.bind(identity);
         }
         logger.debug("Loaded %s identities", identities.size());
     }
