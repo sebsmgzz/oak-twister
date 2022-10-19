@@ -13,14 +13,16 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-public class IdentityPane extends AnchorPane implements View {
+public class IdentityPane extends StackPane implements View {
 
     private final ViewHandler viewHandler;
     private final IdentityViewModel viewModel;
@@ -29,6 +31,7 @@ public class IdentityPane extends AnchorPane implements View {
     @FXML private Label identifierLabel;
     @FXML private Label grantsLabel;
     @FXML private Label createdAtLabel;
+    @FXML private Button closeButton;
 
     private final SimpleIntegerProperty grantsProperty;
 
@@ -52,6 +55,8 @@ public class IdentityPane extends AnchorPane implements View {
         viewModel.grantsProperty().addListener((observable, oldValue, newValue) ->
                 grantsProperty.set(viewModel.grantsProperty().getSize()));
         createdAtLabel.textProperty().bindBidirectional(viewModel.createdAtProperty(), new DateTimeStringConverter());
+        this.setOnMouseEntered(event -> closeButton.setVisible(true));
+        this.setOnMouseExited(event -> closeButton.setVisible(false));
     }
 
     public IdentityViewModel getViewModel() {
@@ -60,6 +65,10 @@ public class IdentityPane extends AnchorPane implements View {
 
     public ObjectProperty<EventHandler<ActionEvent>> onActionProperty() {
         return button.onActionProperty();
+    }
+
+    public ObjectProperty<EventHandler<ActionEvent>> onCloseProperty() {
+        return closeButton.onActionProperty();
     }
 
     public SimpleObjectProperty<UUID> identifierProperty() {

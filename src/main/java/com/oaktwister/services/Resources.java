@@ -64,7 +64,7 @@ public interface Resources {
 
         interface Controls {
             String ACCOUNT_BOX = "/styles/controls/account-box.css";
-            String IDENTITY_CELL = "/styles/controls/identity-cell.css";
+            String IDENTITY_CELL = "/styles/controls/identity-pane.css";
             String IMAGE_BUTTON_BOX = "/styles/controls/image-button-box.css";
             String PLATFORM_PANE = "/styles/controls/platform-pane.css";
         }
