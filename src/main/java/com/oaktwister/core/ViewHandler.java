@@ -1,11 +1,13 @@
 package com.oaktwister.core;
 
+import com.oaktwister.models.aggregators.Identity;
 import com.oaktwister.services.Resources;
 import com.oaktwister.viewmodels.models.AccountViewModel;
+import com.oaktwister.viewmodels.models.IdentityViewModel;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
 import com.oaktwister.views.View;
 import com.oaktwister.views.controls.AccountBox;
-import com.oaktwister.views.controls.IdentityCell;
+import com.oaktwister.views.controls.IdentityPane;
 import com.oaktwister.views.controls.ImageButtonBox;
 import com.oaktwister.views.controls.PlatformPane;
 import com.oaktwister.views.layouts.AccountsPane;
@@ -88,8 +90,8 @@ public class ViewHandler {
         return new AccountsPane(this, viewModelFactory.getAccountsViewModel());
     }
 
-    public IdentityCell getIdentityCell() {
-        return new IdentityCell(this);
+    public IdentityPane getIdentityPane(IdentityViewModel viewModel) {
+        return new IdentityPane(this, viewModel);
     }
 
     public AccountBox getAccountBox(AccountViewModel viewModel) {

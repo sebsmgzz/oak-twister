@@ -14,9 +14,7 @@ public class IdentitySerializer implements JsonObjectSerializer<Identity> {
 
     private final static String ID_KEY = "id";
     private final static String CREATED_AT_KEY = "createdAt";
-    private final static String GRANT_MAP_KEY = "claims";
-    private final static String DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
-    private final static String DATE_TIME_ZONE = "UTC";
+    private final static String GRANT_MAP_KEY = "grants";
 
     private final GrantMapSerializer grantMapSerializer;
     private final LocalDateTimeUtil localDateTimeUtil;

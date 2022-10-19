@@ -5,21 +5,23 @@ import com.oaktwister.services.Resources;
 import com.oaktwister.viewmodels.collections.IdentitiesViewModel;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
 import com.oaktwister.views.View;
+import com.oaktwister.views.controls.IdentityPane;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class IdentitiesPane extends VBox implements View {
@@ -28,7 +30,7 @@ public class IdentitiesPane extends VBox implements View {
     private final IdentitiesViewModel viewModel;
 
     @FXML private Label titleLabel;
-    @FXML private ScrollPane scrollPane;
+    @FXML private AnchorPane anchorPane;
     @FXML private FlowPane flowPane;
     @FXML private Button addButton;
 
@@ -48,14 +50,45 @@ public class IdentitiesPane extends VBox implements View {
     public void initialize(URL location, ResourceBundle resources) {
 
         // Bindings
-        this.widthProperty().addListener(((observable, oldValue, newValue) ->
-                scrollPane.setPrefWidth(newValue.doubleValue())));
-        this.heightProperty().addListener(((observable, oldValue, newValue) ->
-                scrollPane.setPrefHeight(newValue.doubleValue())));
+        viewModel.identitiesProperty().addListener(this::onIdentitiesChange);
 
         // Data loaders
         viewModel.loadIdentities();
 
+    }
+
+    private void onIdentitiesChange(ListChangeListener.Change<? extends IdentityViewModel> change) {
+        List<Node> children = flowPane.getChildren();
+        while (change.next()) {
+
+            // When an identity is added, simply get the IdentityPane from the viewFactory and
+            // add it to the flowPane's children
+            if (change.wasAdded()) {
+                for (IdentityViewModel identityViewModel : change.getAddedSubList()) {
+                    children.add(viewHandler.getIdentityPane(identityViewModel)); // TODO: Bind viewModel
+                }
+            }
+
+            // When a platform is removed, we need to iterate through the flowPane's children to
+            // backtrack the Node to the IdentityViewModel been removed
+            if (change.wasRemoved()) {
+                for (IdentityViewModel identityViewModel : change.getAddedSubList()) {
+                    for (Node node : children) {
+                        IdentityPane identityPane = node instanceof IdentityPane? (IdentityPane) node : null;
+                        if(identityPane == null) {
+                            throw new RuntimeException(
+                                "A IdentitiesPane::flowPane children was found not to be an instance of IdentityPane. " +
+                                "This is not the expected behaviour. Something is critically wrong.");
+                        }
+                        IdentityViewModel foundViewModel = identityPane.getViewModel();
+                        if (identityViewModel == foundViewModel) {
+                            children.remove(node);
+                        }
+                    }
+                }
+            }
+
+        }
     }
 
     public StringProperty titleProperty() {

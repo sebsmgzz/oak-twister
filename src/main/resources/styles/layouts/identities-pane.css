@@ -16,6 +16,10 @@
     -fx-background-color: #FDF8F8;
 }
 
+.flow-pane {
+    -fx-background-color: #717782;
+}
+
 .hbox {
     -fx-padding: 10px;
 }

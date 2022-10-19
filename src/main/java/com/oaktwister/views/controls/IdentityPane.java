@@ -2,6 +2,7 @@ package com.oaktwister.views.controls;
 
 import com.oaktwister.core.ViewHandler;
 import com.oaktwister.services.Resources;
+import com.oaktwister.viewmodels.models.IdentityViewModel;
 import com.oaktwister.views.View;
 import com.oaktwister.views.util.DateTimeStringConverter;
 import com.oaktwister.views.util.NumberStringConverter;
@@ -19,25 +20,23 @@ import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-public class IdentityCell extends AnchorPane implements View {
+public class IdentityPane extends AnchorPane implements View {
 
     private final ViewHandler viewHandler;
+    private final IdentityViewModel viewModel;
 
     @FXML private Button button;
     @FXML private Label identifierLabel;
     @FXML private Label grantsLabel;
     @FXML private Label createdAtLabel;
 
-    private final SimpleObjectProperty<UUID> identifierProperty;
     private final SimpleIntegerProperty grantsProperty;
-    private final SimpleObjectProperty<LocalDateTime> createdAtProperty;
 
-    public IdentityCell(ViewHandler viewHandler) {
+    public IdentityPane(ViewHandler viewHandler, IdentityViewModel viewModel) {
         super();
         this.viewHandler = viewHandler;
-        this.identifierProperty = new SimpleObjectProperty<UUID>(UUIDStringConverter.empty());
+        this.viewModel = viewModel;
         this.grantsProperty = new SimpleIntegerProperty(-1);
-        this.createdAtProperty = new SimpleObjectProperty<>(LocalDateTime.MIN);
         viewHandler.loadCustomView(this);
     }
 
@@ -48,9 +47,15 @@ public class IdentityCell extends AnchorPane implements View {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        identifierLabel.textProperty().bindBidirectional(identifierProperty, new UUIDStringConverter());
+        identifierLabel.textProperty().bindBidirectional(viewModel.idProperty(), new UUIDStringConverter());
         grantsLabel.textProperty().bindBidirectional(grantsProperty, new NumberStringConverter(Integer.class));
-        createdAtLabel.textProperty().bindBidirectional(createdAtProperty, new DateTimeStringConverter());
+        viewModel.grantsProperty().addListener((observable, oldValue, newValue) ->
+                grantsProperty.set(viewModel.grantsProperty().getSize()));
+        createdAtLabel.textProperty().bindBidirectional(viewModel.createdAtProperty(), new DateTimeStringConverter());
+    }
+
+    public IdentityViewModel getViewModel() {
+        return viewModel;
     }
 
     public ObjectProperty<EventHandler<ActionEvent>> onActionProperty() {
@@ -58,7 +63,7 @@ public class IdentityCell extends AnchorPane implements View {
     }
 
     public SimpleObjectProperty<UUID> identifierProperty() {
-        return identifierProperty;
+        return viewModel.idProperty();
     }
 
     public IntegerProperty grantsProperty() {
@@ -66,7 +71,7 @@ public class IdentityCell extends AnchorPane implements View {
     }
 
     public SimpleObjectProperty<LocalDateTime> createdAtProperty() {
-        return createdAtProperty;
+        return viewModel.createdAtProperty();
     }
 
 }
