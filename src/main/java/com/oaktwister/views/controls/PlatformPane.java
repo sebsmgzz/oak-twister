@@ -10,13 +10,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PlatformPane extends StackPane implements View {
-
-    private static final String DATE_TIME_PREFIX = "Created at: "; // TODO: Put this in a label in the xml
 
     private final ViewHandler viewHandler;
     private final PlatformViewModel viewModel;
@@ -55,7 +52,7 @@ public class PlatformPane extends StackPane implements View {
                 imageView.setImage(newValue));
         nameLabel.textProperty().bindBidirectional(viewModel.nameProperty());
         viewModel.createdAtProperty().addListener((observable, oldValue, newValue) ->
-                createdAtLabel.setText(newValue.toString())); // TODO: Use datetime formatter
+                createdAtLabel.setText(viewModel.formatDate(newValue)));
 
     }
 

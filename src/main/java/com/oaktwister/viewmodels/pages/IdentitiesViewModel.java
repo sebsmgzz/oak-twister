@@ -1,8 +1,10 @@
 package com.oaktwister.viewmodels.pages;
 
+import com.oaktwister.core.ViewModelFactory;
 import com.oaktwister.models.aggregators.Identity;
 import com.oaktwister.services.logging.Logger;
 import com.oaktwister.services.repos.IdentitiesRepo;
+import com.oaktwister.services.util.LocalDateTimeUtil;
 import com.oaktwister.services.util.UUIDUtil;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
 import javafx.beans.property.ReadOnlyListProperty;
@@ -13,12 +15,14 @@ import java.util.ArrayList;
 
 public class IdentitiesViewModel {
 
+    private final ViewModelFactory viewModelFactory;
     private final IdentitiesRepo identitiesRepo;
     private final Logger logger;
 
     private final SimpleListProperty<IdentityViewModel> identitiesProperty;
 
-    public IdentitiesViewModel(IdentitiesRepo identitiesRepo, Logger logger) {
+    public IdentitiesViewModel(ViewModelFactory viewModelFactory, IdentitiesRepo identitiesRepo, Logger logger) {
+        this.viewModelFactory = viewModelFactory;
         this.identitiesRepo = identitiesRepo;
         this.logger = logger;
         this.identitiesProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
@@ -32,7 +36,7 @@ public class IdentitiesViewModel {
         logger.debug("Loading identities");
         ArrayList<Identity> identities = identitiesRepo.findAll();
         for(Identity identity : identities) {
-            IdentityViewModel identityViewModel = new IdentityViewModel(identitiesRepo, new UUIDUtil());
+            IdentityViewModel identityViewModel = viewModelFactory.getIdentityViewModel();
             identitiesProperty.add(identityViewModel);
             identityViewModel.bind(identity);
         }

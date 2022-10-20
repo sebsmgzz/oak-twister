@@ -1,7 +1,9 @@
 package com.oaktwister.viewmodels.models;
 
+import com.oaktwister.core.ViewModelFactory;
 import com.oaktwister.models.aggregators.Platform;
 import com.oaktwister.services.repos.ImagesRepo;
+import com.oaktwister.services.util.LocalDateTimeUtil;
 import com.oaktwister.services.util.UUIDUtil;
 import com.oaktwister.views.util.UUIDStringConverter;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -15,8 +17,7 @@ import java.util.UUID;
 public class PlatformViewModel {
 
     private final ImagesRepo imagesRepo;
-
-    private Platform platform;
+    private final LocalDateTimeUtil localDateTimeUtil;
 
     private final SimpleObjectProperty<UUID> id;
     private final SimpleStringProperty name;
@@ -25,14 +26,18 @@ public class PlatformViewModel {
     private final SimpleObjectProperty<LocalDateTime> createdAt;
     private final ClaimMapViewModel claims;
 
-    public PlatformViewModel(ImagesRepo imagesRepo, UUIDUtil uuidUtil) {
+    private Platform platform;
+
+    public PlatformViewModel(ViewModelFactory viewModelFactory, ImagesRepo imagesRepo,
+                             UUIDUtil uuidUtil, LocalDateTimeUtil localDateTimeUtil) {
         this.imagesRepo = imagesRepo;
+        this.localDateTimeUtil = localDateTimeUtil;
         id = new SimpleObjectProperty<>(uuidUtil.empty());
         name = new SimpleStringProperty(null);
         image = new SimpleObjectProperty<>(null);
         url = new SimpleStringProperty(null);
         createdAt = new SimpleObjectProperty<>(LocalDateTime.MIN);
-        claims = new ClaimMapViewModel();
+        claims = viewModelFactory.getClaimMapViewModel();
     }
 
     public void bind(Platform platform) {
@@ -78,6 +83,10 @@ public class PlatformViewModel {
 
     public ClaimMapViewModel claims() {
         return claims;
+    }
+
+    public String formatDate(LocalDateTime dateTime) {
+        return localDateTimeUtil.toDefault(dateTime);
     }
 
 }

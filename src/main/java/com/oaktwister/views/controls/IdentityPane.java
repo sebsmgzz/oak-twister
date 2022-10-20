@@ -51,7 +51,7 @@ public class IdentityPane extends StackPane implements View {
         viewModel.idProperty().addListener((observable, oldValue, newValue) ->
                 identifierLabel.setText(newValue.toString()));
         viewModel.createdAtProperty().addListener((observable, oldValue, newValue) ->
-                createdAtLabel.setText(newValue.toString())); // TODO: Use date time formatter
+                createdAtLabel.setText(viewModel.formatDate(newValue))); // TODO: Use date time formatter
         viewModel.grantMap().grantCountProperty().addListener((observable, oldValue, newValue) ->
                 grantsLabel.setText(String.valueOf(newValue.intValue())));
         deleteButton.onActionProperty().set(event -> viewModel.delete());

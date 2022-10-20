@@ -7,6 +7,7 @@ import com.oaktwister.models.events.DeleteIdentityEvent;
 import com.oaktwister.services.repos.AccountsRepo;
 import com.oaktwister.services.repos.IdentitiesRepo;
 import com.oaktwister.services.repos.PlatformsRepo;
+import com.oaktwister.services.util.LocalDateTimeUtil;
 import com.oaktwister.services.util.UUIDUtil;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -20,6 +21,7 @@ public class AccountViewModel {
     private final AccountsRepo accountsRepo;
     private final PlatformsRepo platformsRepo;
     private final IdentitiesRepo identitiesRepo;
+    private final LocalDateTimeUtil localDateTimeUtil;
 
     private final SimpleObjectProperty<UUID> id;
     private final SimpleObjectProperty<UUID> platformId;
@@ -33,10 +35,12 @@ public class AccountViewModel {
     private Account account;
 
     public AccountViewModel(ViewModelFactory viewModelFactory, AccountsRepo accountsRepo,
-                            PlatformsRepo platformsRepo, IdentitiesRepo identitiesRepo, UUIDUtil uuidUtil) {
+                            PlatformsRepo platformsRepo, IdentitiesRepo identitiesRepo,
+                            UUIDUtil uuidUtil, LocalDateTimeUtil localDateTimeUtil) {
         this.accountsRepo = accountsRepo;
         this.platformsRepo = platformsRepo;
         this.identitiesRepo = identitiesRepo;
+        this.localDateTimeUtil = localDateTimeUtil;
         this.id = new SimpleObjectProperty<>(uuidUtil.empty());
         this.platformId = new SimpleObjectProperty<>(uuidUtil.empty());
         this.identityId = new SimpleObjectProperty<>(uuidUtil.empty());
@@ -115,6 +119,10 @@ public class AccountViewModel {
             return false;
         }
         return accountsRepo.remove(account);
+    }
+
+    public String formatDate(LocalDateTime dateTime) {
+        return localDateTimeUtil.toDefault(dateTime);
     }
 
 }

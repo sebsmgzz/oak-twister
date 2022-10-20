@@ -1,10 +1,11 @@
 package com.oaktwister.viewmodels.models;
 
+import com.oaktwister.core.ViewModelFactory;
 import com.oaktwister.models.aggregators.Identity;
 import com.oaktwister.services.repos.IdentitiesRepo;
 import com.oaktwister.models.events.DeleteIdentityEvent;
+import com.oaktwister.services.util.LocalDateTimeUtil;
 import com.oaktwister.services.util.UUIDUtil;
-import com.oaktwister.views.util.UUIDStringConverter;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.EventHandler;
@@ -15,6 +16,7 @@ import java.util.UUID;
 public class IdentityViewModel {
 
     private final IdentitiesRepo identitiesRepo;
+    private final LocalDateTimeUtil localDateTimeUtil;
 
     private Identity identity;
 
@@ -23,22 +25,24 @@ public class IdentityViewModel {
     private final SimpleObjectProperty<EventHandler<DeleteIdentityEvent>> onDeleteIdentityProperty;
     private final GrantMapViewModel grantMap;
 
-    public IdentityViewModel(IdentitiesRepo identitiesRepo, UUIDUtil uuidUtil) {
+    public IdentityViewModel(ViewModelFactory viewModelFactory, IdentitiesRepo identitiesRepo,
+                             UUIDUtil uuidUtil, LocalDateTimeUtil localDateTimeUtil) {
         this.identitiesRepo = identitiesRepo;
-        grantMap = new GrantMapViewModel();
+        this.localDateTimeUtil = localDateTimeUtil;
         idProperty = new SimpleObjectProperty<>(uuidUtil.empty());
         createdAtProperty = new SimpleObjectProperty<>(LocalDateTime.MIN);
         onDeleteIdentityProperty = new SimpleObjectProperty<>();
+        grantMap = viewModelFactory.getGrantMapViewModel();
     }
 
     public void bind(Identity identity) {
         this.identity = identity;
 
         idProperty.set(identity.getId());
-        idProperty.addListener((observable, oldValue, newValue) -> identity.setId(newValue));
+        idProperty.addListener((observable, oldValue, newValue) -> this.identity.setId(newValue));
 
         createdAtProperty.set(identity.getCreatedAt());
-        createdAtProperty.addListener((observable, oldValue, newValue) ->  identity.setCreatedAt(newValue));
+        createdAtProperty.addListener((observable, oldValue, newValue) ->  this.identity.setCreatedAt(newValue));
 
         grantMap.bind(identity.getGrants());
     }
@@ -73,6 +77,10 @@ public class IdentityViewModel {
             return false;
         }
         return identitiesRepo.remove(identity);
+    }
+
+    public String formatDate(LocalDateTime dateTime) {
+        return localDateTimeUtil.toDefault(dateTime);
     }
 
 }

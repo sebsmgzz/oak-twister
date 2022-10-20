@@ -13,7 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -58,7 +57,7 @@ public class AccountPane extends StackPane implements View {
         viewModel.grants().grantCountProperty().addListener((observable, oldValue, newValue) ->
                 grantsCountLabel.setText(String.valueOf(newValue.intValue())));
         viewModel.createdAtProperty().addListener((observable, oldValue, newValue) ->
-                createdAtLabel.textProperty().set(newValue.toString())); // TODO: Use date time formatter
+                createdAtLabel.textProperty().set(viewModel.formatDate(newValue)));
         deleteButton.onActionProperty().set(event -> viewModel.delete());
 
     }

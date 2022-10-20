@@ -5,16 +5,14 @@ import com.oaktwister.services.repos.AccountsRepo;
 import com.oaktwister.services.repos.IdentitiesRepo;
 import com.oaktwister.services.repos.ImagesRepo;
 import com.oaktwister.services.repos.PlatformsRepo;
+import com.oaktwister.services.util.LocalDateTimeUtil;
 import com.oaktwister.services.util.UUIDUtil;
-import com.oaktwister.viewmodels.models.GrantMapViewModel;
-import com.oaktwister.viewmodels.models.IdentityViewModel;
-import com.oaktwister.viewmodels.models.PlatformViewModel;
+import com.oaktwister.viewmodels.models.*;
 import com.oaktwister.viewmodels.pages.AccountsViewModel;
 import com.oaktwister.viewmodels.pages.IdentitiesViewModel;
 import com.oaktwister.viewmodels.pages.PlatformsViewModel;
 import com.oaktwister.viewmodels.roots.LandingViewModel;
 import com.oaktwister.viewmodels.roots.MainViewModel;
-import com.oaktwister.viewmodels.models.AccountViewModel;
 
 public class ViewModelFactory {
 
@@ -49,8 +47,9 @@ public class ViewModelFactory {
 
     public IdentitiesViewModel getIdentitiesViewModel() {
         if(identitiesViewModel == null) {
+            IdentitiesRepo identitiesRepo = serviceFactory.getIdentitiesRepo();
             Logger logger = new Logger(IdentitiesViewModel.class);
-            identitiesViewModel = new IdentitiesViewModel(serviceFactory.getIdentitiesRepo(), logger);
+            identitiesViewModel = new IdentitiesViewModel(this, identitiesRepo, logger);
             serviceFactory.clearScope();
         }
         return identitiesViewModel;
@@ -58,8 +57,9 @@ public class ViewModelFactory {
 
     public AccountsViewModel getAccountsViewModel() {
         if(accountsViewModel == null) {
+            AccountsRepo accountsRepo = serviceFactory.getAccountsRepo();
             Logger logger = new Logger(AccountsViewModel.class);
-            accountsViewModel = new AccountsViewModel(this,  serviceFactory.getAccountsRepo(), logger);
+            accountsViewModel = new AccountsViewModel(this,  accountsRepo, logger);
             serviceFactory.clearScope();
         }
         return accountsViewModel;
@@ -71,7 +71,7 @@ public class ViewModelFactory {
             ImagesRepo imagesRepo = serviceFactory.getImagesRepo();
             UUIDUtil uuidUtil = serviceFactory.getUUIDUtil();
             Logger logger = new Logger(PlatformsViewModel.class);
-            platformsViewModel = new PlatformsViewModel(platformsRepo, imagesRepo, uuidUtil, logger);
+            platformsViewModel = new PlatformsViewModel(this, platformsRepo, logger);
             serviceFactory.clearScope();
         }
         return platformsViewModel;
@@ -82,8 +82,9 @@ public class ViewModelFactory {
         PlatformsRepo platformsRepo = serviceFactory.getPlatformsRepo();
         IdentitiesRepo identitiesRepo = serviceFactory.getIdentitiesRepo();
         UUIDUtil uuidUtil = serviceFactory.getUUIDUtil();
+        LocalDateTimeUtil localDateTimeUtil = serviceFactory.getLocalDateTimeUtil();
         AccountViewModel viewModel = new AccountViewModel(
-                this, accountsRepo, platformsRepo, identitiesRepo, uuidUtil);
+                this, accountsRepo, platformsRepo, identitiesRepo, uuidUtil, localDateTimeUtil);
         serviceFactory.clearScope();
         return viewModel;
     }
@@ -91,7 +92,9 @@ public class ViewModelFactory {
     public IdentityViewModel getIdentityViewModel() {
         IdentitiesRepo identitiesRepo = serviceFactory.getIdentitiesRepo();
         UUIDUtil uuidUtil = serviceFactory.getUUIDUtil();
-        IdentityViewModel viewModel = new IdentityViewModel(identitiesRepo, uuidUtil);
+        LocalDateTimeUtil localDateTimeUtil = serviceFactory.getLocalDateTimeUtil();
+        IdentityViewModel viewModel = new IdentityViewModel(
+                this, identitiesRepo, uuidUtil, localDateTimeUtil);
         serviceFactory.clearScope();
         return viewModel;
     }
@@ -99,13 +102,21 @@ public class ViewModelFactory {
     public PlatformViewModel getPlatformViewModel() {
         ImagesRepo imagesRepo = serviceFactory.getImagesRepo();
         UUIDUtil uuidUtil = serviceFactory.getUUIDUtil();
-        PlatformViewModel viewModel = new PlatformViewModel(imagesRepo, uuidUtil);
+        LocalDateTimeUtil localDateTimeUtil = serviceFactory.getLocalDateTimeUtil();
+        PlatformViewModel viewModel = new PlatformViewModel(
+                this, imagesRepo, uuidUtil, localDateTimeUtil);
         serviceFactory.clearScope();
         return viewModel;
     }
 
     public GrantMapViewModel getGrantMapViewModel() {
         GrantMapViewModel viewModel = new GrantMapViewModel();
+        serviceFactory.clearScope();
+        return viewModel;
+    }
+
+    public ClaimMapViewModel getClaimMapViewModel() {
+        ClaimMapViewModel viewModel = new ClaimMapViewModel();
         serviceFactory.clearScope();
         return viewModel;
     }

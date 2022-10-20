@@ -100,6 +100,7 @@ public abstract class JsonRepo<T extends Entity> {
         try {
             Path fileLocation = getEntityLocation(entity.getId());
             Files.delete(fileLocation);
+            logger.info("Deleted %s", fileLocation.toString());
             return true;
         } catch (IOException ex) {
             logger.error(ex, ex.getMessage());
