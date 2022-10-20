@@ -6,7 +6,7 @@
     "grants": [
         {
             "name": "Password",
-            "type": "com.oaktwister.models.props.SecretGrant",
+            "type": "com.oaktwister.models.aggregators.grants.SecretGrant",
             "value": {
                 "value": "123",
                 "hint": "one two three"
@@ -14,17 +14,17 @@
         },
         {
             "name": "Birthday",
-            "type": "com.oaktwister.models.props.DateTimeGrant",
+            "type": "com.oaktwister.models.aggregators.grants.DateTimeGrant",
             "value": "2022-08-07T21:48:59Z"
         },
         {
             "name": "Username",
-            "type": "com.oaktwister.models.props.TextGrant",
+            "type": "com.oaktwister.models.aggregators.grants.TextGrant",
             "value": "jDoe"
         },
         {
             "name": "Location",
-            "type": "com.oaktwister.models.props.TextGrant",
+            "type": "com.oaktwister.models.aggregators.grants.TextGrant",
             "value": "Mexico City"
         }
     ]

@@ -6,12 +6,12 @@
     "grants": [
         {
             "name": "Email",
-            "type": "com.oaktwister.models.props.TextGrant",
+            "type": "com.oaktwister.models.aggregators.grants.TextGrant",
             "value": "someone.else@gmail.com"
         },
         {
             "name": "Password",
-            "type": "com.oaktwister.models.props.SecretGrant",
+            "type": "com.oaktwister.models.aggregators.grants.SecretGrant",
             "value": {
                 "value": "123456",
                 "hint": "one...six"
@@ -19,7 +19,7 @@
         },
         {
             "name": "Username",
-            "type": "com.oaktwister.models.props.TextGrant",
+            "type": "com.oaktwister.models.aggregators.grants.TextGrant",
             "value": "anonUser123"
         }
     ]
