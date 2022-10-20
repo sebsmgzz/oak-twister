@@ -83,8 +83,9 @@ public class ViewModelFactory {
         IdentitiesRepo identitiesRepo = serviceFactory.getIdentitiesRepo();
         UUIDUtil uuidUtil = serviceFactory.getUUIDUtil();
         LocalDateTimeUtil localDateTimeUtil = serviceFactory.getLocalDateTimeUtil();
+        Logger logger = new Logger(AccountViewModel.class);
         AccountViewModel viewModel = new AccountViewModel(
-                this, accountsRepo, platformsRepo, identitiesRepo, uuidUtil, localDateTimeUtil);
+                this, accountsRepo, platformsRepo, identitiesRepo, uuidUtil, localDateTimeUtil, logger);
         serviceFactory.clearScope();
         return viewModel;
     }

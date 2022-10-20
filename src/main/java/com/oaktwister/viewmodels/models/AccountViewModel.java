@@ -4,6 +4,7 @@ import com.oaktwister.core.ViewModelFactory;
 import com.oaktwister.models.aggregators.Account;
 import com.oaktwister.models.events.DeleteAccountEvent;
 import com.oaktwister.models.events.DeleteIdentityEvent;
+import com.oaktwister.services.logging.Logger;
 import com.oaktwister.services.repos.AccountsRepo;
 import com.oaktwister.services.repos.IdentitiesRepo;
 import com.oaktwister.services.repos.PlatformsRepo;
@@ -22,6 +23,7 @@ public class AccountViewModel {
     private final PlatformsRepo platformsRepo;
     private final IdentitiesRepo identitiesRepo;
     private final LocalDateTimeUtil localDateTimeUtil;
+    private final Logger logger;
 
     private final SimpleObjectProperty<UUID> id;
     private final SimpleObjectProperty<UUID> platformId;
@@ -36,11 +38,12 @@ public class AccountViewModel {
 
     public AccountViewModel(ViewModelFactory viewModelFactory, AccountsRepo accountsRepo,
                             PlatformsRepo platformsRepo, IdentitiesRepo identitiesRepo,
-                            UUIDUtil uuidUtil, LocalDateTimeUtil localDateTimeUtil) {
+                            UUIDUtil uuidUtil, LocalDateTimeUtil localDateTimeUtil, Logger logger) {
         this.accountsRepo = accountsRepo;
         this.platformsRepo = platformsRepo;
         this.identitiesRepo = identitiesRepo;
         this.localDateTimeUtil = localDateTimeUtil;
+        this.logger = logger;
         this.id = new SimpleObjectProperty<>(uuidUtil.empty());
         this.platformId = new SimpleObjectProperty<>(uuidUtil.empty());
         this.identityId = new SimpleObjectProperty<>(uuidUtil.empty());
@@ -107,7 +110,7 @@ public class AccountViewModel {
 
     public boolean delete() {
         if(account == null) {
-            // TODO: Throw exception?
+            logger.warn("Attempted to delete account without having it set beforehand");
             return false;
         }
         DeleteAccountEvent event = new DeleteAccountEvent(this);
@@ -116,9 +119,15 @@ public class AccountViewModel {
             eventHandler.handle(event);
         }
         if(event.isCanceled()) {
+            logger.info("Delete account event cancelled");
             return false;
+        } else {
+            boolean deleted = accountsRepo.remove(account);
+            if(!deleted) {
+                logger.error("Failed to delete account %s", account.getId());
+            }
+            return deleted;
         }
-        return accountsRepo.remove(account);
     }
 
     public String formatDate(LocalDateTime dateTime) {

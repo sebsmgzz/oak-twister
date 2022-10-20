@@ -8,15 +8,13 @@ import com.oaktwister.viewmodels.util.DualChangeListener;
 import com.oaktwister.views.View;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 
 import java.net.URL;
-import java.util.List;
+import java.util.Iterator;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AccountsPane extends AnchorPane implements View {
@@ -71,7 +69,11 @@ public class AccountsPane extends AnchorPane implements View {
                     "Do you really want to delete account %s?%n" +
                             "This action cannot be undone.",
                     viewModel.idProperty().get()));
-            alert.show();
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.isEmpty() || result.get().equals(ButtonType.CANCEL)) {
+                event.cancel();
+            }
+            this.viewModel.accountsProperty().remove(viewModel);
         });
 
         // Get the AccountBox from the viewHandler and add it to the flowPane's children
@@ -85,8 +87,9 @@ public class AccountsPane extends AnchorPane implements View {
 
     private void onAccountViewModelRemoved(AccountViewModel accountViewModel) {
         // Iterate through the flowPane's children
-        List<Node> children = flowPane.getChildren();
-        for (Node node : children) {
+        Iterator<Node> iterator = flowPane.getChildren().iterator();
+        while (iterator.hasNext()) {
+            Node node = iterator.next();
 
             // Each flowPane child should be of type IdentityPane
             AccountPane accountPane = node instanceof AccountPane ? (AccountPane) node : null;
@@ -99,7 +102,7 @@ public class AccountsPane extends AnchorPane implements View {
             // If the accountBox's AccountViewModel matches the one been removed, remove it as well
             AccountViewModel foundViewModel = accountPane.getViewModel();
             if (accountViewModel == foundViewModel) {
-                children.remove(node);
+                iterator.remove();
             }
 
         }
