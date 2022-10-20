@@ -17,6 +17,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+
 public abstract class JsonRepo<T extends Entity> {
 
     public final static String FILE_EXTENSION = ".json";
@@ -48,6 +50,7 @@ public abstract class JsonRepo<T extends Entity> {
             }
             builder.append(line);
         }
+        buffer.close();
         String json = builder.toString();
         return new JSONObject(json);
     }
@@ -97,15 +100,17 @@ public abstract class JsonRepo<T extends Entity> {
     }
 
     public boolean remove(T entity) {
+        Path fileLocation = getEntityLocation(entity.getId());
+        File file = new File(fileLocation.toString());
+        logger.info("Deleting %s", fileLocation.toString());
         try {
-            Path fileLocation = getEntityLocation(entity.getId());
             Files.delete(fileLocation);
-            logger.info("Deleted %s", fileLocation.toString());
             return true;
         } catch (IOException ex) {
             logger.error(ex, ex.getMessage());
             return false;
         }
+        // TODO: Delete related accounts and platforms
     }
 
 }

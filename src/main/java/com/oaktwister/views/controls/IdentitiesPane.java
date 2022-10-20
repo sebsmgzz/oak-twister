@@ -6,17 +6,18 @@ import com.oaktwister.viewmodels.pages.IdentitiesViewModel;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
 import com.oaktwister.viewmodels.util.DualChangeListener;
 import com.oaktwister.views.View;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 
 import java.net.URL;
-import java.util.List;
+import java.util.Iterator;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class IdentitiesPane extends AnchorPane implements View {
@@ -71,7 +72,11 @@ public class IdentitiesPane extends AnchorPane implements View {
                     "Do you really want to delete identity %s?%n" +
                     "This action cannot be undone.",
                     viewModel.idProperty().get()));
-            alert.show();
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.isEmpty() || result.get().equals(ButtonType.CANCEL)) {
+                event.cancel();
+            }
+            this.viewModel.identitiesProperty().remove(viewModel);
         });
 
         // Get the IdentityPane from the viewHandler and add it to the flowPane's children
@@ -85,21 +90,22 @@ public class IdentitiesPane extends AnchorPane implements View {
 
     private void onIdentityViewModelRemoved(IdentityViewModel identityViewModel) {
         // Iterate through the flowPane's children
-        List<Node> children = flowPane.getChildren();
-        for (Node node : children) {
+        Iterator<Node> childrenIterator = flowPane.getChildren().iterator();
+        while(childrenIterator.hasNext()) {
+            Node node = childrenIterator.next();
 
             // Each flowPane child should be of type IdentityPane
             IdentityPane identityPane = node instanceof IdentityPane? (IdentityPane) node : null;
             if(identityPane == null) {
                 throw new RuntimeException(
                         "A IdentitiesPane::flowPane children was found not to be an instance of IdentityPane. " +
-                        "This is not the expected behaviour. Something is critically wrong.");
+                                "This is not the expected behaviour. Something is critically wrong.");
             }
 
             // If the identityPane's IdentityViewModel matches the one been removed, remove it as well
             IdentityViewModel foundViewModel = identityPane.getViewModel();
             if (identityViewModel == foundViewModel) {
-                children.remove(node);
+                childrenIterator.remove();
             }
 
         }

@@ -2,6 +2,7 @@ package com.oaktwister.viewmodels.models;
 
 import com.oaktwister.core.ViewModelFactory;
 import com.oaktwister.models.aggregators.Identity;
+import com.oaktwister.services.logging.Logger;
 import com.oaktwister.services.repos.IdentitiesRepo;
 import com.oaktwister.models.events.DeleteIdentityEvent;
 import com.oaktwister.services.util.LocalDateTimeUtil;
@@ -17,6 +18,7 @@ public class IdentityViewModel {
 
     private final IdentitiesRepo identitiesRepo;
     private final LocalDateTimeUtil localDateTimeUtil;
+    private final Logger logger;
 
     private Identity identity;
 
@@ -26,9 +28,10 @@ public class IdentityViewModel {
     private final GrantMapViewModel grantMap;
 
     public IdentityViewModel(ViewModelFactory viewModelFactory, IdentitiesRepo identitiesRepo,
-                             UUIDUtil uuidUtil, LocalDateTimeUtil localDateTimeUtil) {
+                             UUIDUtil uuidUtil, LocalDateTimeUtil localDateTimeUtil, Logger logger) {
         this.identitiesRepo = identitiesRepo;
         this.localDateTimeUtil = localDateTimeUtil;
+        this.logger = logger;
         idProperty = new SimpleObjectProperty<>(uuidUtil.empty());
         createdAtProperty = new SimpleObjectProperty<>(LocalDateTime.MIN);
         onDeleteIdentityProperty = new SimpleObjectProperty<>();
@@ -65,7 +68,7 @@ public class IdentityViewModel {
 
     public boolean delete() {
         if(identity == null) {
-            // TODO: Throw exception?
+            logger.warn("Attempted to delete identity without having it set beforehand");
             return false;
         }
         DeleteIdentityEvent event = new DeleteIdentityEvent(this);
@@ -74,9 +77,14 @@ public class IdentityViewModel {
             eventHandler.handle(event);
         }
         if(event.isCanceled()) {
+            logger.info("Delete identity event cancelled");
             return false;
         }
-        return identitiesRepo.remove(identity);
+        boolean deleted = identitiesRepo.remove(identity);
+        if(!deleted) {
+            logger.error("Failed to delete identity %s", identity.getId());
+        }
+        return deleted;
     }
 
     public String formatDate(LocalDateTime dateTime) {
