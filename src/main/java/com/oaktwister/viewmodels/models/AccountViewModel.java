@@ -1,10 +1,12 @@
 package com.oaktwister.viewmodels.models;
 
+import com.oaktwister.core.ViewModelFactory;
 import com.oaktwister.models.aggregators.Account;
 import com.oaktwister.services.repos.AccountsRepo;
 import com.oaktwister.services.repos.IdentitiesRepo;
 import com.oaktwister.services.repos.ImagesRepo;
 import com.oaktwister.services.repos.PlatformsRepo;
+import com.oaktwister.services.util.UUIDUtil;
 import com.oaktwister.views.util.UUIDStringConverter;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -30,18 +32,18 @@ public class AccountViewModel {
 
     private Account account;
 
-    public AccountViewModel(AccountsRepo accountsRepo, PlatformsRepo platformsRepo,
-                            IdentitiesRepo identitiesRepo, ImagesRepo imagesRepo) {
+    public AccountViewModel(ViewModelFactory viewModelFactory, AccountsRepo accountsRepo,
+                            PlatformsRepo platformsRepo, IdentitiesRepo identitiesRepo, UUIDUtil uuidUtil) {
         this.accountsRepo = accountsRepo;
         this.platformsRepo = platformsRepo;
         this.identitiesRepo = identitiesRepo;
-        this.id = new SimpleObjectProperty<>(UUIDStringConverter.empty());
-        this.platformId = new SimpleObjectProperty<>(UUIDStringConverter.empty());
-        this.identityId = new SimpleObjectProperty<>(UUIDStringConverter.empty());
+        this.id = new SimpleObjectProperty<>(uuidUtil.empty());
+        this.platformId = new SimpleObjectProperty<>(uuidUtil.empty());
+        this.identityId = new SimpleObjectProperty<>(uuidUtil.empty());
         this.createdAt = new SimpleObjectProperty<>(LocalDateTime.MIN);
-        identity = new IdentityViewModel(identitiesRepo);
-        platform = new PlatformViewModel(imagesRepo);
-        grants = new GrantMapViewModel();
+        identity = viewModelFactory.getIdentityViewModel();
+        platform = viewModelFactory.getPlatformViewModel();
+        grants = viewModelFactory.getGrantMapViewModel();
     }
 
     public void bind(Account account) {

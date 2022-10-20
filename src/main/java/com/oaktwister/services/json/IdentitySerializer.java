@@ -2,10 +2,7 @@ package com.oaktwister.services.json;
 
 import com.oaktwister.models.aggregators.Identity;
 import com.oaktwister.models.exceptions.UnknownGrantTypeException;
-import com.oaktwister.models.props.Grant;
-import com.oaktwister.models.props.GrantMap;
 import com.oaktwister.services.util.LocalDateTimeUtil;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.UUID;

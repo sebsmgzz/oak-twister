@@ -2,7 +2,8 @@ package com.oaktwister.viewmodels.models;
 
 import com.oaktwister.models.aggregators.Identity;
 import com.oaktwister.services.repos.IdentitiesRepo;
-import com.oaktwister.events.DeleteIdentityEvent;
+import com.oaktwister.models.events.DeleteIdentityEvent;
+import com.oaktwister.services.util.UUIDUtil;
 import com.oaktwister.views.util.UUIDStringConverter;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -22,10 +23,10 @@ public class IdentityViewModel {
     private final SimpleObjectProperty<EventHandler<DeleteIdentityEvent>> onDeleteIdentityProperty;
     private final GrantMapViewModel grantMap;
 
-    public IdentityViewModel(IdentitiesRepo identitiesRepo) {
+    public IdentityViewModel(IdentitiesRepo identitiesRepo, UUIDUtil uuidUtil) {
         this.identitiesRepo = identitiesRepo;
         grantMap = new GrantMapViewModel();
-        idProperty = new SimpleObjectProperty<>(UUIDStringConverter.empty());
+        idProperty = new SimpleObjectProperty<>(uuidUtil.empty());
         createdAtProperty = new SimpleObjectProperty<>(LocalDateTime.MIN);
         onDeleteIdentityProperty = new SimpleObjectProperty<>();
     }

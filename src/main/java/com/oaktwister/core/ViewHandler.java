@@ -1,7 +1,6 @@
 package com.oaktwister.core;
 
-import com.oaktwister.models.aggregators.Identity;
-import com.oaktwister.services.Resources;
+import com.oaktwister.services.util.Resources;
 import com.oaktwister.viewmodels.models.AccountViewModel;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
@@ -10,11 +9,11 @@ import com.oaktwister.views.controls.AccountBox;
 import com.oaktwister.views.controls.IdentityPane;
 import com.oaktwister.views.controls.ImageButtonBox;
 import com.oaktwister.views.controls.PlatformPane;
-import com.oaktwister.views.layouts.AccountsPane;
-import com.oaktwister.views.layouts.IdentitiesPane;
-import com.oaktwister.views.layouts.PlatformsPane;
-import com.oaktwister.views.roots.LandingViewController;
-import com.oaktwister.views.roots.MainViewController;
+import com.oaktwister.views.controls.AccountsPane;
+import com.oaktwister.views.controls.IdentitiesPane;
+import com.oaktwister.views.controls.PlatformsPane;
+import com.oaktwister.views.controllers.LandingViewController;
+import com.oaktwister.views.controllers.MainViewController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

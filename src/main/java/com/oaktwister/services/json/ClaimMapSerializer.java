@@ -1,8 +1,8 @@
 package com.oaktwister.services.json;
 
 import com.oaktwister.models.exceptions.UnknownGrantTypeException;
-import com.oaktwister.models.props.Claim;
-import com.oaktwister.models.props.ClaimMap;
+import com.oaktwister.models.aggregators.claims.Claim;
+import com.oaktwister.models.aggregators.claims.ClaimMap;
 import com.oaktwister.services.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;

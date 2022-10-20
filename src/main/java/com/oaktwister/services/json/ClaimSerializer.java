@@ -1,7 +1,8 @@
 package com.oaktwister.services.json;
 
+import com.oaktwister.models.aggregators.grants.*;
 import com.oaktwister.models.exceptions.UnknownGrantTypeException;
-import com.oaktwister.models.props.*;
+import com.oaktwister.models.aggregators.claims.*;
 import org.json.JSONObject;
 
 import java.util.Objects;

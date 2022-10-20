@@ -1,6 +1,6 @@
 package com.oaktwister.models.aggregators;
 
-import com.oaktwister.models.props.ClaimMap;
+import com.oaktwister.models.aggregators.claims.ClaimMap;
 import com.oaktwister.models.seedwork.Entity;
 
 import java.time.LocalDateTime;

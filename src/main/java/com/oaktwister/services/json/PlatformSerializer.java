@@ -2,7 +2,7 @@ package com.oaktwister.services.json;
 
 import com.oaktwister.models.aggregators.Platform;
 import com.oaktwister.models.exceptions.UnknownGrantTypeException;
-import com.oaktwister.models.props.ClaimMap;
+import com.oaktwister.models.aggregators.claims.ClaimMap;
 import com.oaktwister.services.util.LocalDateTimeUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;

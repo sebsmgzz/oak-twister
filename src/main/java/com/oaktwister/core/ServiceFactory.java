@@ -1,8 +1,8 @@
 package com.oaktwister.core;
 
-import com.oaktwister.services.AppConfig;
-import com.oaktwister.services.Context;
-import com.oaktwister.services.DriveFactory;
+import com.oaktwister.services.config.AppConfig;
+import com.oaktwister.services.config.Context;
+import com.oaktwister.services.repos.DriveRepo;
 import com.oaktwister.services.json.*;
 import com.oaktwister.services.logging.Logger;
 import com.oaktwister.services.repos.AccountsRepo;
@@ -10,6 +10,7 @@ import com.oaktwister.services.repos.IdentitiesRepo;
 import com.oaktwister.services.repos.ImagesRepo;
 import com.oaktwister.services.repos.PlatformsRepo;
 import com.oaktwister.services.util.LocalDateTimeUtil;
+import com.oaktwister.services.util.UUIDUtil;
 
 import java.util.HashMap;
 
@@ -38,12 +39,12 @@ public class ServiceFactory {
         }
     }
 
-    public DriveFactory getDriveFactory() {
-        if(scoped.containsKey(DriveFactory.class)) {
-            return (DriveFactory) scoped.get(DriveFactory.class);
+    public DriveRepo getDriveFactory() {
+        if(scoped.containsKey(DriveRepo.class)) {
+            return (DriveRepo) scoped.get(DriveRepo.class);
         } else {
-            DriveFactory service = new DriveFactory(getAppConfig());
-            scoped.put(DriveFactory.class, service);
+            DriveRepo service = new DriveRepo(getAppConfig());
+            scoped.put(DriveRepo.class, service);
             return service;
         }
     }
@@ -54,6 +55,16 @@ public class ServiceFactory {
         } else {
             LocalDateTimeUtil service = new LocalDateTimeUtil();
             scoped.put(LocalDateTimeUtil.class, service);
+            return service;
+        }
+    }
+
+    public UUIDUtil getUUIDUtil() {
+        if(scoped.containsKey(UUIDUtil.class)) {
+            return (UUIDUtil) scoped.get(UUIDUtil.class);
+        } else {
+            UUIDUtil service = new UUIDUtil();
+            scoped.put(UUIDUtil.class, service);
             return service;
         }
     }

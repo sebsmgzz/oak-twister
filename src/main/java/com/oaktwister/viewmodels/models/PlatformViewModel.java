@@ -1,21 +1,15 @@
 package com.oaktwister.viewmodels.models;
 
 import com.oaktwister.models.aggregators.Platform;
-import com.oaktwister.services.Context;
 import com.oaktwister.services.repos.ImagesRepo;
-import com.oaktwister.services.util.LocalDateTimeUtil;
+import com.oaktwister.services.util.UUIDUtil;
 import com.oaktwister.views.util.UUIDStringConverter;
-import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
-import javafx.scene.image.PixelFormat;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.time.LocalDateTime;
-import java.util.Base64;
 import java.util.UUID;
 
 public class PlatformViewModel {
@@ -31,9 +25,9 @@ public class PlatformViewModel {
     private final SimpleObjectProperty<LocalDateTime> createdAt;
     private final ClaimMapViewModel claims;
 
-    public PlatformViewModel(ImagesRepo imagesRepo) {
+    public PlatformViewModel(ImagesRepo imagesRepo, UUIDUtil uuidUtil) {
         this.imagesRepo = imagesRepo;
-        id = new SimpleObjectProperty<>(UUIDStringConverter.empty());
+        id = new SimpleObjectProperty<>(uuidUtil.empty());
         name = new SimpleStringProperty(null);
         image = new SimpleObjectProperty<>(null);
         url = new SimpleStringProperty(null);

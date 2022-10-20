@@ -1,6 +1,6 @@
 package com.oaktwister.services.repos;
 
-import com.oaktwister.services.Context;
+import com.oaktwister.services.config.Context;
 import com.oaktwister.services.logging.Logger;
 import javafx.scene.image.Image;
 

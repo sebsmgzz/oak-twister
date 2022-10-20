@@ -2,7 +2,7 @@ package com.oaktwister.services.repos;
 
 import com.oaktwister.models.exceptions.UnknownGrantTypeException;
 import com.oaktwister.models.seedwork.Entity;
-import com.oaktwister.services.Context;
+import com.oaktwister.services.config.Context;
 import com.oaktwister.services.json.JsonObjectSerializer;
 import com.oaktwister.services.logging.Logger;
 import org.json.JSONObject;

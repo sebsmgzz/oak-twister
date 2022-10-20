@@ -24,8 +24,8 @@ public class NumberStringConverter extends StringConverter<Number> {
         } else if (numberType.equals(Long.class)) {
             return Long.parseLong(string);
         } else {
-            throw new UnsupportedOperationException(
-                "Class " + numberType.getName() + " is not yet supported.");
+            throw new UnsupportedOperationException(String.format(
+                    "Class %s is not yet supported.", numberType.getName()));
         }
     }
 

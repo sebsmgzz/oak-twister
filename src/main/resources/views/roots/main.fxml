@@ -8,7 +8,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.oaktwister.views.roots.MainViewController"
+            fx:controller="com.oaktwister.views.controllers.MainViewController"
             fx:id="borderPane"
             stylesheets="/styles/roots/main.css"
             styleClass="root"

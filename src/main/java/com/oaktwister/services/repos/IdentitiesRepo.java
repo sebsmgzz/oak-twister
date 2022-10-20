@@ -1,7 +1,7 @@
 package com.oaktwister.services.repos;
 
 import com.oaktwister.models.aggregators.Identity;
-import com.oaktwister.services.Context;
+import com.oaktwister.services.config.Context;
 import com.oaktwister.services.json.IdentitySerializer;
 import com.oaktwister.services.logging.Logger;
 

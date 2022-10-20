@@ -9,7 +9,7 @@
 <fx:root xmlns="http://javafx.com/javafx/8"
          xmlns:fx="http://javafx.com/fxml/1"
          type="javafx.scene.layout.VBox"
-         fx:controller="com.oaktwister.views.layouts.PlatformsPane"
+         fx:controller="com.oaktwister.views.controls.PlatformsPane"
          stylesheets="/styles/layouts/platforms-pane.css"
          alignment="CENTER">
     <Label styleClass="title" text="Platforms" maxWidth="Infinity" alignment="CENTER"/>

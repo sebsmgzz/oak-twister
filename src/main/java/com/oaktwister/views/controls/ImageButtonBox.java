@@ -1,7 +1,7 @@
 package com.oaktwister.views.controls;
 
 import com.oaktwister.core.ViewHandler;
-import com.oaktwister.services.Resources;
+import com.oaktwister.services.util.Resources;
 import com.oaktwister.views.View;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
@@ -13,7 +13,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 

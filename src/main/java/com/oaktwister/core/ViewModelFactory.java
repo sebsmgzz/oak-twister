@@ -5,11 +5,15 @@ import com.oaktwister.services.repos.AccountsRepo;
 import com.oaktwister.services.repos.IdentitiesRepo;
 import com.oaktwister.services.repos.ImagesRepo;
 import com.oaktwister.services.repos.PlatformsRepo;
-import com.oaktwister.viewmodels.collections.AccountsViewModel;
-import com.oaktwister.viewmodels.collections.IdentitiesViewModel;
-import com.oaktwister.viewmodels.collections.PlatformsViewModel;
-import com.oaktwister.viewmodels.main.LandingViewModel;
-import com.oaktwister.viewmodels.main.MainViewModel;
+import com.oaktwister.services.util.UUIDUtil;
+import com.oaktwister.viewmodels.models.GrantMapViewModel;
+import com.oaktwister.viewmodels.models.IdentityViewModel;
+import com.oaktwister.viewmodels.models.PlatformViewModel;
+import com.oaktwister.viewmodels.pages.AccountsViewModel;
+import com.oaktwister.viewmodels.pages.IdentitiesViewModel;
+import com.oaktwister.viewmodels.pages.PlatformsViewModel;
+import com.oaktwister.viewmodels.roots.LandingViewModel;
+import com.oaktwister.viewmodels.roots.MainViewModel;
 import com.oaktwister.viewmodels.models.AccountViewModel;
 
 public class ViewModelFactory {
@@ -65,8 +69,9 @@ public class ViewModelFactory {
         if(platformsViewModel == null) {
             PlatformsRepo platformsRepo = serviceFactory.getPlatformsRepo();
             ImagesRepo imagesRepo = serviceFactory.getImagesRepo();
+            UUIDUtil uuidUtil = serviceFactory.getUUIDUtil();
             Logger logger = new Logger(PlatformsViewModel.class);
-            platformsViewModel = new PlatformsViewModel(imagesRepo, platformsRepo, logger);
+            platformsViewModel = new PlatformsViewModel(platformsRepo, imagesRepo, uuidUtil, logger);
             serviceFactory.clearScope();
         }
         return platformsViewModel;
@@ -76,8 +81,31 @@ public class ViewModelFactory {
         AccountsRepo accountsRepo = serviceFactory.getAccountsRepo();
         PlatformsRepo platformsRepo = serviceFactory.getPlatformsRepo();
         IdentitiesRepo identitiesRepo = serviceFactory.getIdentitiesRepo();
+        UUIDUtil uuidUtil = serviceFactory.getUUIDUtil();
+        AccountViewModel viewModel = new AccountViewModel(
+                this, accountsRepo, platformsRepo, identitiesRepo, uuidUtil);
+        serviceFactory.clearScope();
+        return viewModel;
+    }
+
+    public IdentityViewModel getIdentityViewModel() {
+        IdentitiesRepo identitiesRepo = serviceFactory.getIdentitiesRepo();
+        UUIDUtil uuidUtil = serviceFactory.getUUIDUtil();
+        IdentityViewModel viewModel = new IdentityViewModel(identitiesRepo, uuidUtil);
+        serviceFactory.clearScope();
+        return viewModel;
+    }
+
+    public PlatformViewModel getPlatformViewModel() {
         ImagesRepo imagesRepo = serviceFactory.getImagesRepo();
-        AccountViewModel viewModel = new AccountViewModel(accountsRepo, platformsRepo, identitiesRepo, imagesRepo);
+        UUIDUtil uuidUtil = serviceFactory.getUUIDUtil();
+        PlatformViewModel viewModel = new PlatformViewModel(imagesRepo, uuidUtil);
+        serviceFactory.clearScope();
+        return viewModel;
+    }
+
+    public GrantMapViewModel getGrantMapViewModel() {
+        GrantMapViewModel viewModel = new GrantMapViewModel();
         serviceFactory.clearScope();
         return viewModel;
     }

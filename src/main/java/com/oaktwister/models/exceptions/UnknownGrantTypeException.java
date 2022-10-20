@@ -1,6 +1,6 @@
 package com.oaktwister.models.exceptions;
 
-import com.oaktwister.models.props.Grant;
+import com.oaktwister.models.aggregators.grants.Grant;
 
 public class UnknownGrantTypeException extends Exception {
 

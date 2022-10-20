@@ -1,7 +1,7 @@
 package com.oaktwister.viewmodels.models;
 
-import com.oaktwister.models.props.Claim;
-import com.oaktwister.models.props.ClaimMap;
+import com.oaktwister.models.aggregators.claims.Claim;
+import com.oaktwister.models.aggregators.claims.ClaimMap;
 import com.oaktwister.viewmodels.util.DualChangeListener;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyListProperty;
@@ -31,7 +31,6 @@ public class ClaimMapViewModel {
         claimsProperty.addListener((ListChangeListener<Claim>) change ->
                 claimCountProperty.set(claimsProperty.size()));
     }
-
 
     public ReadOnlyListProperty<Claim> claimsProperty() {
         return claimsProperty;

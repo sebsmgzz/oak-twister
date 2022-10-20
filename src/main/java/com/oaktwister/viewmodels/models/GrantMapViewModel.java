@@ -1,7 +1,7 @@
 package com.oaktwister.viewmodels.models;
 
-import com.oaktwister.models.props.Grant;
-import com.oaktwister.models.props.GrantMap;
+import com.oaktwister.models.aggregators.grants.Grant;
+import com.oaktwister.models.aggregators.grants.GrantMap;
 import com.oaktwister.viewmodels.util.DualChangeListener;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyListProperty;

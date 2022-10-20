@@ -1,7 +1,7 @@
 package com.oaktwister.views.controls;
 
 import com.oaktwister.core.ViewHandler;
-import com.oaktwister.services.Resources;
+import com.oaktwister.services.util.Resources;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
 import com.oaktwister.views.View;
 import javafx.fxml.FXML;

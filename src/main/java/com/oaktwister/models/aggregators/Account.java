@@ -1,6 +1,6 @@
 package com.oaktwister.models.aggregators;
 
-import com.oaktwister.models.props.GrantMap;
+import com.oaktwister.models.aggregators.grants.GrantMap;
 import com.oaktwister.models.seedwork.Entity;
 
 import java.time.LocalDateTime;
