@@ -17,7 +17,7 @@ public class LocalDateTimeUtil {
     }
 
     public String toIso8601(LocalDateTime dateTime) {
-        return dateTime.atZone(ZoneOffset.UTC).toString();
+        return DateTimeFormatter.ofPattern(ISO_8601_PATTERN).format(dateTime);
     }
 
     public LocalDateTime fromDefault(String dateTimeString) {

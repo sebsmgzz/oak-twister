@@ -1,9 +1,13 @@
 package com.oaktwister.services.repos;
 
 import com.oaktwister.models.aggregators.Account;
+import com.oaktwister.models.aggregators.Identity;
 import com.oaktwister.services.config.Context;
 import com.oaktwister.services.json.AccountSerializer;
 import com.oaktwister.services.logging.Logger;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class AccountsRepo extends JsonRepo<Account> {
 
@@ -16,6 +20,12 @@ public class AccountsRepo extends JsonRepo<Account> {
     @Override
     protected String getRepoLocation() {
         return LOCATION;
+    }
+
+    public ArrayList<Account> findByIdentity(Identity identity) {
+        ArrayList<Account> accounts = findAll();
+        accounts.removeIf(account -> !identity.getId().equals(account.getIdentityId()));
+        return accounts;
     }
 
 }

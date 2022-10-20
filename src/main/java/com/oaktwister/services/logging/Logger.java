@@ -2,16 +2,6 @@ package com.oaktwister.services.logging;
 
 public class Logger {
 
-    private static final String BLACK_ANSI_COLOR = "\\u001B[30m";
-    private static final String RED_ANSI_COLOR = "\\u001B[31m";
-    private static final String GREEN_ANSI_COLOR = "\\u001B[32m";
-    private static final String YELLOW_ANSI_COLOR = "\\u001B[33m";
-    private static final String BLUE_ANSI_COLOR = "\\u001B[34m";
-    private static final String CYAN_ANSI_COLOR = "\\u001B[36m";
-    private static final String PURPLE_ANSI_COLOR = "\\u001B[35m";
-    private static final String WHITE_ANSI_COLOR = "\\u001B[37m";
-    private static final String ANSI_RESET = "\\u001B[0m";
-
     private static final String TRACE_PREFIX = "TRACE";
     private static final String DEBUG_PREFIX = "DEBUG";
     private static final String INFO_PREFIX = "INFO";
@@ -30,7 +20,7 @@ public class Logger {
     }
 
     public void trace(String message) {
-        log(TRACE_PREFIX, WHITE_ANSI_COLOR + message + ANSI_RESET);
+        log(TRACE_PREFIX, message);
     }
 
     public void trace(String message, Object... args) {
@@ -46,7 +36,7 @@ public class Logger {
     }
 
     public void info(String message) {
-        log(INFO_PREFIX, CYAN_ANSI_COLOR + message + ANSI_RESET);
+        log(INFO_PREFIX, message);
     }
 
     public void info(String message, Object... args) {
@@ -54,7 +44,7 @@ public class Logger {
     }
 
     public void warn(String message) {
-        log(WARN_PREFIX, YELLOW_ANSI_COLOR + message + ANSI_RESET);
+        log(WARN_PREFIX, message);
     }
 
     public void warn(String message, Object... args) {
@@ -62,7 +52,7 @@ public class Logger {
     }
 
     public void error(String message) {
-        log(ERROR_PREFIX, RED_ANSI_COLOR + message + ANSI_RESET);
+        log(ERROR_PREFIX, message);
     }
 
     public void error(String message, Object... args) {
@@ -75,7 +65,7 @@ public class Logger {
     }
 
     public void critical(String message) {
-        log(CRITICAL_PREFIX, RED_ANSI_COLOR + message + ANSI_RESET);
+        log(CRITICAL_PREFIX, message);
     }
 
     public void critical(String message, Object... args) {

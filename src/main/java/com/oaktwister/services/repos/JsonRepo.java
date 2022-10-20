@@ -11,9 +11,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -75,9 +73,9 @@ public abstract class JsonRepo<T extends Entity> {
     }
 
     public T findById(UUID id) {
-        logger.debug(String.format("Searching entity %s", id));
         try {
             String fileLocation = getEntityLocation(id).toString();
+            logger.info("Searching %s", fileLocation);
             JSONObject json = rawJsonRead(fileLocation);
             return jsonObjectSerializer.deserialize(json);
         } catch (IOException | UnknownGrantTypeException ex) {
@@ -91,6 +89,7 @@ public abstract class JsonRepo<T extends Entity> {
             entity.setId(UUID.randomUUID());
             Path fileLocation = getEntityLocation(entity.getId());
             JSONObject json = jsonObjectSerializer.serialize(entity);
+            logger.info("Adding %s", fileLocation.toString());
             Files.writeString(fileLocation, json.toString());
             return true;
         } catch (IOException | UnknownGrantTypeException ex) {
@@ -100,17 +99,29 @@ public abstract class JsonRepo<T extends Entity> {
     }
 
     public boolean remove(T entity) {
-        Path fileLocation = getEntityLocation(entity.getId());
-        File file = new File(fileLocation.toString());
-        logger.info("Deleting %s", fileLocation.toString());
         try {
+            Path fileLocation = getEntityLocation(entity.getId());
+            File file = new File(fileLocation.toString());
+            logger.info("Deleting %s", fileLocation.toString());
             Files.delete(fileLocation);
             return true;
         } catch (IOException ex) {
             logger.error(ex, ex.getMessage());
             return false;
         }
-        // TODO: Delete related accounts and platforms
+    }
+
+    public boolean update(T entity) {
+        try {
+            Path fileLocation = getEntityLocation(entity.getId());
+            JSONObject json = jsonObjectSerializer.serialize(entity);
+            logger.info("Updating %s", fileLocation.toString());
+            Files.writeString(fileLocation, json.toString(), StandardOpenOption.TRUNCATE_EXISTING);
+            return true;
+        } catch (IOException | UnknownGrantTypeException ex) {
+            logger.error(ex, ex.getMessage());
+            return false;
+        }
     }
 
 }

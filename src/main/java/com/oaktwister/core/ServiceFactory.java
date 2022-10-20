@@ -126,8 +126,11 @@ public class ServiceFactory {
         if(scoped.containsKey(IdentitiesRepo.class)) {
             return (IdentitiesRepo) scoped.get(IdentitiesRepo.class);
         } else {
+            Context context = Context.getInstance();
+            AccountsRepo accountsRepo = getAccountsRepo();
+            IdentitySerializer identitySerializer = getIdentitySerializer();
             Logger logger = new Logger(IdentitiesRepo.class);
-            IdentitiesRepo service = new IdentitiesRepo(getContext(), getIdentitySerializer(), logger);
+            IdentitiesRepo service = new IdentitiesRepo(context, accountsRepo, identitySerializer, logger);
             scoped.put(IdentitiesRepo.class, service);
             return service;
         }
@@ -137,8 +140,10 @@ public class ServiceFactory {
         if(scoped.containsKey(PlatformSerializer.class)) {
             return (PlatformSerializer) scoped.get(PlatformSerializer.class);
         } else {
+            ClaimMapSerializer claimMapSerializer = getClaimMapSerializer();
+            LocalDateTimeUtil localDateTimeUtil = getLocalDateTimeUtil();
             Logger logger = new Logger(PlatformSerializer.class);
-            PlatformSerializer service = new PlatformSerializer(getClaimMapSerializer(), getLocalDateTimeUtil());
+            PlatformSerializer service = new PlatformSerializer(claimMapSerializer, localDateTimeUtil);
             scoped.put(PlatformSerializer.class, service);
             return service;
         }

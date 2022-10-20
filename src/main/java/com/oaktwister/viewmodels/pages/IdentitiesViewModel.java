@@ -4,8 +4,6 @@ import com.oaktwister.core.ViewModelFactory;
 import com.oaktwister.models.aggregators.Identity;
 import com.oaktwister.services.logging.Logger;
 import com.oaktwister.services.repos.IdentitiesRepo;
-import com.oaktwister.services.util.LocalDateTimeUtil;
-import com.oaktwister.services.util.UUIDUtil;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
 import javafx.beans.property.ReadOnlyListProperty;
 import javafx.beans.property.SimpleListProperty;

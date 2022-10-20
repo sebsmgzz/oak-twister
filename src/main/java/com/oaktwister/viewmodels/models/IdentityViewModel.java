@@ -79,12 +79,13 @@ public class IdentityViewModel {
         if(event.isCanceled()) {
             logger.info("Delete identity event cancelled");
             return false;
+        } else {
+            boolean deleted = identitiesRepo.remove(identity);
+            if(!deleted) {
+                logger.error("Failed to delete identity %s", identity.getId());
+            }
+            return deleted;
         }
-        boolean deleted = identitiesRepo.remove(identity);
-        if(!deleted) {
-            logger.error("Failed to delete identity %s", identity.getId());
-        }
-        return deleted;
     }
 
     public String formatDate(LocalDateTime dateTime) {

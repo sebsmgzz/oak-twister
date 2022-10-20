@@ -131,6 +131,7 @@ public class GrantSerializer implements JsonObjectSerializer<Grant<?>> {
     private JSONObject serializeTextGrant(TextGrant textGrant) {
         JSONObject textGrantJson = new JSONObject();
         textGrantJson.put(NAME_KEY, textGrant.getName());
+        textGrantJson.put(TYPE_KEY, TextGrant.class.getTypeName());
         textGrantJson.put(VALUE_KEY, textGrant.getValue());
         return textGrantJson;
     }

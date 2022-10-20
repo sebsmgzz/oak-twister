@@ -46,7 +46,8 @@ public class AccountSerializer implements JsonObjectSerializer<Account> {
         JSONObject accountJson = new JSONObject();
         accountJson.put(ID_KEY, account.getId());
         accountJson.put(PLATFORM_ID_KEY, account.getPlatformId());
-        accountJson.put(IDENTITY_ID_KEY, account.getIdentityId());
+        UUID identityId = account.getIdentityId();
+        accountJson.put(IDENTITY_ID_KEY, identityId != null? identityId : JSONObject.NULL );
         accountJson.put(CREATED_AT_KEY, localDateTimeUtil.toIso8601(account.getCreatedAt()));
         accountJson.put(GRANTS_KEY, grantMapSerializer.serialize(account.getGrants()));
         return accountJson;
