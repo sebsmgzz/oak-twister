@@ -17,6 +17,7 @@ import com.oaktwister.views.controllers.MainViewController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
@@ -61,6 +62,7 @@ public class ViewHandler {
     public void showLandingView() {
         Parent view = loadRootView(LandingViewController.class, Resources.Views.Roots.LANDING);
         Scene scene = new Scene(view);
+        primaryStage.getIcons().add(new Image(Resources.Images.Vikings.OAK));
         primaryStage.setTitle(Resources.Strings.App.TITLE);
         primaryStage.setScene(scene);
         primaryStage.show();
