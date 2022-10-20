@@ -3,18 +3,17 @@ package com.oaktwister.core;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class OakTwisterApp extends Application {
 
     private final ViewModelFactory viewModelFactory;
 
     public OakTwisterApp() {
-        viewModelFactory = new ViewModelFactory();
+        ServiceFactory serviceFactory = new ServiceFactory();
+        viewModelFactory = new ViewModelFactory(serviceFactory);
     }
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         ViewHandler viewHandler = new ViewHandler(stage, viewModelFactory);
         viewHandler.showLandingView();
     }
