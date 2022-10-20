@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
@@ -19,11 +20,12 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class PlatformsPane extends VBox implements View {
+public class PlatformsPane extends AnchorPane implements View {
 
     private final ViewHandler viewHandler;
     private final PlatformsViewModel viewModel;
 
+    @FXML private VBox vbox;
     @FXML private FlowPane flowPane;
     @FXML private ScrollPane scrollPane;
 
@@ -46,6 +48,10 @@ public class PlatformsPane extends VBox implements View {
     public void initialize(URL location, ResourceBundle resources) {
 
         // Bindings
+        AnchorPane.setTopAnchor(vbox, 0.0);
+        AnchorPane.setRightAnchor(vbox, 0.0);
+        AnchorPane.setBottomAnchor(vbox, 0.0);
+        AnchorPane.setLeftAnchor(vbox, 0.0);
         this.widthProperty().addListener((observable, oldValue, newValue) ->
                 scrollPane.setPrefWidth(newValue.doubleValue()));
         this.heightProperty().addListener((observable, oldValue, newValue) ->

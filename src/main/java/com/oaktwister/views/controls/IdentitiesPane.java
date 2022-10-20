@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
@@ -25,6 +26,7 @@ public class IdentitiesPane extends AnchorPane implements View {
 
     @FXML private ScrollPane scrollPane;
     @FXML private FlowPane flowPane;
+    @FXML private Button addButton;
 
     public IdentitiesPane(ViewHandler viewHandler, IdentitiesViewModel viewModel) {
         super();
@@ -101,11 +103,6 @@ public class IdentitiesPane extends AnchorPane implements View {
             }
 
         }
-    }
-
-    @FXML
-    public void onAddButtonClick(ActionEvent event) {
-        // TODO: Add identity
     }
 
 }

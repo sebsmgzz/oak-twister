@@ -1,8 +1,4 @@
 
-.root {
-    -fx-border-width: 0px;
-}
-
 .title {
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 30px;
@@ -12,13 +8,16 @@
 }
 
 .scroll-pane {
-    -fx-padding: 10px;
     -fx-background-color: transparent;
     -fx-control-inner-background: transparent;
 }
 
 .scroll-pane > .viewport {
     -fx-background-color: #FDF8F8;
+}
+
+.flow-pane {
+    -fx-background-color: #717782;
 }
 
 .hbox {

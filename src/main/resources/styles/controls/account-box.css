@@ -1,9 +1,22 @@
 
 .root {
-    -fx-padding: 10px 5px;
+    -fx-background-color: #E8CFB5;
+    -fx-background-radius: 10px;
 }
 
-.vbox {
-    -fx-border-color: #E8CFB5;
-    -fx-border-width: 0 0 1px 0;
+.root:hover {
+    -fx-border-color: #c12126;
+    -fx-border-width: 3px;
+    -fx-border-insets: -3px;
+    -fx-border-radius: 10px;
+}
+
+.btn {
+    -fx-cursor: hand;
+    -fx-background-color: transparent;
+}
+
+.close-btn {
+    -fx-background-radius: 5em;
+    -fx-background-color: #c12126;
 }

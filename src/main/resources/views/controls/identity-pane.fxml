@@ -50,7 +50,6 @@
         </Button>
     </AnchorPane>
     <Button fx:id="deleteButton" styleClass="close-btn"
-            StackPane.alignment="TOP_RIGHT"
             visible="false" mnemonicParsing="false" text="X"
             translateX="5.0" translateY="-5.0" />
 </fx:root>

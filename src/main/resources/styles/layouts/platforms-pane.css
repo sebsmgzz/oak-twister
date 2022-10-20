@@ -8,7 +8,6 @@
 }
 
 .scroll-pane {
-    -fx-padding: 10px;
     -fx-background-color: transparent;
     -fx-control-inner-background: transparent;
 }
@@ -18,7 +17,7 @@
 }
 
 .flow-pane {
-    -fx-padding: 10px 0 10px 0;
+    -fx-background-color: #717782;
 }
 
 .hbox {

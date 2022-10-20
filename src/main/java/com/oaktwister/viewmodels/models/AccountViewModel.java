@@ -2,16 +2,15 @@ package com.oaktwister.viewmodels.models;
 
 import com.oaktwister.core.ViewModelFactory;
 import com.oaktwister.models.aggregators.Account;
+import com.oaktwister.models.events.DeleteAccountEvent;
+import com.oaktwister.models.events.DeleteIdentityEvent;
 import com.oaktwister.services.repos.AccountsRepo;
 import com.oaktwister.services.repos.IdentitiesRepo;
-import com.oaktwister.services.repos.ImagesRepo;
 import com.oaktwister.services.repos.PlatformsRepo;
 import com.oaktwister.services.util.UUIDUtil;
-import com.oaktwister.views.util.UUIDStringConverter;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -26,6 +25,7 @@ public class AccountViewModel {
     private final SimpleObjectProperty<UUID> platformId;
     private final SimpleObjectProperty<UUID> identityId;
     private final SimpleObjectProperty<LocalDateTime> createdAt;
+    private final SimpleObjectProperty<EventHandler<DeleteAccountEvent>> onDeleteAccountProperty;
     private final IdentityViewModel identity;
     private final PlatformViewModel platform;
     private final GrantMapViewModel grants;
@@ -41,6 +41,7 @@ public class AccountViewModel {
         this.platformId = new SimpleObjectProperty<>(uuidUtil.empty());
         this.identityId = new SimpleObjectProperty<>(uuidUtil.empty());
         this.createdAt = new SimpleObjectProperty<>(LocalDateTime.MIN);
+        this.onDeleteAccountProperty = new SimpleObjectProperty<>();
         identity = viewModelFactory.getIdentityViewModel();
         platform = viewModelFactory.getPlatformViewModel();
         grants = viewModelFactory.getGrantMapViewModel();
@@ -84,6 +85,10 @@ public class AccountViewModel {
         return createdAt;
     }
 
+    public SimpleObjectProperty<EventHandler<DeleteAccountEvent>> onDeleteAccountProperty() {
+        return onDeleteAccountProperty;
+    }
+
     public IdentityViewModel identity() {
         return identity;
     }
@@ -97,6 +102,18 @@ public class AccountViewModel {
     }
 
     public boolean delete() {
+        if(account == null) {
+            // TODO: Throw exception?
+            return false;
+        }
+        DeleteAccountEvent event = new DeleteAccountEvent(this);
+        EventHandler<DeleteAccountEvent> eventHandler = onDeleteAccountProperty.get();
+        if(eventHandler != null) {
+            eventHandler.handle(event);
+        }
+        if(event.isCanceled()) {
+            return false;
+        }
         return accountsRepo.remove(account);
     }
 

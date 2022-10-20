@@ -8,6 +8,7 @@ import javafx.beans.property.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
@@ -44,6 +45,7 @@ public class IdentityPane extends StackPane implements View {
         // Styling
         this.setOnMouseEntered(event -> deleteButton.setVisible(true));
         this.setOnMouseExited(event -> deleteButton.setVisible(false));
+        StackPane.setAlignment(deleteButton, Pos.TOP_RIGHT);
 
         // Property bindings
         viewModel.idProperty().addListener((observable, oldValue, newValue) ->

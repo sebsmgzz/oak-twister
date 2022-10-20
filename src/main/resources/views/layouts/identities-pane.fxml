@@ -28,7 +28,7 @@
             </ScrollPane>
         </AnchorPane>
         <HBox styleClass="hbox" alignment="CENTER_RIGHT" VBox.vgrow="NEVER">
-            <Button text="Add" onAction="#onAddButtonClick" minWidth="100"/>
+            <Button fx:id="addButton" text="Add" minWidth="100"/>
         </HBox>
     </VBox>
 </fx:root>

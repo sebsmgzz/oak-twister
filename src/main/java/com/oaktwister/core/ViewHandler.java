@@ -5,7 +5,7 @@ import com.oaktwister.viewmodels.models.AccountViewModel;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
 import com.oaktwister.views.View;
-import com.oaktwister.views.controls.AccountBox;
+import com.oaktwister.views.controls.AccountPane;
 import com.oaktwister.views.controls.IdentityPane;
 import com.oaktwister.views.controls.ImageButtonBox;
 import com.oaktwister.views.controls.PlatformPane;
@@ -93,8 +93,8 @@ public class ViewHandler {
         return new IdentityPane(this, viewModel);
     }
 
-    public AccountBox getAccountBox(AccountViewModel viewModel) {
-        return new AccountBox(this, viewModel);
+    public AccountPane getAccountBox(AccountViewModel viewModel) {
+        return new AccountPane(this, viewModel);
     }
 
     public ImageButtonBox getImageButtonBox() {

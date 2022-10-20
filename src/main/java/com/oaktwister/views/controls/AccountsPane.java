@@ -2,26 +2,31 @@ package com.oaktwister.views.controls;
 
 import com.oaktwister.core.ViewHandler;
 import com.oaktwister.services.util.Resources;
+import com.oaktwister.viewmodels.models.AccountViewModel;
 import com.oaktwister.viewmodels.pages.AccountsViewModel;
 import com.oaktwister.viewmodels.util.DualChangeListener;
 import com.oaktwister.views.View;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class AccountsPane extends VBox implements View {
+public class AccountsPane extends AnchorPane implements View {
 
     private final ViewHandler viewHandler;
     private final AccountsViewModel viewModel;
 
     @FXML private Label titleLabel;
     @FXML private ScrollPane scrollPane;
-    @FXML private VBox vbox;
+    @FXML private FlowPane flowPane;
     @FXML private Button addButton;
 
     public AccountsPane(ViewHandler viewHandler, AccountsViewModel viewModel) {
@@ -39,23 +44,65 @@ public class AccountsPane extends VBox implements View {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        // Styles
-        this.widthProperty().addListener(((observable, oldValue, newValue) ->
-                scrollPane.setPrefWidth(newValue.doubleValue())));
-        this.heightProperty().addListener(((observable, oldValue, newValue) ->
-                scrollPane.setPrefHeight(newValue.doubleValue())));
+        // Styling
+        scrollPane.widthProperty().addListener((observable, oldValue, newValue) ->
+                flowPane.setPrefWidth(newValue.doubleValue()));
+        scrollPane.heightProperty().addListener((observable, oldValue, newValue) ->
+                flowPane.setPrefHeight(newValue.doubleValue()));
 
         // Property bindings
+        // Update the flowPane children whenever a new account is added or removed
         viewModel.accountsProperty().addListener(new DualChangeListener<>(
-            accountViewModel -> vbox.getChildren().add(viewHandler.getAccountBox(accountViewModel)),
-            accountViewModel -> {
-                /* TODO: Look up the AccountBox that references this accountViewModel and remove it */
-            }
-        ));
+                this::onAccountViewModelAdded, this::onAccountViewModelRemoved));
 
         // Load data
         viewModel.loadAccounts();
 
+    }
+
+    private void onAccountViewModelAdded(AccountViewModel identityViewModel) {
+
+        // Bindings
+        identityViewModel.onDeleteAccountProperty().set(event -> {
+            AccountViewModel viewModel = event.getAccountViewModel();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete account");
+            alert.setContentText(String.format(
+                    "Do you really want to delete account %s?%n" +
+                            "This action cannot be undone.",
+                    viewModel.idProperty().get()));
+            alert.show();
+        });
+
+        // Get the AccountBox from the viewHandler and add it to the flowPane's children
+        AccountPane accountPane = viewHandler.getAccountBox(identityViewModel);
+        accountPane.onMainActionProperty().set(event -> {
+            // TODO: Show editable form for the identity
+        });
+        flowPane.getChildren().add(accountPane);
+
+    }
+
+    private void onAccountViewModelRemoved(AccountViewModel accountViewModel) {
+        // Iterate through the flowPane's children
+        List<Node> children = flowPane.getChildren();
+        for (Node node : children) {
+
+            // Each flowPane child should be of type IdentityPane
+            AccountPane accountPane = node instanceof AccountPane ? (AccountPane) node : null;
+            if(accountPane == null) {
+                throw new RuntimeException(
+                        "A AccountsPane::flowPane children was found not to be an instance of AccountBox. " +
+                        "This is not the expected behaviour. Something is critically wrong.");
+            }
+
+            // If the accountBox's AccountViewModel matches the one been removed, remove it as well
+            AccountViewModel foundViewModel = accountPane.getViewModel();
+            if (accountViewModel == foundViewModel) {
+                children.remove(node);
+            }
+
+        }
     }
 
 }

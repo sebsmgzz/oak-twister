@@ -1,8 +1,22 @@
 
 .root {
-    -fx-padding: 10px;
-    -fx-spacing: 5px;
-    -fx-border-width: 2px;
-    -fx-border-color: red;
-    -fx-border-radius: 20px;
+    -fx-background-color: #E8CFB5;
+    -fx-background-radius: 10px;
+}
+
+.root:hover {
+    -fx-border-color: #c12126;
+    -fx-border-width: 3px;
+    -fx-border-insets: -3px;
+    -fx-border-radius: 10px;
+}
+
+.btn {
+    -fx-cursor: hand;
+    -fx-background-color: transparent;
+}
+
+.close-btn {
+    -fx-background-radius: 5em;
+    -fx-background-color: #c12126;
 }

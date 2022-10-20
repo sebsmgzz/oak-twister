@@ -7,6 +7,7 @@
 .root:hover {
     -fx-border-color: #c12126;
     -fx-border-width: 3px;
+    -fx-border-insets: -3px;
     -fx-border-radius: 10px;
 }
 
