@@ -1,6 +1,6 @@
-package com.oaktwister.views.util;
+package com.oaktwister.util.converters;
 
-import com.oaktwister.services.util.LocalDateTimeUtil;
+import com.oaktwister.util.extensions.LocalDateTimeUtil;
 import javafx.util.StringConverter;
 
 import java.time.LocalDateTime;

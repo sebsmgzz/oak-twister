@@ -4,7 +4,7 @@ import com.oaktwister.core.ViewHandler;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.pages.IdentitiesViewModel;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
-import com.oaktwister.viewmodels.util.DualChangeListener;
+import com.oaktwister.util.listeners.DualChangeListener;
 import com.oaktwister.views.View;
 import javafx.fxml.FXML;
 import javafx.scene.Node;

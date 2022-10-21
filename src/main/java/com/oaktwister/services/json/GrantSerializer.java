@@ -3,7 +3,7 @@ package com.oaktwister.services.json;
 import com.oaktwister.models.grants.*;
 import com.oaktwister.exceptions.UnknownGrantTypeException;
 import com.oaktwister.services.logging.Logger;
-import com.oaktwister.services.util.LocalDateTimeUtil;
+import com.oaktwister.util.extensions.LocalDateTimeUtil;
 import org.json.JSONObject;
 
 import java.util.Objects;

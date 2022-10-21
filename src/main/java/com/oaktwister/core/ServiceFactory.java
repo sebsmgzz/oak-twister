@@ -9,8 +9,8 @@ import com.oaktwister.services.repos.AccountsRepo;
 import com.oaktwister.services.repos.IdentitiesRepo;
 import com.oaktwister.services.repos.ImagesRepo;
 import com.oaktwister.services.repos.PlatformsRepo;
-import com.oaktwister.services.util.LocalDateTimeUtil;
-import com.oaktwister.services.util.UUIDUtil;
+import com.oaktwister.util.extensions.LocalDateTimeUtil;
+import com.oaktwister.util.extensions.UUIDUtil;
 
 import java.util.HashMap;
 

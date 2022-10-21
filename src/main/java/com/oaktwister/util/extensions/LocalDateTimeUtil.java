@@ -1,4 +1,4 @@
-package com.oaktwister.services.util;
+package com.oaktwister.util.extensions;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

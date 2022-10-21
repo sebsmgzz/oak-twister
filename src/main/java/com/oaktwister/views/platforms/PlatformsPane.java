@@ -4,7 +4,7 @@ import com.oaktwister.core.ViewHandler;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.pages.PlatformsViewModel;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
-import com.oaktwister.viewmodels.util.DualChangeListener;
+import com.oaktwister.util.listeners.DualChangeListener;
 import com.oaktwister.views.View;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
