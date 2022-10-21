@@ -6,7 +6,7 @@
     "grants": [
         {
             "name": "Password",
-            "type": "com.oaktwister.models.aggregators.grants.SecretGrant",
+            "type": "com.oaktwister.models.grants.SecretGrant",
             "value": {
                 "value": "password",
                 "hint": "The most common password"
@@ -14,7 +14,7 @@
         },
         {
             "name": "Birthday",
-            "type": "com.oaktwister.models.aggregators.grants.DateTimeGrant",
+            "type": "com.oaktwister.models.grants.DateTimeGrant",
             "value": "2022-08-07T21:48:59Z"
         }
     ]

@@ -1,7 +1,7 @@
 package com.oaktwister.viewmodels.models;
 
-import com.oaktwister.models.aggregators.claims.Claim;
-import com.oaktwister.models.aggregators.claims.ClaimMap;
+import com.oaktwister.models.claims.Claim;
+import com.oaktwister.models.claims.ClaimMap;
 import com.oaktwister.viewmodels.util.DualChangeListener;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyListProperty;

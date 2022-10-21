@@ -1,8 +1,8 @@
 package com.oaktwister.services.repos;
 
-import com.oaktwister.models.aggregators.drives.Drive;
-import com.oaktwister.models.aggregators.drives.DriveProps;
-import com.oaktwister.models.aggregators.drives.Version;
+import com.oaktwister.models.drives.Drive;
+import com.oaktwister.models.drives.DriveProps;
+import com.oaktwister.models.drives.Version;
 import com.oaktwister.services.config.AppConfig;
 
 import java.io.File;

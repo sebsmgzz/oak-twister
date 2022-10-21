@@ -1,6 +1,6 @@
 package com.oaktwister.viewmodels.models;
 
-import com.oaktwister.models.aggregators.drives.Drive;
+import com.oaktwister.models.drives.Drive;
 import javafx.beans.property.*;
 
 import java.util.UUID;

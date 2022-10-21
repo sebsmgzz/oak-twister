@@ -1,7 +1,7 @@
 package com.oaktwister.views.laterals;
 
 import com.oaktwister.core.ViewHandler;
-import com.oaktwister.services.util.Resources;
+import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.views.View;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
@@ -31,7 +31,7 @@ public class ImageButtonBox extends HBox implements View {
 
     @Override
     public String getViewLocation() {
-        return Resources.Views.Controls.IMAGE_BUTTON_BOX;
+        return ViewResources.Laterals.IMAGE_BUTTON_BOX_VIEW;
     }
 
     @Override

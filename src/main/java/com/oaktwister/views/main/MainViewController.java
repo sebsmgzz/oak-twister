@@ -1,10 +1,10 @@
 package com.oaktwister.views.main;
 
 import com.oaktwister.core.ViewHandler;
-import com.oaktwister.services.util.Resources;
+import com.oaktwister.services.resources.ImageResources;
+import com.oaktwister.services.resources.StringResources;
 import com.oaktwister.viewmodels.roots.MainViewModel;
 import com.oaktwister.views.laterals.ImageButtonBox;
-import com.oaktwister.views.util.Section;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
@@ -71,14 +71,14 @@ public class MainViewController implements Initializable {
         identitiesButton.setOnAction(e -> viewModel.setSection(Section.IDENTITIES));
 
         // Set button's texts
-        accountsButton.setText(Resources.Strings.ACCOUNTS_BUTTON_TEXT);
-        platformsButton.setText(Resources.Strings.PLATFORMS_BUTTON_TEXT);
-        identitiesButton.setText(Resources.Strings.IDENTITIES_BUTTON_TEXT);
+        accountsButton.setText(StringResources.ACCOUNTS_BUTTON_TEXT);
+        platformsButton.setText(StringResources.PLATFORMS_BUTTON_TEXT);
+        identitiesButton.setText(StringResources.IDENTITIES_BUTTON_TEXT);
 
         // Set button's images
-        identitiesButton.setImage(Resources.Images.FontAwesome.FINGERPRINT_SOLID);
-        platformsButton.setImage(Resources.Images.FontAwesome.LAYER_GROUP_SOLID);
-        accountsButton.setImage(Resources.Images.FontAwesome.USERS_SOLID);
+        identitiesButton.setImage(ImageResources.FontAwesome.FINGERPRINT_SOLID);
+        platformsButton.setImage(ImageResources.FontAwesome.LAYER_GROUP_SOLID);
+        accountsButton.setImage(ImageResources.FontAwesome.USERS_SOLID);
 
     }
 

@@ -1,7 +1,7 @@
 package com.oaktwister.views.accounts;
 
 import com.oaktwister.core.ViewHandler;
-import com.oaktwister.services.util.Resources;
+import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.models.AccountViewModel;
 import com.oaktwister.viewmodels.pages.AccountsViewModel;
 import com.oaktwister.viewmodels.util.DualChangeListener;
@@ -36,7 +36,7 @@ public class AccountsPane extends AnchorPane implements View {
 
     @Override
     public String getViewLocation() {
-        return Resources.Views.Layouts.ACCOUNTS_PANE;
+        return ViewResources.Accounts.ACCOUNTS_PANE;
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.oaktwister.core;
 
-import com.oaktwister.services.util.Resources;
+import com.oaktwister.services.resources.ImageResources;
+import com.oaktwister.services.resources.ViewResources;
+import com.oaktwister.services.resources.StringResources;
 import com.oaktwister.viewmodels.models.AccountViewModel;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
@@ -12,7 +14,7 @@ import com.oaktwister.views.platforms.PlatformPane;
 import com.oaktwister.views.accounts.AccountsPane;
 import com.oaktwister.views.identities.IdentitiesPane;
 import com.oaktwister.views.platforms.PlatformsPane;
-import com.oaktwister.views.landing.LandingViewController;
+import com.oaktwister.views.landings.LandingViewController;
 import com.oaktwister.views.main.MainViewController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -61,16 +63,16 @@ public class ViewHandler {
     }
 
     public void showLandingView() {
-        Parent view = loadRootView(LandingViewController.class, Resources.Views.Roots.LANDING);
+        Parent view = loadRootView(LandingViewController.class, ViewResources.Landings.LANDING_VIEW);
         Scene scene = new Scene(view);
-        primaryStage.getIcons().add(new Image(Resources.Images.Vikings.OAK));
-        primaryStage.setTitle(Resources.Strings.App.TITLE);
+        primaryStage.getIcons().add(new Image(ImageResources.Vikings.OAK));
+        primaryStage.setTitle(StringResources.App.TITLE);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
     public void showMainView() {
-        Parent view = loadRootView(MainViewController.class, Resources.Views.Roots.MAIN);
+        Parent view = loadRootView(MainViewController.class, ViewResources.Main.MAIN_VIEW);
         Scene scene = new Scene(view);
         primaryStage.setScene(scene);
         primaryStage.show();

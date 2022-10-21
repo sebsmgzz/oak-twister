@@ -1,7 +1,7 @@
 package com.oaktwister.views.platforms;
 
 import com.oaktwister.core.ViewHandler;
-import com.oaktwister.services.util.Resources;
+import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.pages.PlatformsViewModel;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
 import com.oaktwister.viewmodels.util.DualChangeListener;
@@ -41,7 +41,7 @@ public class PlatformsPane extends AnchorPane implements View {
 
     @Override
     public String getViewLocation() {
-        return Resources.Views.Layouts.PLATFORMS_PANE;
+        return ViewResources.Platforms.PLATFORMS_PANE;
     }
 
     @Override

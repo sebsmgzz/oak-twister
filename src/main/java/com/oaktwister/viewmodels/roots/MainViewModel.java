@@ -1,7 +1,7 @@
 package com.oaktwister.viewmodels.roots;
 
 import com.oaktwister.services.logging.Logger;
-import com.oaktwister.views.util.Section;
+import com.oaktwister.views.main.Section;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 

@@ -1,10 +1,10 @@
 package com.oaktwister.viewmodels.models;
 
 import com.oaktwister.core.ViewModelFactory;
-import com.oaktwister.models.aggregators.Identity;
+import com.oaktwister.models.Identity;
 import com.oaktwister.services.logging.Logger;
 import com.oaktwister.services.repos.IdentitiesRepo;
-import com.oaktwister.models.events.DeleteIdentityEvent;
+import com.oaktwister.events.DeleteIdentityEvent;
 import com.oaktwister.services.util.LocalDateTimeUtil;
 import com.oaktwister.services.util.UUIDUtil;
 import javafx.beans.property.ReadOnlyObjectProperty;

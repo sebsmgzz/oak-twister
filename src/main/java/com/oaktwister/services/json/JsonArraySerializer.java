@@ -1,6 +1,6 @@
 package com.oaktwister.services.json;
 
-import com.oaktwister.models.exceptions.UnknownGrantTypeException;
+import com.oaktwister.exceptions.UnknownGrantTypeException;
 import org.json.JSONArray;
 
 public interface JsonArraySerializer<T> {

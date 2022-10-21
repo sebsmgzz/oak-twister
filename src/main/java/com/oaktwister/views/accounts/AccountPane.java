@@ -1,7 +1,7 @@
 package com.oaktwister.views.accounts;
 
 import com.oaktwister.core.ViewHandler;
-import com.oaktwister.services.util.Resources;
+import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.models.AccountViewModel;
 import com.oaktwister.views.View;
 import javafx.beans.property.ObjectProperty;
@@ -38,7 +38,7 @@ public class AccountPane extends StackPane implements View {
 
     @Override
     public String getViewLocation() {
-        return Resources.Views.Controls.ACCOUNT_CELL;
+        return ViewResources.Accounts.ACCOUNT_PANE;
     }
 
     @Override

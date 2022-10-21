@@ -5,7 +5,7 @@
     "grants": [
         {
             "name": "Password",
-            "type": "com.oaktwister.models.aggregators.grants.SecretGrant",
+            "type": "com.oaktwister.models.grants.SecretGrant",
             "value": {}
         }
     ]

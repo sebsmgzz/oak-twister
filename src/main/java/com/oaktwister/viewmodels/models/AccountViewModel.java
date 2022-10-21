@@ -1,9 +1,8 @@
 package com.oaktwister.viewmodels.models;
 
 import com.oaktwister.core.ViewModelFactory;
-import com.oaktwister.models.aggregators.Account;
-import com.oaktwister.models.events.DeleteAccountEvent;
-import com.oaktwister.models.events.DeleteIdentityEvent;
+import com.oaktwister.models.Account;
+import com.oaktwister.events.DeleteAccountEvent;
 import com.oaktwister.services.logging.Logger;
 import com.oaktwister.services.repos.AccountsRepo;
 import com.oaktwister.services.repos.IdentitiesRepo;

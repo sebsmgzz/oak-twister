@@ -7,32 +7,32 @@
     "claims": [
         {
             "name": "First name",
-            "grantType": "com.oaktwister.models.aggregators.grants.TextGrant",
+            "grantType": "com.oaktwister.models.grants.TextGrant",
             "isOptional": false
         },
         {
             "name": "Last name",
-            "grantType": "com.oaktwister.models.aggregators.grants.TextGrant",
+            "grantType": "com.oaktwister.models.grants.TextGrant",
             "isOptional": false
         },
         {
             "name": "Email",
-            "grantType": "com.oaktwister.models.aggregators.grants.TextGrant",
+            "grantType": "com.oaktwister.models.grants.TextGrant",
             "isOptional": false
         },
         {
             "name": "Password",
-            "grantType": "com.oaktwister.models.aggregators.grants.SecretGrant",
+            "grantType": "com.oaktwister.models.grants.SecretGrant",
             "isOptional": false
         },
         {
             "name": "Birthday",
-            "grantType": "com.oaktwister.models.aggregators.grants.DateTimeGrant",
+            "grantType": "com.oaktwister.models.grants.DateTimeGrant",
             "isOptional": true
         },
         {
             "name": "Username",
-            "grantType": "com.oaktwister.models.aggregators.grants.TextGrant",
+            "grantType": "com.oaktwister.models.grants.TextGrant",
             "isOptional": false
         }
     ]

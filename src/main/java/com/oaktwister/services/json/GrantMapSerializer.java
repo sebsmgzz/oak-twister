@@ -1,8 +1,8 @@
 package com.oaktwister.services.json;
 
-import com.oaktwister.models.exceptions.UnknownGrantTypeException;
-import com.oaktwister.models.aggregators.grants.Grant;
-import com.oaktwister.models.aggregators.grants.GrantMap;
+import com.oaktwister.exceptions.UnknownGrantTypeException;
+import com.oaktwister.models.grants.Grant;
+import com.oaktwister.models.grants.GrantMap;
 import com.oaktwister.services.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;

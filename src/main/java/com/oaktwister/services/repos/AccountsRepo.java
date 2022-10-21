@@ -1,13 +1,12 @@
 package com.oaktwister.services.repos;
 
-import com.oaktwister.models.aggregators.Account;
-import com.oaktwister.models.aggregators.Identity;
+import com.oaktwister.models.Account;
+import com.oaktwister.models.Identity;
 import com.oaktwister.services.config.Context;
 import com.oaktwister.services.json.AccountSerializer;
 import com.oaktwister.services.logging.Logger;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class AccountsRepo extends JsonRepo<Account> {
 

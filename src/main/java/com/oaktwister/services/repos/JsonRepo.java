@@ -1,6 +1,6 @@
 package com.oaktwister.services.repos;
 
-import com.oaktwister.models.exceptions.UnknownGrantTypeException;
+import com.oaktwister.exceptions.UnknownGrantTypeException;
 import com.oaktwister.models.seedwork.Entity;
 import com.oaktwister.services.config.Context;
 import com.oaktwister.services.json.JsonObjectSerializer;
@@ -14,8 +14,6 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.UUID;
-
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public abstract class JsonRepo<T extends Entity> {
 

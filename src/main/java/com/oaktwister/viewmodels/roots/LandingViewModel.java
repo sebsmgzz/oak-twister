@@ -1,6 +1,6 @@
 package com.oaktwister.viewmodels.roots;
 
-import com.oaktwister.models.aggregators.drives.Drive;
+import com.oaktwister.models.drives.Drive;
 import com.oaktwister.services.config.Context;
 import com.oaktwister.services.repos.DriveRepo;
 import com.oaktwister.viewmodels.models.DriveViewModel;

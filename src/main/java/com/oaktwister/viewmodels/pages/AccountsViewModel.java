@@ -1,7 +1,7 @@
 package com.oaktwister.viewmodels.pages;
 
 import com.oaktwister.core.ViewModelFactory;
-import com.oaktwister.models.aggregators.Account;
+import com.oaktwister.models.Account;
 import com.oaktwister.services.logging.Logger;
 import com.oaktwister.services.repos.AccountsRepo;
 import com.oaktwister.viewmodels.models.AccountViewModel;

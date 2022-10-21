@@ -1,7 +1,7 @@
 package com.oaktwister.views.identities;
 
 import com.oaktwister.core.ViewHandler;
-import com.oaktwister.services.util.Resources;
+import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
 import com.oaktwister.views.View;
 import javafx.beans.property.*;
@@ -36,7 +36,7 @@ public class IdentityPane extends StackPane implements View {
 
     @Override
     public String getViewLocation() {
-        return Resources.Views.Controls.IDENTITY_CELL;
+        return ViewResources.Identities.IDENTITY_PANE;
     }
 
     @Override

@@ -1,11 +1,10 @@
 package com.oaktwister.viewmodels.models;
 
 import com.oaktwister.core.ViewModelFactory;
-import com.oaktwister.models.aggregators.Platform;
+import com.oaktwister.models.Platform;
 import com.oaktwister.services.repos.ImagesRepo;
 import com.oaktwister.services.util.LocalDateTimeUtil;
 import com.oaktwister.services.util.UUIDUtil;
-import com.oaktwister.views.util.UUIDStringConverter;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;

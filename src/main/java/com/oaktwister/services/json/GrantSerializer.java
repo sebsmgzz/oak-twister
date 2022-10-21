@@ -1,7 +1,7 @@
 package com.oaktwister.services.json;
 
-import com.oaktwister.models.aggregators.grants.*;
-import com.oaktwister.models.exceptions.UnknownGrantTypeException;
+import com.oaktwister.models.grants.*;
+import com.oaktwister.exceptions.UnknownGrantTypeException;
 import com.oaktwister.services.logging.Logger;
 import com.oaktwister.services.util.LocalDateTimeUtil;
 import org.json.JSONObject;

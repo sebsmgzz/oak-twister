@@ -1,7 +1,7 @@
 package com.oaktwister.views.identities;
 
 import com.oaktwister.core.ViewHandler;
-import com.oaktwister.services.util.Resources;
+import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.pages.IdentitiesViewModel;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
 import com.oaktwister.viewmodels.util.DualChangeListener;
@@ -38,7 +38,7 @@ public class IdentitiesPane extends AnchorPane implements View {
 
     @Override
     public String getViewLocation() {
-        return Resources.Views.Layouts.IDENTITIES_PANE;
+        return ViewResources.Identities.IDENTITIES_PANE;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.oaktwister.views.platforms;
 
 import com.oaktwister.core.ViewHandler;
-import com.oaktwister.services.util.Resources;
+import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
 import com.oaktwister.views.View;
 import javafx.fxml.FXML;
@@ -34,7 +34,7 @@ public class PlatformPane extends StackPane implements View {
 
     @Override
     public String getViewLocation() {
-        return Resources.Views.Controls.PLATFORM_PANE;
+        return ViewResources.Platforms.PLATFORM_PANE;
     }
 
     @Override
