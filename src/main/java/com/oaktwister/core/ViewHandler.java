@@ -5,15 +5,15 @@ import com.oaktwister.viewmodels.models.AccountViewModel;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
 import com.oaktwister.views.View;
-import com.oaktwister.views.controls.AccountPane;
-import com.oaktwister.views.controls.IdentityPane;
-import com.oaktwister.views.controls.ImageButtonBox;
-import com.oaktwister.views.controls.PlatformPane;
-import com.oaktwister.views.controls.AccountsPane;
-import com.oaktwister.views.controls.IdentitiesPane;
-import com.oaktwister.views.controls.PlatformsPane;
-import com.oaktwister.views.controllers.LandingViewController;
-import com.oaktwister.views.controllers.MainViewController;
+import com.oaktwister.views.accounts.AccountPane;
+import com.oaktwister.views.identities.IdentityPane;
+import com.oaktwister.views.laterals.ImageButtonBox;
+import com.oaktwister.views.platforms.PlatformPane;
+import com.oaktwister.views.accounts.AccountsPane;
+import com.oaktwister.views.identities.IdentitiesPane;
+import com.oaktwister.views.platforms.PlatformsPane;
+import com.oaktwister.views.landing.LandingViewController;
+import com.oaktwister.views.main.MainViewController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -54,8 +54,9 @@ public class ViewHandler {
             fxmlLoader.setRoot(view);
             fxmlLoader.setControllerFactory(aClass -> view);
             fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex);
         }
     }
 

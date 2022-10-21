@@ -16,46 +16,46 @@ public interface Resources {
     interface Images {
 
         interface Cyberpunk {
-            String PLATFORM = "/images/cyberpunk/platform.png";
+            String PLATFORM = "/com/oaktwister/images/cyberpunk/platform.png";
         }
 
         interface FontAwesome {
-            String FINGERPRINT_SOLID = "/images/font-awesome/fingerprint-solid.png";
-            String HOUSE_SOLID = "/images/font-awesome/house-solid.png";
-            String LAYER_GROUP_SOLID = "/images/font-awesome/layer-group-solid.png";
-            String USER_SOLID = "/images/font-awesome/user-solid.png";
-            String USERS_SOLID = "/images/font-awesome/users-solid.png";
+            String FINGERPRINT_SOLID = "/com/oaktwister/images/font-awesome/fingerprint-solid.png";
+            String HOUSE_SOLID = "/com/oaktwister/images/font-awesome/house-solid.png";
+            String LAYER_GROUP_SOLID = "/com/oaktwister/images/font-awesome/layer-group-solid.png";
+            String USER_SOLID = "/com/oaktwister/images/font-awesome/user-solid.png";
+            String USERS_SOLID = "/com/oaktwister/images/font-awesome/users-solid.png";
         }
 
         interface HelpSupport {
-            String INFORMATION = "/images/help-support/information.png";
-            String KEY = "/images/help-support/key.png";
-            String SETTINGS = "/images/help-support/settings.png";
+            String INFORMATION = "/com/oaktwister/images/help-support/information.png";
+            String KEY = "/com/oaktwister/images/help-support/key.png";
+            String SETTINGS = "/com/oaktwister/images/help-support/settings.png";
         }
 
         interface Placeholders {
-            String IMAGE = "/images/placeholders/image.png";
+            String IMAGE = "/com/oaktwister/images/placeholders/image.png";
         }
 
         interface Social {
-            String FACEBOOK = "/images/social/facebook.png";
+            String FACEBOOK = "/com/oaktwister/images/social/facebook.png";
         }
 
         interface SocialNetwork {
-            String ADD = "/images/social-network/add.png";
-            String FAVOURITE = "/images/social-network/favourite.png";
-            String FRIENDS = "/images/social-network/friends.png";
-            String HOME = "/images/social-network/home.png";
-            String MESSAGE = "/images/social-network/message.png";
-            String NEWSFEED = "/images/social-network/newsfeed.png";
-            String POLL = "/images/social-network/poll.png";
-            String SHARE = "/images/social-network/share.png";
-            String TAG = "/images/social-network/tag.png";
-            String USER = "/images/social-network/user.png";
+            String ADD = "/com/oaktwister/images/social-network/add.png";
+            String FAVOURITE = "/com/oaktwister/images/social-network/favourite.png";
+            String FRIENDS = "/com/oaktwister/images/social-network/friends.png";
+            String HOME = "/com/oaktwister/images/social-network/home.png";
+            String MESSAGE = "/com/oaktwister/images/social-network/message.png";
+            String NEWSFEED = "/com/oaktwister/images/social-network/newsfeed.png";
+            String POLL = "/com/oaktwister/images/social-network/poll.png";
+            String SHARE = "/com/oaktwister/images/social-network/share.png";
+            String TAG = "/com/oaktwister/images/social-network/tag.png";
+            String USER = "/com/oaktwister/images/social-network/user.png";
         }
 
         interface Vikings {
-            String OAK = "/images/vikings/oak.png";
+            String OAK = "/com/oaktwister/images/vikings/oak.png";
         }
 
     }
@@ -63,21 +63,21 @@ public interface Resources {
     interface Styles {
 
         interface Controls {
-            String ACCOUNT_BOX = "/styles/controls/account-box.css";
-            String IDENTITY_CELL = "/styles/controls/identity-pane.css";
-            String IMAGE_BUTTON_BOX = "/styles/controls/image-button-box.css";
-            String PLATFORM_PANE = "/styles/controls/platform-pane.css";
+            String ACCOUNT_BOX = "/com/oaktwister/styles/accounts/account-box.css";
+            String IDENTITY_CELL = "/com/oaktwister/styles/identities/identity-pane.css";
+            String IMAGE_BUTTON_BOX = "/com/oaktwister/styles/laterals/image-button-box.css";
+            String PLATFORM_PANE = "/com/oaktwister/styles/platforms/platform-pane.css";
         }
 
         interface Layouts {
-            String ACCOUNTS_PANE = "/styles/layouts/accounts-pane.css";
-            String IDENTITIES_PANE = "/styles/layouts/identities-pane.css";
-            String PLATFORMS_PANE = "/styles/layouts/platforms-pane.css";
+            String ACCOUNTS_PANE = "/com/oaktwister/styles/accounts/accounts-pane.css";
+            String IDENTITIES_PANE = "/com/oaktwister/styles/identities/identities-pane.css";
+            String PLATFORMS_PANE = "/com/oaktwister/styles/platforms/platforms-pane.css";
         }
 
         interface Roots {
-            String MAIN = "/styles/roots/landing.css";
-            String LANDING = "/styles/roots/landing.css";
+            String MAIN = "/com/oaktwister/styles/landing/landing.css";
+            String LANDING = "/com/oaktwister/styles/landing/landing.css";
         }
 
     }
@@ -85,21 +85,21 @@ public interface Resources {
     interface Views {
 
         interface Controls {
-            String ACCOUNT_CELL = "/views/controls/account-pane.fxml";
-            String IDENTITY_CELL = "/views/controls/identity-pane.fxml";
-            String IMAGE_BUTTON_BOX = "/views/controls/image-button-box.fxml";
-            String PLATFORM_PANE = "/views/controls/platform-pane.fxml";
+            String ACCOUNT_CELL = "/com/oaktwister/views/accounts/account-pane.fxml";
+            String IDENTITY_CELL = "/com/oaktwister/views/identities/identity-pane.fxml";
+            String IMAGE_BUTTON_BOX = "/com/oaktwister/views/laterals/image-button-box.fxml";
+            String PLATFORM_PANE = "/com/oaktwister/views/platforms/platform-pane.fxml";
         }
 
         interface Layouts {
-            String ACCOUNTS_PANE = "/views/layouts/accounts-pane.fxml";
-            String IDENTITIES_PANE = "/views/layouts/identities-pane.fxml";
-            String PLATFORMS_PANE = "/views/layouts/platforms-pane.fxml";
+            String ACCOUNTS_PANE = "/com/oaktwister/views/accounts/accounts-pane.fxml";
+            String IDENTITIES_PANE = "/com/oaktwister/views/identities/identities-pane.fxml";
+            String PLATFORMS_PANE = "/com/oaktwister/views/platforms/platforms-pane.fxml";
         }
 
         interface Roots {
-            String LANDING = "/views/roots/landing.fxml";
-            String MAIN = "/views/roots/main.fxml";
+            String LANDING = "landing.fxml";
+            String MAIN = "/com/oaktwister/views/main/main.fxml";
         }
 
     }

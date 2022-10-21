@@ -1,7 +1,7 @@
 package com.oaktwister.core;
 
-import com.oaktwister.views.controllers.LandingViewController;
-import com.oaktwister.views.controllers.MainViewController;
+import com.oaktwister.views.landing.LandingViewController;
+import com.oaktwister.views.main.MainViewController;
 import javafx.util.Callback;
 
 import java.io.IOException;

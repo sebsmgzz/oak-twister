@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.oaktwister.views.landing.LandingViewController"
+      fx:id="root"
+      stylesheets="/com/oaktwister/styles/landing/landing.css"
+      styleClass="background"
+      prefWidth="1000" prefHeight="600">
+    <top>
+        <HBox styleClass="topContent" VBox.vgrow="NEVER">
+            <ImageView styleClass="logo" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="/com/oaktwister/images/vikings/oak.png"/>
+            </ImageView>
+            <Label text="Oak Twister"
+                   alignment="CENTER" contentDisplay="CENTER"
+                   HBox.hgrow="NEVER" styleClass="title"/>
+        </HBox>
+    </top>
+    <center>
+        <TableView fx:id="tableView" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="idColumn" text="Id" styleClass="column"/>
+                <TableColumn fx:id="pathColumn" text="Path" styleClass="column"/>
+                <TableColumn fx:id="capacityColumn" text="Capacity" styleClass="column"/>
+                <TableColumn fx:id="spaceColumn" text="Space" styleClass="column"/>
+            </columns>
+        </TableView>
+    </center>
+    <bottom>
+        <HBox styleClass="bottomContent" VBox.vgrow="NEVER">
+            <Button onAction="#onLoadButtonClick" styleClass="button"
+                    text="Load" HBox.hgrow="NEVER" prefWidth="100"/>
+            <Button onAction="#onRefreshButtonClick" styleClass="button"
+                    text="Refresh" HBox.hgrow="NEVER" prefWidth="100"/>
+        </HBox>
+    </bottom>
+</BorderPane>
