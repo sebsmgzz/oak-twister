@@ -1,12 +1,13 @@
 package com.oaktwister.views.identities;
 
+import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.core.ViewHandler;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.pages.IdentitiesViewModel;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
 import com.oaktwister.util.listeners.DualChangeListener;
-import com.oaktwister.views.View;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -20,7 +21,8 @@ import java.util.Iterator;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class IdentitiesPane extends AnchorPane implements View {
+@ViewDescriptor(location = ViewResources.Identities.IDENTITIES_PANE)
+public class IdentitiesPane extends AnchorPane implements Initializable {
 
     private final ViewHandler viewHandler;
     private final IdentitiesViewModel viewModel;
@@ -34,11 +36,6 @@ public class IdentitiesPane extends AnchorPane implements View {
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
         viewHandler.loadCustomView(this);
-    }
-
-    @Override
-    public String getViewLocation() {
-        return ViewResources.Identities.IDENTITIES_PANE;
     }
 
     @Override

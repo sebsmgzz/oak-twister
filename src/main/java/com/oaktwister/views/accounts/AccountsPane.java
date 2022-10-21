@@ -1,12 +1,13 @@
 package com.oaktwister.views.accounts;
 
+import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.core.ViewHandler;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.models.AccountViewModel;
 import com.oaktwister.viewmodels.pages.AccountsViewModel;
 import com.oaktwister.util.listeners.DualChangeListener;
-import com.oaktwister.views.View;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -17,7 +18,8 @@ import java.util.Iterator;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class AccountsPane extends AnchorPane implements View {
+@ViewDescriptor(location = ViewResources.Accounts.ACCOUNTS_PANE)
+public class AccountsPane extends AnchorPane implements Initializable {
 
     private final ViewHandler viewHandler;
     private final AccountsViewModel viewModel;
@@ -32,11 +34,6 @@ public class AccountsPane extends AnchorPane implements View {
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
         viewHandler.loadCustomView(this);
-    }
-
-    @Override
-    public String getViewLocation() {
-        return ViewResources.Accounts.ACCOUNTS_PANE;
     }
 
     @Override

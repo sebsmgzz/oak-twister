@@ -1,13 +1,14 @@
 package com.oaktwister.views.laterals;
 
+import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.core.ViewHandler;
 import com.oaktwister.services.resources.ViewResources;
-import com.oaktwister.views.View;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,7 +17,8 @@ import javafx.scene.layout.HBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ImageButtonBox extends HBox implements View {
+@ViewDescriptor(location = ViewResources.Laterals.IMAGE_BUTTON_BOX_VIEW)
+public class ImageButtonBox extends HBox implements Initializable {
 
     private final ViewHandler viewHandler;
 
@@ -27,11 +29,6 @@ public class ImageButtonBox extends HBox implements View {
         super();
         this.viewHandler = viewHandler;
         viewHandler.loadCustomView(this);
-    }
-
-    @Override
-    public String getViewLocation() {
-        return ViewResources.Laterals.IMAGE_BUTTON_BOX_VIEW;
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.oaktwister.views.landings;
 
+import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.core.ViewHandler;
+import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.models.DriveViewModel;
 import com.oaktwister.viewmodels.roots.LandingViewModel;
 import javafx.event.ActionEvent;
@@ -16,6 +18,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
+@ViewDescriptor(location = ViewResources.Landings.LANDING_VIEW)
 public class LandingViewController implements Initializable {
 
     private final ViewHandler viewHandler;

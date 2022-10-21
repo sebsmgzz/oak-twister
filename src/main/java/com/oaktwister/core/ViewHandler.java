@@ -1,12 +1,12 @@
 package com.oaktwister.core;
 
+import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.services.resources.ImageResources;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.services.resources.StringResources;
 import com.oaktwister.viewmodels.models.AccountViewModel;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
-import com.oaktwister.views.View;
 import com.oaktwister.views.accounts.AccountPane;
 import com.oaktwister.views.identities.IdentityPane;
 import com.oaktwister.views.laterals.ImageButtonBox;
@@ -38,24 +38,36 @@ public class ViewHandler {
         this.controllerFactory = new ControllerFactory(this, viewModelFactory);
     }
 
-    public <T extends Parent> T loadRootView(@NotNull Class<?> resourceClass, String viewLocation) {
-        try {
-            URL resourceUrl = resourceClass.getResource(viewLocation);
-            FXMLLoader fxmlLoader = new FXMLLoader(resourceUrl);
-            fxmlLoader.setControllerFactory(controllerFactory);
-            return fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    private URL getViewResourceUrl(@NotNull Class<?> viewClass) throws IOException {
+        if (!viewClass.isAnnotationPresent(ViewDescriptor.class)) {
+            // TODO: Create AnnotationNotFoundException class
+            throw new IOException("View is missing the ViewDescriptor annotation. Cannot find view location.");
         }
+        ViewDescriptor viewDescriptor = viewClass.getAnnotation(ViewDescriptor.class);
+        String viewLocation = viewDescriptor.location();
+        return viewClass.getResource(viewLocation);
     }
 
-    public void loadCustomView(View view) {
+    public void loadCustomView(Object view) {
         try {
-            URL resourceUrl = view.getClass().getResource(view.getViewLocation());
-            FXMLLoader fxmlLoader = new FXMLLoader(resourceUrl);
+            Class<?> viewClass = view.getClass();
+            URL viewResourceUrl = getViewResourceUrl(viewClass);
+            FXMLLoader fxmlLoader = new FXMLLoader(viewResourceUrl);
             fxmlLoader.setRoot(view);
             fxmlLoader.setControllerFactory(aClass -> view);
             fxmlLoader.load();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public <T extends Parent> T loadRootView(@NotNull Class<?> viewClass) {
+        try {
+            URL viewResourceUrl = getViewResourceUrl(viewClass);
+            FXMLLoader fxmlLoader = new FXMLLoader(viewResourceUrl);
+            fxmlLoader.setControllerFactory(controllerFactory);
+            return fxmlLoader.load();
         } catch (IOException ex) {
             ex.printStackTrace();
             throw new RuntimeException(ex);
@@ -63,7 +75,7 @@ public class ViewHandler {
     }
 
     public void showLandingView() {
-        Parent view = loadRootView(LandingViewController.class, ViewResources.Landings.LANDING_VIEW);
+        Parent view = loadRootView(LandingViewController.class);
         Scene scene = new Scene(view);
         primaryStage.getIcons().add(new Image(ImageResources.Vikings.OAK));
         primaryStage.setTitle(StringResources.App.TITLE);
@@ -72,7 +84,7 @@ public class ViewHandler {
     }
 
     public void showMainView() {
-        Parent view = loadRootView(MainViewController.class, ViewResources.Main.MAIN_VIEW);
+        Parent view = loadRootView(MainViewController.class);
         Scene scene = new Scene(view);
         primaryStage.setScene(scene);
         primaryStage.show();

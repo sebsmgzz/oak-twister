@@ -1,8 +1,10 @@
 package com.oaktwister.views.main;
 
+import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.core.ViewHandler;
 import com.oaktwister.services.resources.ImageResources;
 import com.oaktwister.services.resources.StringResources;
+import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.roots.MainViewModel;
 import com.oaktwister.views.laterals.ImageButtonBox;
 import javafx.beans.property.Property;
@@ -18,6 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+@ViewDescriptor(location = ViewResources.Main.MAIN_VIEW)
 public class MainViewController implements Initializable {
 
     private final ViewHandler viewHandler;

@@ -1,15 +1,16 @@
 package com.oaktwister.views.platforms;
 
+import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.core.ViewHandler;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.pages.PlatformsViewModel;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
 import com.oaktwister.util.listeners.DualChangeListener;
-import com.oaktwister.views.View;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
@@ -20,7 +21,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class PlatformsPane extends AnchorPane implements View {
+@ViewDescriptor(location = ViewResources.Platforms.PLATFORMS_PANE)
+public class PlatformsPane extends AnchorPane implements Initializable {
 
     private final ViewHandler viewHandler;
     private final PlatformsViewModel viewModel;
@@ -37,11 +39,6 @@ public class PlatformsPane extends AnchorPane implements View {
         this.viewModel = viewModel;
         platforms = new SimpleListProperty<>(FXCollections.observableArrayList());
         viewHandler.loadCustomView(this);
-    }
-
-    @Override
-    public String getViewLocation() {
-        return ViewResources.Platforms.PLATFORMS_PANE;
     }
 
     @Override

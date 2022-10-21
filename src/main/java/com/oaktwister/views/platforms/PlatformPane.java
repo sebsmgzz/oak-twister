@@ -1,10 +1,11 @@
 package com.oaktwister.views.platforms;
 
+import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.core.ViewHandler;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
-import com.oaktwister.views.View;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,7 +14,8 @@ import javafx.scene.layout.StackPane;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class PlatformPane extends StackPane implements View {
+@ViewDescriptor(location = ViewResources.Platforms.PLATFORM_PANE)
+public class PlatformPane extends StackPane implements Initializable {
 
     private final ViewHandler viewHandler;
     private final PlatformViewModel viewModel;
@@ -30,11 +32,6 @@ public class PlatformPane extends StackPane implements View {
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
         viewHandler.loadCustomView(this);
-    }
-
-    @Override
-    public String getViewLocation() {
-        return ViewResources.Platforms.PLATFORM_PANE;
     }
 
     @Override

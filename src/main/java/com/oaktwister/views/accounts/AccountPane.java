@@ -1,13 +1,14 @@
 package com.oaktwister.views.accounts;
 
+import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.core.ViewHandler;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.models.AccountViewModel;
-import com.oaktwister.views.View;
 import javafx.beans.property.ObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,7 +17,8 @@ import javafx.scene.layout.StackPane;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class AccountPane extends StackPane implements View {
+@ViewDescriptor(location = ViewResources.Accounts.ACCOUNT_PANE)
+public class AccountPane extends StackPane implements Initializable {
 
     private final ViewHandler viewHandler;
     private final AccountViewModel viewModel;
@@ -34,11 +36,6 @@ public class AccountPane extends StackPane implements View {
         this.viewHandler = viewHandler;
         this.viewModel = viewModel;
         viewHandler.loadCustomView(this);
-    }
-
-    @Override
-    public String getViewLocation() {
-        return ViewResources.Accounts.ACCOUNT_PANE;
     }
 
     @Override
