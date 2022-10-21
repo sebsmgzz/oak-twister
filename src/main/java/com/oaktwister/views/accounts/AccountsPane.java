@@ -60,7 +60,7 @@ public class AccountsPane extends AnchorPane implements Initializable {
         // Bindings
         identityViewModel.onDeleteAccountProperty().set(event -> {
             AccountViewModel viewModel = event.getAccountViewModel();
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Delete account");
             alert.setContentText(String.format(
                     "Do you really want to delete account %s?%n" +

@@ -102,11 +102,13 @@ public class ViewModelFactory {
     }
 
     public PlatformViewModel getPlatformViewModel() {
+        PlatformsRepo platformsRepo = serviceFactory.getPlatformsRepo();
         ImagesRepo imagesRepo = serviceFactory.getImagesRepo();
         UUIDUtil uuidUtil = serviceFactory.getUUIDUtil();
         LocalDateTimeUtil localDateTimeUtil = serviceFactory.getLocalDateTimeUtil();
+        Logger logger = new Logger(PlatformViewModel.class);
         PlatformViewModel viewModel = new PlatformViewModel(
-                this, imagesRepo, uuidUtil, localDateTimeUtil);
+                this, platformsRepo, imagesRepo, uuidUtil, localDateTimeUtil, logger);
         serviceFactory.clearScope();
         return viewModel;
     }

@@ -4,30 +4,20 @@ import com.oaktwister.viewmodels.models.IdentityViewModel;
 import javafx.event.Event;
 import javafx.event.EventType;
 
-public class DeleteIdentityEvent extends Event {
+public class DeleteIdentityEvent extends CancellableEvent {
 
-    private static final EventType<DeleteIdentityEvent> DELETING_IDENTITY =
-            new EventType<>(Event.ANY, "DELETING_IDENTITY");
+    private static final EventType<DeleteIdentityEvent> DELETE_IDENTITY =
+            new EventType<>(Event.ANY, "DELETE_IDENTITY");
 
     private final IdentityViewModel identityViewModel;
-    private boolean canceled;
 
     public DeleteIdentityEvent(IdentityViewModel identityViewModel) {
-        super(DELETING_IDENTITY);
+        super(DELETE_IDENTITY);
         this.identityViewModel = identityViewModel;
-        canceled = false;
     }
 
     public IdentityViewModel getIdentityViewModel() {
         return identityViewModel;
-    }
-
-    public void cancel() {
-        canceled = true;
-    }
-
-    public boolean isCanceled() {
-        return canceled;
     }
 
 }

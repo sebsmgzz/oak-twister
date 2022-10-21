@@ -3,6 +3,7 @@ package com.oaktwister.views.platforms;
 import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.core.ViewHandler;
 import com.oaktwister.services.resources.ViewResources;
+import com.oaktwister.viewmodels.models.AccountViewModel;
 import com.oaktwister.viewmodels.pages.PlatformsViewModel;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
 import com.oaktwister.util.listeners.DualChangeListener;
@@ -12,13 +13,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 @ViewDescriptor(location = ViewResources.Platforms.PLATFORMS_PANE)
@@ -65,6 +70,23 @@ public class PlatformsPane extends AnchorPane implements Initializable {
     // When a platform is added, simply get the PlatformPane from the viewFactory and
     // add it to the flowPane's children
     private void onPlatformViewModelAdded(PlatformViewModel platformViewModel) {
+
+        // Bindings
+        platformViewModel.onDeleteAccountProperty().set(event -> {
+            PlatformViewModel viewModel = event.getPlatformViewModel();
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Delete platform");
+            alert.setContentText(String.format(
+                    "Do you really want to delete platform %s?%n" +
+                            "This action cannot be undone.",
+                    viewModel.idProperty().get()));
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.isEmpty() || result.get().equals(ButtonType.CANCEL)) {
+                event.cancel();
+            }
+            this.viewModel.platformsProperty().remove(viewModel);
+        });
+
         PlatformPane platformPane = viewHandler.getPlatformPane(platformViewModel);
         flowPane.getChildren().add(platformPane);
     }
@@ -72,17 +94,18 @@ public class PlatformsPane extends AnchorPane implements Initializable {
     // When a platform is removed, we need to iterate through the flowPane's children to
     // backtrack the Node to the PlatformViewModel been removed
     private void onPlatformViewModelRemoved(PlatformViewModel platformViewModel) {
-        List<Node> children = flowPane.getChildren();
-        for (Node node : children) {
+        Iterator<Node> iterator = flowPane.getChildren().iterator();
+        while(iterator.hasNext()) {
+            Node node = iterator.next();
             PlatformPane platformPane = node instanceof PlatformPane? (PlatformPane) node : null;
             if(platformPane == null) {
                 throw new RuntimeException(
-                    "A PlatformPane::flowPane children was found not to be an instance of PlatformPane. " +
-                            "This is not the expected behaviour. Something is critically wrong.");
+                        "A PlatformPane::flowPane children was found not to be an instance of PlatformPane. " +
+                                "This is not the expected behaviour. Something is critically wrong.");
             }
             PlatformViewModel foundViewModel = platformPane.getViewModel();
             if (platformViewModel == foundViewModel) {
-                children.remove(node);
+                iterator.remove();
             }
         }
     }

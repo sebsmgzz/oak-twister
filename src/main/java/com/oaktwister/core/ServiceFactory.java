@@ -164,8 +164,9 @@ public class ServiceFactory {
         if(scoped.containsKey(ClaimMapSerializer.class)) {
             return (ClaimMapSerializer) scoped.get(ClaimMapSerializer.class);
         } else {
+            ClaimSerializer claimSerializer = getClaimSerializer();
             Logger logger = new Logger(ClaimMapSerializer.class);
-            ClaimMapSerializer service = new ClaimMapSerializer(getClaimSerializer(), logger);
+            ClaimMapSerializer service = new ClaimMapSerializer(claimSerializer, logger);
             scoped.put(ClaimMapSerializer.class, service);
             return service;
         }
@@ -175,8 +176,10 @@ public class ServiceFactory {
         if(scoped.containsKey(AccountsRepo.class)) {
             return (AccountsRepo) scoped.get(AccountsRepo.class);
         } else {
+            Context context = Context.getInstance();
+            AccountSerializer accountSerializer = getAccountSerializer();
             Logger logger = new Logger(AccountsRepo.class);
-            AccountsRepo service = new AccountsRepo(getContext(), getAccountSerializer(), logger);
+            AccountsRepo service = new AccountsRepo(context, accountSerializer, logger);
             scoped.put(AccountsRepo.class, service);
             return service;
         }
@@ -186,8 +189,11 @@ public class ServiceFactory {
         if(scoped.containsKey(PlatformsRepo.class)) {
             return (PlatformsRepo) scoped.get(PlatformsRepo.class);
         } else {
+            Context context = Context.getInstance();
+            PlatformSerializer platformSerializer = getPlatformSerializer();
+            AccountsRepo accountsRepo = getAccountsRepo();
             Logger logger = new Logger(PlatformsRepo.class);
-            PlatformsRepo service = new PlatformsRepo(getContext(), getPlatformSerializer(), logger);
+            PlatformsRepo service = new PlatformsRepo(context, platformSerializer, accountsRepo, logger);
             scoped.put(PlatformsRepo.class, service);
             return service;
         }

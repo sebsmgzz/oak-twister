@@ -50,6 +50,7 @@ public class PlatformPane extends StackPane implements Initializable {
         nameLabel.textProperty().bindBidirectional(viewModel.nameProperty());
         viewModel.createdAtProperty().addListener((observable, oldValue, newValue) ->
                 createdAtLabel.setText(viewModel.formatDate(newValue)));
+        deleteButton.onActionProperty().set(event -> viewModel.delete());
 
     }
 

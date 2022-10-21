@@ -63,7 +63,7 @@ public class IdentitiesPane extends AnchorPane implements Initializable {
         // Bindings
         identityViewModel.onDeleteIdentityProperty().set(event -> {
             IdentityViewModel viewModel = event.getIdentityViewModel();
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Delete identity");
             alert.setContentText(String.format(
                     "Do you really want to delete identity %s?%n" +
