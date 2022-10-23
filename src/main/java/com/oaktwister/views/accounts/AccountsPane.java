@@ -1,7 +1,7 @@
 package com.oaktwister.views.accounts;
 
 import com.oaktwister.annotations.ViewDescriptor;
-import com.oaktwister.core.ViewHandler;
+import com.oaktwister.core.ViewMediator;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.models.AccountViewModel;
 import com.oaktwister.viewmodels.pages.AccountsViewModel;
@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 @ViewDescriptor(location = ViewResources.Accounts.ACCOUNTS_PANE)
 public class AccountsPane extends AnchorPane implements Initializable {
 
-    private final ViewHandler viewHandler;
+    private final ViewMediator viewMediator;
     private final AccountsViewModel viewModel;
 
     @FXML private Label titleLabel;
@@ -29,11 +29,11 @@ public class AccountsPane extends AnchorPane implements Initializable {
     @FXML private FlowPane flowPane;
     @FXML private Button addButton;
 
-    public AccountsPane(ViewHandler viewHandler, AccountsViewModel viewModel) {
+    public AccountsPane(ViewMediator viewMediator, AccountsViewModel viewModel) {
         super();
-        this.viewHandler = viewHandler;
+        this.viewMediator = viewMediator;
         this.viewModel = viewModel;
-        viewHandler.loadCustomView(this);
+        viewMediator.loadCustomView(this);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class AccountsPane extends AnchorPane implements Initializable {
         });
 
         // Get the AccountBox from the viewHandler and add it to the flowPane's children
-        AccountPane accountPane = viewHandler.getAccountBox(identityViewModel);
+        AccountPane accountPane = viewMediator.controls().getAccountPane(identityViewModel);
         accountPane.onMainActionProperty().set(event -> {
             // TODO: Show editable form for the identity
         });

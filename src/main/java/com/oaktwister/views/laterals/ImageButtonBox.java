@@ -1,7 +1,7 @@
 package com.oaktwister.views.laterals;
 
 import com.oaktwister.annotations.ViewDescriptor;
-import com.oaktwister.core.ViewHandler;
+import com.oaktwister.core.ViewMediator;
 import com.oaktwister.services.resources.ViewResources;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
@@ -20,15 +20,15 @@ import java.util.ResourceBundle;
 @ViewDescriptor(location = ViewResources.Laterals.IMAGE_BUTTON_BOX_VIEW)
 public class ImageButtonBox extends HBox implements Initializable {
 
-    private final ViewHandler viewHandler;
+    private final ViewMediator viewMediator;
 
     @FXML private Button button;
     @FXML private ImageView imageView;
 
-    public ImageButtonBox(ViewHandler viewHandler) {
+    public ImageButtonBox(ViewMediator viewMediator) {
         super();
-        this.viewHandler = viewHandler;
-        viewHandler.loadCustomView(this);
+        this.viewMediator = viewMediator;
+        viewMediator.loadCustomView(this);
     }
 
     @Override

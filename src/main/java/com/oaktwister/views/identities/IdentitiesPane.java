@@ -1,11 +1,13 @@
 package com.oaktwister.views.identities;
 
 import com.oaktwister.annotations.ViewDescriptor;
-import com.oaktwister.core.ViewHandler;
+import com.oaktwister.core.ViewMediator;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.pages.IdentitiesViewModel;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
 import com.oaktwister.util.listeners.DualChangeListener;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -15,6 +17,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import org.jetbrains.annotations.NotNull;
 
 import java.net.URL;
 import java.util.Iterator;
@@ -24,39 +27,44 @@ import java.util.ResourceBundle;
 @ViewDescriptor(location = ViewResources.Identities.IDENTITIES_PANE)
 public class IdentitiesPane extends AnchorPane implements Initializable {
 
-    private final ViewHandler viewHandler;
-    private final IdentitiesViewModel viewModel;
+    private final ViewMediator viewMediator;
 
     @FXML private ScrollPane scrollPane;
     @FXML private FlowPane flowPane;
     @FXML private Button addButton;
 
-    public IdentitiesPane(ViewHandler viewHandler, IdentitiesViewModel viewModel) {
+    private final SimpleObjectProperty<IdentitiesViewModel> viewModelProperty;
+
+    public IdentitiesPane(ViewMediator viewMediator) {
         super();
-        this.viewHandler = viewHandler;
-        this.viewModel = viewModel;
-        viewHandler.loadCustomView(this);
+        this.viewMediator = viewMediator;
+        viewModelProperty = new SimpleObjectProperty<>();
+        viewMediator.loadCustomView(this);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        // Styling
         scrollPane.widthProperty().addListener((observable, oldValue, newValue) ->
                 flowPane.setPrefWidth(newValue.doubleValue()));
         scrollPane.heightProperty().addListener((observable, oldValue, newValue) ->
                 flowPane.setPrefHeight(newValue.doubleValue()));
-
-        // Property bindings
-        // Update the flowPane children whenever a new identity is added or removed
-        viewModel.identitiesProperty().addListener(new DualChangeListener<>(
-                this::onIdentityViewModelAdded, this::onIdentityViewModelRemoved));
-
-        // Load data
-        viewModel.loadIdentities();
-
     }
 
+    public ReadOnlyObjectProperty<IdentitiesViewModel> viewModelProperty() {
+        return viewModelProperty;
+    }
+
+    public IdentitiesViewModel getViewModel() {
+        return viewModelProperty.get();
+    }
+
+    public void setViewModel(@NotNull IdentitiesViewModel viewModel) {
+        // TODO: Use weak properties listeners
+        viewModelProperty.set(viewModel);
+        viewModel.identitiesProperty().addListener(new DualChangeListener<IdentityViewModel>(
+                this::onIdentityViewModelAdded, this::onIdentityViewModelRemoved));
+        viewModel.loadIdentities();
+    }
 
     private void onIdentityViewModelAdded(IdentityViewModel identityViewModel) {
 
@@ -73,11 +81,11 @@ public class IdentitiesPane extends AnchorPane implements Initializable {
             if(result.isEmpty() || result.get().equals(ButtonType.CANCEL)) {
                 event.cancel();
             }
-            this.viewModel.identitiesProperty().remove(viewModel);
+            getViewModel().identitiesProperty().remove(viewModel);
         });
 
         // Get the IdentityPane from the viewHandler and add it to the flowPane's children
-        IdentityPane identityPane = viewHandler.getIdentityPane(identityViewModel);
+        IdentityPane identityPane = viewMediator.controls().getIdentityPane(identityViewModel);
         identityPane.onMainActionProperty().set(event -> {
             // TODO: Show editable form for the identity
         });

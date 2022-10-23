@@ -1,7 +1,7 @@
 package com.oaktwister.views.landings;
 
 import com.oaktwister.annotations.ViewDescriptor;
-import com.oaktwister.core.ViewHandler;
+import com.oaktwister.core.ViewMediator;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.models.DriveViewModel;
 import com.oaktwister.viewmodels.roots.LandingViewModel;
@@ -21,7 +21,7 @@ import java.util.UUID;
 @ViewDescriptor(location = ViewResources.Landings.LANDING_VIEW)
 public class LandingViewController implements Initializable {
 
-    private final ViewHandler viewHandler;
+    private final ViewMediator viewMediator;
     private final LandingViewModel viewModel;
 
     @FXML private BorderPane root;
@@ -31,8 +31,8 @@ public class LandingViewController implements Initializable {
     @FXML private TableColumn<DriveViewModel, String> capacityColumn;
     @FXML private TableColumn<DriveViewModel, String> spaceColumn;
 
-    public LandingViewController(ViewHandler viewHandler, LandingViewModel viewModel) {
-        this.viewHandler = viewHandler;
+    public LandingViewController(ViewMediator viewMediator, LandingViewModel viewModel) {
+        this.viewMediator = viewMediator;
         this.viewModel = viewModel;
     }
 
@@ -52,7 +52,7 @@ public class LandingViewController implements Initializable {
     public void onLoadButtonClick(ActionEvent actionEvent) {
         try {
             viewModel.loadContext();
-            viewHandler.showMainView();
+            viewMediator.showMainView();
         } catch (IllegalArgumentException ex) {
             ex.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.WARNING);

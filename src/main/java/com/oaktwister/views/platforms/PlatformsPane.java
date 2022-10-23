@@ -1,9 +1,8 @@
 package com.oaktwister.views.platforms;
 
 import com.oaktwister.annotations.ViewDescriptor;
-import com.oaktwister.core.ViewHandler;
+import com.oaktwister.core.ViewMediator;
 import com.oaktwister.services.resources.ViewResources;
-import com.oaktwister.viewmodels.models.AccountViewModel;
 import com.oaktwister.viewmodels.pages.PlatformsViewModel;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
 import com.oaktwister.util.listeners.DualChangeListener;
@@ -22,14 +21,13 @@ import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 @ViewDescriptor(location = ViewResources.Platforms.PLATFORMS_PANE)
 public class PlatformsPane extends AnchorPane implements Initializable {
 
-    private final ViewHandler viewHandler;
+    private final ViewMediator viewMediator;
     private final PlatformsViewModel viewModel;
 
     @FXML private VBox vbox;
@@ -38,12 +36,12 @@ public class PlatformsPane extends AnchorPane implements Initializable {
 
     private final SimpleListProperty<PlatformPane> platforms;
 
-    public PlatformsPane(ViewHandler viewHandler, PlatformsViewModel viewModel) {
+    public PlatformsPane(ViewMediator viewMediator, PlatformsViewModel viewModel) {
         super();
-        this.viewHandler = viewHandler;
+        this.viewMediator = viewMediator;
         this.viewModel = viewModel;
         platforms = new SimpleListProperty<>(FXCollections.observableArrayList());
-        viewHandler.loadCustomView(this);
+        viewMediator.loadCustomView(this);
     }
 
     @Override
@@ -87,7 +85,7 @@ public class PlatformsPane extends AnchorPane implements Initializable {
             this.viewModel.platformsProperty().remove(viewModel);
         });
 
-        PlatformPane platformPane = viewHandler.getPlatformPane(platformViewModel);
+        PlatformPane platformPane = viewMediator.controls().getPlatformPane(platformViewModel);
         flowPane.getChildren().add(platformPane);
     }
 

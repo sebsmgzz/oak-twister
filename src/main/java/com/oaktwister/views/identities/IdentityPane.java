@@ -1,7 +1,7 @@
 package com.oaktwister.views.identities;
 
 import com.oaktwister.annotations.ViewDescriptor;
-import com.oaktwister.core.ViewHandler;
+import com.oaktwister.core.ViewMediator;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
 import javafx.beans.property.*;
@@ -20,8 +20,7 @@ import java.util.ResourceBundle;
 @ViewDescriptor(location = ViewResources.Identities.IDENTITY_PANE)
 public class IdentityPane extends StackPane implements Initializable {
 
-    private final ViewHandler viewHandler;
-    private final IdentityViewModel viewModel;
+    private final ViewMediator viewMediator;
 
     @FXML private Button mainButton;
     @FXML private Label identifierLabel;
@@ -29,22 +28,32 @@ public class IdentityPane extends StackPane implements Initializable {
     @FXML private Label createdAtLabel;
     @FXML private Button deleteButton;
 
-    public IdentityPane(ViewHandler viewHandler, IdentityViewModel viewModel) {
+    private final SimpleObjectProperty<IdentityViewModel> viewModelProperty;
+
+    public IdentityPane(ViewMediator viewMediator) {
         super();
-        this.viewHandler = viewHandler;
-        this.viewModel = viewModel;
-        viewHandler.loadCustomView(this);
+        this.viewMediator = viewMediator;
+        this.viewModelProperty = new SimpleObjectProperty<>();
+        viewMediator.loadCustomView(this);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        // Styling
-        this.setOnMouseEntered(event -> deleteButton.setVisible(true));
-        this.setOnMouseExited(event -> deleteButton.setVisible(false));
+        setOnMouseEntered(event -> deleteButton.setVisible(true));
+        setOnMouseExited(event -> deleteButton.setVisible(false));
         StackPane.setAlignment(deleteButton, Pos.TOP_RIGHT);
+    }
 
-        // Property bindings
+    public ReadOnlyObjectProperty<IdentityViewModel> viewModelProperty() {
+        return viewModelProperty;
+    }
+
+    public IdentityViewModel getViewModel() {
+        return viewModelProperty.get();
+    }
+
+    public void setViewModel(IdentityViewModel viewModel) {
+        // TODO: Use weak properties listeners
         viewModel.idProperty().addListener((observable, oldValue, newValue) ->
                 identifierLabel.setText(newValue.toString()));
         viewModel.createdAtProperty().addListener((observable, oldValue, newValue) ->
@@ -52,11 +61,6 @@ public class IdentityPane extends StackPane implements Initializable {
         viewModel.grantMap().grantCountProperty().addListener((observable, oldValue, newValue) ->
                 grantsLabel.setText(String.valueOf(newValue.intValue())));
         deleteButton.onActionProperty().set(event -> viewModel.delete());
-
-    }
-
-    public IdentityViewModel getViewModel() {
-        return viewModel;
     }
 
     public ObjectProperty<EventHandler<ActionEvent>> onMainActionProperty() {

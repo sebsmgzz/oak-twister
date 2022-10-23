@@ -1,7 +1,7 @@
 package com.oaktwister.views.main;
 
 import com.oaktwister.annotations.ViewDescriptor;
-import com.oaktwister.core.ViewHandler;
+import com.oaktwister.core.ViewMediator;
 import com.oaktwister.services.resources.ImageResources;
 import com.oaktwister.services.resources.StringResources;
 import com.oaktwister.services.resources.ViewResources;
@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 @ViewDescriptor(location = ViewResources.Main.MAIN_VIEW)
 public class MainViewController implements Initializable {
 
-    private final ViewHandler viewHandler;
+    private final ViewMediator viewMediator;
     private final MainViewModel viewModel;
 
     @FXML private BorderPane borderPane;
@@ -35,20 +35,20 @@ public class MainViewController implements Initializable {
 
     private final Property<Node> centerNodeProperty;
 
-    public MainViewController(ViewHandler viewHandler, MainViewModel viewModel) throws IOException {
-        this.viewHandler = viewHandler;
+    public MainViewController(ViewMediator viewMediator, MainViewModel viewModel) throws IOException {
+        this.viewMediator = viewMediator;
         this.viewModel = viewModel;
-        accountsButton = viewHandler.getImageButtonBox();
-        platformsButton = viewHandler.getImageButtonBox();
-        identitiesButton = viewHandler.getImageButtonBox();
+        accountsButton = viewMediator.controls().getImageButtonBox();
+        platformsButton = viewMediator.controls().getImageButtonBox();
+        identitiesButton = viewMediator.controls().getImageButtonBox();
         centerNodeProperty = new SimpleObjectProperty<Node>(getSection());
     }
 
     private Node getSection() {
         return switch (viewModel.getSection()) {
-            case ACCOUNTS -> viewHandler.getAccountsPane();
-            case PLATFORMS -> viewHandler.getPlatformsPane();
-            case IDENTITIES -> viewHandler.getIdentitiesPane();
+            case ACCOUNTS -> viewMediator.controls().getAccountsPane();
+            case PLATFORMS -> viewMediator.controls().getPlatformsPane();
+            case IDENTITIES -> viewMediator.controls().getIdentitiesPane();
         };
     }
 
@@ -87,7 +87,7 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void onBackButtonAction(ActionEvent actionEvent) throws IOException {
-        viewHandler.showLandingView();
+        viewMediator.showLandingView();
     }
 
 }

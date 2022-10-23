@@ -1,7 +1,7 @@
 package com.oaktwister.views.platforms;
 
 import com.oaktwister.annotations.ViewDescriptor;
-import com.oaktwister.core.ViewHandler;
+import com.oaktwister.core.ViewMediator;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
 import javafx.fxml.FXML;
@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
 @ViewDescriptor(location = ViewResources.Platforms.PLATFORM_PANE)
 public class PlatformPane extends StackPane implements Initializable {
 
-    private final ViewHandler viewHandler;
+    private final ViewMediator viewMediator;
     private final PlatformViewModel viewModel;
 
     @FXML private Button mainButton;
@@ -27,11 +27,11 @@ public class PlatformPane extends StackPane implements Initializable {
     @FXML private Label createdAtLabel;
     @FXML private Button deleteButton;
 
-    public PlatformPane(ViewHandler viewHandler, PlatformViewModel viewModel) {
+    public PlatformPane(ViewMediator viewMediator, PlatformViewModel viewModel) {
         super();
-        this.viewHandler = viewHandler;
+        this.viewMediator = viewMediator;
         this.viewModel = viewModel;
-        viewHandler.loadCustomView(this);
+        viewMediator.loadCustomView(this);
     }
 
     @Override

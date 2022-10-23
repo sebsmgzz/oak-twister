@@ -1,7 +1,7 @@
 package com.oaktwister.views.accounts;
 
 import com.oaktwister.annotations.ViewDescriptor;
-import com.oaktwister.core.ViewHandler;
+import com.oaktwister.core.ViewMediator;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.models.AccountViewModel;
 import javafx.beans.property.ObjectProperty;
@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
 @ViewDescriptor(location = ViewResources.Accounts.ACCOUNT_PANE)
 public class AccountPane extends StackPane implements Initializable {
 
-    private final ViewHandler viewHandler;
+    private final ViewMediator viewMediator;
     private final AccountViewModel viewModel;
 
     @FXML private Button mainButton;
@@ -31,11 +31,11 @@ public class AccountPane extends StackPane implements Initializable {
     @FXML private Label createdAtLabel;
     @FXML private Button deleteButton;
 
-    public AccountPane(ViewHandler viewHandler, AccountViewModel viewModel) {
+    public AccountPane(ViewMediator viewMediator, AccountViewModel viewModel) {
         super();
-        this.viewHandler = viewHandler;
+        this.viewMediator = viewMediator;
         this.viewModel = viewModel;
-        viewHandler.loadCustomView(this);
+        viewMediator.loadCustomView(this);
     }
 
     @Override

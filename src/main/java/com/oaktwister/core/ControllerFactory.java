@@ -8,11 +8,11 @@ import java.io.IOException;
 
 public class ControllerFactory implements Callback<Class<?>, Object> {
 
-    private final ViewHandler viewHandler;
+    private final ViewMediator viewMediator;
     private final ViewModelFactory viewModelFactory;
 
-    public ControllerFactory(ViewHandler viewHandler, ViewModelFactory viewModelFactory) {
-        this.viewHandler = viewHandler;
+    public ControllerFactory(ViewMediator viewMediator, ViewModelFactory viewModelFactory) {
+        this.viewMediator = viewMediator;
         this.viewModelFactory = viewModelFactory;
     }
 
@@ -20,9 +20,9 @@ public class ControllerFactory implements Callback<Class<?>, Object> {
     public Object call(Class<?> aClass) {
         try {
             if(aClass.equals(LandingViewController.class)) {
-                return new LandingViewController(viewHandler, viewModelFactory.getLandingViewModel());
+                return new LandingViewController(viewMediator, viewModelFactory.getLandingViewModel());
             } else if (aClass.equals(MainViewController.class)) {
-                return new MainViewController(viewHandler, viewModelFactory.getMainViewModel());
+                return new MainViewController(viewMediator, viewModelFactory.getMainViewModel());
             } else {
                 return null;
             }
