@@ -21,14 +21,13 @@ import java.util.ResourceBundle;
 public class IdentityPane extends StackPane implements Initializable {
 
     private final ViewMediator viewMediator;
+    private final SimpleObjectProperty<IdentityViewModel> viewModelProperty;
 
     @FXML private Button mainButton;
     @FXML private Label identifierLabel;
     @FXML private Label grantsLabel;
     @FXML private Label createdAtLabel;
     @FXML private Button deleteButton;
-
-    private final SimpleObjectProperty<IdentityViewModel> viewModelProperty;
 
     public IdentityPane(ViewMediator viewMediator) {
         super();
@@ -44,14 +43,6 @@ public class IdentityPane extends StackPane implements Initializable {
         StackPane.setAlignment(deleteButton, Pos.TOP_RIGHT);
     }
 
-    public ReadOnlyObjectProperty<IdentityViewModel> viewModelProperty() {
-        return viewModelProperty;
-    }
-
-    public IdentityViewModel getViewModel() {
-        return viewModelProperty.get();
-    }
-
     public void setViewModel(IdentityViewModel viewModel) {
         // TODO: Use weak properties listeners
         viewModel.idProperty().addListener((observable, oldValue, newValue) ->
@@ -61,6 +52,14 @@ public class IdentityPane extends StackPane implements Initializable {
         viewModel.grantMap().grantCountProperty().addListener((observable, oldValue, newValue) ->
                 grantsLabel.setText(String.valueOf(newValue.intValue())));
         deleteButton.onActionProperty().set(event -> viewModel.delete());
+    }
+
+    public IdentityViewModel getViewModel() {
+        return viewModelProperty.get();
+    }
+
+    public ReadOnlyObjectProperty<IdentityViewModel> viewModelProperty() {
+        return viewModelProperty;
     }
 
     public ObjectProperty<EventHandler<ActionEvent>> onMainActionProperty() {

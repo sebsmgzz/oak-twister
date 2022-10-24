@@ -4,6 +4,8 @@ import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.core.ViewMediator;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -18,7 +20,7 @@ import java.util.ResourceBundle;
 public class PlatformPane extends StackPane implements Initializable {
 
     private final ViewMediator viewMediator;
-    private final PlatformViewModel viewModel;
+    private final SimpleObjectProperty<PlatformViewModel> viewModelProperty;
 
     @FXML private Button mainButton;
     @FXML private Label idLabel;
@@ -27,22 +29,21 @@ public class PlatformPane extends StackPane implements Initializable {
     @FXML private Label createdAtLabel;
     @FXML private Button deleteButton;
 
-    public PlatformPane(ViewMediator viewMediator, PlatformViewModel viewModel) {
+    public PlatformPane(ViewMediator viewMediator) {
         super();
         this.viewMediator = viewMediator;
-        this.viewModel = viewModel;
+        this.viewModelProperty = new SimpleObjectProperty<>();
         viewMediator.loadCustomView(this);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        // Styling
-        this.setOnMouseEntered(event -> deleteButton.setVisible(true));
-        this.setOnMouseExited(event -> deleteButton.setVisible(false));
+        super.setOnMouseEntered(event -> deleteButton.setVisible(true));
+        super.setOnMouseExited(event -> deleteButton.setVisible(false));
         StackPane.setAlignment(deleteButton, Pos.TOP_RIGHT);
+    }
 
-        // Property binding
+    public void setViewModel(PlatformViewModel viewModel) {
         viewModel.idProperty().addListener((observable, oldValue, newValue) ->
                 idLabel.setText(newValue.toString()));
         viewModel.imageProperty().addListener((observable, oldValue, newValue) ->
@@ -50,12 +51,16 @@ public class PlatformPane extends StackPane implements Initializable {
         nameLabel.textProperty().bindBidirectional(viewModel.nameProperty());
         viewModel.createdAtProperty().addListener((observable, oldValue, newValue) ->
                 createdAtLabel.setText(viewModel.formatDate(newValue)));
-        deleteButton.onActionProperty().set(event -> viewModel.delete());
-
+        deleteButton.setOnAction(event -> viewModel.delete());
+        viewModelProperty.set(viewModel);
     }
 
     public PlatformViewModel getViewModel() {
-        return viewModel;
+        return viewModelProperty.get();
+    }
+
+    public ReadOnlyObjectProperty<PlatformViewModel> viewModelProperty() {
+        return viewModelProperty;
     }
 
 }

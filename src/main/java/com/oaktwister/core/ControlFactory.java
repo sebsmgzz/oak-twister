@@ -25,7 +25,9 @@ public class ControlFactory {
     }
 
     public PlatformsPane getPlatformsPane(PlatformsViewModel viewModel) {
-        return new PlatformsPane(viewMediator, viewModel);
+        PlatformsPane platformsPane = new PlatformsPane(viewMediator);
+        platformsPane.setViewModel(viewModel);
+        return platformsPane;
     }
 
     public PlatformsPane getPlatformsPane() {
@@ -34,7 +36,9 @@ public class ControlFactory {
     }
 
     public PlatformPane getPlatformPane(PlatformViewModel viewModel) {
-        return new PlatformPane(viewMediator, viewModel);
+        PlatformPane platformPane = new PlatformPane(viewMediator);
+        platformPane.setViewModel(viewModel);
+        return platformPane;
     }
 
     public PlatformPane getPlatformPane() {
@@ -43,7 +47,9 @@ public class ControlFactory {
     }
 
     public AccountsPane getAccountsPane(AccountsViewModel viewModel) {
-        return new AccountsPane(viewMediator, viewModel);
+        AccountsPane accountsPane = new AccountsPane(viewMediator);
+        accountsPane.setViewModelProperty(viewModel);
+        return accountsPane;
     }
 
     public AccountsPane getAccountsPane() {
@@ -52,7 +58,9 @@ public class ControlFactory {
     }
 
     public AccountPane getAccountPane(AccountViewModel viewModel) {
-        return new AccountPane(viewMediator, viewModel);
+        AccountPane accountPane = new AccountPane(viewMediator);
+        accountPane.setViewModel(viewModel);
+        return accountPane;
     }
 
     public AccountPane getAccountPane() {
@@ -61,9 +69,9 @@ public class ControlFactory {
     }
 
     public IdentitiesPane getIdentitiesPane(IdentitiesViewModel viewModel) {
-        IdentitiesPane view = new IdentitiesPane(viewMediator);
-        view.setViewModel(viewModel);
-        return view;
+        IdentitiesPane identitiesPane = new IdentitiesPane(viewMediator);
+        identitiesPane.setViewModel(viewModel);
+        return identitiesPane;
     }
 
     public IdentitiesPane getIdentitiesPane() {

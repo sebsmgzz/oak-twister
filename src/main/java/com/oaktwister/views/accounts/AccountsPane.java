@@ -6,6 +6,8 @@ import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.models.AccountViewModel;
 import com.oaktwister.viewmodels.pages.AccountsViewModel;
 import com.oaktwister.util.listeners.DualChangeListener;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -22,37 +24,41 @@ import java.util.ResourceBundle;
 public class AccountsPane extends AnchorPane implements Initializable {
 
     private final ViewMediator viewMediator;
-    private final AccountsViewModel viewModel;
+    private final SimpleObjectProperty<AccountsViewModel> viewModelProperty;
 
     @FXML private Label titleLabel;
     @FXML private ScrollPane scrollPane;
     @FXML private FlowPane flowPane;
     @FXML private Button addButton;
 
-    public AccountsPane(ViewMediator viewMediator, AccountsViewModel viewModel) {
+    public AccountsPane(ViewMediator viewMediator) {
         super();
         this.viewMediator = viewMediator;
-        this.viewModel = viewModel;
+        this.viewModelProperty = new SimpleObjectProperty<>();
         viewMediator.loadCustomView(this);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        // Styling
         scrollPane.widthProperty().addListener((observable, oldValue, newValue) ->
                 flowPane.setPrefWidth(newValue.doubleValue()));
         scrollPane.heightProperty().addListener((observable, oldValue, newValue) ->
                 flowPane.setPrefHeight(newValue.doubleValue()));
+    }
 
-        // Property bindings
-        // Update the flowPane children whenever a new account is added or removed
+    public void setViewModelProperty(AccountsViewModel viewModel) {
         viewModel.accountsProperty().addListener(new DualChangeListener<>(
                 this::onAccountViewModelAdded, this::onAccountViewModelRemoved));
-
-        // Load data
         viewModel.loadAccounts();
+        viewModelProperty.set(viewModel);
+    }
 
+    public AccountsViewModel getViewModel() {
+        return viewModelProperty.get();
+    }
+
+    public ReadOnlyObjectProperty<AccountsViewModel> viewModelProperty() {
+        return viewModelProperty;
     }
 
     private void onAccountViewModelAdded(AccountViewModel identityViewModel) {
@@ -70,7 +76,7 @@ public class AccountsPane extends AnchorPane implements Initializable {
             if(result.isEmpty() || result.get().equals(ButtonType.CANCEL)) {
                 event.cancel();
             }
-            this.viewModel.accountsProperty().remove(viewModel);
+            viewModelProperty.get().accountsProperty().remove(viewModel);
         });
 
         // Get the AccountBox from the viewHandler and add it to the flowPane's children

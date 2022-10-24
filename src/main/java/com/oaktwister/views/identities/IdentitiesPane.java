@@ -28,12 +28,11 @@ import java.util.ResourceBundle;
 public class IdentitiesPane extends AnchorPane implements Initializable {
 
     private final ViewMediator viewMediator;
+    private final SimpleObjectProperty<IdentitiesViewModel> viewModelProperty;
 
     @FXML private ScrollPane scrollPane;
     @FXML private FlowPane flowPane;
     @FXML private Button addButton;
-
-    private final SimpleObjectProperty<IdentitiesViewModel> viewModelProperty;
 
     public IdentitiesPane(ViewMediator viewMediator) {
         super();
@@ -50,20 +49,20 @@ public class IdentitiesPane extends AnchorPane implements Initializable {
                 flowPane.setPrefHeight(newValue.doubleValue()));
     }
 
-    public ReadOnlyObjectProperty<IdentitiesViewModel> viewModelProperty() {
-        return viewModelProperty;
-    }
-
-    public IdentitiesViewModel getViewModel() {
-        return viewModelProperty.get();
-    }
-
     public void setViewModel(@NotNull IdentitiesViewModel viewModel) {
         // TODO: Use weak properties listeners
         viewModelProperty.set(viewModel);
         viewModel.identitiesProperty().addListener(new DualChangeListener<IdentityViewModel>(
                 this::onIdentityViewModelAdded, this::onIdentityViewModelRemoved));
         viewModel.loadIdentities();
+    }
+
+    public IdentitiesViewModel getViewModel() {
+        return viewModelProperty.get();
+    }
+
+    public ReadOnlyObjectProperty<IdentitiesViewModel> viewModelProperty() {
+        return viewModelProperty;
     }
 
     private void onIdentityViewModelAdded(IdentityViewModel identityViewModel) {

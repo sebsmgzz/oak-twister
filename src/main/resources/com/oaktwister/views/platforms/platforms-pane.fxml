@@ -24,7 +24,7 @@
             </FlowPane>
         </ScrollPane>
         <HBox styleClass="hbox" alignment="CENTER_RIGHT">
-            <Button styleClass="none" text="Add" minWidth="100"/>
+            <Button fx:id="addButton" styleClass="none" text="Add" minWidth="100"/>
         </HBox>
     </VBox>
 </fx:root>

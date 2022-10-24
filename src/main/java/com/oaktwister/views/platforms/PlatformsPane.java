@@ -6,13 +6,18 @@ import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.pages.PlatformsViewModel;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
 import com.oaktwister.util.listeners.DualChangeListener;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
@@ -28,41 +33,48 @@ import java.util.ResourceBundle;
 public class PlatformsPane extends AnchorPane implements Initializable {
 
     private final ViewMediator viewMediator;
-    private final PlatformsViewModel viewModel;
+    private final SimpleObjectProperty<PlatformsViewModel> viewModelProperty;
 
     @FXML private VBox vbox;
     @FXML private FlowPane flowPane;
     @FXML private ScrollPane scrollPane;
+    @FXML private Button addButton;
 
-    private final SimpleListProperty<PlatformPane> platforms;
-
-    public PlatformsPane(ViewMediator viewMediator, PlatformsViewModel viewModel) {
+    public PlatformsPane(ViewMediator viewMediator) {
         super();
         this.viewMediator = viewMediator;
-        this.viewModel = viewModel;
-        platforms = new SimpleListProperty<>(FXCollections.observableArrayList());
+        this.viewModelProperty = new SimpleObjectProperty<>();
         viewMediator.loadCustomView(this);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        // Bindings
         AnchorPane.setTopAnchor(vbox, 0.0);
         AnchorPane.setRightAnchor(vbox, 0.0);
         AnchorPane.setBottomAnchor(vbox, 0.0);
         AnchorPane.setLeftAnchor(vbox, 0.0);
-        this.widthProperty().addListener((observable, oldValue, newValue) ->
+        super.widthProperty().addListener((observable, oldValue, newValue) ->
                 scrollPane.setPrefWidth(newValue.doubleValue()));
-        this.heightProperty().addListener((observable, oldValue, newValue) ->
+        super.heightProperty().addListener((observable, oldValue, newValue) ->
                 scrollPane.setPrefHeight(newValue.doubleValue()));
+    }
 
-        viewModel.platformsProperty().addListener(new DualChangeListener<>(
+    public void setViewModel(PlatformsViewModel viewModelProperty) {
+        viewModelProperty.platformsProperty().addListener(new DualChangeListener<>(
                 this::onPlatformViewModelAdded, this::onPlatformViewModelRemoved));
+        viewModelProperty.loadPlatforms();
+    }
 
-        // Load data
-        viewModel.loadPlatforms();
+    public PlatformsViewModel getViewModel() {
+        return viewModelProperty.get();
+    }
 
+    public ReadOnlyObjectProperty<PlatformsViewModel> viewModelProperty() {
+        return viewModelProperty;
+    }
+
+    public ObjectProperty<EventHandler<ActionEvent>> onActionProperty() {
+        return addButton.onActionProperty();
     }
 
     // When a platform is added, simply get the PlatformPane from the viewFactory and
@@ -82,7 +94,7 @@ public class PlatformsPane extends AnchorPane implements Initializable {
             if(result.isEmpty() || result.get().equals(ButtonType.CANCEL)) {
                 event.cancel();
             }
-            this.viewModel.platformsProperty().remove(viewModel);
+            getViewModel().platformsProperty().remove(viewModel);
         });
 
         PlatformPane platformPane = viewMediator.controls().getPlatformPane(platformViewModel);
@@ -106,11 +118,6 @@ public class PlatformsPane extends AnchorPane implements Initializable {
                 iterator.remove();
             }
         }
-    }
-
-    @FXML
-    public void onAddButtonClick(ActionEvent actionEvent) {
-        // TODO: Add PlatformPane to the platforms field
     }
 
 }
