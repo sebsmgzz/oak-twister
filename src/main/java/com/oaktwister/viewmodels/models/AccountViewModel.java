@@ -3,16 +3,18 @@ package com.oaktwister.viewmodels.models;
 import com.oaktwister.core.ViewModelFactory;
 import com.oaktwister.models.Account;
 import com.oaktwister.events.DeleteAccountEvent;
+import com.oaktwister.models.Identity;
+import com.oaktwister.models.Platform;
+import com.oaktwister.models.grants.GrantMap;
 import com.oaktwister.services.logging.Logger;
 import com.oaktwister.services.repos.AccountsRepo;
 import com.oaktwister.services.repos.IdentitiesRepo;
 import com.oaktwister.services.repos.PlatformsRepo;
-import com.oaktwister.utils.extensions.LocalDateTimeUtil;
 import com.oaktwister.utils.extensions.UUIDUtil;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.EventHandler;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -23,16 +25,16 @@ public class AccountViewModel {
     private final IdentitiesRepo identitiesRepo;
     private final Logger logger;
 
-    private final SimpleObjectProperty<UUID> id;
-    private final SimpleObjectProperty<UUID> platformId;
-    private final SimpleObjectProperty<UUID> identityId;
-    private final SimpleObjectProperty<LocalDateTime> createdAt;
-    private final SimpleObjectProperty<EventHandler<DeleteAccountEvent>> onDeleteAccountProperty;
-    private final IdentityViewModel identity;
-    private final PlatformViewModel platform;
-    private final GrantMapViewModel grants;
-
     private Account account;
+    private final IdentityViewModel identityViewModel;
+    private final PlatformViewModel platformViewModel;
+    private final GrantMapViewModel grantMapViewModel;
+
+    private final SimpleObjectProperty<UUID> idProperty;
+    private final SimpleObjectProperty<UUID> platformIdProperty;
+    private final SimpleObjectProperty<UUID> identityIdProperty;
+    private final SimpleObjectProperty<LocalDateTime> createdAtProperty;
+    private final SimpleObjectProperty<EventHandler<DeleteAccountEvent>> onDeleteAccountProperty;
 
     public AccountViewModel(ViewModelFactory viewModelFactory, AccountsRepo accountsRepo,
                             PlatformsRepo platformsRepo, IdentitiesRepo identitiesRepo, Logger logger) {
@@ -40,68 +42,89 @@ public class AccountViewModel {
         this.platformsRepo = platformsRepo;
         this.identitiesRepo = identitiesRepo;
         this.logger = logger;
-        id = new SimpleObjectProperty<>(UUIDUtil.empty());
-        platformId = new SimpleObjectProperty<>(UUIDUtil.empty());
-        identityId = new SimpleObjectProperty<>(UUIDUtil.empty());
-        createdAt = new SimpleObjectProperty<>(LocalDateTime.MIN);
+        identityViewModel = viewModelFactory.getIdentityViewModel();
+        platformViewModel = viewModelFactory.getPlatformViewModel();
+        grantMapViewModel = viewModelFactory.getGrantMapViewModel();
+        idProperty = new SimpleObjectProperty<>(UUIDUtil.empty());
+        platformIdProperty = new SimpleObjectProperty<>(UUIDUtil.empty());
+        identityIdProperty = new SimpleObjectProperty<>(UUIDUtil.empty());
+        createdAtProperty = new SimpleObjectProperty<>(LocalDateTime.MIN);
         onDeleteAccountProperty = new SimpleObjectProperty<>();
-        identity = viewModelFactory.getIdentityViewModel();
-        platform = viewModelFactory.getPlatformViewModel();
-        grants = viewModelFactory.getGrantMapViewModel();
     }
 
-    public void bind(Account account) {
+    public void setAccount(Account account) {
+        if(this.account != null) {
+            throw new RuntimeException("Account has already been set");
+        }
         this.account = account;
 
-        id.set(account.getId());
-        id.addListener((observable, oldValue, newValue) -> this.account.setId(newValue));
-
-        platformId.set(account.getPlatformId());
-        platformId.addListener((observable, oldValue, newValue) -> this.account.setPlatformId(newValue));
-
-        identityId.set(account.getIdentityId());
-        identityId.addListener((observable, oldValue, newValue) -> this.account.setIdentityId(newValue));
-
-        createdAt.set(account.getCreatedAt());
-        createdAt.addListener((observable, oldValue, newValue) -> this.account.setCreatedAt(newValue));
-
         if(account.hasIdentity()) {
-            identity.bind(identitiesRepo.findById(account.getIdentityId()));
+            UUID identityId = account.getIdentityId();
+            Identity identity = identitiesRepo.findById(identityId);
+            identityViewModel.setIdentity(identity);
         }
-        platform.bind(platformsRepo.findById(account.getPlatformId()));
-        grants.bind(account.getGrants());
-    }
 
-    public ReadOnlyObjectProperty<UUID> idProperty() {
-        return id;
-    }
+        UUID platformId = account.getPlatformId();
+        Platform platform = platformsRepo.findById(platformId);
+        platformViewModel.setPlatform(platform);
 
-    public ReadOnlyObjectProperty<UUID> platformIdProperty() {
-        return platformId;
-    }
+        GrantMap grantMap = account.getGrants();
+        grantMapViewModel.setGrantMap(grantMap);
 
-    public ReadOnlyObjectProperty<UUID> identityIdProperty() {
-        return identityId;
-    }
+        UUID id = account.getId();
+        idProperty.set(id);
+        idProperty.addListener((observable, oldValue, newValue) -> {
+            this.account.setId(newValue);
+        });
 
-    public ReadOnlyObjectProperty<LocalDateTime> createdAtProperty() {
-        return createdAt;
-    }
+        platformIdProperty.set(platformId);
+        platformIdProperty.addListener((observable, oldValue, newValue) -> {
+            this.account.setPlatformId(newValue);
+        });
 
-    public SimpleObjectProperty<EventHandler<DeleteAccountEvent>> onDeleteAccountProperty() {
-        return onDeleteAccountProperty;
+        UUID identityId = account.getIdentityId();
+        identityIdProperty.set(identityId);
+        identityIdProperty.addListener((observable, oldValue, newValue) -> {
+            this.account.setIdentityId(newValue);
+        });
+
+        LocalDateTime createdAt = account.getCreatedAt();
+        createdAtProperty.set(createdAt);
+        createdAtProperty.addListener((observable, oldValue, newValue) -> {
+            this.account.setCreatedAt(newValue);
+        });
     }
 
     public IdentityViewModel identity() {
-        return identity;
+        return identityViewModel;
     }
 
     public PlatformViewModel platform() {
-        return platform;
+        return platformViewModel;
     }
 
-    public GrantMapViewModel grants() {
-        return grants;
+    public GrantMapViewModel grantMap() {
+        return grantMapViewModel;
+    }
+
+    public ReadOnlyObjectProperty<UUID> idProperty() {
+        return idProperty;
+    }
+
+    public ReadOnlyObjectProperty<UUID> platformIdProperty() {
+        return platformIdProperty;
+    }
+
+    public ReadOnlyObjectProperty<UUID> identityIdProperty() {
+        return identityIdProperty;
+    }
+
+    public ReadOnlyObjectProperty<LocalDateTime> createdAtProperty() {
+        return createdAtProperty;
+    }
+
+    public ObjectProperty<EventHandler<DeleteAccountEvent>> onDeleteAccountProperty() {
+        return onDeleteAccountProperty;
     }
 
     public boolean delete() {

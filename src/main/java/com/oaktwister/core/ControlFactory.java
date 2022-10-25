@@ -3,9 +3,9 @@ package com.oaktwister.core;
 import com.oaktwister.viewmodels.models.AccountViewModel;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
-import com.oaktwister.viewmodels.pages.AccountsViewModel;
-import com.oaktwister.viewmodels.pages.IdentitiesViewModel;
-import com.oaktwister.viewmodels.pages.PlatformsViewModel;
+import com.oaktwister.viewmodels.collections.AccountsViewModel;
+import com.oaktwister.viewmodels.collections.IdentitiesViewModel;
+import com.oaktwister.viewmodels.collections.PlatformsViewModel;
 import com.oaktwister.views.accounts.AccountPane;
 import com.oaktwister.views.accounts.AccountsPane;
 import com.oaktwister.views.identities.IdentitiesPane;
@@ -13,13 +13,6 @@ import com.oaktwister.views.identities.IdentityPane;
 import com.oaktwister.views.laterals.ImageButtonBox;
 import com.oaktwister.views.platforms.PlatformPane;
 import com.oaktwister.views.platforms.PlatformsPane;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-
-import java.util.Optional;
-import java.util.UUID;
 
 public class ControlFactory {
 

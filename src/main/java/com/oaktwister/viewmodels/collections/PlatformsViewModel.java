@@ -1,4 +1,4 @@
-package com.oaktwister.viewmodels.pages;
+package com.oaktwister.viewmodels.collections;
 
 import com.oaktwister.core.ViewModelFactory;
 import com.oaktwister.models.Platform;
@@ -8,7 +8,6 @@ import com.oaktwister.viewmodels.models.PlatformViewModel;
 import javafx.beans.property.ReadOnlyListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
-
 import java.util.List;
 import java.util.UUID;
 
@@ -37,7 +36,7 @@ public class PlatformsViewModel {
         for(Platform platform : platforms) {
             PlatformViewModel platformViewModel = viewModelFactory.getPlatformViewModel();
             this.platforms.add(platformViewModel);
-            platformViewModel.bind(platform);
+            platformViewModel.setPlatform(platform);
         }
         logger.debug("Loaded %s platforms", platforms.size());
     }
@@ -49,7 +48,7 @@ public class PlatformsViewModel {
         if(success) {
             PlatformViewModel platformViewModel = viewModelFactory.getPlatformViewModel();
             this.platforms.add(platformViewModel);
-            platformViewModel.bind(platform);
+            platformViewModel.setPlatform(platform);
         }
         return success;
     }

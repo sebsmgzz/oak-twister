@@ -74,7 +74,7 @@ public class IdentityPane extends StackPane implements Initializable {
     public void setViewModel(IdentityViewModel viewModel) {
         mainButton.setOnAction(this::onMainButtonClick);
         identifierProperty.bind(viewModel.idProperty());
-        grantsCountProperty.bind(viewModel.grants().grantCountProperty());
+        grantsCountProperty.bind(viewModel.grantMap().grantCountProperty());
         createdAtProperty.bind(viewModel.createdAtProperty());
         deleteButton.setOnAction(this::onDeleteButtonClick);
     }

@@ -33,7 +33,7 @@ public class IdentitySerializer implements JsonObjectSerializer<Identity> {
         JSONObject identityJson = new JSONObject();
         identityJson.put(ID_KEY, identity.getId());
         identityJson.put(CREATED_AT_KEY, identity.getCreatedAt());
-        identityJson.put(GRANT_MAP_KEY, grantMapSerializer.serialize(identity.getGrants()));
+        identityJson.put(GRANT_MAP_KEY, grantMapSerializer.serialize(identity.getGrantMap()));
         return identityJson;
     }
 

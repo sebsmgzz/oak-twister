@@ -5,7 +5,7 @@ import com.oaktwister.core.ViewMediator;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.utils.listeners.*;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
-import com.oaktwister.viewmodels.pages.PlatformsViewModel;
+import com.oaktwister.viewmodels.collections.PlatformsViewModel;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleMapProperty;
 import javafx.beans.property.SimpleObjectProperty;

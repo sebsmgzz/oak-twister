@@ -1,4 +1,4 @@
-package com.oaktwister.viewmodels.pages;
+package com.oaktwister.viewmodels.collections;
 
 import com.oaktwister.core.ViewModelFactory;
 import com.oaktwister.models.Account;
@@ -8,7 +8,6 @@ import com.oaktwister.viewmodels.models.AccountViewModel;
 import javafx.beans.property.ReadOnlyListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
-
 import java.util.List;
 
 public class AccountsViewModel {
@@ -35,8 +34,8 @@ public class AccountsViewModel {
         List<Account> accounts = accountsRepo.findAll();
         for(Account account : accounts) {
             AccountViewModel accountViewModel = viewModelFactory.getAccountViewModel();
-            this.accountsProperty.add(accountViewModel);
-            accountViewModel.bind(account);
+            accountsProperty.add(accountViewModel);
+            accountViewModel.setAccount(account);
         }
         logger.debug("Loaded %s accounts", accounts.size());
     }

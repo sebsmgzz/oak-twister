@@ -8,7 +8,7 @@ import com.oaktwister.utils.listeners.ListItemRemovedListener;
 import com.oaktwister.utils.listeners.MapItemAddedListener;
 import com.oaktwister.utils.listeners.MapItemRemovedListener;
 import com.oaktwister.viewmodels.models.AccountViewModel;
-import com.oaktwister.viewmodels.pages.AccountsViewModel;
+import com.oaktwister.viewmodels.collections.AccountsViewModel;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleMapProperty;
 import javafx.beans.property.SimpleObjectProperty;

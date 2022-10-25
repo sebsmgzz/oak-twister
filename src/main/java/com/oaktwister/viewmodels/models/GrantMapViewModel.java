@@ -9,27 +9,35 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import java.util.Collection;
 
 public class GrantMapViewModel {
 
     private GrantMap grantMap;
+
     private final SimpleIntegerProperty grantCountProperty;
     private final SimpleListProperty<Grant<?>> grantsProperty;
 
     public GrantMapViewModel() {
-        this.grantCountProperty = new SimpleIntegerProperty(-1);
-        this.grantsProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
+        grantCountProperty = new SimpleIntegerProperty();
+        grantsProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
     }
 
-    public void bind(GrantMap grantMap) {
+    public void setGrantMap(GrantMap grantMap) {
+        if(this.grantMap != null) {
+            throw new RuntimeException("GrantMap has already been set");
+        }
         this.grantMap = grantMap;
 
-        grantCountProperty.set(grantMap.grants().size());
+        Collection<Grant<?>> grants = grantMap.grants();
+        int grantCount = grants.size();
+        grantCountProperty.set(grantCount);
 
-        grantsProperty.set(FXCollections.observableArrayList(grantMap.grants()));
-        grantsProperty.addListener((ListChangeListener<Grant<?>>) change ->
-                grantCountProperty.set(grantsProperty.size()));
+        grantsProperty.setAll(grants);
         grantsProperty.addListener(new ListItemChangeListener<>(grantMap::add, grantMap::remove));
+        grantsProperty.addListener((ListChangeListener<Grant<?>>) change -> {
+            grantCountProperty.set(grantsProperty.size());
+        });
     }
 
     public ReadOnlyIntegerProperty grantCountProperty() {

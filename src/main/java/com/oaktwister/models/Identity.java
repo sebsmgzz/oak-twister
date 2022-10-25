@@ -29,7 +29,7 @@ public class Identity extends Entity {
         this.createdAt = createdAt;
     }
 
-    public GrantMap getGrants() {
+    public GrantMap getGrantMap() {
         return grants;
     }
 

@@ -85,7 +85,7 @@ public class AccountPane extends StackPane implements Initializable {
         createdAtProperty.bind(viewModel.createdAtProperty());
         platformNameProperty().bindBidirectional(viewModel.platform().nameProperty());
         imageProperty().bindBidirectional(viewModel.platform().imageProperty());
-        grantsCountProperty.bind(viewModel.grants().grantCountProperty());
+        grantsCountProperty.bind(viewModel.grantMap().grantCountProperty());
         deleteButton.setOnAction(this::onDeleteButtonClick);
         viewModelProperty.set(viewModel);
     }

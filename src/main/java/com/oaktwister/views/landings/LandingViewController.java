@@ -5,7 +5,6 @@ import com.oaktwister.core.ViewMediator;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.models.DriveViewModel;
 import com.oaktwister.viewmodels.roots.LandingViewModel;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -43,18 +42,18 @@ public class LandingViewController implements Initializable {
 
         // Set cell's factories
         idColumn.setCellValueFactory(cell -> cell.getValue().idProperty());
-        pathColumn.setCellValueFactory(cell -> cell.getValue().pathProperty());
-        capacityColumn.setCellValueFactory(cell -> cell.getValue().capacityProperty());
-        spaceColumn.setCellValueFactory(cell -> cell.getValue().spaceProperty());
+        pathColumn.setCellValueFactory(cell -> cell.getValue().pathPropertyProperty());
+        capacityColumn.setCellValueFactory(cell -> cell.getValue().capacityProperty().asString());
+        spaceColumn.setCellValueFactory(cell -> cell.getValue().spaceProperty().asString());
 
         // Set the button's actions
         loadButton.setOnAction(this::onLoadButtonClick);
         refreshButton.setOnAction(this::onRefreshButtonClick);
 
         // Bind the tableView's properties with the viewModel
-        tableView.itemsProperty().bindBidirectional(viewModel.drivesProperty());
+        tableView.itemsProperty().bind(viewModel.drivesProperty());
         tableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            viewModel.setSelectedDrive(newValue);
+            viewModel.selectedDriveProperty().set(newValue);
         });
 
         // Load drives

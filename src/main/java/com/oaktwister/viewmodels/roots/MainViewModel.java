@@ -13,7 +13,7 @@ public class MainViewModel {
 
     public MainViewModel(Logger logger) {
         this.logger = logger;
-        section = new SimpleObjectProperty<Section>();
+        section = new SimpleObjectProperty<>();
     }
 
     public ObjectProperty<Section> sectionProperty() {

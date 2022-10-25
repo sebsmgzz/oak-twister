@@ -1,4 +1,4 @@
-package com.oaktwister.viewmodels.pages;
+package com.oaktwister.viewmodels.collections;
 
 import com.oaktwister.core.ViewModelFactory;
 import com.oaktwister.models.Identity;
@@ -8,7 +8,6 @@ import com.oaktwister.viewmodels.models.IdentityViewModel;
 import javafx.beans.property.ReadOnlyListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
-
 import java.util.ArrayList;
 
 public class IdentitiesViewModel {
@@ -23,7 +22,7 @@ public class IdentitiesViewModel {
         this.viewModelFactory = viewModelFactory;
         this.identitiesRepo = identitiesRepo;
         this.logger = logger;
-        this.identitiesProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
+        identitiesProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
     }
 
     public ReadOnlyListProperty<IdentityViewModel> identitiesProperty() {
@@ -36,7 +35,7 @@ public class IdentitiesViewModel {
         for(Identity identity : identities) {
             IdentityViewModel identityViewModel = viewModelFactory.getIdentityViewModel();
             identitiesProperty.add(identityViewModel);
-            identityViewModel.bind(identity);
+            identityViewModel.setIdentity(identity);
         }
         logger.debug("Loaded %s identities", identities.size());
     }

@@ -1,16 +1,12 @@
 package com.oaktwister.core;
 
+import com.oaktwister.services.config.Context;
 import com.oaktwister.services.logging.Logger;
-import com.oaktwister.services.repos.AccountsRepo;
-import com.oaktwister.services.repos.IdentitiesRepo;
-import com.oaktwister.services.repos.ImagesRepo;
-import com.oaktwister.services.repos.PlatformsRepo;
-import com.oaktwister.utils.extensions.LocalDateTimeUtil;
-import com.oaktwister.utils.extensions.UUIDUtil;
+import com.oaktwister.services.repos.*;
 import com.oaktwister.viewmodels.models.*;
-import com.oaktwister.viewmodels.pages.AccountsViewModel;
-import com.oaktwister.viewmodels.pages.IdentitiesViewModel;
-import com.oaktwister.viewmodels.pages.PlatformsViewModel;
+import com.oaktwister.viewmodels.collections.AccountsViewModel;
+import com.oaktwister.viewmodels.collections.IdentitiesViewModel;
+import com.oaktwister.viewmodels.collections.PlatformsViewModel;
 import com.oaktwister.viewmodels.roots.LandingViewModel;
 import com.oaktwister.viewmodels.roots.MainViewModel;
 
@@ -30,7 +26,8 @@ public class ViewModelFactory {
 
     public LandingViewModel getLandingViewModel() {
         if(landingViewModel == null) {
-            landingViewModel = new LandingViewModel(serviceFactory.getContext(), serviceFactory.getDriveFactory());
+            DriveRepo driveFactory = serviceFactory.getDriveFactory();
+            landingViewModel = new LandingViewModel(this, driveFactory);
             serviceFactory.clearScope();
         }
         return landingViewModel;
@@ -115,6 +112,13 @@ public class ViewModelFactory {
         ClaimMapViewModel viewModel = new ClaimMapViewModel();
         serviceFactory.clearScope();
         return viewModel;
+    }
+
+    public DriveViewModel getDriveViewModel() {
+        Context context = serviceFactory.getContext();
+        DriveViewModel driveViewModel = new DriveViewModel(context);
+        serviceFactory.clearScope();
+        return driveViewModel;
     }
 
 }
