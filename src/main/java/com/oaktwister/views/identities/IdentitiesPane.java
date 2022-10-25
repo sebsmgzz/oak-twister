@@ -72,6 +72,7 @@ public class IdentitiesPane extends AnchorPane implements Initializable {
             identityPanesProperty.get().remove(identityViewModel);
         }));
         viewModelProperty.set(viewModel);
+        viewModel.loadIdentities();
     }
 
     public IdentitiesViewModel getViewModel() {

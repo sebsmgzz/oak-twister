@@ -27,7 +27,6 @@ public class ControlFactory {
     public PlatformsPane getPlatformsPane(PlatformsViewModel viewModel) {
         PlatformsPane platformsPane = new PlatformsPane(viewMediator);
         platformsPane.setViewModel(viewModel);
-        viewModel.loadPlatforms();
         return platformsPane;
     }
 
@@ -50,7 +49,6 @@ public class ControlFactory {
     public AccountsPane getAccountsPane(AccountsViewModel viewModel) {
         AccountsPane accountsPane = new AccountsPane(viewMediator);
         accountsPane.setViewModel(viewModel);
-        viewModel.loadAccounts();
         return accountsPane;
     }
 
@@ -73,7 +71,6 @@ public class ControlFactory {
     public IdentitiesPane getIdentitiesPane(IdentitiesViewModel viewModel) {
         IdentitiesPane identitiesPane = new IdentitiesPane(viewMediator);
         identitiesPane.setViewModel(viewModel);
-        viewModel.loadIdentities();
         return identitiesPane;
     }
 

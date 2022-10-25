@@ -78,6 +78,7 @@ public class PlatformsPane extends AnchorPane implements Initializable {
             platformPanesProperty.get().remove(platformViewModel);
         }));
         viewModelProperty.set(viewModel);
+        viewModel.loadPlatforms();
     }
 
     public PlatformsViewModel getViewModel() {

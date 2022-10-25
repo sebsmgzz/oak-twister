@@ -74,6 +74,7 @@ public class AccountsPane extends AnchorPane implements Initializable {
             accountPanesProperty.remove(accountViewModel);
         }));
         viewModelProperty.set(viewModel);
+        viewModel.loadAccounts();
     }
 
     public AccountsViewModel getViewModel() {
