@@ -28,7 +28,7 @@ public class ImageButtonBox extends HBox implements Initializable {
     public ImageButtonBox(ViewMediator viewMediator) {
         super();
         this.viewMediator = viewMediator;
-        viewMediator.loadCustomView(this);
+        viewMediator.loadViewControl(this);
     }
 
     @Override

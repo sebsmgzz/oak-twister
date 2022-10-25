@@ -42,7 +42,7 @@ public class AccountsPane extends AnchorPane implements Initializable {
         this.viewMediator = viewMediator;
         viewModelProperty = new SimpleObjectProperty<>();
         accountPanesProperty = new SimpleMapProperty<>(FXCollections.observableHashMap());
-        viewMediator.loadCustomView(this);
+        viewMediator.loadViewControl(this);
     }
 
     @Override

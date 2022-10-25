@@ -48,7 +48,7 @@ public class PlatformPane extends StackPane implements Initializable {
         viewModelProperty = new SimpleObjectProperty<>();
         identifierProperty = new SimpleObjectProperty<>(); // TODO: Initialize empty UUID
         createdAtProperty = new SimpleObjectProperty<>(LocalDateTime.MIN);
-        viewMediator.loadCustomView(this);
+        viewMediator.loadViewControl(this);
     }
 
     @Override

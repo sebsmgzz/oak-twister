@@ -40,7 +40,7 @@ public class IdentitiesPane extends AnchorPane implements Initializable {
         this.viewMediator = viewMediator;
         viewModelProperty = new SimpleObjectProperty<>();
         identityPanesProperty = new SimpleMapProperty<>(FXCollections.observableHashMap());
-        viewMediator.loadCustomView(this);
+        viewMediator.loadViewControl(this);
     }
 
     @Override

@@ -7,25 +7,17 @@ import javafx.beans.property.SimpleObjectProperty;
 
 public class MainViewModel {
 
-    private final ObjectProperty<Section> section;
-
     private final Logger logger;
 
+    private final ObjectProperty<Section> section;
+
     public MainViewModel(Logger logger) {
-        section = new SimpleObjectProperty<Section>(Section.ACCOUNTS);
         this.logger = logger;
+        section = new SimpleObjectProperty<Section>();
     }
 
     public ObjectProperty<Section> sectionProperty() {
         return section;
-    }
-
-    public Section getSection() {
-        return sectionProperty().get();
-    }
-
-    public void setSection(Section value) {
-        sectionProperty().set(value);
     }
 
 }

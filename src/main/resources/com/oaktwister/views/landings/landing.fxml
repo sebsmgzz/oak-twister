@@ -7,7 +7,7 @@
 <BorderPane xmlns="http://javafx.com/javafx/8"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.oaktwister.views.landings.LandingViewController"
-      fx:id="root"
+      fx:id="borderPane"
       stylesheets="/com/oaktwister/styles/landing/landing.css"
       styleClass="background"
       prefWidth="1000" prefHeight="600">
@@ -33,9 +33,9 @@
     </center>
     <bottom>
         <HBox styleClass="bottomContent" VBox.vgrow="NEVER">
-            <Button onAction="#onLoadButtonClick" styleClass="button"
+            <Button fx:id="loadButton" styleClass="button"
                     text="Load" HBox.hgrow="NEVER" prefWidth="100"/>
-            <Button onAction="#onRefreshButtonClick" styleClass="button"
+            <Button fx:id="refreshButton" styleClass="button"
                     text="Refresh" HBox.hgrow="NEVER" prefWidth="100"/>
         </HBox>
     </bottom>

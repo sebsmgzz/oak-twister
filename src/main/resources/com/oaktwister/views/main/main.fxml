@@ -19,8 +19,8 @@
                 <Label styleClass="title" text="OakTwister" alignment="CENTER" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
             </HBox>
             <VBox fx:id="vbox" styleClass="vbox-in" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS"/>
-            <Button styleClass="clickable" text="Back" onAction="#onBackButtonAction" maxWidth="Infinity"/>
-            <Button styleClass="clickable" text="Settings" maxWidth="Infinity" VBox.vgrow="NEVER"/>
+            <Button fx:id="backButton" styleClass="clickable" text="Back" maxWidth="Infinity"/>
+            <Button fx:id="settingsButton" styleClass="clickable" text="Settings" maxWidth="Infinity" VBox.vgrow="NEVER"/>
         </VBox>
     </left>
 </BorderPane>

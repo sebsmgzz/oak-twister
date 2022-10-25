@@ -3,6 +3,8 @@ package com.oaktwister.core;
 import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.services.resources.ImageResources;
 import com.oaktwister.services.resources.StringResources;
+import com.oaktwister.viewmodels.roots.LandingViewModel;
+import com.oaktwister.viewmodels.roots.MainViewModel;
 import com.oaktwister.views.landings.LandingViewController;
 import com.oaktwister.views.main.MainViewController;
 import javafx.fxml.FXMLLoader;
@@ -18,13 +20,11 @@ public class ViewMediator {
 
     private final Stage primaryStage;
     private final ViewModelFactory viewModelFactory;
-    private final ControllerFactory controllerFactory;
     private final ControlFactory controlFactory;
 
     public ViewMediator(Stage primaryStage, ViewModelFactory viewModelFactory) {
         this.primaryStage = primaryStage;
         this.viewModelFactory = viewModelFactory;
-        this.controllerFactory = new ControllerFactory(this, viewModelFactory);
         this.controlFactory = new ControlFactory(this, viewModelFactory);
     }
 
@@ -42,13 +42,13 @@ public class ViewMediator {
         return viewClass.getResource(viewLocation);
     }
 
-    public void loadCustomView(Object view) {
+    public void loadViewControl(Object viewControl) {
         try {
-            Class<?> viewClass = view.getClass();
+            Class<?> viewClass = viewControl.getClass();
             URL viewResourceUrl = getViewResourceUrl(viewClass);
             FXMLLoader fxmlLoader = new FXMLLoader(viewResourceUrl);
-            fxmlLoader.setRoot(view);
-            fxmlLoader.setControllerFactory(aClass -> view);
+            fxmlLoader.setRoot(viewControl);
+            fxmlLoader.setControllerFactory(aClass -> viewControl);
             fxmlLoader.load();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -56,11 +56,12 @@ public class ViewMediator {
         }
     }
 
-    public <T extends Parent> T loadRootView(@NotNull Class<?> viewClass) {
+    public <T extends Parent> T loadRootView(@NotNull Object viewController) {
         try {
+            Class<?> viewClass = viewController.getClass();
             URL viewResourceUrl = getViewResourceUrl(viewClass);
             FXMLLoader fxmlLoader = new FXMLLoader(viewResourceUrl);
-            fxmlLoader.setControllerFactory(controllerFactory);
+            fxmlLoader.setControllerFactory(aClass -> viewController);
             return fxmlLoader.load();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -69,7 +70,9 @@ public class ViewMediator {
     }
 
     public void showLandingView() {
-        Parent view = loadRootView(LandingViewController.class);
+        LandingViewModel viewModel = viewModelFactory.getLandingViewModel();
+        LandingViewController controller = new LandingViewController(this, viewModel);
+        Parent view = loadRootView(controller);
         Scene scene = new Scene(view);
         primaryStage.getIcons().add(new Image(ImageResources.Vikings.OAK));
         primaryStage.setTitle(StringResources.App.TITLE);
@@ -78,7 +81,9 @@ public class ViewMediator {
     }
 
     public void showMainView() {
-        Parent view = loadRootView(MainViewController.class);
+        MainViewModel viewModel = viewModelFactory.getMainViewModel();
+        MainViewController controller = new MainViewController(this, viewModel);
+        Parent view = loadRootView(controller);
         Scene scene = new Scene(view);
         primaryStage.setScene(scene);
         primaryStage.show();

@@ -9,13 +9,13 @@ import com.oaktwister.viewmodels.roots.MainViewModel;
 import com.oaktwister.views.laterals.ImageButtonBox;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.event.ActionEvent;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -26,68 +26,70 @@ public class MainViewController implements Initializable {
     private final ViewMediator viewMediator;
     private final MainViewModel viewModel;
 
-    @FXML private BorderPane borderPane;
-    @FXML private VBox vbox;
+    private final Property<Node> centerNodeProperty;
 
     private final ImageButtonBox accountsButton;
     private final ImageButtonBox platformsButton;
     private final ImageButtonBox identitiesButton;
 
-    private final Property<Node> centerNodeProperty;
+    @FXML private BorderPane borderPane;
+    @FXML private VBox vbox;
+    @FXML private Button backButton;
+    @FXML private Button settingsButton;
 
-    public MainViewController(ViewMediator viewMediator, MainViewModel viewModel) throws IOException {
+    public MainViewController(ViewMediator viewMediator, MainViewModel viewModel) {
         this.viewMediator = viewMediator;
         this.viewModel = viewModel;
+        centerNodeProperty = new SimpleObjectProperty<Node>();
         accountsButton = viewMediator.controls().getImageButtonBox();
         platformsButton = viewMediator.controls().getImageButtonBox();
         identitiesButton = viewMediator.controls().getImageButtonBox();
-        centerNodeProperty = new SimpleObjectProperty<Node>(getSection());
-    }
-
-    private Node getSection() {
-        return switch (viewModel.getSection()) {
-            case ACCOUNTS -> viewMediator.controls().getAccountsPane();
-            case PLATFORMS -> viewMediator.controls().getPlatformsPane();
-            case IDENTITIES -> viewMediator.controls().getIdentitiesPane();
-        };
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        // The centerNodeProperty listens for changes from the view model property and
-        // converts the type from Section to Node. The borderPane gets updated due to its
-        // binding with the centerNodeProperty. The only downside is that bidirectional binding
-        // won't reach the view model, but that is fine for this case (since do not require it).
-        viewModel.sectionProperty().addListener(s -> centerNodeProperty.setValue(getSection()));
+        // Bind the borderPane's center node with the centerNodeProperty
         borderPane.centerProperty().bind(centerNodeProperty);
 
-        // Mount buttons
-        vbox.getChildren().add(accountsButton);
-        vbox.getChildren().add(platformsButton);
-        vbox.getChildren().add(identitiesButton);
-        identitiesButton.setMaxWidth(Double.MAX_VALUE);
+        // Add and initialize lateral buttons
+        ObservableList<Node> vboxChildren = vbox.getChildren();
 
-        // Bind button's actions to change the view model section accordingly
-        accountsButton.setOnAction(e -> viewModel.setSection(Section.ACCOUNTS));
-        platformsButton.setOnAction(e -> viewModel.setSection(Section.PLATFORMS));
-        identitiesButton.setOnAction(e -> viewModel.setSection(Section.IDENTITIES));
-
-        // Set button's texts
+        // Accounts button
+        vboxChildren.add(accountsButton);
         accountsButton.setText(StringResources.ACCOUNTS_BUTTON_TEXT);
-        platformsButton.setText(StringResources.PLATFORMS_BUTTON_TEXT);
-        identitiesButton.setText(StringResources.IDENTITIES_BUTTON_TEXT);
-
-        // Set button's images
-        identitiesButton.setImage(ImageResources.FontAwesome.FINGERPRINT_SOLID);
-        platformsButton.setImage(ImageResources.FontAwesome.LAYER_GROUP_SOLID);
         accountsButton.setImage(ImageResources.FontAwesome.USERS_SOLID);
+        accountsButton.setOnAction(event -> viewModel.sectionProperty().set(Section.ACCOUNTS));
 
-    }
+        // Platforms button
+        vboxChildren.add(platformsButton);
+        platformsButton.setText(StringResources.PLATFORMS_BUTTON_TEXT);
+        platformsButton.setImage(ImageResources.FontAwesome.LAYER_GROUP_SOLID);
+        platformsButton.setOnAction(event -> viewModel.sectionProperty().set(Section.PLATFORMS));
 
-    @FXML
-    public void onBackButtonAction(ActionEvent actionEvent) throws IOException {
-        viewMediator.showLandingView();
+        // Identities button
+        vboxChildren.add(identitiesButton);
+        identitiesButton.setText(StringResources.IDENTITIES_BUTTON_TEXT);
+        identitiesButton.setImage(ImageResources.FontAwesome.FINGERPRINT_SOLID);
+        identitiesButton.setOnAction(event -> viewModel.sectionProperty().set(Section.IDENTITIES));
+
+        // Set the button's actions
+        backButton.setOnAction(event -> viewMediator.showLandingView());
+        settingsButton.setOnAction(event -> { /* TODO: MainViewController::onSettingsButtonClick */ });
+
+        // Bind the viewModel with the centerNodeProperty
+        viewModel.sectionProperty().addListener((observable, oldValue, newValue) -> {
+            Node node = switch (newValue) {
+                case ACCOUNTS -> viewMediator.controls().getAccountsPane();
+                case PLATFORMS -> viewMediator.controls().getPlatformsPane();
+                case IDENTITIES -> viewMediator.controls().getIdentitiesPane();
+            };
+            centerNodeProperty.setValue(node);
+        });
+
+        // Initialize viewModel in AccountsSection
+        viewModel.sectionProperty().set(Section.ACCOUNTS);
+
     }
 
 }

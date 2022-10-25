@@ -45,7 +45,7 @@ public class IdentityPane extends StackPane implements Initializable {
         identifierProperty = new SimpleObjectProperty<>(); // TODO: Initialize empty UUID
         createdAtProperty = new SimpleObjectProperty<>(LocalDateTime.MIN);
         grantsCountProperty = new SimpleIntegerProperty();
-        viewMediator.loadCustomView(this);
+        viewMediator.loadViewControl(this);
     }
 
     @Override
