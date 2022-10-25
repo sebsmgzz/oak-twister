@@ -30,7 +30,7 @@
                         <VBox styleClass="vbox">
                             <HBox>
                                 <Label text="Account: "/>
-                                <Label fx:id="idLabel"/>
+                                <Label fx:id="identifierLabel"/>
                             </HBox>
                             <HBox>
                                 <Label text="Grants: "/>

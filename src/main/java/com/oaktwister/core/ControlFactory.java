@@ -13,6 +13,13 @@ import com.oaktwister.views.identities.IdentityPane;
 import com.oaktwister.views.laterals.ImageButtonBox;
 import com.oaktwister.views.platforms.PlatformPane;
 import com.oaktwister.views.platforms.PlatformsPane;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+
+import java.util.Optional;
+import java.util.UUID;
 
 public class ControlFactory {
 
@@ -27,6 +34,7 @@ public class ControlFactory {
     public PlatformsPane getPlatformsPane(PlatformsViewModel viewModel) {
         PlatformsPane platformsPane = new PlatformsPane(viewMediator);
         platformsPane.setViewModel(viewModel);
+        viewModel.loadPlatforms();
         return platformsPane;
     }
 
@@ -48,7 +56,8 @@ public class ControlFactory {
 
     public AccountsPane getAccountsPane(AccountsViewModel viewModel) {
         AccountsPane accountsPane = new AccountsPane(viewMediator);
-        accountsPane.setViewModelProperty(viewModel);
+        accountsPane.setViewModel(viewModel);
+        viewModel.loadAccounts();
         return accountsPane;
     }
 
@@ -71,12 +80,13 @@ public class ControlFactory {
     public IdentitiesPane getIdentitiesPane(IdentitiesViewModel viewModel) {
         IdentitiesPane identitiesPane = new IdentitiesPane(viewMediator);
         identitiesPane.setViewModel(viewModel);
+        viewModel.loadIdentities();
         return identitiesPane;
     }
 
     public IdentitiesPane getIdentitiesPane() {
         IdentitiesViewModel viewModel = viewModelFactory.getIdentitiesViewModel();
-        return  getIdentitiesPane(viewModel);
+        return getIdentitiesPane(viewModel);
     }
 
     public IdentityPane getIdentityPane(IdentityViewModel viewModel) {

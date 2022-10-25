@@ -5,11 +5,11 @@ import javafx.collections.ListChangeListener;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class RemovedChangeListener<T> implements ListChangeListener<T> {
+public class ListItemRemovedListener<T> implements ListChangeListener<T> {
 
     private final Consumer<T> consumer;
 
-    public RemovedChangeListener(Consumer<T> consumer) {
+    public ListItemRemovedListener(Consumer<T> consumer) {
         this.consumer = consumer;
     }
 

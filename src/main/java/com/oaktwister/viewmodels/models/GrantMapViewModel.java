@@ -2,7 +2,7 @@ package com.oaktwister.viewmodels.models;
 
 import com.oaktwister.models.grants.Grant;
 import com.oaktwister.models.grants.GrantMap;
-import com.oaktwister.util.listeners.DualChangeListener;
+import com.oaktwister.util.listeners.ListItemChangeListener;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyListProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -29,7 +29,7 @@ public class GrantMapViewModel {
         grantsProperty.set(FXCollections.observableArrayList(grantMap.grants()));
         grantsProperty.addListener((ListChangeListener<Grant<?>>) change ->
                 grantCountProperty.set(grantsProperty.size()));
-        grantsProperty.addListener(new DualChangeListener<>(grantMap::add, grantMap::remove));
+        grantsProperty.addListener(new ListItemChangeListener<>(grantMap::add, grantMap::remove));
     }
 
     public ReadOnlyIntegerProperty grantCountProperty() {

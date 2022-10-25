@@ -2,7 +2,7 @@ package com.oaktwister.viewmodels.models;
 
 import com.oaktwister.models.claims.Claim;
 import com.oaktwister.models.claims.ClaimMap;
-import com.oaktwister.util.listeners.DualChangeListener;
+import com.oaktwister.util.listeners.ListItemChangeListener;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyListProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -25,7 +25,7 @@ public class ClaimMapViewModel {
         this.claimMap = claimMap;
 
         claimsProperty.set(FXCollections.observableArrayList(this.claimMap.claims()));
-        claimsProperty.addListener(new DualChangeListener<>(this.claimMap::add, this.claimMap::remove));
+        claimsProperty.addListener(new ListItemChangeListener<>(this.claimMap::add, this.claimMap::remove));
 
         claimCountProperty.set(this.claimMap.size());
         claimsProperty.addListener((ListChangeListener<Claim>) change ->

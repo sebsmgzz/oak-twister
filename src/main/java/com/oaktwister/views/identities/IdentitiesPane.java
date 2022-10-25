@@ -3,33 +3,34 @@ package com.oaktwister.views.identities;
 import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.core.ViewMediator;
 import com.oaktwister.services.resources.ViewResources;
-import com.oaktwister.viewmodels.pages.IdentitiesViewModel;
+import com.oaktwister.util.listeners.*;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
-import com.oaktwister.util.listeners.DualChangeListener;
+import com.oaktwister.viewmodels.pages.IdentitiesViewModel;
 import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.SimpleMapProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-import org.jetbrains.annotations.NotNull;
-
 import java.net.URL;
-import java.util.Iterator;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 @ViewDescriptor(location = ViewResources.Identities.IDENTITIES_PANE)
 public class IdentitiesPane extends AnchorPane implements Initializable {
 
     private final ViewMediator viewMediator;
-    private final SimpleObjectProperty<IdentitiesViewModel> viewModelProperty;
 
+    private final SimpleObjectProperty<IdentitiesViewModel> viewModelProperty;
+    private final SimpleMapProperty<IdentityViewModel, IdentityPane> identityPanesProperty;
+
+    @FXML private Label titleLabel;
     @FXML private ScrollPane scrollPane;
     @FXML private FlowPane flowPane;
     @FXML private Button addButton;
@@ -38,23 +39,39 @@ public class IdentitiesPane extends AnchorPane implements Initializable {
         super();
         this.viewMediator = viewMediator;
         viewModelProperty = new SimpleObjectProperty<>();
+        identityPanesProperty = new SimpleMapProperty<>(FXCollections.observableHashMap());
         viewMediator.loadCustomView(this);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        // UI
         scrollPane.widthProperty().addListener((observable, oldValue, newValue) ->
                 flowPane.setPrefWidth(newValue.doubleValue()));
         scrollPane.heightProperty().addListener((observable, oldValue, newValue) ->
                 flowPane.setPrefHeight(newValue.doubleValue()));
+        addButton.setOnAction(this::onAddButtonClick);
+
+        // Properties
+        identityPanesProperty.addListener(new MapItemAddedListener<>((identityViewModel, identityPane) -> {
+            flowPane.getChildren().add(identityPane);
+        }));
+        identityPanesProperty.addListener(new MapItemRemovedListener<>((identityViewModel, identityPane) -> {
+            flowPane.getChildren().remove(identityPane);
+        }));
+
     }
 
-    public void setViewModel(@NotNull IdentitiesViewModel viewModel) {
-        // TODO: Use weak properties listeners
+    public void setViewModel(IdentitiesViewModel viewModel) {
+        viewModel.identitiesProperty().addListener(new ListItemAddedListener<>(identityViewModel -> {
+            IdentityPane identityPane = viewMediator.controls().getIdentityPane(identityViewModel);
+            identityPanesProperty.get().put(identityViewModel, identityPane);
+        }));
+        viewModel.identitiesProperty().addListener(new ListItemRemovedListener<>(identityViewModel -> {
+            identityPanesProperty.get().remove(identityViewModel);
+        }));
         viewModelProperty.set(viewModel);
-        viewModel.identitiesProperty().addListener(new DualChangeListener<IdentityViewModel>(
-                this::onIdentityViewModelAdded, this::onIdentityViewModelRemoved));
-        viewModel.loadIdentities();
     }
 
     public IdentitiesViewModel getViewModel() {
@@ -65,54 +82,12 @@ public class IdentitiesPane extends AnchorPane implements Initializable {
         return viewModelProperty;
     }
 
-    private void onIdentityViewModelAdded(IdentityViewModel identityViewModel) {
-
-        // Bindings
-        identityViewModel.onDeleteIdentityProperty().set(event -> {
-            IdentityViewModel viewModel = event.getIdentityViewModel();
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Delete identity");
-            alert.setContentText(String.format(
-                    "Do you really want to delete identity %s?%n" +
-                    "This action cannot be undone.",
-                    viewModel.idProperty().get()));
-            Optional<ButtonType> result = alert.showAndWait();
-            if(result.isEmpty() || result.get().equals(ButtonType.CANCEL)) {
-                event.cancel();
-            }
-            getViewModel().identitiesProperty().remove(viewModel);
-        });
-
-        // Get the IdentityPane from the viewHandler and add it to the flowPane's children
-        IdentityPane identityPane = viewMediator.controls().getIdentityPane(identityViewModel);
-        identityPane.onMainActionProperty().set(event -> {
-            // TODO: Show editable form for the identity
-        });
-        flowPane.getChildren().add(identityPane);
-
+    public StringProperty titleProperty() {
+        return titleLabel.textProperty();
     }
 
-    private void onIdentityViewModelRemoved(IdentityViewModel identityViewModel) {
-        // Iterate through the flowPane's children
-        Iterator<Node> childrenIterator = flowPane.getChildren().iterator();
-        while(childrenIterator.hasNext()) {
-            Node node = childrenIterator.next();
-
-            // Each flowPane child should be of type IdentityPane
-            IdentityPane identityPane = node instanceof IdentityPane? (IdentityPane) node : null;
-            if(identityPane == null) {
-                throw new RuntimeException(
-                        "A IdentitiesPane::flowPane children was found not to be an instance of IdentityPane. " +
-                                "This is not the expected behaviour. Something is critically wrong.");
-            }
-
-            // If the identityPane's IdentityViewModel matches the one been removed, remove it as well
-            IdentityViewModel foundViewModel = identityPane.getViewModel();
-            if (identityViewModel == foundViewModel) {
-                childrenIterator.remove();
-            }
-
-        }
+    private void onAddButtonClick(ActionEvent event) {
+        // TODO: IdentitiesPane::onAddButtonClick
     }
 
 }

@@ -3,39 +3,36 @@ package com.oaktwister.views.platforms;
 import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.core.ViewMediator;
 import com.oaktwister.services.resources.ViewResources;
-import com.oaktwister.viewmodels.pages.PlatformsViewModel;
+import com.oaktwister.util.listeners.*;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
-import com.oaktwister.util.listeners.DualChangeListener;
-import javafx.beans.property.ObjectProperty;
+import com.oaktwister.viewmodels.pages.PlatformsViewModel;
 import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleMapProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
-
 import java.net.URL;
-import java.util.Iterator;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 @ViewDescriptor(location = ViewResources.Platforms.PLATFORMS_PANE)
 public class PlatformsPane extends AnchorPane implements Initializable {
 
     private final ViewMediator viewMediator;
+
     private final SimpleObjectProperty<PlatformsViewModel> viewModelProperty;
+    private final SimpleMapProperty<PlatformViewModel, PlatformPane> platformPanesProperty;
 
     @FXML private VBox vbox;
+    @FXML private Label titleLabel;
     @FXML private FlowPane flowPane;
     @FXML private ScrollPane scrollPane;
     @FXML private Button addButton;
@@ -43,12 +40,15 @@ public class PlatformsPane extends AnchorPane implements Initializable {
     public PlatformsPane(ViewMediator viewMediator) {
         super();
         this.viewMediator = viewMediator;
-        this.viewModelProperty = new SimpleObjectProperty<>();
+        viewModelProperty = new SimpleObjectProperty<>();
+        platformPanesProperty = new SimpleMapProperty<>(FXCollections.observableHashMap());
         viewMediator.loadCustomView(this);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        // UI
         AnchorPane.setTopAnchor(vbox, 0.0);
         AnchorPane.setRightAnchor(vbox, 0.0);
         AnchorPane.setBottomAnchor(vbox, 0.0);
@@ -57,12 +57,27 @@ public class PlatformsPane extends AnchorPane implements Initializable {
                 scrollPane.setPrefWidth(newValue.doubleValue()));
         super.heightProperty().addListener((observable, oldValue, newValue) ->
                 scrollPane.setPrefHeight(newValue.doubleValue()));
+        addButton.setOnAction(this::onAddButtonClick);
+
+        // Properties
+        platformPanesProperty.addListener(new MapItemAddedListener<>((platformViewModel, platformPane) -> {
+            flowPane.getChildren().add(platformPane);
+        }));
+        platformPanesProperty.addListener(new MapItemRemovedListener<>((platformViewModel, platformPane) -> {
+            flowPane.getChildren().remove(platformPane);
+        }));
+
     }
 
-    public void setViewModel(PlatformsViewModel viewModelProperty) {
-        viewModelProperty.platformsProperty().addListener(new DualChangeListener<>(
-                this::onPlatformViewModelAdded, this::onPlatformViewModelRemoved));
-        viewModelProperty.loadPlatforms();
+    public void setViewModel(PlatformsViewModel viewModel) {
+        viewModel.platformsProperty().addListener(new ListItemAddedListener<>(platformViewModel -> {
+            PlatformPane platformPane = viewMediator.controls().getPlatformPane(platformViewModel);
+            platformPanesProperty.get().put(platformViewModel, platformPane);
+        }));
+        viewModel.platformsProperty().addListener(new ListItemRemovedListener<>(platformViewModel -> {
+            platformPanesProperty.get().remove(platformViewModel);
+        }));
+        viewModelProperty.set(viewModel);
     }
 
     public PlatformsViewModel getViewModel() {
@@ -73,51 +88,12 @@ public class PlatformsPane extends AnchorPane implements Initializable {
         return viewModelProperty;
     }
 
-    public ObjectProperty<EventHandler<ActionEvent>> onActionProperty() {
-        return addButton.onActionProperty();
+    public StringProperty titleProperty() {
+        return titleLabel.textProperty();
     }
 
-    // When a platform is added, simply get the PlatformPane from the viewFactory and
-    // add it to the flowPane's children
-    private void onPlatformViewModelAdded(PlatformViewModel platformViewModel) {
-
-        // Bindings
-        platformViewModel.onDeleteAccountProperty().set(event -> {
-            PlatformViewModel viewModel = event.getPlatformViewModel();
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Delete platform");
-            alert.setContentText(String.format(
-                    "Do you really want to delete platform %s?%n" +
-                            "This action cannot be undone.",
-                    viewModel.idProperty().get()));
-            Optional<ButtonType> result = alert.showAndWait();
-            if(result.isEmpty() || result.get().equals(ButtonType.CANCEL)) {
-                event.cancel();
-            }
-            getViewModel().platformsProperty().remove(viewModel);
-        });
-
-        PlatformPane platformPane = viewMediator.controls().getPlatformPane(platformViewModel);
-        flowPane.getChildren().add(platformPane);
-    }
-
-    // When a platform is removed, we need to iterate through the flowPane's children to
-    // backtrack the Node to the PlatformViewModel been removed
-    private void onPlatformViewModelRemoved(PlatformViewModel platformViewModel) {
-        Iterator<Node> iterator = flowPane.getChildren().iterator();
-        while(iterator.hasNext()) {
-            Node node = iterator.next();
-            PlatformPane platformPane = node instanceof PlatformPane? (PlatformPane) node : null;
-            if(platformPane == null) {
-                throw new RuntimeException(
-                        "A PlatformPane::flowPane children was found not to be an instance of PlatformPane. " +
-                                "This is not the expected behaviour. Something is critically wrong.");
-            }
-            PlatformViewModel foundViewModel = platformPane.getViewModel();
-            if (platformViewModel == foundViewModel) {
-                iterator.remove();
-            }
-        }
+    private void onAddButtonClick(ActionEvent event) {
+        // TODO: PlatformsPane::onAddButtonClick
     }
 
 }

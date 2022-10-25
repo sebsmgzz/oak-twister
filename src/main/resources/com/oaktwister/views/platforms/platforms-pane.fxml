@@ -14,7 +14,7 @@
          fx:controller="com.oaktwister.views.platforms.PlatformsPane"
          stylesheets="/com/oaktwister/styles/platforms/platforms-pane.css">
     <VBox fx:id="vbox" alignment="CENTER">
-        <Label styleClass="title" text="Platforms" maxWidth="Infinity" alignment="CENTER"/>
+        <Label fx:id="titleLabel" styleClass="title" text="Platforms" maxWidth="Infinity" alignment="CENTER"/>
         <ScrollPane fx:id="scrollPane" styleClass="scroll-pane" hbarPolicy="NEVER" hvalue="0.5" vvalue="0.5"
                     fitToHeight="true" fitToWidth="true">
             <FlowPane fx:id="flowPane" styleClass="flow-pane" alignment="TOP_CENTER" vgap="10" hgap="10">

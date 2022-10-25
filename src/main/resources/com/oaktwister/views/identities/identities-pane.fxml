@@ -15,7 +15,7 @@
     <VBox alignment="CENTER"
           AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0"
           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
-        <Label styleClass="title" text="Identities" maxWidth="Infinity" alignment="CENTER" VBox.vgrow="NEVER"/>
+        <Label fx:id="titleLabel" styleClass="title" text="Identities" maxWidth="Infinity" alignment="CENTER" VBox.vgrow="NEVER"/>
         <AnchorPane styleClass="scroll-pane" VBox.vgrow="ALWAYS">
             <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER"
                         AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0"

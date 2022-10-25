@@ -3,21 +3,26 @@ package com.oaktwister.views.accounts;
 import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.core.ViewMediator;
 import com.oaktwister.services.resources.ViewResources;
+import com.oaktwister.util.listeners.ListItemAddedListener;
+import com.oaktwister.util.listeners.ListItemRemovedListener;
+import com.oaktwister.util.listeners.MapItemAddedListener;
+import com.oaktwister.util.listeners.MapItemRemovedListener;
 import com.oaktwister.viewmodels.models.AccountViewModel;
 import com.oaktwister.viewmodels.pages.AccountsViewModel;
-import com.oaktwister.util.listeners.DualChangeListener;
 import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.SimpleMapProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-
 import java.net.URL;
-import java.util.Iterator;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 @ViewDescriptor(location = ViewResources.Accounts.ACCOUNTS_PANE)
@@ -25,6 +30,7 @@ public class AccountsPane extends AnchorPane implements Initializable {
 
     private final ViewMediator viewMediator;
     private final SimpleObjectProperty<AccountsViewModel> viewModelProperty;
+    private final SimpleMapProperty<AccountViewModel, AccountPane> accountPanesProperty;
 
     @FXML private Label titleLabel;
     @FXML private ScrollPane scrollPane;
@@ -34,22 +40,39 @@ public class AccountsPane extends AnchorPane implements Initializable {
     public AccountsPane(ViewMediator viewMediator) {
         super();
         this.viewMediator = viewMediator;
-        this.viewModelProperty = new SimpleObjectProperty<>();
+        viewModelProperty = new SimpleObjectProperty<>();
+        accountPanesProperty = new SimpleMapProperty<>(FXCollections.observableHashMap());
         viewMediator.loadCustomView(this);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        // UI
         scrollPane.widthProperty().addListener((observable, oldValue, newValue) ->
                 flowPane.setPrefWidth(newValue.doubleValue()));
         scrollPane.heightProperty().addListener((observable, oldValue, newValue) ->
                 flowPane.setPrefHeight(newValue.doubleValue()));
+        addButton.setOnAction(this::onAddButtonClick);
+
+        // Properties
+        accountPanesProperty.addListener(new MapItemAddedListener<>((accountViewModel, accountPane) -> {
+            flowPane.getChildren().add(accountPane);
+        }));
+        accountPanesProperty.addListener(new MapItemRemovedListener<>((accountViewModel, accountPane) -> {
+            flowPane.getChildren().remove(accountPane);
+        }));
+
     }
 
-    public void setViewModelProperty(AccountsViewModel viewModel) {
-        viewModel.accountsProperty().addListener(new DualChangeListener<>(
-                this::onAccountViewModelAdded, this::onAccountViewModelRemoved));
-        viewModel.loadAccounts();
+    public void setViewModel(AccountsViewModel viewModel) {
+        viewModel.accountsProperty().addListener(new ListItemAddedListener<>(accountViewModel -> {
+            AccountPane accountPane = viewMediator.controls().getAccountPane(accountViewModel);
+            accountPanesProperty.put(accountViewModel, accountPane);
+        }));
+        viewModel.accountsProperty().addListener(new ListItemRemovedListener<>(accountViewModel -> {
+            accountPanesProperty.remove(accountViewModel);
+        }));
         viewModelProperty.set(viewModel);
     }
 
@@ -61,54 +84,12 @@ public class AccountsPane extends AnchorPane implements Initializable {
         return viewModelProperty;
     }
 
-    private void onAccountViewModelAdded(AccountViewModel identityViewModel) {
-
-        // Bindings
-        identityViewModel.onDeleteAccountProperty().set(event -> {
-            AccountViewModel viewModel = event.getAccountViewModel();
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Delete account");
-            alert.setContentText(String.format(
-                    "Do you really want to delete account %s?%n" +
-                            "This action cannot be undone.",
-                    viewModel.idProperty().get()));
-            Optional<ButtonType> result = alert.showAndWait();
-            if(result.isEmpty() || result.get().equals(ButtonType.CANCEL)) {
-                event.cancel();
-            }
-            viewModelProperty.get().accountsProperty().remove(viewModel);
-        });
-
-        // Get the AccountBox from the viewHandler and add it to the flowPane's children
-        AccountPane accountPane = viewMediator.controls().getAccountPane(identityViewModel);
-        accountPane.onMainActionProperty().set(event -> {
-            // TODO: Show editable form for the identity
-        });
-        flowPane.getChildren().add(accountPane);
-
+    public StringProperty titleProperty() {
+        return titleLabel.textProperty();
     }
 
-    private void onAccountViewModelRemoved(AccountViewModel accountViewModel) {
-        // Iterate through the flowPane's children
-        Iterator<Node> iterator = flowPane.getChildren().iterator();
-        while (iterator.hasNext()) {
-            Node node = iterator.next();
-
-            // Each flowPane child should be of type IdentityPane
-            AccountPane accountPane = node instanceof AccountPane ? (AccountPane) node : null;
-            if(accountPane == null) {
-                throw new RuntimeException(
-                        "A AccountsPane::flowPane children was found not to be an instance of AccountBox. " +
-                        "This is not the expected behaviour. Something is critically wrong.");
-            }
-
-            // If the accountBox's AccountViewModel matches the one been removed, remove it as well
-            AccountViewModel foundViewModel = accountPane.getViewModel();
-            if (accountViewModel == foundViewModel) {
-                iterator.remove();
-            }
-
-        }
+    public void onAddButtonClick(ActionEvent event) {
+        // TODO: AccountsPane::onAddButtonClick
     }
 
 }

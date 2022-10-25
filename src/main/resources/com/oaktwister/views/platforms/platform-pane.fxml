@@ -23,7 +23,7 @@
                     <VBox alignment="CENTER"
                           AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0"
                           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
-                        <Label fx:id="idLabel" text="00000000-0000-0000-0000-000000000000" VBox.vgrow="NEVER"/>
+                        <Label fx:id="identifierLabel" text="00000000-0000-0000-0000-000000000000" VBox.vgrow="NEVER"/>
                         <ImageView fx:id="imageView" styleClass="imageView" VBox.vgrow="ALWAYS"
                                    preserveRatio="true" fitHeight="100.0">
                             <Image url="/com/oaktwister/images/placeholders/image.png"/>

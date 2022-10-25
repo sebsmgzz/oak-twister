@@ -62,7 +62,7 @@ public class IdentityViewModel {
         return onDeleteIdentityProperty;
     }
 
-    public GrantMapViewModel grantMap() {
+    public GrantMapViewModel grants() {
         return grantMap;
     }
 

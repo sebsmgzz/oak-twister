@@ -5,12 +5,12 @@ import javafx.collections.ListChangeListener;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class DualChangeListener<T> implements ListChangeListener<T> {
+public class ListItemChangeListener<T> implements ListChangeListener<T> {
 
     private final Consumer<T> onAdded;
     private final Consumer<T> onRemoved;
 
-    public DualChangeListener(Consumer<T> onAdded, Consumer<T> onRemoved) {
+    public ListItemChangeListener(Consumer<T> onAdded, Consumer<T> onRemoved) {
         this.onAdded = onAdded;
         this.onRemoved = onRemoved;
     }
