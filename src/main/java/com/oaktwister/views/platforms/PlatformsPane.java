@@ -3,7 +3,7 @@ package com.oaktwister.views.platforms;
 import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.core.ViewMediator;
 import com.oaktwister.services.resources.ViewResources;
-import com.oaktwister.util.listeners.*;
+import com.oaktwister.utils.listeners.*;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
 import com.oaktwister.viewmodels.pages.PlatformsViewModel;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -71,7 +71,7 @@ public class PlatformsPane extends AnchorPane implements Initializable {
 
     public void setViewModel(PlatformsViewModel viewModel) {
         viewModel.platformsProperty().addListener(new ListItemAddedListener<>(platformViewModel -> {
-            PlatformPane platformPane = viewMediator.controls().getPlatformPane(platformViewModel);
+            PlatformPane platformPane = viewMediator.controlFactory.getPlatformPane(platformViewModel);
             platformPanesProperty.get().put(platformViewModel, platformPane);
         }));
         viewModel.platformsProperty().addListener(new ListItemRemovedListener<>(platformViewModel -> {

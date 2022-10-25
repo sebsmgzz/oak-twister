@@ -20,16 +20,13 @@ public class ViewMediator {
 
     private final Stage primaryStage;
     private final ViewModelFactory viewModelFactory;
-    private final ControlFactory controlFactory;
+
+    public final ControlFactory controlFactory;
 
     public ViewMediator(Stage primaryStage, ViewModelFactory viewModelFactory) {
         this.primaryStage = primaryStage;
         this.viewModelFactory = viewModelFactory;
         this.controlFactory = new ControlFactory(this, viewModelFactory);
-    }
-
-    public ControlFactory controls() {
-        return controlFactory;
     }
 
     private URL getViewResourceUrl(@NotNull Class<?> viewClass) throws IOException {

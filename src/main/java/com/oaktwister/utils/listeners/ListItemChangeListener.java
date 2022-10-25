@@ -1,4 +1,4 @@
-package com.oaktwister.util.listeners;
+package com.oaktwister.utils.listeners;
 
 import javafx.collections.ListChangeListener;
 

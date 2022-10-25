@@ -3,7 +3,7 @@ package com.oaktwister.views.identities;
 import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.core.ViewMediator;
 import com.oaktwister.services.resources.ViewResources;
-import com.oaktwister.util.listeners.*;
+import com.oaktwister.utils.listeners.*;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
 import com.oaktwister.viewmodels.pages.IdentitiesViewModel;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -65,7 +65,7 @@ public class IdentitiesPane extends AnchorPane implements Initializable {
 
     public void setViewModel(IdentitiesViewModel viewModel) {
         viewModel.identitiesProperty().addListener(new ListItemAddedListener<>(identityViewModel -> {
-            IdentityPane identityPane = viewMediator.controls().getIdentityPane(identityViewModel);
+            IdentityPane identityPane = viewMediator.controlFactory.getIdentityPane(identityViewModel);
             identityPanesProperty.get().put(identityViewModel, identityPane);
         }));
         viewModel.identitiesProperty().addListener(new ListItemRemovedListener<>(identityViewModel -> {

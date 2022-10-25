@@ -2,7 +2,7 @@ package com.oaktwister.viewmodels.models;
 
 import com.oaktwister.models.claims.Claim;
 import com.oaktwister.models.claims.ClaimMap;
-import com.oaktwister.util.listeners.ListItemChangeListener;
+import com.oaktwister.utils.listeners.ListItemChangeListener;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyListProperty;
 import javafx.beans.property.SimpleIntegerProperty;

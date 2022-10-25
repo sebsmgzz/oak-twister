@@ -1,14 +1,13 @@
 package com.oaktwister.viewmodels.models;
 
 import com.oaktwister.core.ViewModelFactory;
-import com.oaktwister.events.DeleteAccountEvent;
 import com.oaktwister.events.DeletePlatformEvent;
 import com.oaktwister.models.Platform;
 import com.oaktwister.services.logging.Logger;
 import com.oaktwister.services.repos.ImagesRepo;
 import com.oaktwister.services.repos.PlatformsRepo;
-import com.oaktwister.util.extensions.LocalDateTimeUtil;
-import com.oaktwister.util.extensions.UUIDUtil;
+import com.oaktwister.utils.extensions.LocalDateTimeUtil;
+import com.oaktwister.utils.extensions.UUIDUtil;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;

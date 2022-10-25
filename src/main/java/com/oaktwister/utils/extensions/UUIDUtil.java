@@ -1,4 +1,4 @@
-package com.oaktwister.util.extensions;
+package com.oaktwister.utils.extensions;
 
 import java.util.UUID;
 

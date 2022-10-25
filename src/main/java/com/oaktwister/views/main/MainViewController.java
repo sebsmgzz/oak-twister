@@ -41,9 +41,9 @@ public class MainViewController implements Initializable {
         this.viewMediator = viewMediator;
         this.viewModel = viewModel;
         centerNodeProperty = new SimpleObjectProperty<Node>();
-        accountsButton = viewMediator.controls().getImageButtonBox();
-        platformsButton = viewMediator.controls().getImageButtonBox();
-        identitiesButton = viewMediator.controls().getImageButtonBox();
+        accountsButton = viewMediator.controlFactory.getImageButtonBox();
+        platformsButton = viewMediator.controlFactory.getImageButtonBox();
+        identitiesButton = viewMediator.controlFactory.getImageButtonBox();
     }
 
     @Override
@@ -80,9 +80,9 @@ public class MainViewController implements Initializable {
         // Bind the viewModel with the centerNodeProperty
         viewModel.sectionProperty().addListener((observable, oldValue, newValue) -> {
             Node node = switch (newValue) {
-                case ACCOUNTS -> viewMediator.controls().getAccountsPane();
-                case PLATFORMS -> viewMediator.controls().getPlatformsPane();
-                case IDENTITIES -> viewMediator.controls().getIdentitiesPane();
+                case ACCOUNTS -> viewMediator.controlFactory.getAccountsPane();
+                case PLATFORMS -> viewMediator.controlFactory.getPlatformsPane();
+                case IDENTITIES -> viewMediator.controlFactory.getIdentitiesPane();
             };
             centerNodeProperty.setValue(node);
         });

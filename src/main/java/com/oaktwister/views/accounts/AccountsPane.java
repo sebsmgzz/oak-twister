@@ -3,10 +3,10 @@ package com.oaktwister.views.accounts;
 import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.core.ViewMediator;
 import com.oaktwister.services.resources.ViewResources;
-import com.oaktwister.util.listeners.ListItemAddedListener;
-import com.oaktwister.util.listeners.ListItemRemovedListener;
-import com.oaktwister.util.listeners.MapItemAddedListener;
-import com.oaktwister.util.listeners.MapItemRemovedListener;
+import com.oaktwister.utils.listeners.ListItemAddedListener;
+import com.oaktwister.utils.listeners.ListItemRemovedListener;
+import com.oaktwister.utils.listeners.MapItemAddedListener;
+import com.oaktwister.utils.listeners.MapItemRemovedListener;
 import com.oaktwister.viewmodels.models.AccountViewModel;
 import com.oaktwister.viewmodels.pages.AccountsViewModel;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -67,7 +67,7 @@ public class AccountsPane extends AnchorPane implements Initializable {
 
     public void setViewModel(AccountsViewModel viewModel) {
         viewModel.accountsProperty().addListener(new ListItemAddedListener<>(accountViewModel -> {
-            AccountPane accountPane = viewMediator.controls().getAccountPane(accountViewModel);
+            AccountPane accountPane = viewMediator.controlFactory.getAccountPane(accountViewModel);
             accountPanesProperty.put(accountViewModel, accountPane);
         }));
         viewModel.accountsProperty().addListener(new ListItemRemovedListener<>(accountViewModel -> {

@@ -3,7 +3,7 @@ package com.oaktwister.services.json;
 import com.oaktwister.models.Platform;
 import com.oaktwister.exceptions.UnknownGrantTypeException;
 import com.oaktwister.models.claims.ClaimMap;
-import com.oaktwister.util.extensions.LocalDateTimeUtil;
+import com.oaktwister.utils.extensions.LocalDateTimeUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.UUID;

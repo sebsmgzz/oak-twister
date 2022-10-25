@@ -1,4 +1,4 @@
-package com.oaktwister.util.converters;
+package com.oaktwister.utils.converters;
 
 import javafx.util.StringConverter;
 
