@@ -49,32 +49,12 @@ public class ServiceFactory {
         }
     }
 
-    public LocalDateTimeUtil getLocalDateTimeUtil() {
-        if(scoped.containsKey(LocalDateTimeUtil.class)) {
-            return (LocalDateTimeUtil) scoped.get(LocalDateTimeUtil.class);
-        } else {
-            LocalDateTimeUtil service = new LocalDateTimeUtil();
-            scoped.put(LocalDateTimeUtil.class, service);
-            return service;
-        }
-    }
-
-    public UUIDUtil getUUIDUtil() {
-        if(scoped.containsKey(UUIDUtil.class)) {
-            return (UUIDUtil) scoped.get(UUIDUtil.class);
-        } else {
-            UUIDUtil service = new UUIDUtil();
-            scoped.put(UUIDUtil.class, service);
-            return service;
-        }
-    }
-
     public GrantSerializer getGrantSerializer() {
         if(scoped.containsKey(GrantSerializer.class)) {
             return (GrantSerializer) scoped.get(GrantSerializer.class);
         } else {
             Logger logger = new Logger(GrantSerializer.class);
-            GrantSerializer service = new GrantSerializer(getLocalDateTimeUtil(), logger);
+            GrantSerializer service = new GrantSerializer(logger);
             scoped.put(GrantSerializer.class, service);
             return service;
         }
@@ -84,8 +64,9 @@ public class ServiceFactory {
         if(scoped.containsKey(GrantMapSerializer.class)) {
             return (GrantMapSerializer) scoped.get(GrantMapSerializer.class);
         } else {
+            GrantSerializer grantSerializer = getGrantSerializer();
             Logger logger = new Logger(GrantMapSerializer.class);
-            GrantMapSerializer service = new GrantMapSerializer(getGrantSerializer(), logger);
+            GrantMapSerializer service = new GrantMapSerializer(grantSerializer, logger);
             scoped.put(GrantMapSerializer.class, service);
             return service;
         }
@@ -95,7 +76,8 @@ public class ServiceFactory {
         if(scoped.containsKey(IdentitySerializer.class)) {
             return (IdentitySerializer) scoped.get(IdentitySerializer.class);
         } else {
-            IdentitySerializer service = new IdentitySerializer(getGrantMapSerializer(), getLocalDateTimeUtil());
+            GrantMapSerializer grantMapSerializer = getGrantMapSerializer();
+            IdentitySerializer service = new IdentitySerializer(grantMapSerializer);
             scoped.put(IdentitySerializer.class, service);
             return service;
         }
@@ -105,7 +87,8 @@ public class ServiceFactory {
         if(scoped.containsKey(AccountSerializer.class)) {
             return (AccountSerializer) scoped.get(AccountSerializer.class);
         } else {
-            AccountSerializer service = new AccountSerializer(getGrantMapSerializer(), getLocalDateTimeUtil());
+            GrantMapSerializer grantMapSerializer = getGrantMapSerializer();
+            AccountSerializer service = new AccountSerializer(grantMapSerializer);
             scoped.put(AccountSerializer.class, service);
             return service;
         }
@@ -115,8 +98,9 @@ public class ServiceFactory {
         if(scoped.containsKey(ImagesRepo.class)) {
             return (ImagesRepo) scoped.get(ImagesRepo.class);
         } else {
+            Context context = getContext();
             Logger logger = new Logger(ImagesRepo.class);
-            ImagesRepo service = new ImagesRepo(getContext(), logger);
+            ImagesRepo service = new ImagesRepo(context, logger);
             scoped.put(ImagesRepo.class, service);
             return service;
         }
@@ -141,9 +125,8 @@ public class ServiceFactory {
             return (PlatformSerializer) scoped.get(PlatformSerializer.class);
         } else {
             ClaimMapSerializer claimMapSerializer = getClaimMapSerializer();
-            LocalDateTimeUtil localDateTimeUtil = getLocalDateTimeUtil();
             Logger logger = new Logger(PlatformSerializer.class);
-            PlatformSerializer service = new PlatformSerializer(claimMapSerializer, localDateTimeUtil);
+            PlatformSerializer service = new PlatformSerializer(claimMapSerializer, logger);
             scoped.put(PlatformSerializer.class, service);
             return service;
         }
@@ -154,7 +137,7 @@ public class ServiceFactory {
             return (ClaimSerializer) scoped.get(ClaimSerializer.class);
         } else {
             Logger logger = new Logger(ClaimSerializer.class);
-            ClaimSerializer service = new ClaimSerializer();
+            ClaimSerializer service = new ClaimSerializer(logger);
             scoped.put(ClaimSerializer.class, service);
             return service;
         }

@@ -21,7 +21,6 @@ public class PlatformViewModel {
 
     private final PlatformsRepo platformsRepo;
     private final ImagesRepo imagesRepo;
-    private final LocalDateTimeUtil localDateTimeUtil;
     private final Logger logger;
 
     private final SimpleObjectProperty<UUID> id;
@@ -34,13 +33,12 @@ public class PlatformViewModel {
 
     private Platform platform;
 
-    public PlatformViewModel(ViewModelFactory viewModelFactory, PlatformsRepo platformsRepo, ImagesRepo imagesRepo,
-                             UUIDUtil uuidUtil, LocalDateTimeUtil localDateTimeUtil, Logger logger) {
+    public PlatformViewModel(ViewModelFactory viewModelFactory, PlatformsRepo platformsRepo,
+                             ImagesRepo imagesRepo, Logger logger) {
         this.platformsRepo = platformsRepo;
         this.imagesRepo = imagesRepo;
-        this.localDateTimeUtil = localDateTimeUtil;
         this.logger = logger;
-        id = new SimpleObjectProperty<>(uuidUtil.empty());
+        id = new SimpleObjectProperty<>(UUIDUtil.empty());
         name = new SimpleStringProperty(null);
         image = new SimpleObjectProperty<>(null);
         url = new SimpleStringProperty(null);
@@ -96,10 +94,6 @@ public class PlatformViewModel {
 
     public ClaimMapViewModel claims() {
         return claims;
-    }
-
-    public String formatDate(LocalDateTime dateTime) {
-        return localDateTimeUtil.toDefault(dateTime);
     }
 
     public boolean delete() {

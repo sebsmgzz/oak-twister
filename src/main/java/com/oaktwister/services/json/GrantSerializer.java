@@ -15,10 +15,8 @@ public class GrantSerializer implements JsonObjectSerializer<Grant<?>> {
     private final static String VALUE_KEY = "value";
 
     private final Logger logger;
-    private final LocalDateTimeUtil localDateTimeUtil;
 
-    public GrantSerializer(LocalDateTimeUtil localDateTimeUtil, Logger logger) {
-        this.localDateTimeUtil = localDateTimeUtil;
+    public GrantSerializer(Logger logger) {
         this.logger = logger;
     }
 
@@ -60,14 +58,14 @@ public class GrantSerializer implements JsonObjectSerializer<Grant<?>> {
     private DateTimeGrant deserializeDateTimeGrant(JSONObject dateTimeGrantJson) {
         return new DateTimeGrant(
                 dateTimeGrantJson.getString(NAME_KEY),
-                localDateTimeUtil.fromIso8601(dateTimeGrantJson.getString(VALUE_KEY)));
+                LocalDateTimeUtil.fromIso8601(dateTimeGrantJson.getString(VALUE_KEY)));
     }
 
     private JSONObject serializeDateTimeGrant(DateTimeGrant dateTimeGrant) {
         JSONObject dateTimeGrantJson = new JSONObject();
         dateTimeGrantJson.put(NAME_KEY, dateTimeGrant.getName());
         dateTimeGrantJson.put(TYPE_KEY, DateTimeGrant.class.getTypeName());
-        dateTimeGrantJson.put(VALUE_KEY, localDateTimeUtil.toIso8601(dateTimeGrant.getValue()));
+        dateTimeGrantJson.put(VALUE_KEY, LocalDateTimeUtil.toIso8601(dateTimeGrant.getValue()));
         return dateTimeGrantJson;
     }
 

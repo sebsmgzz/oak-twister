@@ -16,11 +16,9 @@ public class AccountSerializer implements JsonObjectSerializer<Account> {
     private final static String GRANTS_KEY = "grants";
 
     private final GrantMapSerializer grantMapSerializer;
-    private final LocalDateTimeUtil localDateTimeUtil;
 
-    public AccountSerializer(GrantMapSerializer grantMapSerializer, LocalDateTimeUtil localDateTimeUtil) {
+    public AccountSerializer(GrantMapSerializer grantMapSerializer) {
         this.grantMapSerializer = grantMapSerializer;
-        this.localDateTimeUtil = localDateTimeUtil;
     }
 
     @Override
@@ -35,7 +33,7 @@ public class AccountSerializer implements JsonObjectSerializer<Account> {
             UUID.fromString(json.get(ID_KEY).toString()),
             UUID.fromString(json.get(PLATFORM_ID_KEY).toString()),
             identityId,
-            localDateTimeUtil.fromIso8601(json.getString(CREATED_AT_KEY)));
+            LocalDateTimeUtil.fromIso8601(json.getString(CREATED_AT_KEY)));
         account.setGrants(grantMapSerializer.deserialize(json.getJSONArray(GRANTS_KEY)));
         return account;
 
@@ -48,7 +46,7 @@ public class AccountSerializer implements JsonObjectSerializer<Account> {
         accountJson.put(PLATFORM_ID_KEY, account.getPlatformId());
         UUID identityId = account.getIdentityId();
         accountJson.put(IDENTITY_ID_KEY, identityId != null? identityId : JSONObject.NULL );
-        accountJson.put(CREATED_AT_KEY, localDateTimeUtil.toIso8601(account.getCreatedAt()));
+        accountJson.put(CREATED_AT_KEY, LocalDateTimeUtil.toIso8601(account.getCreatedAt()));
         accountJson.put(GRANTS_KEY, grantMapSerializer.serialize(account.getGrants()));
         return accountJson;
     }

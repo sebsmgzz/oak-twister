@@ -3,6 +3,7 @@ package com.oaktwister.services.json;
 import com.oaktwister.models.grants.*;
 import com.oaktwister.exceptions.UnknownGrantTypeException;
 import com.oaktwister.models.claims.*;
+import com.oaktwister.services.logging.Logger;
 import org.json.JSONObject;
 
 import java.util.Objects;
@@ -12,6 +13,12 @@ public class ClaimSerializer implements JsonObjectSerializer<Claim> {
     private final static String NAME_KEY = "name";
     private final static String GRANT_TYPE_KEY = "grantType";
     private final static String IS_OPTIONAL_KEY = "isOptional";
+
+    private final Logger logger;
+
+    public ClaimSerializer(Logger logger) {
+        this.logger = logger;
+    }
 
     @Override
     public Claim deserialize(JSONObject claimJson) throws UnknownGrantTypeException {

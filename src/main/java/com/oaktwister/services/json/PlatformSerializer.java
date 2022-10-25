@@ -3,6 +3,7 @@ package com.oaktwister.services.json;
 import com.oaktwister.models.Platform;
 import com.oaktwister.exceptions.UnknownGrantTypeException;
 import com.oaktwister.models.claims.ClaimMap;
+import com.oaktwister.services.logging.Logger;
 import com.oaktwister.utils.extensions.LocalDateTimeUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,11 +19,11 @@ public class PlatformSerializer implements JsonObjectSerializer<Platform> {
     public final static String CLAIMS_KEY = "claims";
 
     private final ClaimMapSerializer claimMapSerializer;
-    private final LocalDateTimeUtil localDateTimeUtil;
+    private final Logger logger;
 
-    public PlatformSerializer(ClaimMapSerializer claimMapSerializer, LocalDateTimeUtil localDateTimeUtil) {
+    public PlatformSerializer(ClaimMapSerializer claimMapSerializer, Logger logger) {
         this.claimMapSerializer = claimMapSerializer;
-        this.localDateTimeUtil = localDateTimeUtil;
+        this.logger = logger;
     }
 
     @Override
@@ -32,7 +33,7 @@ public class PlatformSerializer implements JsonObjectSerializer<Platform> {
                 json.getString(NAME_KEY),
                 UUID.fromString(json.getString(IMAGE_ID_KEY)),
                 json.getString(URL_KEY),
-                localDateTimeUtil.fromIso8601(json.getString(CREATED_AT_KEY)));
+                LocalDateTimeUtil.fromIso8601(json.getString(CREATED_AT_KEY)));
         JSONArray jsonArray = json.getJSONArray(CLAIMS_KEY);
         ClaimMap claimMap = claimMapSerializer.deserialize(jsonArray);
         platform.setClaims(claimMap);
@@ -46,7 +47,7 @@ public class PlatformSerializer implements JsonObjectSerializer<Platform> {
         json.put(NAME_KEY, platform.getName());
         json.put(URL_KEY, platform.getUrl());
         json.put(IMAGE_ID_KEY, platform.getImageId().toString());
-        json.put(CREATED_AT_KEY, localDateTimeUtil.toIso8601(platform.getCreatedAt()));
+        json.put(CREATED_AT_KEY, LocalDateTimeUtil.toIso8601(platform.getCreatedAt()));
         json.put(CLAIMS_KEY, claimMapSerializer.serialize(platform.getClaims()));
         return json;
     }

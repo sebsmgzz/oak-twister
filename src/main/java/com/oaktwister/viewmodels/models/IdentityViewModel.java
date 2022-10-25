@@ -17,7 +17,6 @@ import java.util.UUID;
 public class IdentityViewModel {
 
     private final IdentitiesRepo identitiesRepo;
-    private final LocalDateTimeUtil localDateTimeUtil;
     private final Logger logger;
 
     private Identity identity;
@@ -27,12 +26,10 @@ public class IdentityViewModel {
     private final SimpleObjectProperty<EventHandler<DeleteIdentityEvent>> onDeleteIdentityProperty;
     private final GrantMapViewModel grantMap;
 
-    public IdentityViewModel(ViewModelFactory viewModelFactory, IdentitiesRepo identitiesRepo,
-                             UUIDUtil uuidUtil, LocalDateTimeUtil localDateTimeUtil, Logger logger) {
+    public IdentityViewModel(ViewModelFactory viewModelFactory, IdentitiesRepo identitiesRepo, Logger logger) {
         this.identitiesRepo = identitiesRepo;
-        this.localDateTimeUtil = localDateTimeUtil;
         this.logger = logger;
-        idProperty = new SimpleObjectProperty<>(uuidUtil.empty());
+        idProperty = new SimpleObjectProperty<>(UUIDUtil.empty());
         createdAtProperty = new SimpleObjectProperty<>(LocalDateTime.MIN);
         onDeleteIdentityProperty = new SimpleObjectProperty<>();
         grantMap = viewModelFactory.getGrantMapViewModel();
@@ -86,10 +83,6 @@ public class IdentityViewModel {
             }
             return deleted;
         }
-    }
-
-    public String formatDate(LocalDateTime dateTime) {
-        return localDateTimeUtil.toDefault(dateTime);
     }
 
 }

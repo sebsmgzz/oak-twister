@@ -68,8 +68,6 @@ public class ViewModelFactory {
     public PlatformsViewModel getPlatformsViewModel() {
         if(platformsViewModel == null) {
             PlatformsRepo platformsRepo = serviceFactory.getPlatformsRepo();
-            ImagesRepo imagesRepo = serviceFactory.getImagesRepo();
-            UUIDUtil uuidUtil = serviceFactory.getUUIDUtil();
             Logger logger = new Logger(PlatformsViewModel.class);
             platformsViewModel = new PlatformsViewModel(this, platformsRepo, logger);
             serviceFactory.clearScope();
@@ -81,22 +79,18 @@ public class ViewModelFactory {
         AccountsRepo accountsRepo = serviceFactory.getAccountsRepo();
         PlatformsRepo platformsRepo = serviceFactory.getPlatformsRepo();
         IdentitiesRepo identitiesRepo = serviceFactory.getIdentitiesRepo();
-        UUIDUtil uuidUtil = serviceFactory.getUUIDUtil();
-        LocalDateTimeUtil localDateTimeUtil = serviceFactory.getLocalDateTimeUtil();
         Logger logger = new Logger(AccountViewModel.class);
         AccountViewModel viewModel = new AccountViewModel(
-                this, accountsRepo, platformsRepo, identitiesRepo, uuidUtil, localDateTimeUtil, logger);
+                this, accountsRepo, platformsRepo, identitiesRepo, logger);
         serviceFactory.clearScope();
         return viewModel;
     }
 
     public IdentityViewModel getIdentityViewModel() {
         IdentitiesRepo identitiesRepo = serviceFactory.getIdentitiesRepo();
-        UUIDUtil uuidUtil = serviceFactory.getUUIDUtil();
-        LocalDateTimeUtil localDateTimeUtil = serviceFactory.getLocalDateTimeUtil();
         Logger logger = new Logger(IdentitiesViewModel.class);
         IdentityViewModel viewModel = new IdentityViewModel(
-                this, identitiesRepo, uuidUtil, localDateTimeUtil, logger);
+                this, identitiesRepo, logger);
         serviceFactory.clearScope();
         return viewModel;
     }
@@ -104,11 +98,9 @@ public class ViewModelFactory {
     public PlatformViewModel getPlatformViewModel() {
         PlatformsRepo platformsRepo = serviceFactory.getPlatformsRepo();
         ImagesRepo imagesRepo = serviceFactory.getImagesRepo();
-        UUIDUtil uuidUtil = serviceFactory.getUUIDUtil();
-        LocalDateTimeUtil localDateTimeUtil = serviceFactory.getLocalDateTimeUtil();
         Logger logger = new Logger(PlatformViewModel.class);
         PlatformViewModel viewModel = new PlatformViewModel(
-                this, platformsRepo, imagesRepo, uuidUtil, localDateTimeUtil, logger);
+                this, platformsRepo, imagesRepo, logger);
         serviceFactory.clearScope();
         return viewModel;
     }

@@ -3,6 +3,8 @@ package com.oaktwister.views.platforms;
 import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.core.ViewMediator;
 import com.oaktwister.services.resources.ViewResources;
+import com.oaktwister.utils.extensions.LocalDateTimeUtil;
+import com.oaktwister.utils.extensions.UUIDUtil;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -46,7 +48,7 @@ public class PlatformPane extends StackPane implements Initializable {
         super();
         this.viewMediator = viewMediator;
         viewModelProperty = new SimpleObjectProperty<>();
-        identifierProperty = new SimpleObjectProperty<>(); // TODO: Initialize empty UUID
+        identifierProperty = new SimpleObjectProperty<>(UUIDUtil.empty());
         createdAtProperty = new SimpleObjectProperty<>(LocalDateTime.MIN);
         viewMediator.loadViewControl(this);
     }
@@ -64,7 +66,7 @@ public class PlatformPane extends StackPane implements Initializable {
             identifierLabel.setText(newValue.toString());
         });
         createdAtProperty.addListener((observer, oldValue, newValue) -> {
-            createdAtLabel.setText(newValue.toString()); // TODO: Format date
+            createdAtLabel.setText(LocalDateTimeUtil.toDefault(newValue));
         });
 
     }

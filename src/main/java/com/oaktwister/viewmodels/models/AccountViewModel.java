@@ -21,7 +21,6 @@ public class AccountViewModel {
     private final AccountsRepo accountsRepo;
     private final PlatformsRepo platformsRepo;
     private final IdentitiesRepo identitiesRepo;
-    private final LocalDateTimeUtil localDateTimeUtil;
     private final Logger logger;
 
     private final SimpleObjectProperty<UUID> id;
@@ -36,18 +35,16 @@ public class AccountViewModel {
     private Account account;
 
     public AccountViewModel(ViewModelFactory viewModelFactory, AccountsRepo accountsRepo,
-                            PlatformsRepo platformsRepo, IdentitiesRepo identitiesRepo,
-                            UUIDUtil uuidUtil, LocalDateTimeUtil localDateTimeUtil, Logger logger) {
+                            PlatformsRepo platformsRepo, IdentitiesRepo identitiesRepo, Logger logger) {
         this.accountsRepo = accountsRepo;
         this.platformsRepo = platformsRepo;
         this.identitiesRepo = identitiesRepo;
-        this.localDateTimeUtil = localDateTimeUtil;
         this.logger = logger;
-        this.id = new SimpleObjectProperty<>(uuidUtil.empty());
-        this.platformId = new SimpleObjectProperty<>(uuidUtil.empty());
-        this.identityId = new SimpleObjectProperty<>(uuidUtil.empty());
-        this.createdAt = new SimpleObjectProperty<>(LocalDateTime.MIN);
-        this.onDeleteAccountProperty = new SimpleObjectProperty<>();
+        id = new SimpleObjectProperty<>(UUIDUtil.empty());
+        platformId = new SimpleObjectProperty<>(UUIDUtil.empty());
+        identityId = new SimpleObjectProperty<>(UUIDUtil.empty());
+        createdAt = new SimpleObjectProperty<>(LocalDateTime.MIN);
+        onDeleteAccountProperty = new SimpleObjectProperty<>();
         identity = viewModelFactory.getIdentityViewModel();
         platform = viewModelFactory.getPlatformViewModel();
         grants = viewModelFactory.getGrantMapViewModel();
@@ -127,10 +124,6 @@ public class AccountViewModel {
             }
             return deleted;
         }
-    }
-
-    public String formatDate(LocalDateTime dateTime) {
-        return localDateTimeUtil.toDefault(dateTime);
     }
 
 }

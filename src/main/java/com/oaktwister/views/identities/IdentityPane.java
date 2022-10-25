@@ -3,6 +3,8 @@ package com.oaktwister.views.identities;
 import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.core.ViewMediator;
 import com.oaktwister.services.resources.ViewResources;
+import com.oaktwister.utils.extensions.LocalDateTimeUtil;
+import com.oaktwister.utils.extensions.UUIDUtil;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
 import javafx.beans.property.*;
 import javafx.event.ActionEvent;
@@ -42,7 +44,7 @@ public class IdentityPane extends StackPane implements Initializable {
         super();
         this.viewMediator = viewMediator;
         viewModelProperty = new SimpleObjectProperty<>();
-        identifierProperty = new SimpleObjectProperty<>(); // TODO: Initialize empty UUID
+        identifierProperty = new SimpleObjectProperty<>(UUIDUtil.empty());
         createdAtProperty = new SimpleObjectProperty<>(LocalDateTime.MIN);
         grantsCountProperty = new SimpleIntegerProperty();
         viewMediator.loadViewControl(this);
@@ -61,7 +63,7 @@ public class IdentityPane extends StackPane implements Initializable {
             identifierLabel.setText(newValue.toString());
         });
         createdAtProperty.addListener((observer, oldValue, newValue) -> {
-            createdAtLabel.setText(newValue.toString()); // TODO: Use datetime formatter
+            createdAtLabel.setText(LocalDateTimeUtil.toDefault(newValue));
         });
         grantsCountProperty.addListener((observable, oldValue, newValue) -> {
             grantsCountLabel.setText(newValue.toString());

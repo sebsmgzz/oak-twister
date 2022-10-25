@@ -14,18 +14,16 @@ public class IdentitySerializer implements JsonObjectSerializer<Identity> {
     private final static String GRANT_MAP_KEY = "grants";
 
     private final GrantMapSerializer grantMapSerializer;
-    private final LocalDateTimeUtil localDateTimeUtil;
 
-    public IdentitySerializer(GrantMapSerializer grantMapSerializer, LocalDateTimeUtil localDateTimeUtil) {
+    public IdentitySerializer(GrantMapSerializer grantMapSerializer) {
         this.grantMapSerializer = grantMapSerializer;
-        this.localDateTimeUtil = localDateTimeUtil;
     }
 
     @Override
     public Identity deserialize(JSONObject identityJson) throws UnknownGrantTypeException {
         Identity identity = new Identity(
             UUID.fromString(identityJson.getString(ID_KEY)),
-            localDateTimeUtil.fromIso8601(identityJson.getString(CREATED_AT_KEY)));
+            LocalDateTimeUtil.fromIso8601(identityJson.getString(CREATED_AT_KEY)));
         identity.setGrants(grantMapSerializer.deserialize(identityJson.getJSONArray(GRANT_MAP_KEY)));
         return identity;
     }
