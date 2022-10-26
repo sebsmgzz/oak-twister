@@ -27,6 +27,7 @@ public interface ViewResources {
     interface Platforms {
         String PLATFORM_PANE = "/com/oaktwister/views/platforms/platform-pane.fxml";
         String PLATFORMS_PANE = "/com/oaktwister/views/platforms/platforms-pane.fxml";
+        String EDIT_DIALOG = "/com/oaktwister/views/platforms/edit-platform-dialog-pane.fxml";
     }
 
 }

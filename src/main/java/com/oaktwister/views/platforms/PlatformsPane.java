@@ -14,13 +14,12 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 @ViewDescriptor(location = ViewResources.Platforms.PLATFORMS_PANE)
@@ -94,7 +93,16 @@ public class PlatformsPane extends AnchorPane implements Initializable {
     }
 
     private void onAddButtonClick(ActionEvent event) {
-        // TODO: PlatformsPane::onAddButtonClick
+        EditPlatformDialogPane dialogPane = viewMediator.dialogFactory.getEditPlatformDialogPane();
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setDialogPane(dialogPane);
+        Optional<ButtonType> dialogResult = dialog.showAndWait();
+        if(dialogResult.isPresent() && dialogResult.get().equals(ButtonType.FINISH)) {
+            // TODO: Add dialogPane::viewModel to PlatformsPane::platformPanes
+            PlatformViewModel viewModel = dialogPane.getViewModel();
+            String name = viewModel.nameProperty().get();
+            System.out.println(name);
+        }
     }
 
 }
