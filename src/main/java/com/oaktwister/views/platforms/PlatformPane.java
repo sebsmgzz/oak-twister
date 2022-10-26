@@ -115,7 +115,11 @@ public class PlatformPane extends StackPane implements Initializable {
         EditPlatformDialogPane dialogPane = viewMediator.dialogFactory.getEditPlatformDialogPane(viewModel);
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setDialogPane(dialogPane);
-        dialog.showAndWait();
+        Optional<ButtonType> result = dialog.showAndWait();
+        dialog.setOnCloseRequest(event1 -> {  });
+        if (result.isPresent() && result.get().equals(ButtonType.FINISH)) {
+            getViewModel().delete();
+        }
     }
 
     private void onDeleteButtonClick(ActionEvent event) {
