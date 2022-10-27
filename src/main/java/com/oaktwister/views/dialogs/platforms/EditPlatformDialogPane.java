@@ -5,19 +5,24 @@ import com.oaktwister.models.claims.Claim;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.utils.extensions.NodeUtil;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
+
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-@ViewDescriptor(location = ViewResources.Platforms.EDIT_DIALOG)
+@ViewDescriptor(location = ViewResources.Dialogs.EDIT_PLATFORM)
 public class EditPlatformDialogPane extends DialogPane implements Initializable {
 
     private PlatformViewModel viewModel;

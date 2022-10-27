@@ -5,7 +5,11 @@ import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.utils.extensions.LocalDateTimeUtil;
 import com.oaktwister.utils.extensions.NodeUtil;
 import com.oaktwister.utils.extensions.UUIDUtil;
-import javafx.beans.property.*;
+
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -20,7 +24,7 @@ import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-@ViewDescriptor(location = ViewResources.Identities.IDENTITY_PANE)
+@ViewDescriptor(location = ViewResources.Controls.IDENTITY_PANE)
 public class IdentityPane extends StackPane implements Initializable {
 
     private final SimpleObjectProperty<UUID> identifierProperty;

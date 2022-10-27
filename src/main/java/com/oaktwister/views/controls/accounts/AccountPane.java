@@ -6,6 +6,7 @@ import com.oaktwister.utils.extensions.LocalDateTimeUtil;
 import com.oaktwister.utils.extensions.NodeUtil;
 import com.oaktwister.utils.extensions.UUIDUtil;
 import com.oaktwister.viewmodels.models.AccountViewModel;
+
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -21,12 +22,13 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-@ViewDescriptor(location = ViewResources.Accounts.ACCOUNT_PANE)
+@ViewDescriptor(location = ViewResources.Controls.ACCOUNT_PANE)
 public class AccountPane extends StackPane implements Initializable {
 
     private final SimpleObjectProperty<AccountViewModel> viewModelProperty;

@@ -1,7 +1,8 @@
-package com.oaktwister.views.controls.laterals;
+package com.oaktwister.views.controls.imagebuttonboxes;
 
 import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.services.resources.ViewResources;
+
 import com.oaktwister.utils.extensions.NodeUtil;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
@@ -13,10 +14,11 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
-@ViewDescriptor(location = ViewResources.Laterals.IMAGE_BUTTON_BOX_VIEW)
+@ViewDescriptor(location = ViewResources.Controls.IMAGE_BUTTON_BOX)
 public class ImageButtonBox extends HBox implements Initializable {
 
     @FXML private Button button;

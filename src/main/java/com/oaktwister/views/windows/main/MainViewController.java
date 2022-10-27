@@ -5,18 +5,16 @@ import com.oaktwister.core.Navigation;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.utils.listeners.ListItemAddedListener;
 import com.oaktwister.utils.listeners.ListItemRemovedListener;
-import com.oaktwister.viewmodels.collections.PlatformsViewModel;
 import com.oaktwister.viewmodels.models.AccountViewModel;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
 import com.oaktwister.viewmodels.roots.MainViewModel;
+import com.oaktwister.views.controls.pagepanes.PagePane;
 import com.oaktwister.views.controls.accounts.AccountPane;
-import com.oaktwister.views.controls.accounts.AccountsPane;
-import com.oaktwister.views.controls.identities.IdentitiesPane;
 import com.oaktwister.views.controls.identities.IdentityPane;
-import com.oaktwister.views.controls.laterals.ImageButtonBox;
+import com.oaktwister.views.controls.imagebuttonboxes.ImageButtonBox;
 import com.oaktwister.views.controls.platforms.PlatformPane;
-import com.oaktwister.views.controls.platforms.PlatformsPane;
+
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,12 +22,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
+
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-@ViewDescriptor(location = ViewResources.Main.MAIN_VIEW)
+@ViewDescriptor(location = ViewResources.Windows.MAIN)
 public class MainViewController implements Initializable {
 
     private final Navigation navigation;
@@ -46,9 +45,9 @@ public class MainViewController implements Initializable {
     private final ListItemAddedListener<IdentityViewModel> identityViewModelAddedListener;
     private final ListItemRemovedListener<IdentityViewModel> identityViewModelRemovedListener;
 
-    private final AccountsPane accountsPane;
-    private final PlatformsPane platformsPane;
-    private final IdentitiesPane identitiesPane;
+    private final PagePane<AccountPane> accountsPane;
+    private final PagePane<PlatformPane> platformsPane;
+    private final PagePane<IdentityPane> identitiesPane;
 
     @FXML private BorderPane borderPane;
     @FXML private ImageButtonBox accountsImageButtonBox;
@@ -69,9 +68,9 @@ public class MainViewController implements Initializable {
         platformViewModelRemovedListener = new ListItemRemovedListener<>(this::onPlatformViewModelRemoved);
         identityViewModelAddedListener = new ListItemAddedListener<>(this::onIdentityViewModelAdded);
         identityViewModelRemovedListener = new ListItemRemovedListener<>(this::onIdentityViewModelRemoved);
-        accountsPane = new AccountsPane();
-        platformsPane = new PlatformsPane();
-        identitiesPane = new IdentitiesPane();
+        accountsPane = new PagePane<>();
+        platformsPane = new PagePane<>();
+        identitiesPane = new PagePane<>();
     }
 
     @Override
@@ -132,12 +131,12 @@ public class MainViewController implements Initializable {
         accountPane.imageProperty().bind(accountViewModel.platform().imageProperty());
         accountPane.platformNameProperty().bind(accountViewModel.platform().nameProperty());
         accountPane.grantsCountProperty().bind(accountViewModel.grantMap().grantCountProperty());
-        accountsPane.accountPanesProperty().add(accountPane);
+        accountsPane.panesProperty().add(accountPane);
         accountsMap.put(accountViewModel, accountPane);
     }
     private void onAccountViewModelRemoved(AccountViewModel accountViewModel) {
         AccountPane accountPane = accountsMap.remove(accountViewModel);
-        accountsPane.accountPanesProperty().remove(accountPane);
+        accountsPane.panesProperty().remove(accountPane);
     }
 
     private void onPlatformViewModelAdded(PlatformViewModel platformViewModel) {
@@ -148,13 +147,13 @@ public class MainViewController implements Initializable {
         platformPane.imageProperty().bind(platformViewModel.imageProperty());
         platformPane.nameProperty().bind(platformViewModel.nameProperty());
         platformPane.createdAtProperty().bind(platformViewModel.createdAtProperty());
-        platformsPane.platformPanesProperty().add(platformPane);
+        platformsPane.panesProperty().add(platformPane);
         platformsMap.put(platformViewModel, platformPane);
     }
 
     private void onPlatformViewModelRemoved(PlatformViewModel platformViewModel) {
         PlatformPane platformPane = platformsMap.remove(platformViewModel);
-        platformsPane.platformPanesProperty().remove(platformPane);
+        platformsPane.panesProperty().remove(platformPane);
     }
 
     private void onIdentityViewModelAdded(IdentityViewModel identityViewModel) {
@@ -164,13 +163,13 @@ public class MainViewController implements Initializable {
         identityPane.identifierProperty().bind(identityViewModel.idProperty());
         identityPane.grantsCountProperty().bind(identityViewModel.grantMap().grantCountProperty());
         identityPane.createdAtProperty().bind(identityViewModel.createdAtProperty());
-        identitiesPane.identityPanesProperty().add(identityPane);
+        identitiesPane.panesProperty().add(identityPane);
         identitiesMap.put(identityViewModel, identityPane);
     }
 
     private void onIdentityViewModelRemoved(IdentityViewModel identityViewModel) {
         IdentityPane identityPane = identitiesMap.remove(identityViewModel);
-        identitiesPane.identityPanesProperty().remove(identityPane);
+        identitiesPane.panesProperty().remove(identityPane);
     }
 
     private void onAccountPaneClick(ActionEvent actionEvent) {

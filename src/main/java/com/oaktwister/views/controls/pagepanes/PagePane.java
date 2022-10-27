@@ -1,10 +1,11 @@
-package com.oaktwister.views.controls.identities;
+package com.oaktwister.views.controls.pagepanes;
 
 import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.utils.extensions.NodeUtil;
 import com.oaktwister.utils.listeners.ListItemAddedListener;
 import com.oaktwister.utils.listeners.ListItemRemovedListener;
+
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -14,22 +15,24 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
-@ViewDescriptor(location = ViewResources.Identities.IDENTITIES_PANE)
-public class IdentitiesPane extends AnchorPane implements Initializable {
+@ViewDescriptor(location = ViewResources.Controls.PAGE_PANE)
+public class PagePane<T extends Node> extends AnchorPane implements Initializable {
 
-    private final SimpleListProperty<IdentityPane> identityPanesProperty;
+    private final SimpleListProperty<T> panesProperty;
 
-    private final ListItemAddedListener<IdentityPane> onIdentityPaneAddedListener;
-    private final ListItemRemovedListener<IdentityPane> onIdentityPaneRemovedListener;
+    private final ListItemAddedListener<T> onPaneAddedListener;
+    private final ListItemRemovedListener<T> onPaneRemovedListener;
 
     @FXML private VBox vbox;
     @FXML private Label titleLabel;
@@ -37,11 +40,10 @@ public class IdentitiesPane extends AnchorPane implements Initializable {
     @FXML private FlowPane flowPane;
     @FXML private Button addButton;
 
-    public IdentitiesPane() {
-        super();
-        identityPanesProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
-        onIdentityPaneAddedListener = new ListItemAddedListener<>(this::onIdentityPaneAdded);
-        onIdentityPaneRemovedListener = new ListItemRemovedListener<>(this::onIdentityPaneRemoved);
+    public PagePane() {
+        panesProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
+        onPaneAddedListener = new ListItemAddedListener<>(this::onPaneAdded);
+        onPaneRemovedListener = new ListItemRemovedListener<>(this::onPaneRemoved);
         NodeUtil.loadControl(this);
     }
 
@@ -57,28 +59,28 @@ public class IdentitiesPane extends AnchorPane implements Initializable {
         AnchorPane.setRightAnchor(vbox, 0.0);
         AnchorPane.setBottomAnchor(vbox, 0.0);
         AnchorPane.setLeftAnchor(vbox, 0.0);
-        identityPanesProperty.addListener(onIdentityPaneAddedListener);
-        identityPanesProperty.addListener(onIdentityPaneRemovedListener);
+        panesProperty.addListener(onPaneAddedListener);
+        panesProperty.addListener(onPaneRemovedListener);
+    }
+
+    public ListProperty<T> panesProperty() {
+        return panesProperty;
     }
 
     public StringProperty titleProperty() {
         return titleLabel.textProperty();
     }
 
-    public ListProperty<IdentityPane> identityPanesProperty() {
-        return identityPanesProperty;
-    }
-
     public ObjectProperty<EventHandler<ActionEvent>> onAddActionProperty() {
         return addButton.onActionProperty();
     }
 
-    private void onIdentityPaneAdded(IdentityPane identityPane) {
-        flowPane.getChildren().add(identityPane);
+    private void onPaneAdded(T pane) {
+        flowPane.getChildren().add(pane);
     }
 
-    private void onIdentityPaneRemoved(IdentityPane identityPane) {
-        flowPane.getChildren().remove(identityPane);
+    private void onPaneRemoved(T pane) {
+        flowPane.getChildren().remove(pane);
     }
 
 }

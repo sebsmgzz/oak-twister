@@ -6,7 +6,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<?import com.oaktwister.views.controls.laterals.ImageButtonBox?>
+<?import com.oaktwister.views.controls.imagebuttonboxes.ImageButtonBox?>
 <?import javafx.scene.image.Image?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8"

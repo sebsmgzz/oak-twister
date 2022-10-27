@@ -5,6 +5,7 @@ import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.utils.extensions.LocalDateTimeUtil;
 import com.oaktwister.utils.extensions.NodeUtil;
 import com.oaktwister.utils.extensions.UUIDUtil;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
@@ -18,12 +19,13 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-@ViewDescriptor(location = ViewResources.Platforms.PLATFORM_PANE)
+@ViewDescriptor(location = ViewResources.Controls.PLATFORM_PANE)
 public class PlatformPane extends StackPane implements Initializable {
 
     private final SimpleObjectProperty<UUID> identifierProperty;

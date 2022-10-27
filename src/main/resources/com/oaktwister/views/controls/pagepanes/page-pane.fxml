@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Button?>
 <?import javafx.geometry.Insets?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
 
 <fx:root xmlns="http://javafx.com/javafx/8"
          xmlns:fx="http://javafx.com/fxml/1"
          type="javafx.scene.layout.AnchorPane"
-         fx:controller="com.oaktwister.views.controls.identities.IdentitiesPane"
-         stylesheets="/com/oaktwister/styles/identities/identities-pane.css"
+         fx:controller="com.oaktwister.views.controls.pagepanes.PagePane"
+         stylesheets="/com/oaktwister/styles/accounts/accounts-pane.css"
          prefHeight="400.0" prefWidth="600.0">
-    <VBox fx:id="vbox" alignment="CENTER">
-        <Label fx:id="titleLabel" styleClass="title" text="Identities"
-               maxWidth="Infinity" alignment="CENTER" VBox.vgrow="NEVER"/>
+    <VBox fx:id="vbox" alignment="TOP_CENTER">
+        <Label fx:id="titleLabel" styleClass="title" text="Accounts" maxWidth="Infinity" alignment="CENTER"/>
         <AnchorPane styleClass="scroll-pane" VBox.vgrow="ALWAYS">
             <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER"
                         AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0"
@@ -26,7 +29,7 @@
                 </FlowPane>
             </ScrollPane>
         </AnchorPane>
-        <HBox styleClass="hbox" alignment="CENTER_RIGHT" VBox.vgrow="NEVER">
+        <HBox styleClass="hbox" alignment="CENTER_RIGHT">
             <Button fx:id="addButton" text="Add" minWidth="100"/>
         </HBox>
     </VBox>

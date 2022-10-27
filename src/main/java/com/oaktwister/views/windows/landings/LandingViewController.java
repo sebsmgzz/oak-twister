@@ -2,11 +2,10 @@ package com.oaktwister.views.windows.landings;
 
 import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.core.Navigation;
-import com.oaktwister.services.resources.ImageResources;
-import com.oaktwister.services.resources.StringResources;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.models.DriveViewModel;
 import com.oaktwister.viewmodels.roots.LandingViewModel;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,13 +13,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-@ViewDescriptor(location = ViewResources.Landings.LANDING_VIEW)
+@ViewDescriptor(location = ViewResources.Windows.LANDING)
 public class LandingViewController implements Initializable {
 
     private final Navigation navigation;
