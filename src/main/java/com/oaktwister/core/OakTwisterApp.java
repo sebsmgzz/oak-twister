@@ -14,8 +14,8 @@ public class OakTwisterApp extends Application {
 
     @Override
     public void start(Stage stage) {
-        ViewMediator viewMediator = new ViewMediator(stage, viewModelFactory);
-        viewMediator.showLandingView();
+        Navigation navigation = new Navigation(stage, viewModelFactory);
+        navigation.goToLandingView();
     }
 
 }

@@ -29,7 +29,7 @@ public class IdentitiesViewModel {
         return identitiesProperty;
     }
 
-    public void loadIdentities() {
+    public void load() {
         logger.debug("Loading identities");
         ArrayList<Identity> identities = identitiesRepo.findAll();
         for(Identity identity : identities) {
@@ -38,6 +38,10 @@ public class IdentitiesViewModel {
             identityViewModel.setIdentity(identity);
         }
         logger.debug("Loaded %s identities", identities.size());
+    }
+
+    public void clear() {
+        identitiesProperty.clear();
     }
 
 }

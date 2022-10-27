@@ -29,15 +29,19 @@ public class AccountsViewModel {
         return accountsProperty;
     }
 
-    public void loadAccounts() {
+    public void load() {
         logger.debug("Loading accounts");
         List<Account> accounts = accountsRepo.findAll();
         for(Account account : accounts) {
             AccountViewModel accountViewModel = viewModelFactory.getAccountViewModel();
-            accountsProperty.add(accountViewModel);
             accountViewModel.setAccount(account);
+            accountsProperty.add(accountViewModel);
         }
         logger.debug("Loaded %s accounts", accounts.size());
+    }
+
+    public void clear() {
+        accountsProperty.clear();
     }
 
 }

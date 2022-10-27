@@ -36,7 +36,7 @@ public class ViewModelFactory {
     public MainViewModel getMainViewModel() {
         if(mainViewModel == null) {
             Logger logger = new Logger(MainViewModel.class);
-            mainViewModel = new MainViewModel(logger);
+            mainViewModel = new MainViewModel(this, logger);
             serviceFactory.clearScope();
         }
         return mainViewModel;
