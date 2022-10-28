@@ -10,8 +10,8 @@ module oaktwister.main {
     opens com.oaktwister.views.windows.landings to javafx.fxml;
     exports com.oaktwister.views.windows.landings;
 
-    opens com.oaktwister.views.controls.imagebuttonboxes to javafx.fxml;
-    exports com.oaktwister.views.controls.imagebuttonboxes;
+    opens com.oaktwister.views.controls.buttons to javafx.fxml;
+    exports com.oaktwister.views.controls.buttons;
 
     exports com.oaktwister.views.windows.main;
     opens com.oaktwister.views.windows.main to javafx.fxml;
@@ -28,7 +28,7 @@ module oaktwister.main {
     exports com.oaktwister.views.dialogs.platforms;
     opens com.oaktwister.views.dialogs.platforms to javafx.fxml;
 
-    exports com.oaktwister.views.controls.pagepanes;
-    opens com.oaktwister.views.controls.pagepanes to javafx.fxml;
+    exports com.oaktwister.views.controls.pages;
+    opens com.oaktwister.views.controls.pages to javafx.fxml;
 
 }

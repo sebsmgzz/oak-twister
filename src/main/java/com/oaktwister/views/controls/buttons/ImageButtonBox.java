@@ -1,4 +1,4 @@
-package com.oaktwister.views.controls.imagebuttonboxes;
+package com.oaktwister.views.controls.buttons;
 
 import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.services.resources.ViewResources;

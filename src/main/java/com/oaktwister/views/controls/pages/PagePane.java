@@ -1,4 +1,4 @@
-package com.oaktwister.views.controls.pagepanes;
+package com.oaktwister.views.controls.pages;
 
 import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.services.resources.ViewResources;

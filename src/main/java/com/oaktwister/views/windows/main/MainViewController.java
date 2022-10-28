@@ -9,10 +9,10 @@ import com.oaktwister.viewmodels.models.AccountViewModel;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
 import com.oaktwister.viewmodels.roots.MainViewModel;
-import com.oaktwister.views.controls.pagepanes.PagePane;
+import com.oaktwister.views.controls.pages.PagePane;
 import com.oaktwister.views.controls.accounts.AccountPane;
 import com.oaktwister.views.controls.identities.IdentityPane;
-import com.oaktwister.views.controls.imagebuttonboxes.ImageButtonBox;
+import com.oaktwister.views.controls.buttons.ImageButtonBox;
 import com.oaktwister.views.controls.platforms.PlatformPane;
 
 import com.oaktwister.views.dialogs.platforms.EditPlatformDialogResult;
@@ -21,12 +21,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
 
 import java.net.URL;
 import java.util.HashMap;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 @ViewDescriptor(location = ViewResources.Windows.MAIN)
