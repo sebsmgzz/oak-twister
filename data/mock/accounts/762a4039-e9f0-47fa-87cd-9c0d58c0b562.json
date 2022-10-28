@@ -6,7 +6,7 @@
     "grants": [
         {
             "name": "Password",
-            "type": "com.oaktwister.models.grants.SecretGrant",
+            "type": "SecretGrant",
             "value": {
                 "value": "rockyou",
                 "hint": "We will ___"
@@ -14,7 +14,7 @@
         },
         {
             "name": "Username",
-            "type": "com.oaktwister.models.grants.TextGrant",
+            "type": "TextGrant",
             "value": "john.smith"
         }
     ]

@@ -2,19 +2,20 @@ package com.oaktwister.views.windows.main;
 
 import com.oaktwister.core.Navigation;
 import com.oaktwister.services.resources.StringResources;
+import com.oaktwister.utils.extensions.MapUtil;
 import com.oaktwister.utils.listeners.ListItemAddedListener;
 import com.oaktwister.utils.listeners.ListItemRemovedListener;
 import com.oaktwister.viewmodels.collections.PlatformsViewModel;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
 import com.oaktwister.views.controls.pages.PagePane;
 import com.oaktwister.views.controls.platforms.PlatformPane;
+import com.oaktwister.views.controls.platforms.PlatformPaneEvent;
 import com.oaktwister.views.dialogs.platforms.EditPlatformDialogResult;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
-import java.util.HashMap;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class PlatformsController implements Initializable {
 
@@ -73,11 +74,21 @@ public class PlatformsController implements Initializable {
         platformsPane.panesProperty().remove(platformPane);
     }
 
-    private void onPlatformPaneClick(ActionEvent actionEvent) {
-        // TODO: Show EditPlatformDialog
+    private void onPlatformPaneClick(PlatformPaneEvent actionEvent) {
+        PlatformPane platformPane = actionEvent.getPlatformPane();
+        PlatformViewModel platformViewModel = MapUtil.getKeyByValue(platformsMap, platformPane);
+        if(platformViewModel == null) {
+            // TODO: Throw exception? This should never happen
+            return;
+        }
+        EditPlatformDialogResult result = navigation.showEditPlatformDialog(platformViewModel);
+        if(result == EditPlatformDialogResult.SAVED) {
+            // TODO: Save to database
+            System.out.println("Updating platform to database");
+        }
     }
 
-    private void onPlatformPaneDeleteClick(ActionEvent actionEvent) {
+    private void onPlatformPaneDeleteClick(PlatformPaneEvent actionEvent) {
         // TODO: Show DeletePlatformAlert
     }
 

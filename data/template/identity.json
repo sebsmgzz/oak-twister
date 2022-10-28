@@ -4,17 +4,17 @@
     "grants": [
         {
             "name": "First name",
-            "type": "com.oaktwister.models.grants.TextGrant",
+            "type": "TextGrant",
             "value": "John"
         },
         {
             "name": "Last name",
-            "type": "com.oaktwister.models.grants.TextGrant",
+            "type": "TextGrant",
             "value": "Smith"
         },
         {
             "name": "Email",
-            "type": "com.oaktwister.models.grants.TextGrant",
+            "type": "TextGrant",
             "value": "john.smith@gmail.com"
         }
     ]

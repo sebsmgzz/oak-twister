@@ -1,8 +1,9 @@
 package com.oaktwister.viewmodels.models;
 
 import com.oaktwister.core.ViewModelFactory;
-import com.oaktwister.events.DeletePlatformEvent;
+import com.oaktwister.exceptions.UnknownGrantTypeException;
 import com.oaktwister.models.Platform;
+import com.oaktwister.models.claims.Claim;
 import com.oaktwister.models.claims.ClaimMap;
 import com.oaktwister.services.logging.Logger;
 import com.oaktwister.services.repos.ImagesRepo;
@@ -11,7 +12,7 @@ import com.oaktwister.utils.extensions.UUIDUtil;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.event.EventHandler;
+import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -22,15 +23,14 @@ public class PlatformViewModel {
     private final ImagesRepo imagesRepo;
     private final Logger logger;
 
-    private Platform platform;
-    private final ClaimMapViewModel claimMapViewModel;
-
     private final SimpleObjectProperty<UUID> idProperty;
     private final SimpleStringProperty nameProperty;
+    private final SimpleObjectProperty<UUID> imageIdProperty;
     private final SimpleObjectProperty<Image> imageProperty;
     private final SimpleStringProperty urlProperty;
     private final SimpleObjectProperty<LocalDateTime> createdAtProperty;
-    private final SimpleObjectProperty<EventHandler<DeletePlatformEvent>> onDeleteAccountProperty;
+
+    private final ClaimMapViewModel claimMapViewModel;
 
     public PlatformViewModel(ViewModelFactory viewModelFactory, PlatformsRepo platformsRepo,
                              ImagesRepo imagesRepo, Logger logger) {
@@ -40,53 +40,43 @@ public class PlatformViewModel {
         claimMapViewModel = viewModelFactory.getClaimMapViewModel();
         idProperty = new SimpleObjectProperty<>(UUIDUtil.empty());
         nameProperty = new SimpleStringProperty();
+        imageIdProperty = new SimpleObjectProperty<>(UUIDUtil.empty());
         imageProperty = new SimpleObjectProperty<>();
         urlProperty = new SimpleStringProperty();
         createdAtProperty = new SimpleObjectProperty<>(LocalDateTime.MIN);
-        onDeleteAccountProperty = new SimpleObjectProperty<>();
     }
 
     public void setPlatform(Platform platform) {
-        this.platform = platform;
-
         UUID id = platform.getId();
         idProperty.set(id);
-        idProperty.addListener((observable, oldValue, newValue) -> {
-            this.platform.setId(newValue);
-        });
-
         String name = platform.getName();
         nameProperty.set(name);
-        nameProperty.addListener((observable, oldValue, newValue) -> {
-            this.platform.setName(newValue);
-        });
-
         UUID imageId = platform.getImageId();
+        imageIdProperty.set(imageId);
         Image image = imagesRepo.findById(imageId);
         imageProperty.set(image);
-        imageProperty.addListener((observable, oldValue, newValue) -> {
-            UUID newImageId = imagesRepo.add(newValue);
-            this.platform.setImageId(newImageId);
-        });
-
         String url = platform.getUrl();
         urlProperty.set(url);
-        urlProperty.addListener((observable, oldValue, newValue) -> {
-            this.platform.setUrl(newValue);
-        });
-
         LocalDateTime createdAt = platform.getCreatedAt();
         createdAtProperty.set(createdAt);
-        createdAtProperty.addListener((observable, oldValue, newValue) -> {
-            this.platform.setCreatedAt(newValue);
-        });
-
         ClaimMap claimMap = platform.getClaims();
-        claimMapViewModel.bind(claimMap);
+        claimMapViewModel.setClaimMap(claimMap);
     }
 
-    public ClaimMapViewModel claims() {
-        return claimMapViewModel;
+    public Platform getPlatform() throws UnknownGrantTypeException {
+        UUID id = idProperty.get();
+        String name = nameProperty.get();
+        UUID imageId = imageIdProperty.get();
+        String url = urlProperty.get();
+        LocalDateTime createdAt = createdAtProperty.get();
+        Platform platform = new Platform(id, name, imageId, url, createdAt);
+        ClaimMap claims = platform.getClaims();
+        ObservableList<ClaimViewModel> claimViewModels = claimMapViewModel.claimsProperty().get();
+        for(ClaimViewModel claimViewModel : claimViewModels) {
+            Claim claim = claimViewModel.getClaim();
+            claims.add(claim);
+        }
+        return platform;
     }
 
     public ReadOnlyObjectProperty<UUID> idProperty() {
@@ -95,6 +85,10 @@ public class PlatformViewModel {
 
     public SimpleStringProperty nameProperty() {
         return nameProperty;
+    }
+
+    public ReadOnlyObjectProperty<UUID> imageIdProperty() {
+        return imageIdProperty;
     }
 
     public SimpleObjectProperty<Image> imageProperty() {
@@ -109,29 +103,17 @@ public class PlatformViewModel {
         return createdAtProperty;
     }
 
-    public SimpleObjectProperty<EventHandler<DeletePlatformEvent>> onDeleteAccountProperty() {
-        return onDeleteAccountProperty;
+    public ClaimMapViewModel claimMap() {
+        return claimMapViewModel;
     }
 
     public boolean delete() {
-        if(platform == null) {
-            logger.warn("Attempted to delete a platform without having it set beforehand");
+        try {
+            Platform platform = getPlatform();
+            return platformsRepo.remove(platform);
+        } catch (UnknownGrantTypeException ex) {
+            ex.printStackTrace();
             return false;
-        }
-        DeletePlatformEvent event = new DeletePlatformEvent(this);
-        EventHandler<DeletePlatformEvent> eventHandler = onDeleteAccountProperty.get();
-        if(eventHandler != null) {
-            eventHandler.handle(event);
-        }
-        if(event.isCanceled()) {
-            logger.info("Delete platform event cancelled");
-            return false;
-        } else {
-            boolean deleted = platformsRepo.remove(platform);
-            if(!deleted) {
-                logger.error("Failed to delete platform %s", platform.getId());
-            }
-            return deleted;
         }
     }
 

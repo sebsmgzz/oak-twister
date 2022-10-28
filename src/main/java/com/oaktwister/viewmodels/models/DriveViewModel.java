@@ -13,8 +13,6 @@ public class DriveViewModel {
 
     private final Context context;
 
-    private Drive drive;
-
     private final SimpleObjectProperty<UUID> idProperty;
     private final SimpleStringProperty pathProperty;
     private final SimpleObjectProperty<DataSize> capacityProperty;
@@ -29,32 +27,21 @@ public class DriveViewModel {
     }
 
     public void setDrive(Drive drive) {
-        if(this.drive != null) {
-            throw new RuntimeException("Drive has already been set");
-        }
-        this.drive = drive;
-
         UUID id = drive.props().getId();
         idProperty.set(id);
-
         String path = drive.getPath();
         pathProperty.set(path);
-        pathProperty.addListener((observable, oldValue, newValue) -> {
-            this.drive.setPath(newValue);
-        });
-
         DataSize capacity = drive.getCapacity();
         capacityProperty.set(capacity);
-        capacityProperty.addListener((observable, oldValue, newValue) -> {
-            this.drive.setCapacity(newValue);
-        });
-
         DataSize space = drive.getSpace();
         spaceProperty.set(space);
-        spaceProperty.addListener((observable, oldValue, newValue) -> {
-            this.drive.setSpace(newValue);
-        });
+    }
 
+    public Drive getDrive() {
+        String path = pathProperty.get();
+        DataSize capacity = capacityProperty.get();
+        DataSize space = spaceProperty.get();
+        return new Drive(path, capacity, space, null);
     }
 
     public ReadOnlyObjectProperty<UUID> idProperty() {
@@ -74,6 +61,7 @@ public class DriveViewModel {
     }
 
     public void attachToContext() {
+        Drive drive = getDrive();
         if(!drive.isPersistenceCapable()) {
             throw new IllegalArgumentException(
                     "The current drive selection must be persistence capable. " +

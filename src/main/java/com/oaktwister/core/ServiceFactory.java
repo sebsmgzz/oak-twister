@@ -2,6 +2,7 @@ package com.oaktwister.core;
 
 import com.oaktwister.services.config.AppConfig;
 import com.oaktwister.services.config.Context;
+import com.oaktwister.services.parsers.GrantTypeParser;
 import com.oaktwister.services.repos.DriveRepo;
 import com.oaktwister.services.json.*;
 import com.oaktwister.services.logging.Logger;
@@ -9,8 +10,6 @@ import com.oaktwister.services.repos.AccountsRepo;
 import com.oaktwister.services.repos.IdentitiesRepo;
 import com.oaktwister.services.repos.ImagesRepo;
 import com.oaktwister.services.repos.PlatformsRepo;
-import com.oaktwister.utils.extensions.LocalDateTimeUtil;
-import com.oaktwister.utils.extensions.UUIDUtil;
 
 import java.util.HashMap;
 
@@ -49,12 +48,24 @@ public class ServiceFactory {
         }
     }
 
+    public GrantTypeParser getGrantTypeParser() {
+        if(scoped.containsKey(GrantTypeParser.class)) {
+            return (GrantTypeParser) scoped.get(GrantTypeParser.class);
+        } else {
+            Logger logger = new Logger(GrantTypeParser.class);
+            GrantTypeParser service = new GrantTypeParser();
+            scoped.put(GrantTypeParser.class, service);
+            return service;
+        }
+    }
+
     public GrantSerializer getGrantSerializer() {
         if(scoped.containsKey(GrantSerializer.class)) {
             return (GrantSerializer) scoped.get(GrantSerializer.class);
         } else {
+            GrantTypeParser grantTypeParser = getGrantTypeParser();
             Logger logger = new Logger(GrantSerializer.class);
-            GrantSerializer service = new GrantSerializer(logger);
+            GrantSerializer service = new GrantSerializer(grantTypeParser, logger);
             scoped.put(GrantSerializer.class, service);
             return service;
         }
@@ -136,8 +147,9 @@ public class ServiceFactory {
         if(scoped.containsKey(ClaimSerializer.class)) {
             return (ClaimSerializer) scoped.get(ClaimSerializer.class);
         } else {
+            GrantTypeParser grantTypeParser = getGrantTypeParser();
             Logger logger = new Logger(ClaimSerializer.class);
-            ClaimSerializer service = new ClaimSerializer(logger);
+            ClaimSerializer service = new ClaimSerializer(grantTypeParser, logger);
             scoped.put(ClaimSerializer.class, service);
             return service;
         }

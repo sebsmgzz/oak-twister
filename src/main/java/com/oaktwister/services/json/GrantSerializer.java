@@ -1,8 +1,14 @@
 package com.oaktwister.services.json;
 
-import com.oaktwister.models.grants.*;
 import com.oaktwister.exceptions.UnknownGrantTypeException;
+import com.oaktwister.models.grants.DateTimeGrant;
+import com.oaktwister.models.grants.FlagGrant;
+import com.oaktwister.models.grants.Grant;
+import com.oaktwister.models.grants.NumberGrant;
+import com.oaktwister.models.grants.SecretGrant;
+import com.oaktwister.models.grants.TextGrant;
 import com.oaktwister.services.logging.Logger;
+import com.oaktwister.services.parsers.GrantTypeParser;
 import com.oaktwister.utils.extensions.LocalDateTimeUtil;
 import org.json.JSONObject;
 
@@ -14,44 +20,47 @@ public class GrantSerializer implements JsonObjectSerializer<Grant<?>> {
     private final static String TYPE_KEY = "type";
     private final static String VALUE_KEY = "value";
 
+    private final GrantTypeParser grantTypeParser;
     private final Logger logger;
 
-    public GrantSerializer(Logger logger) {
+    public GrantSerializer(GrantTypeParser grantTypeParser, Logger logger) {
+        this.grantTypeParser = grantTypeParser;
         this.logger = logger;
     }
 
     @Override
     public Grant<?> deserialize(JSONObject grantJson) throws UnknownGrantTypeException {
-        String type = grantJson.getString(TYPE_KEY);
-        if(Objects.equals(type, DateTimeGrant.class.getTypeName())) {
+        String grantTypeName = grantJson.getString(TYPE_KEY);
+        if(Objects.equals(grantTypeName, DateTimeGrant.class.getTypeName())) {
             return deserializeDateTimeGrant(grantJson);
-        } else if (Objects.equals(type, FlagGrant.class.getTypeName())) {
+        } else if (Objects.equals(grantTypeName, FlagGrant.class.getTypeName())) {
             return deserializeFlagGrant(grantJson);
-        } else if (Objects.equals(type, NumberGrant.class.getTypeName())) {
+        } else if (Objects.equals(grantTypeName, NumberGrant.class.getTypeName())) {
             return deserializeNumberGrant(grantJson);
-        } else if (Objects.equals(type, SecretGrant.class.getTypeName())) {
+        } else if (Objects.equals(grantTypeName, SecretGrant.class.getTypeName())) {
             return deserializeSecretGrant(grantJson);
-        } else if (Objects.equals(type, TextGrant.class.getTypeName())) {
+        } else if (Objects.equals(grantTypeName, TextGrant.class.getTypeName())) {
             return deserializeTextGrant(grantJson);
         } else {
-            throw new UnknownGrantTypeException(type);
+            throw new UnknownGrantTypeException(grantTypeName);
         }
     }
 
     @Override
-    public JSONObject serialize(Grant<?> entity) throws UnknownGrantTypeException {
-        if(entity instanceof DateTimeGrant) {
-            return serializeDateTimeGrant((DateTimeGrant) entity);
-        } else if (entity instanceof FlagGrant) {
-            return serializeFlagGrant((FlagGrant) entity);
-        } else if (entity instanceof NumberGrant) {
-            return serializeNumberGrant((NumberGrant) entity);
-        } else if (entity instanceof SecretGrant) {
-            return serializeSecretGrant((SecretGrant) entity);
-        } else if (entity instanceof TextGrant) {
-            return serializeTextGrant((TextGrant) entity);
+    public JSONObject serialize(Grant<?> grant) throws UnknownGrantTypeException {
+        if(grant instanceof DateTimeGrant) {
+            return serializeDateTimeGrant((DateTimeGrant) grant);
+        } else if (grant instanceof FlagGrant) {
+            return serializeFlagGrant((FlagGrant) grant);
+        } else if (grant instanceof NumberGrant) {
+            return serializeNumberGrant((NumberGrant) grant);
+        } else if (grant instanceof SecretGrant) {
+            return serializeSecretGrant((SecretGrant) grant);
+        } else if (grant instanceof TextGrant) {
+            return serializeTextGrant((TextGrant) grant);
         } else {
-            throw new UnknownGrantTypeException(entity.getClass().getTypeName());
+            String grantTypeName = grantTypeParser.getGrantTypeName(grant.getClass());
+            throw new UnknownGrantTypeException(grantTypeName);
         }
     }
 

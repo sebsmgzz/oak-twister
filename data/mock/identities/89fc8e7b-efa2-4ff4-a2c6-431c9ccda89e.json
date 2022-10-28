@@ -4,22 +4,22 @@
     "grants": [
         {
             "name": "First name",
-            "type": "com.oaktwister.models.grants.TextGrant",
+            "type": "TextGrant",
             "value": "Jane"
         },
         {
             "name": "Last name",
-            "type": "com.oaktwister.models.grants.TextGrant",
+            "type": "TextGrant",
             "value": "Doe"
         },
         {
             "name": "Email",
-            "type": "com.oaktwister.models.grants.TextGrant",
+            "type": "TextGrant",
             "value": "jane.doe@outlook.com"
         },
         {
             "name": "Gender",
-            "type": "com.oaktwister.models.grants.TextGrant",
+            "type": "TextGrant",
             "value": "female"
         }
     ]

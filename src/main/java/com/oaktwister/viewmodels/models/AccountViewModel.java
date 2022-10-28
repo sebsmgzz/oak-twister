@@ -11,10 +11,11 @@ import com.oaktwister.services.repos.AccountsRepo;
 import com.oaktwister.services.repos.IdentitiesRepo;
 import com.oaktwister.services.repos.PlatformsRepo;
 import com.oaktwister.utils.extensions.UUIDUtil;
-import javafx.beans.property.ObjectProperty;
+
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.EventHandler;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -25,7 +26,6 @@ public class AccountViewModel {
     private final IdentitiesRepo identitiesRepo;
     private final Logger logger;
 
-    private Account account;
     private final IdentityViewModel identityViewModel;
     private final PlatformViewModel platformViewModel;
     private final GrantMapViewModel grantMapViewModel;
@@ -53,46 +53,38 @@ public class AccountViewModel {
     }
 
     public void setAccount(Account account) {
-        if(this.account != null) {
-            throw new RuntimeException("Account has already been set");
-        }
-        this.account = account;
-
+        UUID id = account.getId();
+        idProperty.set(id);
+        UUID platformId = account.getPlatformId();
+        platformIdProperty.set(platformId);
+        Platform platform = platformsRepo.findById(platformId);
+        platformViewModel.setPlatform(platform);
         if(account.hasIdentity()) {
             UUID identityId = account.getIdentityId();
+            identityIdProperty.set(identityId);
             Identity identity = identitiesRepo.findById(identityId);
             identityViewModel.setIdentity(identity);
         }
-
-        UUID platformId = account.getPlatformId();
-        Platform platform = platformsRepo.findById(platformId);
-        platformViewModel.setPlatform(platform);
-
-        GrantMap grantMap = account.getGrants();
-        grantMapViewModel.setGrantMap(grantMap);
-
-        UUID id = account.getId();
-        idProperty.set(id);
-        idProperty.addListener((observable, oldValue, newValue) -> {
-            this.account.setId(newValue);
-        });
-
-        platformIdProperty.set(platformId);
-        platformIdProperty.addListener((observable, oldValue, newValue) -> {
-            this.account.setPlatformId(newValue);
-        });
-
-        UUID identityId = account.getIdentityId();
-        identityIdProperty.set(identityId);
-        identityIdProperty.addListener((observable, oldValue, newValue) -> {
-            this.account.setIdentityId(newValue);
-        });
-
         LocalDateTime createdAt = account.getCreatedAt();
         createdAtProperty.set(createdAt);
-        createdAtProperty.addListener((observable, oldValue, newValue) -> {
-            this.account.setCreatedAt(newValue);
-        });
+        GrantMap grantMap = account.getGrants();
+        grantMapViewModel.setGrantMap(grantMap);
+    }
+
+    public Account getAccount() {
+        UUID id = idProperty.get();
+        UUID platformId = platformIdProperty.get();
+        UUID identityId = identityIdProperty.get();
+        LocalDateTime createdAt = createdAtProperty.get();
+        Account account = new Account(id, platformId, identityId, createdAt);
+        /*
+        ListProperty<GrantViewModel<?>> grantViewModels = grantMapViewModel.grantsProperty();
+        for(GrantViewModel<?> grantViewModel : grantViewModels) {
+            Grant<?> grant = grantViewModel.getGrant();
+            account.getGrants().add(grant);
+        }
+        */
+        return account;
     }
 
     public IdentityViewModel identity() {
@@ -123,30 +115,13 @@ public class AccountViewModel {
         return createdAtProperty;
     }
 
-    public ObjectProperty<EventHandler<DeleteAccountEvent>> onDeleteAccountProperty() {
-        return onDeleteAccountProperty;
-    }
-
     public boolean delete() {
-        if(account == null) {
-            logger.warn("Attempted to delete account without having it set beforehand");
-            return false;
+        Account account = getAccount();
+        boolean deleted = accountsRepo.remove(account);
+        if(!deleted) {
+            logger.error("Failed to delete account %s", account.getId());
         }
-        DeleteAccountEvent event = new DeleteAccountEvent(this);
-        EventHandler<DeleteAccountEvent> eventHandler = onDeleteAccountProperty.get();
-        if(eventHandler != null) {
-            eventHandler.handle(event);
-        }
-        if(event.isCanceled()) {
-            logger.info("Delete account event cancelled");
-            return false;
-        } else {
-            boolean deleted = accountsRepo.remove(account);
-            if(!deleted) {
-                logger.error("Failed to delete account %s", account.getId());
-            }
-            return deleted;
-        }
+        return deleted;
     }
 
 }

@@ -22,7 +22,7 @@ public class Claim {
         this.name = name;
     }
 
-    public Class<?> getGrantType() {
+    public Class<? extends Grant<?>> getGrantType() {
         return grantType;
     }
 

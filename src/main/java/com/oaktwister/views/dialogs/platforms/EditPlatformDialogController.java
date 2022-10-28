@@ -1,9 +1,8 @@
 package com.oaktwister.views.dialogs.platforms;
 
 import com.oaktwister.annotations.ViewDescriptor;
-import com.oaktwister.models.claims.Claim;
 import com.oaktwister.services.resources.ViewResources;
-import com.oaktwister.utils.extensions.NodeUtil;
+import com.oaktwister.viewmodels.models.ClaimViewModel;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
 
 import javafx.beans.property.*;
@@ -29,10 +28,10 @@ public class EditPlatformDialogController implements Initializable {
     @FXML private TextField nameTextField;
     @FXML private TextField urlTextField;
     @FXML private ImageView imageView;
-    @FXML private TableView<Claim> claimsTableView;
-    @FXML private TableColumn<Claim, String> nameColumn;
-    @FXML private TableColumn<Claim, String> grantTypeColumn;
-    @FXML private TableColumn<Claim, Boolean> optionalColumn;
+    @FXML private TableView<ClaimViewModel> claimsTableView;
+    @FXML private TableColumn<ClaimViewModel, String> nameColumn;
+    @FXML private TableColumn<ClaimViewModel, String> grantTypeColumn;
+    @FXML private TableColumn<ClaimViewModel, Boolean> optionalColumn;
     @FXML private Button saveButton;
     @FXML private Button cancelButton;
 
@@ -44,16 +43,16 @@ public class EditPlatformDialogController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         PlatformViewModel viewModel = viewModelProperty.get();
+
         nameTextField.textProperty().bindBidirectional(viewModel.nameProperty());
         urlTextField.textProperty().bindBidirectional(viewModel.urlProperty());
         imageView.imageProperty().bindBidirectional(viewModel.imageProperty());
-        claimsTableView.itemsProperty().bind(viewModel.claims().claimsProperty());
+        claimsTableView.itemsProperty().bind(viewModel.claimMap().claimsProperty());
 
-        nameColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getName()));
-        grantTypeColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getGrantType().getName()));
-        optionalColumn.setCellValueFactory(cell -> new SimpleBooleanProperty(cell.getValue().getIsOptional()));
+        nameColumn.setCellValueFactory(cell -> cell.getValue().nameProperty());
+        grantTypeColumn.setCellValueFactory(cell -> cell.getValue().grantTypeNameProperty());
+        optionalColumn.setCellValueFactory(cell -> cell.getValue().isOptionalProperty());
 
         saveButton.setOnAction(event -> {
             resultProperty.set(EditPlatformDialogResult.SAVED);

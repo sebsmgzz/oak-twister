@@ -1,7 +1,10 @@
 package com.oaktwister.core;
 
+import com.oaktwister.models.grants.DateTimeGrant;
+import com.oaktwister.models.grants.Grant;
 import com.oaktwister.services.config.Context;
 import com.oaktwister.services.logging.Logger;
+import com.oaktwister.services.parsers.GrantTypeParser;
 import com.oaktwister.services.repos.*;
 import com.oaktwister.viewmodels.models.*;
 import com.oaktwister.viewmodels.collections.AccountsViewModel;
@@ -103,13 +106,14 @@ public class ViewModelFactory {
     }
 
     public GrantMapViewModel getGrantMapViewModel() {
-        GrantMapViewModel viewModel = new GrantMapViewModel();
+        GrantMapViewModel viewModel = new GrantMapViewModel(this);
         serviceFactory.clearScope();
         return viewModel;
     }
 
     public ClaimMapViewModel getClaimMapViewModel() {
-        ClaimMapViewModel viewModel = new ClaimMapViewModel();
+        GrantTypeParser grantTypeParser = serviceFactory.getGrantTypeParser();
+        ClaimMapViewModel viewModel = new ClaimMapViewModel(this, grantTypeParser);
         serviceFactory.clearScope();
         return viewModel;
     }
@@ -119,6 +123,13 @@ public class ViewModelFactory {
         DriveViewModel driveViewModel = new DriveViewModel(context);
         serviceFactory.clearScope();
         return driveViewModel;
+    }
+
+    public ClaimViewModel getClaimViewModel() {
+        GrantTypeParser grantTypeParser = serviceFactory.getGrantTypeParser();
+        ClaimViewModel claimViewModel = new ClaimViewModel(grantTypeParser);
+        serviceFactory.clearScope();
+        return claimViewModel;
     }
 
 }

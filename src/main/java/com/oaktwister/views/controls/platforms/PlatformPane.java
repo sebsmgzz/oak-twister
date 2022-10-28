@@ -28,6 +28,8 @@ import java.util.UUID;
 @ViewDescriptor(location = ViewResources.Controls.PLATFORM_PANE)
 public class PlatformPane extends StackPane implements Initializable {
 
+    private final SimpleObjectProperty<EventHandler<PlatformPaneEvent>> onMainActionProperty;
+    private final SimpleObjectProperty<EventHandler<PlatformPaneEvent>> onDeleteActionProperty;
     private final SimpleObjectProperty<UUID> identifierProperty;
     private final SimpleObjectProperty<LocalDateTime> createdAtProperty;
 
@@ -42,6 +44,8 @@ public class PlatformPane extends StackPane implements Initializable {
         super();
         identifierProperty = new SimpleObjectProperty<>(UUIDUtil.empty());
         createdAtProperty = new SimpleObjectProperty<>(LocalDateTime.MIN);
+        onMainActionProperty = new SimpleObjectProperty<>();
+        onDeleteActionProperty = new SimpleObjectProperty<>();
         NodeUtil.loadControl(this);
     }
 
@@ -56,10 +60,8 @@ public class PlatformPane extends StackPane implements Initializable {
         createdAtProperty.addListener((observer, oldValue, newValue) -> {
             createdAtLabel.setText(LocalDateTimeUtil.toDefault(newValue));
         });
-    }
-
-    public ObjectProperty<EventHandler<ActionEvent>> onMainActionProperty() {
-        return mainButton.onActionProperty();
+        mainButton.setOnAction(this::onMainButtonClick);
+        deleteButton.setOnAction(this::onDeleteButtonClick);
     }
 
     public ObjectProperty<UUID> identifierProperty() {
@@ -78,36 +80,26 @@ public class PlatformPane extends StackPane implements Initializable {
         return createdAtProperty;
     }
 
-    public ObjectProperty<EventHandler<ActionEvent>> onDeleteActionProperty() {
-        return deleteButton.onActionProperty();
+    public ObjectProperty<EventHandler<PlatformPaneEvent>> onMainActionProperty() {
+        return onMainActionProperty;
     }
 
-/*
-
-    private void onMainButtonClick(ActionEvent event) {
-        PlatformViewModel viewModel = getViewModel();
-        EditPlatformDialog dialog = viewMediator.dialogFactory.getEditPlatformDialog(viewModel);
-        dialog.setOnFinish(platformViewModel -> {
-            // TODO: Update platform
-            System.out.println("Update platform");
-        });
-        dialog.showAndWait();
+    public ObjectProperty<EventHandler<PlatformPaneEvent>> onDeleteActionProperty() {
+        return onDeleteActionProperty;
     }
 
-    private void onDeleteButtonClick(ActionEvent event) {
-        // TODO: Move to alert factory? Event system?
-        PlatformViewModel viewModel = getViewModel();
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Delete platform");
-        alert.setContentText(String.format(
-                "Do you really want to delete platform %s?%n" +
-                        "This action cannot be undone.",
-                viewModel.idProperty().get()));
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && !result.get().equals(ButtonType.CANCEL)) {
-            getViewModel().delete();
+    private void onMainButtonClick(ActionEvent actionEvent) {
+        if (onMainActionProperty.isNotNull().get()) {
+            PlatformPaneEvent platformPaneEvent = new PlatformPaneEvent(this);
+            onMainActionProperty.get().handle(platformPaneEvent);
         }
     }
-*/
+
+    private void onDeleteButtonClick(ActionEvent actionEvent) {
+        if (onDeleteActionProperty.isNotNull().get()) {
+            PlatformPaneEvent platformPaneEvent = new PlatformPaneEvent(this);
+            onDeleteActionProperty.get().handle(platformPaneEvent);
+        }
+    }
 
 }
