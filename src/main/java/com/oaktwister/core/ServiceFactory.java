@@ -1,7 +1,7 @@
 package com.oaktwister.core;
 
-import com.oaktwister.services.config.AppConfig;
-import com.oaktwister.services.config.Context;
+import com.oaktwister.services.configs.Install;
+import com.oaktwister.services.configs.Session;
 import com.oaktwister.services.parsers.GrantTypeParser;
 import com.oaktwister.services.repos.DriveRepo;
 import com.oaktwister.services.json.*;
@@ -18,22 +18,22 @@ public class ServiceFactory {
     private final HashMap<Class<?>, Object> singletons = new HashMap<>();
     private final HashMap<Class<?>, Object> scoped = new HashMap<>();
 
-    public Context getContext() {
-        if(singletons.containsKey(Context.class)) {
-            return (Context) singletons.get(Context.class);
+    public Session getContext() {
+        if(singletons.containsKey(Session.class)) {
+            return (Session) singletons.get(Session.class);
         } else {
-            Context service = Context.getInstance();
-            singletons.put(Context.class, service);
+            Session service = Session.getInstance();
+            singletons.put(Session.class, service);
             return service;
         }
     }
 
-    public AppConfig getAppConfig() {
-        if(singletons.containsKey(AppConfig.class)) {
-            return (AppConfig) singletons.get(AppConfig.class);
+    public Install getAppConfig() {
+        if(singletons.containsKey(Install.class)) {
+            return (Install) singletons.get(Install.class);
         } else {
-            AppConfig service = AppConfig.getInstance();
-            singletons.put(AppConfig.class, service);
+            Install service = Install.getInstance();
+            singletons.put(Install.class, service);
             return service;
         }
     }
@@ -109,9 +109,9 @@ public class ServiceFactory {
         if(scoped.containsKey(ImagesRepo.class)) {
             return (ImagesRepo) scoped.get(ImagesRepo.class);
         } else {
-            Context context = getContext();
+            Session session = getContext();
             Logger logger = new Logger(ImagesRepo.class);
-            ImagesRepo service = new ImagesRepo(context, logger);
+            ImagesRepo service = new ImagesRepo(session, logger);
             scoped.put(ImagesRepo.class, service);
             return service;
         }
@@ -121,11 +121,11 @@ public class ServiceFactory {
         if(scoped.containsKey(IdentitiesRepo.class)) {
             return (IdentitiesRepo) scoped.get(IdentitiesRepo.class);
         } else {
-            Context context = Context.getInstance();
+            Session session = Session.getInstance();
             AccountsRepo accountsRepo = getAccountsRepo();
             IdentitySerializer identitySerializer = getIdentitySerializer();
             Logger logger = new Logger(IdentitiesRepo.class);
-            IdentitiesRepo service = new IdentitiesRepo(context, accountsRepo, identitySerializer, logger);
+            IdentitiesRepo service = new IdentitiesRepo(session, accountsRepo, identitySerializer, logger);
             scoped.put(IdentitiesRepo.class, service);
             return service;
         }
@@ -171,10 +171,10 @@ public class ServiceFactory {
         if(scoped.containsKey(AccountsRepo.class)) {
             return (AccountsRepo) scoped.get(AccountsRepo.class);
         } else {
-            Context context = Context.getInstance();
+            Session session = Session.getInstance();
             AccountSerializer accountSerializer = getAccountSerializer();
             Logger logger = new Logger(AccountsRepo.class);
-            AccountsRepo service = new AccountsRepo(context, accountSerializer, logger);
+            AccountsRepo service = new AccountsRepo(session, accountSerializer, logger);
             scoped.put(AccountsRepo.class, service);
             return service;
         }
@@ -184,11 +184,11 @@ public class ServiceFactory {
         if(scoped.containsKey(PlatformsRepo.class)) {
             return (PlatformsRepo) scoped.get(PlatformsRepo.class);
         } else {
-            Context context = Context.getInstance();
+            Session session = Session.getInstance();
             PlatformSerializer platformSerializer = getPlatformSerializer();
             AccountsRepo accountsRepo = getAccountsRepo();
             Logger logger = new Logger(PlatformsRepo.class);
-            PlatformsRepo service = new PlatformsRepo(context, platformSerializer, accountsRepo, logger);
+            PlatformsRepo service = new PlatformsRepo(session, platformSerializer, accountsRepo, logger);
             scoped.put(PlatformsRepo.class, service);
             return service;
         }

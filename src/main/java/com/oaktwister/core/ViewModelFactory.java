@@ -1,8 +1,6 @@
 package com.oaktwister.core;
 
-import com.oaktwister.models.grants.DateTimeGrant;
-import com.oaktwister.models.grants.Grant;
-import com.oaktwister.services.config.Context;
+import com.oaktwister.services.configs.Session;
 import com.oaktwister.services.logging.Logger;
 import com.oaktwister.services.parsers.GrantTypeParser;
 import com.oaktwister.services.repos.*;
@@ -119,8 +117,8 @@ public class ViewModelFactory {
     }
 
     public DriveViewModel getDriveViewModel() {
-        Context context = serviceFactory.getContext();
-        DriveViewModel driveViewModel = new DriveViewModel(context);
+        Session session = serviceFactory.getContext();
+        DriveViewModel driveViewModel = new DriveViewModel(session);
         serviceFactory.clearScope();
         return driveViewModel;
     }

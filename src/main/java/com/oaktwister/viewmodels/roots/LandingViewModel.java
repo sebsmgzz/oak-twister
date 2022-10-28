@@ -2,12 +2,10 @@ package com.oaktwister.viewmodels.roots;
 
 import com.oaktwister.core.ViewModelFactory;
 import com.oaktwister.models.drives.Drive;
-import com.oaktwister.services.config.Context;
 import com.oaktwister.services.repos.DriveRepo;
 import com.oaktwister.viewmodels.models.DriveViewModel;
 import javafx.beans.property.ReadOnlyListProperty;
 import javafx.beans.property.SimpleListProperty;
-import javafx.beans.property.SimpleMapProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 

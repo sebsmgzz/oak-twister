@@ -1,6 +1,6 @@
 package com.oaktwister.services.repos;
 
-import com.oaktwister.services.config.Context;
+import com.oaktwister.services.configs.Session;
 import com.oaktwister.services.logging.Logger;
 import javafx.scene.image.Image;
 
@@ -13,16 +13,16 @@ public class ImagesRepo {
     public static final String LOCATION = "images";
     public static final String FILE_EXTENSION = ".png";
 
-    private final Context context;
+    private final Session session;
     private final Logger logger;
 
-    public ImagesRepo(Context context, Logger logger) {
-        this.context = context;
+    public ImagesRepo(Session session, Logger logger) {
+        this.session = session;
         this.logger = logger;
     }
 
     private Path getFullRepoLocation() {
-        return Paths.get(context.getDrive().getPath(), LOCATION);
+        return Paths.get(session.getDrive().getPath(), LOCATION);
     }
 
     public Path getImageLocation(UUID id) {

@@ -21,7 +21,7 @@ out/
 .classpath
 .factorypath
 .project
-.settings
+.install
 .springBeans
 .sts4-cache
 bin/

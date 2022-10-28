@@ -2,12 +2,12 @@ package com.oaktwister.models.drives;
 
 import java.util.UUID;
 
-public class DriveProps {
+public class DriveMetaData {
 
     private UUID id;
     private Version version;
 
-    public DriveProps(UUID id, Version version) {
+    public DriveMetaData(UUID id, Version version) {
         this.id = id;
         this.version = version;
     }

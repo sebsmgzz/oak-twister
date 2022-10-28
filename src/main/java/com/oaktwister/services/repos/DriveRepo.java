@@ -1,9 +1,9 @@
 package com.oaktwister.services.repos;
 
 import com.oaktwister.models.drives.Drive;
-import com.oaktwister.models.drives.DriveProps;
+import com.oaktwister.models.drives.DriveMetaData;
 import com.oaktwister.models.drives.Version;
-import com.oaktwister.services.config.AppConfig;
+import com.oaktwister.services.configs.Install;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -24,10 +24,10 @@ public class DriveRepo {
     private final static String UNIX_OS_DRIVE_PATH = "\\";
     private final static String JAVA_CLASS_PATH_KEY = "java.class.path";
 
-    private final AppConfig appConfig;
+    private final Install install;
 
-    public DriveRepo(AppConfig appConfig) {
-        this.appConfig = appConfig;
+    public DriveRepo(Install install) {
+        this.install = install;
     }
 
     public List<Drive> getAllDrives() {
@@ -35,7 +35,7 @@ public class DriveRepo {
         // Load connected drives as well as mock data if development env
         ArrayList<Drive> drives = new ArrayList<Drive>();
         ArrayList<File> driveRoots = new ArrayList<>(Arrays.asList(File.listRoots()));
-        if(appConfig.isDevelopmentEnv()) {
+        if(install.isDevelopmentEnv()) {
             Path pathToExecutingProgram = Path.of(System.getProperty(JAVA_CLASS_PATH_KEY));
             Path workingDir = pathToExecutingProgram.getParent().getParent().getParent();
             Path pathToMockData = Paths.get(workingDir.toString(), "data", "mock");
@@ -60,7 +60,7 @@ public class DriveRepo {
 
     }
 
-    private DriveProps getDriveProps(File driveFile) {
+    private DriveMetaData getDriveProps(File driveFile) {
         try {
             File oakFile = new File(driveFile, DRIVE_PROPS_FILE_NAME);
             Scanner scanner = new Scanner(oakFile);
@@ -76,7 +76,7 @@ public class DriveRepo {
                 }
             }
             scanner.close();
-            return new DriveProps(
+            return new DriveMetaData(
                 UUID.fromString(oakProps.get(ID_PROP_KEY)),
                 new Version(oakProps.get(VERSION_PROP_KEY)));
         } catch (Exception ex) {

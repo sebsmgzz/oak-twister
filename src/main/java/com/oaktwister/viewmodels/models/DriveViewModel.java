@@ -2,7 +2,7 @@ package com.oaktwister.viewmodels.models;
 
 import com.oaktwister.models.drives.DataSize;
 import com.oaktwister.models.drives.Drive;
-import com.oaktwister.services.config.Context;
+import com.oaktwister.services.configs.Session;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -11,15 +11,15 @@ import java.util.UUID;
 
 public class DriveViewModel {
 
-    private final Context context;
+    private final Session session;
 
     private final SimpleObjectProperty<UUID> idProperty;
     private final SimpleStringProperty pathProperty;
     private final SimpleObjectProperty<DataSize> capacityProperty;
     private final SimpleObjectProperty<DataSize> spaceProperty;
 
-    public DriveViewModel(Context context) {
-        this.context = context;
+    public DriveViewModel(Session session) {
+        this.session = session;
         idProperty = new SimpleObjectProperty<>();
         pathProperty = new SimpleStringProperty();
         capacityProperty = new SimpleObjectProperty<>();
@@ -67,7 +67,7 @@ public class DriveViewModel {
                     "The current drive selection must be persistence capable. " +
                             "Try selecting a different drive or formatting this drive first.");
         }
-        context.setDrive(drive);
+        session.setDrive(drive);
     }
 
 }

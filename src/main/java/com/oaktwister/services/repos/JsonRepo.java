@@ -2,7 +2,7 @@ package com.oaktwister.services.repos;
 
 import com.oaktwister.exceptions.UnknownGrantTypeException;
 import com.oaktwister.models.seedwork.Entity;
-import com.oaktwister.services.config.Context;
+import com.oaktwister.services.configs.Session;
 import com.oaktwister.services.json.JsonObjectSerializer;
 import com.oaktwister.services.logging.Logger;
 import org.json.JSONObject;
@@ -19,12 +19,12 @@ public abstract class JsonRepo<T extends Entity> {
 
     public final static String FILE_EXTENSION = ".json";
 
-    private final Context context;
+    private final Session session;
     private final JsonObjectSerializer<T> jsonObjectSerializer;
     private final Logger logger;
 
-    public JsonRepo(Context context, JsonObjectSerializer<T> jsonObjectSerializer, Logger logger) {
-        this.context = context;
+    public JsonRepo(Session session, JsonObjectSerializer<T> jsonObjectSerializer, Logger logger) {
+        this.session = session;
         this.jsonObjectSerializer = jsonObjectSerializer;
         this.logger = logger;
     }
@@ -32,7 +32,7 @@ public abstract class JsonRepo<T extends Entity> {
     protected abstract String getRepoLocation();
 
     private Path getFullRepoLocation() {
-        return Paths.get(context.getDrive().getPath(), getRepoLocation());
+        return Paths.get(session.getDrive().getPath(), getRepoLocation());
     }
 
     private JSONObject rawJsonRead(String jsonLocation) throws IOException {
