@@ -1,6 +1,6 @@
 package com.oaktwister.views.windows.main;
 
-public enum Section {
+public enum Page {
     IDENTITIES,
     PLATFORMS,
     ACCOUNTS

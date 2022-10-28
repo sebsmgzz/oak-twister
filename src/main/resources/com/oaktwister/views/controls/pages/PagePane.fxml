@@ -17,7 +17,7 @@
          stylesheets="/com/oaktwister/styles/accounts/accounts-pane.css"
          prefHeight="400.0" prefWidth="600.0">
     <VBox fx:id="vbox" alignment="TOP_CENTER">
-        <Label fx:id="titleLabel" styleClass="title" text="Accounts" maxWidth="Infinity" alignment="CENTER"/>
+        <Label fx:id="titleLabel" styleClass="title" text="Title" maxWidth="Infinity" alignment="CENTER"/>
         <AnchorPane styleClass="scroll-pane" VBox.vgrow="ALWAYS">
             <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER"
                         AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0"

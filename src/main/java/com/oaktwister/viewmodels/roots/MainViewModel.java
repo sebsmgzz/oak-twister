@@ -5,7 +5,7 @@ import com.oaktwister.services.logging.Logger;
 import com.oaktwister.viewmodels.collections.AccountsViewModel;
 import com.oaktwister.viewmodels.collections.IdentitiesViewModel;
 import com.oaktwister.viewmodels.collections.PlatformsViewModel;
-import com.oaktwister.views.windows.main.Section;
+import com.oaktwister.views.windows.main.Page;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
@@ -16,7 +16,7 @@ public class MainViewModel {
     private final PlatformsViewModel platformsViewModel;
     private final IdentitiesViewModel identitiesViewModel;
 
-    private final SimpleObjectProperty<Section> section;
+    private final SimpleObjectProperty<Page> section;
 
     public MainViewModel(ViewModelFactory viewModelFactory, Logger logger) {
         this.logger = logger;
@@ -38,7 +38,7 @@ public class MainViewModel {
         return identitiesViewModel;
     }
 
-    public ObjectProperty<Section> sectionProperty() {
+    public ObjectProperty<Page> sectionProperty() {
         return section;
     }
 
