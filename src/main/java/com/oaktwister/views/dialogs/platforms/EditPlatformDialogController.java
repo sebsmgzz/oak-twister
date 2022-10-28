@@ -6,28 +6,26 @@ import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.utils.extensions.NodeUtil;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
 
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.ObservableList;
+import javafx.beans.property.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.DialogPane;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 @ViewDescriptor(location = ViewResources.Dialogs.EDIT_PLATFORM)
-public class EditPlatformDialogPane extends DialogPane implements Initializable {
+public class EditPlatformDialogController implements Initializable {
 
-    private PlatformViewModel viewModel;
+    private final Stage stage;
+    private final SimpleObjectProperty<PlatformViewModel> viewModelProperty;
+    private final SimpleObjectProperty<EditPlatformDialogResult> resultProperty;
 
-    @FXML private AnchorPane anchorPane;
     @FXML private TextField nameTextField;
     @FXML private TextField urlTextField;
     @FXML private ImageView imageView;
@@ -35,41 +33,45 @@ public class EditPlatformDialogPane extends DialogPane implements Initializable 
     @FXML private TableColumn<Claim, String> nameColumn;
     @FXML private TableColumn<Claim, String> grantTypeColumn;
     @FXML private TableColumn<Claim, Boolean> optionalColumn;
+    @FXML private Button saveButton;
+    @FXML private Button cancelButton;
 
-    public EditPlatformDialogPane() {
-        NodeUtil.loadControl(this);
+    public EditPlatformDialogController(Stage stage, PlatformViewModel viewModel) {
+        this.stage = stage;
+        viewModelProperty = new SimpleObjectProperty<>(viewModel);
+        resultProperty = new SimpleObjectProperty<>(EditPlatformDialogResult.CANCELED);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ObservableList<ButtonType> buttonTypes = super.getButtonTypes();
-        buttonTypes.add(ButtonType.CLOSE);
-        buttonTypes.add(ButtonType.FINISH);
-    }
 
-    public void setViewModel(PlatformViewModel viewModel) {
-        this.viewModel = viewModel;
-
+        PlatformViewModel viewModel = viewModelProperty.get();
         nameTextField.textProperty().bindBidirectional(viewModel.nameProperty());
         urlTextField.textProperty().bindBidirectional(viewModel.urlProperty());
         imageView.imageProperty().bindBidirectional(viewModel.imageProperty());
-
         claimsTableView.itemsProperty().bind(viewModel.claims().claimsProperty());
 
-        nameColumn.setCellValueFactory(cell -> {
-            Claim claim = cell.getValue();
-            String name = claim.getName();
-            SimpleStringProperty nameProperty = new SimpleStringProperty(name);
-            nameProperty.addListener((observable, oldValue, newValue) -> claim.setName(newValue));
-            return nameProperty;
-        });
+        nameColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getName()));
         grantTypeColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getGrantType().getName()));
         optionalColumn.setCellValueFactory(cell -> new SimpleBooleanProperty(cell.getValue().getIsOptional()));
 
+        saveButton.setOnAction(event -> {
+            resultProperty.set(EditPlatformDialogResult.SAVED);
+            stage.close();
+        });
+        cancelButton.setOnAction(event -> {
+            resultProperty.set(EditPlatformDialogResult.CANCELED);
+            stage.close();
+        });
+
     }
 
-    public PlatformViewModel getViewModel() {
-        return viewModel;
+    public ReadOnlyObjectProperty<PlatformViewModel> viewModelProperty() {
+        return viewModelProperty;
+    }
+
+    public ReadOnlyObjectProperty<EditPlatformDialogResult> resultProperty() {
+        return resultProperty;
     }
 
 }

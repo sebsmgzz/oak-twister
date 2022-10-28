@@ -15,6 +15,7 @@ import com.oaktwister.views.controls.identities.IdentityPane;
 import com.oaktwister.views.controls.imagebuttonboxes.ImageButtonBox;
 import com.oaktwister.views.controls.platforms.PlatformPane;
 
+import com.oaktwister.views.dialogs.platforms.EditPlatformDialogResult;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -199,13 +200,10 @@ public class MainViewController implements Initializable {
 
     private void onAddPlatformPane(ActionEvent actionEvent) {
         PlatformViewModel platformViewModel = navigation.viewModelFactory.getPlatformViewModel();
-        Optional<ButtonType> result = navigation.showEditPlatformDialog(platformViewModel);
-        if(result.isPresent()) {
-            ButtonType buttonType = result.get();
-            if(buttonType == ButtonType.FINISH) {
-                // TODO: Save to database
-                System.out.println("Saving platform to database");
-            }
+        EditPlatformDialogResult result = navigation.showEditPlatformDialog(platformViewModel);
+        if(result == EditPlatformDialogResult.SAVED) {
+            // TODO: Save to database
+            System.out.println("Saving platform to database");
         }
     }
 
