@@ -10,4 +10,10 @@ public interface StringResources {
         String TITLE = "OakTwister";
     }
 
+    interface Url  {
+        String WEBSITE = "https://www.github.com";
+        String REPOSITORY = "https://www.github.com";
+        String DOCUMENTATION = "https://www.github.com";
+    }
+
 }

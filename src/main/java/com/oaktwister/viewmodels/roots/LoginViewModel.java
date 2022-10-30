@@ -16,7 +16,12 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.List;
+import java.awt.Desktop;
 
 public class LoginViewModel {
 
@@ -63,6 +68,7 @@ public class LoginViewModel {
     }
 
     public void loadDrives() {
+        drivesProperty.clear();
         List<Drive> drives = driveLoader.listAllDrives();
         for (Drive drive : drives) {
             DriveViewModel driveViewModel = viewModelFactory.getDriveViewModel(drive);
@@ -90,6 +96,16 @@ public class LoginViewModel {
         sessionSettings.setMeta(driveMeta);
         sessionSettings.setDrive(drive);
         return true;
+    }
+
+    public void browse(String urlString) {
+        try {
+            URL url = new URL(urlString);
+            URI uri = url.toURI();
+            Desktop.getDesktop().browse(uri);
+        } catch (URISyntaxException | IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
 }

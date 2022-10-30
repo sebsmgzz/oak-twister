@@ -3,6 +3,7 @@ module oaktwister.main {
     requires javafx.fxml;
     requires org.jetbrains.annotations;
     requires org.json;
+    requires java.desktop;
 
     opens com.oaktwister.core to javafx.graphics;
     exports com.oaktwister.core;

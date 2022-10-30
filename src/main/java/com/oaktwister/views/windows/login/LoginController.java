@@ -2,6 +2,7 @@ package com.oaktwister.views.windows.login;
 
 import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.core.Navigation;
+import com.oaktwister.services.resources.StringResources;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.models.DriveViewModel;
 import com.oaktwister.viewmodels.roots.LoginViewModel;
@@ -39,19 +40,32 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        // Set button's actions
         newUserButton.setOnAction(this::onNewUserButtonClick);
         newDriveButton.setOnAction(this::onNewDriveButtonClick);
-        // TODO: Open browser when clicking hyperlink
+        loginButton.setOnAction(this::onLoginButtonClick);
+
+        // Configure combo box
         driveComboBox.setButtonCell(new DriveCell());
         driveComboBox.setCellFactory(listView -> new DriveCell());
         driveComboBox.itemsProperty().bind(viewModel.drivesProperty());
         driveComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
             viewModel.selectedDriveProperty().set(newValue);
         });
+        driveComboBox.setOnShowing(event -> {
+            viewModel.loadDrives();
+        });
+
+        // Set hyperlink's actions
+        websiteHyperlink.setOnAction(event -> viewModel.browse(StringResources.Url.WEBSITE));
+        documentationHyperlink.setOnAction(event -> viewModel.browse(StringResources.Url.DOCUMENTATION));
+        repositoryHyperlink.setOnAction(event -> viewModel.browse(StringResources.Url.REPOSITORY));
+
+        // Bind properties
         usernameTextField.textProperty().bindBidirectional(viewModel.usernameProperty());
         passwordTextField.textProperty().bindBidirectional(viewModel.passwordProperty());
-        viewModel.loadDrives();
-        loginButton.setOnAction(this::onLoginButtonClick);
+
     }
 
     private void onNewDriveButtonClick(ActionEvent actionEvent) {
