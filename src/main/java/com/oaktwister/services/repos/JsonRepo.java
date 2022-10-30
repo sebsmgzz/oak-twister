@@ -2,7 +2,7 @@ package com.oaktwister.services.repos;
 
 import com.oaktwister.exceptions.UnknownGrantTypeException;
 import com.oaktwister.models.seedwork.Entity;
-import com.oaktwister.services.configs.Session;
+import com.oaktwister.services.configs.SessionSettings;
 import com.oaktwister.services.json.JsonObjectSerializer;
 import com.oaktwister.services.logging.Logger;
 import org.json.JSONObject;
@@ -19,12 +19,12 @@ public abstract class JsonRepo<T extends Entity> {
 
     public final static String FILE_EXTENSION = ".json";
 
-    private final Session session;
+    private final SessionSettings sessionSettings;
     private final JsonObjectSerializer<T> jsonObjectSerializer;
     private final Logger logger;
 
-    public JsonRepo(Session session, JsonObjectSerializer<T> jsonObjectSerializer, Logger logger) {
-        this.session = session;
+    public JsonRepo(SessionSettings sessionSettings, JsonObjectSerializer<T> jsonObjectSerializer, Logger logger) {
+        this.sessionSettings = sessionSettings;
         this.jsonObjectSerializer = jsonObjectSerializer;
         this.logger = logger;
     }
@@ -32,7 +32,12 @@ public abstract class JsonRepo<T extends Entity> {
     protected abstract String getRepoLocation();
 
     private Path getFullRepoLocation() {
-        return Paths.get(session.getDrive().getPath(), getRepoLocation());
+        if(sessionSettings.hasDrive()) {
+            String drivePath = sessionSettings.getDrive().getPath();
+            String repoLocation = getRepoLocation();
+            return Paths.get(drivePath, repoLocation);
+        }
+        throw new RuntimeException("No drive has been set");
     }
 
     private JSONObject rawJsonRead(String jsonLocation) throws IOException {

@@ -1,24 +1,40 @@
 package com.oaktwister.models.drives;
 
 public class Version {
-    private final static String VERSION_REGEX = "(?<major>[^.\\n]+)\\.(?<minor>[^.\\n]+)\\.(?<patch>[^.\\n]+)";
 
-    private final String version;
+    private final int major;
+    private final int minor;
+    private final int patch;
 
-    public Version(String version) {
-        this.version = version;
+    public Version(int major, int minor, int patch) {
+        this.major = major;
+        this.minor = minor;
+        this.patch = patch;
     }
 
     public int major() {
-        return Integer.parseInt(version.split(VERSION_REGEX)[0]);
+        return major;
     }
 
     public int minor() {
-        return Integer.parseInt(version.split(VERSION_REGEX)[1]);
+        return minor;
     }
 
     public int patch() {
-        return Integer.parseInt(version.split(VERSION_REGEX)[2]);
+        return patch;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%d.%d.%d", major, minor, patch);
+    }
+
+    public static Version parse(String version) {
+        String[] breadcrumbs = version.split("\\.");
+        int major = Integer.parseInt(breadcrumbs[0]);
+        int minor = Integer.parseInt(breadcrumbs[1]);
+        int patch = Integer.parseInt(breadcrumbs[2]);
+        return new Version(major, minor, patch);
     }
 
 }

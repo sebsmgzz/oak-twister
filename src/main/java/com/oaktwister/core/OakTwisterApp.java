@@ -15,7 +15,7 @@ public class OakTwisterApp extends Application {
     @Override
     public void start(Stage stage) {
         Navigation navigation = new Navigation(stage, viewModelFactory);
-        navigation.goToLandingView();
+        navigation.goToLogin();
     }
 
 }

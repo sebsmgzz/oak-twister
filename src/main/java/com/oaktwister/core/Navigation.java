@@ -4,12 +4,13 @@ import com.oaktwister.services.resources.ImageResources;
 import com.oaktwister.services.resources.StringResources;
 import com.oaktwister.utils.extensions.NodeUtil;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
-import com.oaktwister.viewmodels.roots.LandingViewModel;
+import com.oaktwister.viewmodels.roots.LoginViewModel;
 import com.oaktwister.viewmodels.roots.MainViewModel;
 import com.oaktwister.views.dialogs.platforms.EditPlatformDialogController;
 import com.oaktwister.views.dialogs.platforms.EditPlatformDialogResult;
-import com.oaktwister.views.windows.landings.LandingViewController;
-import com.oaktwister.views.windows.main.MainViewController;
+import com.oaktwister.views.windows.login.LoginController;
+import com.oaktwister.views.windows.main.MainController;
+
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -37,9 +38,9 @@ public class Navigation {
         stage.showAndWait();
     }
 
-    public void goToLandingView() {
-        LandingViewModel viewModel = viewModelFactory.getLandingViewModel();
-        LandingViewController controller = new LandingViewController(this, viewModel);
+    public void goToLogin() {
+        LoginViewModel viewModel = viewModelFactory.getLoginViewModel();
+        LoginController controller = new LoginController(this, viewModel);
         Parent node = NodeUtil.loadWindow(controller);
         Scene scene = new Scene(node);
         primaryStage.setScene(scene);
@@ -48,9 +49,9 @@ public class Navigation {
         primaryStage.show();
     }
 
-    public void goToMainView() {
+    public void goToMain() {
         MainViewModel viewModel = viewModelFactory.getMainViewModel();
-        MainViewController controller = new MainViewController(this, viewModel);
+        MainController controller = new MainController(this, viewModel);
         Parent node = NodeUtil.loadWindow(controller);
         Scene scene = new Scene(node);
         primaryStage.setScene(scene);

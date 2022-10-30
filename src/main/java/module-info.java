@@ -7,8 +7,8 @@ module oaktwister.main {
     opens com.oaktwister.core to javafx.graphics;
     exports com.oaktwister.core;
 
-    opens com.oaktwister.views.windows.landings to javafx.fxml;
-    exports com.oaktwister.views.windows.landings;
+    opens com.oaktwister.views.windows.login to javafx.fxml;
+    exports com.oaktwister.views.windows.login;
 
     opens com.oaktwister.views.controls.buttons to javafx.fxml;
     exports com.oaktwister.views.controls.buttons;

@@ -1,6 +1,8 @@
 package com.oaktwister.core;
 
-import com.oaktwister.services.configs.Session;
+import com.oaktwister.models.drives.Drive;
+import com.oaktwister.services.configs.SessionSettings;
+import com.oaktwister.services.drives.DriveLoader;
 import com.oaktwister.services.logging.Logger;
 import com.oaktwister.services.parsers.GrantTypeParser;
 import com.oaktwister.services.repos.*;
@@ -8,14 +10,14 @@ import com.oaktwister.viewmodels.models.*;
 import com.oaktwister.viewmodels.collections.AccountsViewModel;
 import com.oaktwister.viewmodels.collections.IdentitiesViewModel;
 import com.oaktwister.viewmodels.collections.PlatformsViewModel;
-import com.oaktwister.viewmodels.roots.LandingViewModel;
+import com.oaktwister.viewmodels.roots.LoginViewModel;
 import com.oaktwister.viewmodels.roots.MainViewModel;
 
 public class ViewModelFactory {
 
     private final ServiceFactory serviceFactory;
 
-    private LandingViewModel landingViewModel;
+    private LoginViewModel loginViewModel;
     private MainViewModel mainViewModel;
     private IdentitiesViewModel identitiesViewModel;
     private PlatformsViewModel platformsViewModel;
@@ -25,13 +27,14 @@ public class ViewModelFactory {
         this.serviceFactory = serviceFactory;
     }
 
-    public LandingViewModel getLandingViewModel() {
-        if(landingViewModel == null) {
-            DriveRepo driveFactory = serviceFactory.getDriveFactory();
-            landingViewModel = new LandingViewModel(this, driveFactory);
+    public LoginViewModel getLoginViewModel() {
+        if(loginViewModel == null) {
+            SessionSettings session = serviceFactory.getSessionSettings();
+            DriveLoader driveLoader = serviceFactory.getDriveLoader();
+            loginViewModel = new LoginViewModel(this, session, driveLoader);
             serviceFactory.clearScope();
         }
-        return landingViewModel;
+        return loginViewModel;
     }
 
     public MainViewModel getMainViewModel() {
@@ -116,9 +119,8 @@ public class ViewModelFactory {
         return viewModel;
     }
 
-    public DriveViewModel getDriveViewModel() {
-        Session session = serviceFactory.getContext();
-        DriveViewModel driveViewModel = new DriveViewModel(session);
+    public DriveViewModel getDriveViewModel(Drive drive) {
+        DriveViewModel driveViewModel = new DriveViewModel(drive, this);
         serviceFactory.clearScope();
         return driveViewModel;
     }

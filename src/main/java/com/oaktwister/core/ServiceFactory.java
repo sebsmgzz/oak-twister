@@ -1,9 +1,10 @@
 package com.oaktwister.core;
 
-import com.oaktwister.services.configs.Install;
-import com.oaktwister.services.configs.Session;
+import com.oaktwister.services.configs.Environment;
+import com.oaktwister.services.configs.AppSettings;
+import com.oaktwister.services.configs.SessionSettings;
+import com.oaktwister.services.drives.DriveLoader;
 import com.oaktwister.services.parsers.GrantTypeParser;
-import com.oaktwister.services.repos.DriveRepo;
 import com.oaktwister.services.json.*;
 import com.oaktwister.services.logging.Logger;
 import com.oaktwister.services.repos.AccountsRepo;
@@ -18,32 +19,44 @@ public class ServiceFactory {
     private final HashMap<Class<?>, Object> singletons = new HashMap<>();
     private final HashMap<Class<?>, Object> scoped = new HashMap<>();
 
-    public Session getContext() {
-        if(singletons.containsKey(Session.class)) {
-            return (Session) singletons.get(Session.class);
+    public SessionSettings getSessionSettings() {
+        if(singletons.containsKey(SessionSettings.class)) {
+            return (SessionSettings) singletons.get(SessionSettings.class);
         } else {
-            Session service = Session.getInstance();
-            singletons.put(Session.class, service);
+            SessionSettings service = new SessionSettings();
+            singletons.put(SessionSettings.class, service);
             return service;
         }
     }
 
-    public Install getAppConfig() {
-        if(singletons.containsKey(Install.class)) {
-            return (Install) singletons.get(Install.class);
+    public AppSettings getAppConfig() {
+        if(singletons.containsKey(AppSettings.class)) {
+            return (AppSettings) singletons.get(AppSettings.class);
         } else {
-            Install service = Install.getInstance();
-            singletons.put(Install.class, service);
+            AppSettings service = AppSettings.getInstance();
+            singletons.put(AppSettings.class, service);
             return service;
         }
     }
 
-    public DriveRepo getDriveFactory() {
-        if(scoped.containsKey(DriveRepo.class)) {
-            return (DriveRepo) scoped.get(DriveRepo.class);
+    public Environment getEnvironment() {
+        if(singletons.containsKey(Environment.class)) {
+            return (Environment) singletons.get(Environment.class);
         } else {
-            DriveRepo service = new DriveRepo(getAppConfig());
-            scoped.put(DriveRepo.class, service);
+            Environment service = Environment.getInstance();
+            singletons.put(Environment.class, service);
+            return service;
+        }
+    }
+
+    public DriveLoader getDriveLoader() {
+        if(scoped.containsKey(DriveLoader.class)) {
+            return (DriveLoader) scoped.get(DriveLoader.class);
+        } else {
+            Environment environment = getEnvironment();
+            Logger logger = new Logger(DriveLoader.class);
+            DriveLoader service = new DriveLoader(environment);
+            scoped.put(DriveLoader.class, service);
             return service;
         }
     }
@@ -109,9 +122,9 @@ public class ServiceFactory {
         if(scoped.containsKey(ImagesRepo.class)) {
             return (ImagesRepo) scoped.get(ImagesRepo.class);
         } else {
-            Session session = getContext();
+            SessionSettings sessionSettings = getSessionSettings();
             Logger logger = new Logger(ImagesRepo.class);
-            ImagesRepo service = new ImagesRepo(session, logger);
+            ImagesRepo service = new ImagesRepo(sessionSettings, logger);
             scoped.put(ImagesRepo.class, service);
             return service;
         }
@@ -121,11 +134,11 @@ public class ServiceFactory {
         if(scoped.containsKey(IdentitiesRepo.class)) {
             return (IdentitiesRepo) scoped.get(IdentitiesRepo.class);
         } else {
-            Session session = Session.getInstance();
+            SessionSettings sessionSettings = getSessionSettings();
             AccountsRepo accountsRepo = getAccountsRepo();
             IdentitySerializer identitySerializer = getIdentitySerializer();
             Logger logger = new Logger(IdentitiesRepo.class);
-            IdentitiesRepo service = new IdentitiesRepo(session, accountsRepo, identitySerializer, logger);
+            IdentitiesRepo service = new IdentitiesRepo(sessionSettings, accountsRepo, identitySerializer, logger);
             scoped.put(IdentitiesRepo.class, service);
             return service;
         }
@@ -171,10 +184,10 @@ public class ServiceFactory {
         if(scoped.containsKey(AccountsRepo.class)) {
             return (AccountsRepo) scoped.get(AccountsRepo.class);
         } else {
-            Session session = Session.getInstance();
+            SessionSettings sessionSettings = getSessionSettings();
             AccountSerializer accountSerializer = getAccountSerializer();
             Logger logger = new Logger(AccountsRepo.class);
-            AccountsRepo service = new AccountsRepo(session, accountSerializer, logger);
+            AccountsRepo service = new AccountsRepo(sessionSettings, accountSerializer, logger);
             scoped.put(AccountsRepo.class, service);
             return service;
         }
@@ -184,11 +197,11 @@ public class ServiceFactory {
         if(scoped.containsKey(PlatformsRepo.class)) {
             return (PlatformsRepo) scoped.get(PlatformsRepo.class);
         } else {
-            Session session = Session.getInstance();
+            SessionSettings sessionSettings = getSessionSettings();
             PlatformSerializer platformSerializer = getPlatformSerializer();
             AccountsRepo accountsRepo = getAccountsRepo();
             Logger logger = new Logger(PlatformsRepo.class);
-            PlatformsRepo service = new PlatformsRepo(session, platformSerializer, accountsRepo, logger);
+            PlatformsRepo service = new PlatformsRepo(sessionSettings, platformSerializer, accountsRepo, logger);
             scoped.put(PlatformsRepo.class, service);
             return service;
         }

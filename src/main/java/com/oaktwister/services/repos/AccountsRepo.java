@@ -3,7 +3,7 @@ package com.oaktwister.services.repos;
 import com.oaktwister.models.Account;
 import com.oaktwister.models.Identity;
 import com.oaktwister.models.Platform;
-import com.oaktwister.services.configs.Session;
+import com.oaktwister.services.configs.SessionSettings;
 import com.oaktwister.services.json.AccountSerializer;
 import com.oaktwister.services.logging.Logger;
 
@@ -13,8 +13,8 @@ public class AccountsRepo extends JsonRepo<Account> {
 
     public static final String LOCATION = "accounts";
 
-    public AccountsRepo(Session session, AccountSerializer accountSerializer, Logger logger) {
-        super(session, accountSerializer, logger);
+    public AccountsRepo(SessionSettings sessionSettings, AccountSerializer accountSerializer, Logger logger) {
+        super(sessionSettings, accountSerializer, logger);
     }
 
     @Override

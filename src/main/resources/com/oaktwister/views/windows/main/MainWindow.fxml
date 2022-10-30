@@ -11,7 +11,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.oaktwister.views.windows.main.MainViewController"
+            fx:controller="com.oaktwister.views.windows.main.MainController"
             fx:id="borderPane"
             stylesheets="/com/oaktwister/styles/main/main.css"
             styleClass="root"

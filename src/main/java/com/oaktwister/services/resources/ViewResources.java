@@ -15,8 +15,8 @@ public interface ViewResources {
     }
 
     interface Windows {
-        String LANDING = "/com/oaktwister/views/windows/landings/LandingView.fxml";
-        String MAIN = "/com/oaktwister/views/windows/main/MainView.fxml";
+        String MAIN = "/com/oaktwister/views/windows/main/MainWindow.fxml";
+        String LOGIN = "/com/oaktwister/views/windows/login/LoginWindow.fxml";
     }
 
 }

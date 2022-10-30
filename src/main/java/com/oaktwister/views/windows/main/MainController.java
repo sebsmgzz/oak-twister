@@ -20,7 +20,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 @ViewDescriptor(location = ViewResources.Windows.MAIN)
-public class MainViewController implements Initializable {
+public class MainController implements Initializable {
 
     private final Navigation navigation;
     private final MainViewModel viewModel;
@@ -36,7 +36,7 @@ public class MainViewController implements Initializable {
     @FXML private Button backButton;
     @FXML private Button settingsButton;
 
-    public MainViewController(Navigation navigation, MainViewModel viewModel) {
+    public MainController(Navigation navigation, MainViewModel viewModel) {
         this.navigation = navigation;
         this.viewModel = viewModel;
         accountsController = new AccountsController(navigation, viewModel.accounts());
@@ -54,7 +54,7 @@ public class MainViewController implements Initializable {
         accountsImageButtonBox.setOnAction(event -> viewModel.sectionProperty().set(Page.ACCOUNTS));
         platformsImageButtonBox.setOnAction(event -> viewModel.sectionProperty().set(Page.PLATFORMS));
         identitiesImageButtonBox.setOnAction(event -> viewModel.sectionProperty().set(Page.IDENTITIES));
-        backButton.setOnAction(event -> navigation.goToLandingView());
+        backButton.setOnAction(event -> navigation.goToLogin());
         settingsButton.setOnAction(event -> { /* TODO: Show Settings */ });
 
         // Initialize controllers

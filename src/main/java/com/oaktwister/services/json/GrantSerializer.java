@@ -31,15 +31,16 @@ public class GrantSerializer implements JsonObjectSerializer<Grant<?>> {
     @Override
     public Grant<?> deserialize(JSONObject grantJson) throws UnknownGrantTypeException {
         String grantTypeName = grantJson.getString(TYPE_KEY);
-        if(Objects.equals(grantTypeName, DateTimeGrant.class.getTypeName())) {
+        Class<? extends Grant<?>> grantType = grantTypeParser.getGrantType(grantTypeName);
+        if(grantType == DateTimeGrant.class) {
             return deserializeDateTimeGrant(grantJson);
-        } else if (Objects.equals(grantTypeName, FlagGrant.class.getTypeName())) {
+        } else if (grantType == FlagGrant.class) {
             return deserializeFlagGrant(grantJson);
-        } else if (Objects.equals(grantTypeName, NumberGrant.class.getTypeName())) {
+        } else if (grantType == NumberGrant.class) {
             return deserializeNumberGrant(grantJson);
-        } else if (Objects.equals(grantTypeName, SecretGrant.class.getTypeName())) {
+        } else if (grantType == SecretGrant.class) {
             return deserializeSecretGrant(grantJson);
-        } else if (Objects.equals(grantTypeName, TextGrant.class.getTypeName())) {
+        } else if (grantType == TextGrant.class) {
             return deserializeTextGrant(grantJson);
         } else {
             throw new UnknownGrantTypeException(grantTypeName);

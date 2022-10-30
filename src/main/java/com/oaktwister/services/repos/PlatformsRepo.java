@@ -2,7 +2,7 @@ package com.oaktwister.services.repos;
 
 import com.oaktwister.models.Account;
 import com.oaktwister.models.Platform;
-import com.oaktwister.services.configs.Session;
+import com.oaktwister.services.configs.SessionSettings;
 import com.oaktwister.services.json.PlatformSerializer;
 import com.oaktwister.services.logging.Logger;
 
@@ -14,9 +14,9 @@ public class PlatformsRepo extends JsonRepo<Platform> {
 
     private final AccountsRepo accountsRepo;
 
-    public PlatformsRepo(Session session, PlatformSerializer platformSerializer,
+    public PlatformsRepo(SessionSettings sessionSettings, PlatformSerializer platformSerializer,
                          AccountsRepo accountsRepo, Logger logger) {
-        super(session, platformSerializer, logger);
+        super(sessionSettings, platformSerializer, logger);
         this.accountsRepo = accountsRepo;
     }
 
