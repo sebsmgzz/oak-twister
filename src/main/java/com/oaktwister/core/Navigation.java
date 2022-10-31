@@ -6,11 +6,11 @@ import com.oaktwister.utils.extensions.NodeUtil;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
 import com.oaktwister.viewmodels.roots.LoginViewModel;
 import com.oaktwister.viewmodels.roots.MainViewModel;
-import com.oaktwister.views.dialogs.logins.LoginFailedController;
-import com.oaktwister.views.dialogs.platforms.EditPlatformDialogController;
-import com.oaktwister.views.dialogs.platforms.EditPlatformDialogResult;
-import com.oaktwister.views.windows.login.LoginController;
-import com.oaktwister.views.windows.main.MainController;
+import com.oaktwister.controllers.dialogs.LoginFailedController;
+import com.oaktwister.controllers.dialogs.EditPlatformDialogController;
+import com.oaktwister.views.dialogs.EditPlatformDialogResult;
+import com.oaktwister.controllers.layouts.LoginController;
+import com.oaktwister.controllers.layouts.MainController;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;

@@ -8,31 +8,22 @@ module oaktwister.main {
     opens com.oaktwister.core to javafx.graphics;
     exports com.oaktwister.core;
 
-    opens com.oaktwister.views.windows.login to javafx.fxml;
-    exports com.oaktwister.views.windows.login;
+    exports com.oaktwister.controllers.dialogs;
+    opens com.oaktwister.controllers.dialogs to javafx.fxml;
 
-    opens com.oaktwister.views.controls.buttons to javafx.fxml;
-    exports com.oaktwister.views.controls.buttons;
+    exports com.oaktwister.controllers.layouts;
+    opens com.oaktwister.controllers.layouts to javafx.fxml;
 
-    exports com.oaktwister.views.windows.main;
-    opens com.oaktwister.views.windows.main to javafx.fxml;
+    exports com.oaktwister.controllers.controls;
+    opens com.oaktwister.controllers.controls to javafx.fxml;
 
-    exports com.oaktwister.views.controls.accounts;
-    opens com.oaktwister.views.controls.accounts to javafx.fxml;
+    exports com.oaktwister.views.layouts;
+    opens com.oaktwister.views.layouts to javafx.fxml;
 
-    exports com.oaktwister.views.controls.identities;
-    opens com.oaktwister.views.controls.identities to javafx.fxml;
+    exports com.oaktwister.views.controls;
+    opens com.oaktwister.views.controls to javafx.fxml;
 
-    exports com.oaktwister.views.controls.platforms;
-    opens com.oaktwister.views.controls.platforms to javafx.fxml;
-
-    exports com.oaktwister.views.dialogs.platforms;
-    opens com.oaktwister.views.dialogs.platforms to javafx.fxml;
-
-    exports com.oaktwister.views.controls.pages;
-    opens com.oaktwister.views.controls.pages to javafx.fxml;
-
-    exports com.oaktwister.views.dialogs.logins;
-    opens com.oaktwister.views.dialogs.logins to javafx.fxml;
+    exports com.oaktwister.views.dialogs;
+    opens com.oaktwister.views.dialogs to javafx.fxml;
 
 }

@@ -5,7 +5,7 @@ import com.oaktwister.services.logging.Logger;
 import com.oaktwister.viewmodels.collections.AccountsViewModel;
 import com.oaktwister.viewmodels.collections.IdentitiesViewModel;
 import com.oaktwister.viewmodels.collections.PlatformsViewModel;
-import com.oaktwister.views.windows.main.Page;
+import com.oaktwister.controllers.layouts.Page;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
