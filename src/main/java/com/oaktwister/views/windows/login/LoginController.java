@@ -6,6 +6,7 @@ import com.oaktwister.services.resources.StringResources;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.viewmodels.models.DriveViewModel;
 import com.oaktwister.viewmodels.roots.LoginViewModel;
+import com.oaktwister.views.dialogs.logins.LoginFailedController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -79,7 +80,8 @@ public class LoginController implements Initializable {
         if(loggedIn) {
             navigation.goToMain();
         } else {
-            // TODO: Show alert
+            String errorMessage = viewModel.loginErrorMessageProperty().get();
+            navigation.showLoginFailedAlert(errorMessage);
         }
     }
 

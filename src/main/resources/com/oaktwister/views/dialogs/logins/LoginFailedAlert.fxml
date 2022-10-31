@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.Button?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.oaktwister.views.dialogs.logins.LoginFailedController"
+            prefHeight="200.0" prefWidth="300.0">
+   <VBox alignment="CENTER"
+         AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0"
+         AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+      <padding>
+         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+      </padding>
+      <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+         </padding>
+         <ImageView fx:id="iconImageView" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="/com/oaktwister/images/notifications/error.png"/>
+         </ImageView>
+         <Label fx:id="titleLabel" text="Login failed" alignment="CENTER" contentDisplay="CENTER"
+                maxHeight="Infinity" maxWidth="Infinity">
+            <font>
+               <Font size="25.0"/>
+            </font>
+         </Label>
+      </HBox>
+      <Label fx:id="messageLabel" text="Voluptatibus corrupti nesciunt voluptatibus at numquam ut natus placeat. Tenetur aut et et vero. Eligendi sunt ea vel id. Officia quod reprehenderit quasi dignissimos sunt aspernatur optio aspernatur. Et quos soluta reprehenderit in.Fugit aperiam repellendus illo vel commodi. Perspiciatis eveniet voluptatem aliquam aut. Voluptas veniam aspernatur ratione voluptatem. Eaque modi et voluptatem. Sunt asperiores enim nobis aut nostrum. Ea illum ut quaerat facere aut fuga."
+             maxHeight="Infinity" maxWidth="Infinity"
+             wrapText="true" alignment="TOP_LEFT"
+             VBox.vgrow="ALWAYS" />
+      <HBox alignment="CENTER_RIGHT" VBox.vgrow="NEVER">
+         <Button fx:id="okayButton" text="Okay" minWidth="100.0" mnemonicParsing="false"/>
+      </HBox>
+   </VBox>
+</AnchorPane>

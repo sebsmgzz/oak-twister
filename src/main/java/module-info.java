@@ -32,4 +32,7 @@ module oaktwister.main {
     exports com.oaktwister.views.controls.pages;
     opens com.oaktwister.views.controls.pages to javafx.fxml;
 
+    exports com.oaktwister.views.dialogs.logins;
+    opens com.oaktwister.views.dialogs.logins to javafx.fxml;
+
 }

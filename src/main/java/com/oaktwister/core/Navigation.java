@@ -6,6 +6,7 @@ import com.oaktwister.utils.extensions.NodeUtil;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
 import com.oaktwister.viewmodels.roots.LoginViewModel;
 import com.oaktwister.viewmodels.roots.MainViewModel;
+import com.oaktwister.views.dialogs.logins.LoginFailedController;
 import com.oaktwister.views.dialogs.platforms.EditPlatformDialogController;
 import com.oaktwister.views.dialogs.platforms.EditPlatformDialogResult;
 import com.oaktwister.views.windows.login.LoginController;
@@ -28,14 +29,13 @@ public class Navigation {
         this.viewModelFactory = viewModelFactory;
     }
 
-    private void showDialog(Stage stage, Object dialogController) {
+    private void initDialog(Stage stage, Object dialogController) {
         Parent node = NodeUtil.loadWindow(dialogController);
         Scene scene = new Scene(node);
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
         Window window = primaryStage.getScene().getWindow();
         stage.initOwner(window);
-        stage.showAndWait();
     }
 
     public void goToLogin() {
@@ -61,8 +61,17 @@ public class Navigation {
     public EditPlatformDialogResult showEditPlatformDialog(PlatformViewModel platformViewModel) {
         Stage stage = new Stage();
         EditPlatformDialogController controller = new EditPlatformDialogController(stage, platformViewModel);
-        showDialog(stage, controller);
+        initDialog(stage, controller);
+        stage.showAndWait();
         return controller.resultProperty().get();
+    }
+
+    public void showLoginFailedAlert(String message) {
+        Stage stage = new Stage();
+        LoginFailedController controller = new LoginFailedController(stage);
+        initDialog(stage, controller);
+        controller.messageProperty().set(message);
+        stage.showAndWait();
     }
 
 }

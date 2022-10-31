@@ -35,6 +35,12 @@
             "url": "https://fontawesome.com/icons",
             "platform": "FontAwesome",
             "author": "FontAwesome"
-        }    
+        },
+        {
+            "path": "/images/notifications/*",
+            "url": "https://www.flaticon.com/packs/notifications?style_id=3&family_id=1&group_id=1",
+            "platform": "FontAwesome",
+            "author": "Freepik"
+        }
     ]
 }
