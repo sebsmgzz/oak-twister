@@ -35,12 +35,12 @@ public class NodeUtil {
         }
     }
 
-    public static <T extends Parent> T loadWindow(@NotNull Object windowController) {
+    public static <T extends Parent> T loadWindow(@NotNull Object window) {
         try {
-            Class<?> nodeClass = windowController.getClass();
+            Class<?> nodeClass = window.getClass();
             URL resourceUrl = getViewResourceUrl(nodeClass);
             FXMLLoader loader = new FXMLLoader(resourceUrl);
-            loader.setControllerFactory(aClass -> windowController);
+            loader.setControllerFactory(aClass -> window);
             return loader.load();
         } catch (IOException ex) {
             ex.printStackTrace();

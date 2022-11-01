@@ -1,6 +1,7 @@
 package com.oaktwister.controllers.controls;
 
 import com.oaktwister.core.Navigation;
+import com.oaktwister.core.ViewModelFactory;
 import com.oaktwister.events.IdentityPaneActionEvent;
 import com.oaktwister.services.resources.StringResources;
 import com.oaktwister.utils.listeners.ListItemAddedListener;
@@ -16,35 +17,40 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class IdentitiesController implements Initializable {
+public class IdentitiesController {
 
     private final Navigation navigation;
-    private final IdentitiesViewModel viewModel;
-    private final HashMap<IdentityViewModel, IdentityPane> identitiesMap;
 
-    private final PagePane<IdentityPane> identitiesPane;
+    private final IdentitiesViewModel viewModel;
+    private final PagePane<IdentityPane> view;
+
+    private final HashMap<IdentityViewModel, IdentityPane> identitiesMap;
     private final ListItemAddedListener<IdentityViewModel> identityViewModelAddedListener;
     private final ListItemRemovedListener<IdentityViewModel> identityViewModelRemovedListener;
 
-    public IdentitiesController(Navigation navigation, IdentitiesViewModel viewModel) {
+    public IdentitiesController(Navigation navigation, ViewModelFactory viewModelFactory) {
         this.navigation = navigation;
-        this.viewModel = viewModel;
+        viewModel = viewModelFactory.getIdentitiesViewModel();
+        view = new PagePane<>();
         identitiesMap = new HashMap<>();
-        identitiesPane = new PagePane<>();
         identityViewModelAddedListener = new ListItemAddedListener<>(this::onIdentityViewModelAdded);
         identityViewModelRemovedListener = new ListItemRemovedListener<>(this::onIdentityViewModelRemoved);
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        identitiesPane.titleProperty().set(StringResources.IDENTITIES);
-        identitiesPane.onAddActionProperty().set(this::onAddIdentityPane);
+    public void initialize() {
+        view.titleProperty().set(StringResources.IDENTITIES);
+        view.onAddActionProperty().set(this::onAddIdentityPane);
         viewModel.identitiesProperty().addListener(identityViewModelAddedListener);
         viewModel.identitiesProperty().addListener(identityViewModelRemovedListener);
     }
 
     public PagePane<IdentityPane> getView() {
-        return identitiesPane;
+        return view;
+    }
+
+    public void onShowing() {
+        viewModel.clear();
+        viewModel.load();
     }
 
     private void onAddIdentityPane(ActionEvent actionEvent) {
@@ -58,13 +64,13 @@ public class IdentitiesController implements Initializable {
         identityPane.identifierProperty().bind(identityViewModel.idProperty());
         identityPane.grantsCountProperty().bind(identityViewModel.grantMap().grantCountProperty());
         identityPane.createdAtProperty().bind(identityViewModel.createdAtProperty());
-        identitiesPane.panesProperty().add(identityPane);
+        view.panesProperty().add(identityPane);
         identitiesMap.put(identityViewModel, identityPane);
     }
 
     private void onIdentityViewModelRemoved(IdentityViewModel identityViewModel) {
         IdentityPane identityPane = identitiesMap.remove(identityViewModel);
-        identitiesPane.panesProperty().remove(identityPane);
+        view.panesProperty().remove(identityPane);
     }
 
     private void onIdentityPaneMainAction(IdentityPaneActionEvent event) {

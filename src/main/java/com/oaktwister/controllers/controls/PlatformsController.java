@@ -1,6 +1,7 @@
 package com.oaktwister.controllers.controls;
 
 import com.oaktwister.core.Navigation;
+import com.oaktwister.core.ViewModelFactory;
 import com.oaktwister.services.resources.StringResources;
 import com.oaktwister.utils.extensions.MapUtil;
 import com.oaktwister.utils.listeners.ListItemAddedListener;
@@ -12,40 +13,43 @@ import com.oaktwister.views.controls.PlatformPane;
 import com.oaktwister.views.controls.PlatformPaneEvent;
 import com.oaktwister.views.dialogs.EditPlatformDialogResult;
 import javafx.event.ActionEvent;
-import javafx.fxml.Initializable;
 
-import java.net.URL;
 import java.util.*;
 
-public class PlatformsController implements Initializable {
+public class PlatformsController {
 
     private final Navigation navigation;
-    private final PlatformsViewModel viewModel;
-    private final HashMap<PlatformViewModel, PlatformPane> platformsMap;
 
-    private final PagePane<PlatformPane> platformsPane;
+    private final PlatformsViewModel viewModel;
+    private final PagePane<PlatformPane> view;
+
+    private final HashMap<PlatformViewModel, PlatformPane> platformsMap;
     private final ListItemAddedListener<PlatformViewModel> platformViewModelAddedListener;
     private final ListItemRemovedListener<PlatformViewModel> platformViewModelRemovedListener;
 
-    public PlatformsController(Navigation navigation, PlatformsViewModel viewModel) {
+    public PlatformsController(Navigation navigation, ViewModelFactory viewModelFactory) {
         this.navigation = navigation;
-        this.viewModel = viewModel;
+        viewModel = viewModelFactory.getPlatformsViewModel();
+        view = new PagePane<>();
         platformsMap = new HashMap<>();
-        platformsPane = new PagePane<>();
         platformViewModelAddedListener = new ListItemAddedListener<>(this::onPlatformViewModelAdded);
         platformViewModelRemovedListener = new ListItemRemovedListener<>(this::onPlatformViewModelRemoved);
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        platformsPane.titleProperty().set(StringResources.PLATFORMS);
-        platformsPane.onAddActionProperty().set(this::onAddPlatformPane);
+    public void initialize() {
+        view.titleProperty().set(StringResources.PLATFORMS);
+        view.onAddActionProperty().set(this::onAddPlatformPane);
         viewModel.platformsProperty().addListener(platformViewModelAddedListener);
         viewModel.platformsProperty().addListener(platformViewModelRemovedListener);
     }
 
     public PagePane<PlatformPane> getView() {
-        return platformsPane;
+        return view;
+    }
+
+    public void onShowing() {
+        viewModel.clear();
+        viewModel.load();
     }
 
     private void onAddPlatformPane(ActionEvent actionEvent) {
@@ -65,13 +69,13 @@ public class PlatformsController implements Initializable {
         platformPane.imageProperty().bind(platformViewModel.imageProperty());
         platformPane.nameProperty().bind(platformViewModel.nameProperty());
         platformPane.createdAtProperty().bind(platformViewModel.createdAtProperty());
-        platformsPane.panesProperty().add(platformPane);
+        view.panesProperty().add(platformPane);
         platformsMap.put(platformViewModel, platformPane);
     }
 
     private void onPlatformViewModelRemoved(PlatformViewModel platformViewModel) {
         PlatformPane platformPane = platformsMap.remove(platformViewModel);
-        platformsPane.panesProperty().remove(platformPane);
+        view.panesProperty().remove(platformPane);
     }
 
     private void onPlatformPaneClick(PlatformPaneEvent actionEvent) {

@@ -5,7 +5,6 @@ import com.oaktwister.services.resources.StringResources;
 import com.oaktwister.utils.extensions.NodeUtil;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
 import com.oaktwister.viewmodels.roots.LoginViewModel;
-import com.oaktwister.viewmodels.roots.MainViewModel;
 import com.oaktwister.controllers.dialogs.LoginFailedController;
 import com.oaktwister.controllers.dialogs.EditPlatformDialogController;
 import com.oaktwister.views.dialogs.EditPlatformDialogResult;
@@ -22,7 +21,7 @@ import javafx.stage.Window;
 public class Navigation {
 
     private final Stage primaryStage;
-    public final ViewModelFactory viewModelFactory;
+    private final ViewModelFactory viewModelFactory;
 
     public Navigation(Stage primaryStage, ViewModelFactory viewModelFactory) {
         this.primaryStage = primaryStage;
@@ -50,8 +49,7 @@ public class Navigation {
     }
 
     public void goToMain() {
-        MainViewModel viewModel = viewModelFactory.getMainViewModel();
-        MainController controller = new MainController(this, viewModel);
+        MainController controller = new MainController(this, viewModelFactory);
         Parent node = NodeUtil.loadWindow(controller);
         Scene scene = new Scene(node);
         primaryStage.setScene(scene);

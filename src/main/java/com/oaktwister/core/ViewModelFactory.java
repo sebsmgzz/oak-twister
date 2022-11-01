@@ -11,14 +11,12 @@ import com.oaktwister.viewmodels.collections.AccountsViewModel;
 import com.oaktwister.viewmodels.collections.IdentitiesViewModel;
 import com.oaktwister.viewmodels.collections.PlatformsViewModel;
 import com.oaktwister.viewmodels.roots.LoginViewModel;
-import com.oaktwister.viewmodels.roots.MainViewModel;
 
 public class ViewModelFactory {
 
     private final ServiceFactory serviceFactory;
 
     private LoginViewModel loginViewModel;
-    private MainViewModel mainViewModel;
     private IdentitiesViewModel identitiesViewModel;
     private PlatformsViewModel platformsViewModel;
     private AccountsViewModel accountsViewModel;
@@ -35,15 +33,6 @@ public class ViewModelFactory {
             serviceFactory.clearScope();
         }
         return loginViewModel;
-    }
-
-    public MainViewModel getMainViewModel() {
-        if(mainViewModel == null) {
-            Logger logger = new Logger(MainViewModel.class);
-            mainViewModel = new MainViewModel(this, logger);
-            serviceFactory.clearScope();
-        }
-        return mainViewModel;
     }
 
     public IdentitiesViewModel getIdentitiesViewModel() {

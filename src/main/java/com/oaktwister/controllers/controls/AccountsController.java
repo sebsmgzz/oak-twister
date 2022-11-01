@@ -1,6 +1,7 @@
 package com.oaktwister.controllers.controls;
 
 import com.oaktwister.core.Navigation;
+import com.oaktwister.core.ViewModelFactory;
 import com.oaktwister.events.AccountPaneActionEvent;
 import com.oaktwister.services.resources.StringResources;
 import com.oaktwister.utils.listeners.ListItemAddedListener;
@@ -10,41 +11,43 @@ import com.oaktwister.viewmodels.models.AccountViewModel;
 import com.oaktwister.views.controls.AccountPane;
 import com.oaktwister.views.controls.PagePane;
 import javafx.event.ActionEvent;
-import javafx.fxml.Initializable;
 
-import java.net.URL;
 import java.util.HashMap;
-import java.util.ResourceBundle;
 
-public class AccountsController implements Initializable {
+public class AccountsController {
 
     private final Navigation navigation;
-    private final AccountsViewModel viewModel;
-    private final HashMap<AccountViewModel, AccountPane> accountsMap;
 
-    private final PagePane<AccountPane> accountsPane;
+    private final AccountsViewModel viewModel;
+    private final PagePane<AccountPane> view;
+
+    private final HashMap<AccountViewModel, AccountPane> accountsMap;
     private final ListItemAddedListener<AccountViewModel> accountViewModelAddedListener;
     private final ListItemRemovedListener<AccountViewModel> accountViewModelRemovedListener;
 
-    public AccountsController(Navigation navigation, AccountsViewModel viewModel) {
+    public AccountsController(Navigation navigation, ViewModelFactory viewModelFactory) {
         this.navigation = navigation;
-        this.viewModel = viewModel;
+        viewModel = viewModelFactory.getAccountsViewModel();
+        view = new PagePane<>();
         accountsMap = new HashMap<>();
-        accountsPane = new PagePane<>();
         accountViewModelAddedListener = new ListItemAddedListener<>(this::onAccountViewModelAdded);
         accountViewModelRemovedListener = new ListItemRemovedListener<>(this::onAccountViewModelRemoved);
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        accountsPane.titleProperty().set(StringResources.ACCOUNTS);
-        accountsPane.onAddActionProperty().set(this::onAddAccountPane);
+    public void initialize() {
+        view.titleProperty().set(StringResources.ACCOUNTS);
+        view.onAddActionProperty().set(this::onAddAccountPane);
         viewModel.accountsProperty().addListener(accountViewModelAddedListener);
         viewModel.accountsProperty().addListener(accountViewModelRemovedListener);
     }
 
     public PagePane<AccountPane> getView() {
-        return accountsPane;
+        return view;
+    }
+
+    public void onShowing() {
+        viewModel.clear();
+        viewModel.load();
     }
 
     private void onAddAccountPane(ActionEvent actionEvent) {
@@ -60,13 +63,13 @@ public class AccountsController implements Initializable {
         accountPane.imageProperty().bind(accountViewModel.platform().imageProperty());
         accountPane.platformNameProperty().bind(accountViewModel.platform().nameProperty());
         accountPane.grantsCountProperty().bind(accountViewModel.grantMap().grantCountProperty());
-        accountsPane.panesProperty().add(accountPane);
+        view.panesProperty().add(accountPane);
         accountsMap.put(accountViewModel, accountPane);
     }
 
     private void onAccountViewModelRemoved(AccountViewModel accountViewModel) {
         AccountPane accountPane = accountsMap.remove(accountViewModel);
-        accountsPane.panesProperty().remove(accountPane);
+        view.panesProperty().remove(accountPane);
     }
 
     private void onAccountPaneMainAction(AccountPaneActionEvent event) {
