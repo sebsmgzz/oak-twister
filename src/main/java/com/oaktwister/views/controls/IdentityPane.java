@@ -1,6 +1,7 @@
 package com.oaktwister.views.controls;
 
 import com.oaktwister.annotations.ViewDescriptor;
+import com.oaktwister.events.*;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.utils.extensions.LocalDateTimeUtil;
 import com.oaktwister.utils.extensions.NodeUtil;
@@ -10,7 +11,6 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,6 +30,8 @@ public class IdentityPane extends StackPane implements Initializable {
     private final SimpleObjectProperty<UUID> identifierProperty;
     private final SimpleObjectProperty<LocalDateTime> createdAtProperty;
     private final SimpleIntegerProperty grantsCountProperty;
+    private final SimpleObjectProperty<EventHandler<IdentityPaneActionEvent>> onMainActionProperty;
+    private final SimpleObjectProperty<EventHandler<IdentityPaneActionEvent>> onDeleteActionProperty;
 
     @FXML private Button mainButton;
     @FXML private Label identifierLabel;
@@ -42,6 +44,8 @@ public class IdentityPane extends StackPane implements Initializable {
         identifierProperty = new SimpleObjectProperty<>(UUIDUtil.empty());
         createdAtProperty = new SimpleObjectProperty<>(LocalDateTime.MIN);
         grantsCountProperty = new SimpleIntegerProperty();
+        onMainActionProperty = new SimpleObjectProperty<>();
+        onDeleteActionProperty = new SimpleObjectProperty<>();
         NodeUtil.loadControl(this);
     }
 
@@ -59,10 +63,24 @@ public class IdentityPane extends StackPane implements Initializable {
         grantsCountProperty.addListener((observable, oldValue, newValue) -> {
             grantsCountLabel.setText(newValue.toString());
         });
+        deleteButton.setOnAction(actionEvent -> {
+            EventHandler<IdentityPaneActionEvent> eventHandler = onDeleteActionProperty.get();
+            if(eventHandler != null) {
+                IdentityPaneActionEvent event = new IdentityPaneActionEvent(this, actionEvent);
+                eventHandler.handle(event);
+            }
+        });
+        mainButton.setOnAction(actionEvent -> {
+            EventHandler<IdentityPaneActionEvent> eventHandler = onMainActionProperty.get();
+            if(eventHandler != null) {
+                IdentityPaneActionEvent event = new IdentityPaneActionEvent(this, actionEvent);
+                eventHandler.handle(event);
+            }
+        });
     }
 
-    public ObjectProperty<EventHandler<ActionEvent>> onMainActionProperty() {
-        return mainButton.onActionProperty();
+    public SimpleObjectProperty<EventHandler<IdentityPaneActionEvent>> onMainActionProperty() {
+        return onMainActionProperty;
     }
 
     public ObjectProperty<UUID> identifierProperty() {
@@ -77,8 +95,8 @@ public class IdentityPane extends StackPane implements Initializable {
         return createdAtProperty;
     }
 
-    public ObjectProperty<EventHandler<ActionEvent>> onDeleteActionProperty() {
-        return deleteButton.onActionProperty();
+    public SimpleObjectProperty<EventHandler<IdentityPaneActionEvent>> onDeleteActionProperty() {
+        return onDeleteActionProperty;
     }
 
 /*

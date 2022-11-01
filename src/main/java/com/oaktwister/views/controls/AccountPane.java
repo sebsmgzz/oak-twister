@@ -1,18 +1,17 @@
 package com.oaktwister.views.controls;
 
 import com.oaktwister.annotations.ViewDescriptor;
+import com.oaktwister.events.AccountPaneActionEvent;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.utils.extensions.LocalDateTimeUtil;
 import com.oaktwister.utils.extensions.NodeUtil;
 import com.oaktwister.utils.extensions.UUIDUtil;
-import com.oaktwister.viewmodels.models.AccountViewModel;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,10 +30,11 @@ import java.util.UUID;
 @ViewDescriptor(location = ViewResources.Controls.ACCOUNT_PANE)
 public class AccountPane extends StackPane implements Initializable {
 
-    private final SimpleObjectProperty<AccountViewModel> viewModelProperty;
     private final SimpleObjectProperty<UUID> identifierProperty;
     private final SimpleObjectProperty<LocalDateTime> createdAtProperty;
     private final SimpleIntegerProperty grantsCountProperty;
+    private final SimpleObjectProperty<EventHandler<AccountPaneActionEvent>> onDeleteActionProperty;
+    private final SimpleObjectProperty<EventHandler<AccountPaneActionEvent>> onMainActionProperty;
 
     @FXML private Button mainButton;
     @FXML private ImageView imageView;
@@ -46,10 +46,11 @@ public class AccountPane extends StackPane implements Initializable {
 
     public AccountPane() {
         super();
-        viewModelProperty = new SimpleObjectProperty<>();
         identifierProperty = new SimpleObjectProperty<>(UUIDUtil.empty());
         createdAtProperty = new SimpleObjectProperty<>(LocalDateTime.MIN);
         grantsCountProperty = new SimpleIntegerProperty();
+        onDeleteActionProperty = new SimpleObjectProperty<>();
+        onMainActionProperty = new SimpleObjectProperty<>();
         NodeUtil.loadControl(this);
     }
 
@@ -67,10 +68,24 @@ public class AccountPane extends StackPane implements Initializable {
         grantsCountProperty.addListener((observable, oldValue, newValue) -> {
             grantsCountLabel.setText(newValue.toString());
         });
+        deleteButton.setOnAction(actionEvent -> {
+            EventHandler<AccountPaneActionEvent> eventHandler = onDeleteActionProperty.get();
+            if(eventHandler != null) {
+                AccountPaneActionEvent event = new AccountPaneActionEvent(this, actionEvent);
+                eventHandler.handle(event);
+            }
+        });
+        mainButton.setOnAction(actionEvent -> {
+            EventHandler<AccountPaneActionEvent> eventHandler = onMainActionProperty.get();
+            if(eventHandler != null) {
+                AccountPaneActionEvent event = new AccountPaneActionEvent(this, actionEvent);
+                eventHandler.handle(event);
+            }
+        });
     }
 
-    public ObjectProperty<EventHandler<ActionEvent>> onMainActionProperty() {
-        return mainButton.onActionProperty();
+    public SimpleObjectProperty<EventHandler<AccountPaneActionEvent>> onMainActionProperty() {
+        return onMainActionProperty;
     }
 
     public ObjectProperty<Image> imageProperty() {
@@ -93,8 +108,8 @@ public class AccountPane extends StackPane implements Initializable {
         return createdAtProperty;
     }
 
-    public ObjectProperty<EventHandler<ActionEvent>> onDeleteActionProperty() {
-        return deleteButton.onActionProperty();
+    public SimpleObjectProperty<EventHandler<AccountPaneActionEvent>> onDeleteActionProperty() {
+        return onDeleteActionProperty;
     }
 
     /*

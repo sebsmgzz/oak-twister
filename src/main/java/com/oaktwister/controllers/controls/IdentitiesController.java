@@ -1,6 +1,7 @@
 package com.oaktwister.controllers.controls;
 
 import com.oaktwister.core.Navigation;
+import com.oaktwister.events.IdentityPaneActionEvent;
 import com.oaktwister.services.resources.StringResources;
 import com.oaktwister.utils.listeners.ListItemAddedListener;
 import com.oaktwister.utils.listeners.ListItemRemovedListener;
@@ -52,8 +53,8 @@ public class IdentitiesController implements Initializable {
 
     private void onIdentityViewModelAdded(IdentityViewModel identityViewModel) {
         IdentityPane identityPane = new IdentityPane();
-        identityPane.onMainActionProperty().set(this::onIdentityPaneClick);
-        identityPane.onDeleteActionProperty().set(this::onIdentityPaneDeleteClick);
+        identityPane.onMainActionProperty().set(this::onIdentityPaneMainAction);
+        identityPane.onDeleteActionProperty().set(this::onIdentityPaneDeleteAction);
         identityPane.identifierProperty().bind(identityViewModel.idProperty());
         identityPane.grantsCountProperty().bind(identityViewModel.grantMap().grantCountProperty());
         identityPane.createdAtProperty().bind(identityViewModel.createdAtProperty());
@@ -66,11 +67,11 @@ public class IdentitiesController implements Initializable {
         identitiesPane.panesProperty().remove(identityPane);
     }
 
-    private void onIdentityPaneClick(ActionEvent actionEvent) {
+    private void onIdentityPaneMainAction(IdentityPaneActionEvent event) {
         // TODO: Show EditIdentityDialog
     }
 
-    private void onIdentityPaneDeleteClick(ActionEvent actionEvent) {
+    private void onIdentityPaneDeleteAction(IdentityPaneActionEvent event) {
         // TODO: Show DeleteIdentityAlert
     }
 

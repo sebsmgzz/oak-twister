@@ -2,7 +2,6 @@ package com.oaktwister.viewmodels.models;
 
 import com.oaktwister.core.ViewModelFactory;
 import com.oaktwister.models.Account;
-import com.oaktwister.events.DeleteAccountEvent;
 import com.oaktwister.models.Identity;
 import com.oaktwister.models.Platform;
 import com.oaktwister.models.grants.GrantMap;
@@ -34,7 +33,6 @@ public class AccountViewModel {
     private final SimpleObjectProperty<UUID> platformIdProperty;
     private final SimpleObjectProperty<UUID> identityIdProperty;
     private final SimpleObjectProperty<LocalDateTime> createdAtProperty;
-    private final SimpleObjectProperty<EventHandler<DeleteAccountEvent>> onDeleteAccountProperty;
 
     public AccountViewModel(ViewModelFactory viewModelFactory, AccountsRepo accountsRepo,
                             PlatformsRepo platformsRepo, IdentitiesRepo identitiesRepo, Logger logger) {
@@ -49,7 +47,6 @@ public class AccountViewModel {
         platformIdProperty = new SimpleObjectProperty<>(UUIDUtil.empty());
         identityIdProperty = new SimpleObjectProperty<>(UUIDUtil.empty());
         createdAtProperty = new SimpleObjectProperty<>(LocalDateTime.MIN);
-        onDeleteAccountProperty = new SimpleObjectProperty<>();
     }
 
     public void setAccount(Account account) {

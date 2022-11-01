@@ -1,6 +1,7 @@
 package com.oaktwister.controllers.controls;
 
 import com.oaktwister.core.Navigation;
+import com.oaktwister.events.AccountPaneActionEvent;
 import com.oaktwister.services.resources.StringResources;
 import com.oaktwister.utils.listeners.ListItemAddedListener;
 import com.oaktwister.utils.listeners.ListItemRemovedListener;
@@ -30,8 +31,8 @@ public class AccountsController implements Initializable {
         this.viewModel = viewModel;
         accountsMap = new HashMap<>();
         accountsPane = new PagePane<>();
-        accountViewModelAddedListener = new ListItemAddedListener<>(this::onAccountPaneAdded);
-        accountViewModelRemovedListener = new ListItemRemovedListener<>(this::onAccountPaneRemoved);
+        accountViewModelAddedListener = new ListItemAddedListener<>(this::onAccountViewModelAdded);
+        accountViewModelRemovedListener = new ListItemRemovedListener<>(this::onAccountViewModelRemoved);
     }
 
     @Override
@@ -50,10 +51,10 @@ public class AccountsController implements Initializable {
         // TODO: Show EditAccountDialog
     }
 
-    private void onAccountPaneAdded(AccountViewModel accountViewModel) {
+    private void onAccountViewModelAdded(AccountViewModel accountViewModel) {
         AccountPane accountPane = new AccountPane();
-        accountPane.onMainActionProperty().set(this::onAccountPaneClick);
-        accountPane.onDeleteActionProperty().set(this::onAccountPaneDeleteClick);
+        accountPane.onMainActionProperty().set(this::onAccountPaneMainAction);
+        accountPane.onDeleteActionProperty().set(this::onAccountPaneDeleteAction);
         accountPane.identifierProperty().bind(accountViewModel.idProperty());
         accountPane.createdAtProperty().bind(accountViewModel.createdAtProperty());
         accountPane.imageProperty().bind(accountViewModel.platform().imageProperty());
@@ -63,16 +64,16 @@ public class AccountsController implements Initializable {
         accountsMap.put(accountViewModel, accountPane);
     }
 
-    private void onAccountPaneRemoved(AccountViewModel accountViewModel) {
+    private void onAccountViewModelRemoved(AccountViewModel accountViewModel) {
         AccountPane accountPane = accountsMap.remove(accountViewModel);
         accountsPane.panesProperty().remove(accountPane);
     }
 
-    private void onAccountPaneClick(ActionEvent actionEvent) {
+    private void onAccountPaneMainAction(AccountPaneActionEvent event) {
         // TODO: Show EditAccountDialog
     }
 
-    private void onAccountPaneDeleteClick(ActionEvent actionEvent) {
+    private void onAccountPaneDeleteAction(AccountPaneActionEvent event) {
         // TODO: Show DeleteAccountAlert
     }
 
