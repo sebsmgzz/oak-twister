@@ -95,7 +95,7 @@ public class LoginViewModel {
         // TODO: Set the encryption key in the SessionSettings
         sessionSettings.setMeta(driveMeta);
         sessionSettings.setDrive(drive);
-        return false;
+        return true;
     }
 
     public void browse(String urlString) {

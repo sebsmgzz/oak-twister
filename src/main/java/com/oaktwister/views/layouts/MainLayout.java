@@ -21,7 +21,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 @ViewDescriptor(location = ViewResources.Windows.MAIN)
-public class MainLayout extends Parent implements Initializable {
+public class MainLayout extends BorderPane implements Initializable {
 
     @FXML private BorderPane borderPane;
     @FXML private ImageButtonBox accountsImageButtonBox;
@@ -36,7 +36,7 @@ public class MainLayout extends Parent implements Initializable {
     private final SimpleObjectProperty<Node> identitiesPageProperty;
 
     public MainLayout() {
-        pageProperty = new SimpleObjectProperty<>(MainPage.ACCOUNTS);
+        pageProperty = new SimpleObjectProperty<>();
         accountPageProperty = new SimpleObjectProperty<>();
         platformsPageProperty = new SimpleObjectProperty<>();
         identitiesPageProperty = new SimpleObjectProperty<>();
@@ -51,7 +51,7 @@ public class MainLayout extends Parent implements Initializable {
         identitiesImageButtonBox.setOnAction(event -> pageProperty.set(MainPage.IDENTITIES));
     }
 
-    public ReadOnlyObjectProperty<MainPage> pageProperty() {
+    public ObjectProperty<MainPage> pageProperty() {
         return pageProperty;
     }
 
@@ -64,7 +64,7 @@ public class MainLayout extends Parent implements Initializable {
     }
 
     public ObjectProperty<Node> identitiesPageProperty() {
-        return accountPageProperty;
+        return identitiesPageProperty;
     }
 
     public ObjectProperty<EventHandler<ActionEvent>> onBackActionProperty() {
@@ -89,6 +89,9 @@ public class MainLayout extends Parent implements Initializable {
             case IDENTITIES -> {
                 Node centerNode = identitiesPageProperty.get();
                 borderPane.setCenter(centerNode);
+            }
+            default -> {
+                borderPane.setCenter(null);
             }
         }
     }
