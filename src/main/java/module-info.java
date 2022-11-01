@@ -25,5 +25,7 @@ module oaktwister.main {
 
     exports com.oaktwister.views.dialogs;
     opens com.oaktwister.views.dialogs to javafx.fxml;
+    exports com.oaktwister.utils;
+    opens com.oaktwister.utils to javafx.graphics;
 
 }

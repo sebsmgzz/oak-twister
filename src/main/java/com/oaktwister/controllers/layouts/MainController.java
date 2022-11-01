@@ -1,9 +1,9 @@
 package com.oaktwister.controllers.layouts;
 
 import com.oaktwister.core.UIContext;
-
 import com.oaktwister.views.layouts.MainLayout;
 import com.oaktwister.views.layouts.MainLayoutPage;
+
 import javafx.beans.value.ObservableValue;
 
 public class MainController {

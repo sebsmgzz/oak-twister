@@ -9,6 +9,7 @@ import com.oaktwister.viewmodels.collections.AccountsViewModel;
 import com.oaktwister.viewmodels.models.AccountViewModel;
 import com.oaktwister.views.controls.AccountPane;
 import com.oaktwister.views.controls.PagePane;
+
 import javafx.event.ActionEvent;
 
 import java.util.HashMap;

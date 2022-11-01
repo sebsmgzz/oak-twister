@@ -9,8 +9,8 @@ import com.oaktwister.controllers.dialogs.EditPlatformDialogController;
 import com.oaktwister.views.dialogs.EditPlatformDialogResult;
 import com.oaktwister.controllers.layouts.LoginController;
 import com.oaktwister.controllers.layouts.MainController;
-
 import com.oaktwister.views.layouts.MainLayout;
+
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;

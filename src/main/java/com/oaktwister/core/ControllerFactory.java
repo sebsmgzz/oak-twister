@@ -5,6 +5,7 @@ import com.oaktwister.controllers.controls.IdentitiesController;
 import com.oaktwister.controllers.controls.PlatformsController;
 import com.oaktwister.controllers.layouts.LoginController;
 import com.oaktwister.controllers.layouts.MainController;
+import com.oaktwister.utils.Lazy;
 
 public class ControllerFactory {
 

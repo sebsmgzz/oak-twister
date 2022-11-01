@@ -1,4 +1,4 @@
-package com.oaktwister.core;
+package com.oaktwister.utils;
 
 import java.util.concurrent.Callable;
 

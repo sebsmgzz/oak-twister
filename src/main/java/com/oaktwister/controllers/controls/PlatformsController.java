@@ -11,9 +11,10 @@ import com.oaktwister.views.controls.PagePane;
 import com.oaktwister.views.controls.PlatformPane;
 import com.oaktwister.views.controls.PlatformPaneEvent;
 import com.oaktwister.views.dialogs.EditPlatformDialogResult;
+
 import javafx.event.ActionEvent;
 
-import java.util.*;
+import java.util.HashMap;
 
 public class PlatformsController {
 

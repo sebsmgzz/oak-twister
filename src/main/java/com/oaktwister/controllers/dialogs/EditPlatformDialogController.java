@@ -6,7 +6,8 @@ import com.oaktwister.viewmodels.models.ClaimViewModel;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
 
 import com.oaktwister.views.dialogs.EditPlatformDialogResult;
-import javafx.beans.property.*;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
