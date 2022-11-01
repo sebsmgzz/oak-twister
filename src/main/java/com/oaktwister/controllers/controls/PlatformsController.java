@@ -1,7 +1,6 @@
 package com.oaktwister.controllers.controls;
 
-import com.oaktwister.core.Navigation;
-import com.oaktwister.core.ViewModelFactory;
+import com.oaktwister.core.UIContext;
 import com.oaktwister.services.resources.StringResources;
 import com.oaktwister.utils.extensions.MapUtil;
 import com.oaktwister.utils.listeners.ListItemAddedListener;
@@ -18,7 +17,7 @@ import java.util.*;
 
 public class PlatformsController {
 
-    private final Navigation navigation;
+    private final UIContext ui;
 
     private final PlatformsViewModel viewModel;
     private final PagePane<PlatformPane> view;
@@ -27,9 +26,9 @@ public class PlatformsController {
     private final ListItemAddedListener<PlatformViewModel> platformViewModelAddedListener;
     private final ListItemRemovedListener<PlatformViewModel> platformViewModelRemovedListener;
 
-    public PlatformsController(Navigation navigation, ViewModelFactory viewModelFactory) {
-        this.navigation = navigation;
-        viewModel = viewModelFactory.getPlatformsViewModel();
+    public PlatformsController(UIContext ui) {
+        this.ui = ui;
+        viewModel = ui.viewModels().platforms();
         view = new PagePane<>();
         platformsMap = new HashMap<>();
         platformViewModelAddedListener = new ListItemAddedListener<>(this::onPlatformViewModelAdded);
@@ -47,14 +46,14 @@ public class PlatformsController {
         return view;
     }
 
-    public void onShowing() {
+    public void reloadPlatforms() {
         viewModel.clear();
         viewModel.load();
     }
 
     private void onAddPlatformPane(ActionEvent actionEvent) {
-        PlatformViewModel platformViewModel = navigation.viewModelFactory.getPlatformViewModel();
-        EditPlatformDialogResult result = navigation.showEditPlatformDialog(platformViewModel);
+        PlatformViewModel platformViewModel = ui.viewModels().platform();
+        EditPlatformDialogResult result = ui.navigation().showEditPlatformDialog(platformViewModel);
         if(result == EditPlatformDialogResult.SAVED) {
             // TODO: Save to database
             System.out.println("Saving platform to database");
@@ -85,7 +84,7 @@ public class PlatformsController {
             // TODO: Throw exception? This should never happen
             return;
         }
-        EditPlatformDialogResult result = navigation.showEditPlatformDialog(platformViewModel);
+        EditPlatformDialogResult result = ui.navigation().showEditPlatformDialog(platformViewModel);
         if(result == EditPlatformDialogResult.SAVED) {
             // TODO: Save to database
             System.out.println("Updating platform to database");

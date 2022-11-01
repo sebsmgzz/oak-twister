@@ -10,7 +10,6 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,7 +37,7 @@ public class PlatformsViewModel {
         Platform platform = new Platform(name, image, url);
         boolean success = platformsRepo.add(platform);
         if(success) {
-            PlatformViewModel platformViewModel = viewModelFactory.getPlatformViewModel();
+            PlatformViewModel platformViewModel = viewModelFactory.platform();
             this.platformsProperty.add(platformViewModel);
             platformViewModel.setPlatform(platform);
         }
@@ -49,7 +48,7 @@ public class PlatformsViewModel {
         logger.debug("Loading platforms");
         List<Platform> platforms = platformsRepo.findAll();
         for(Platform platform : platforms) {
-            PlatformViewModel platformViewModel = viewModelFactory.getPlatformViewModel();
+            PlatformViewModel platformViewModel = viewModelFactory.platform();
             platformViewModel.setPlatform(platform);
             this.platformsProperty.add(platformViewModel);
         }

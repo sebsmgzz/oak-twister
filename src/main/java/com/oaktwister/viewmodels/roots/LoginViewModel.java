@@ -71,7 +71,7 @@ public class LoginViewModel {
         drivesProperty.clear();
         List<Drive> drives = driveLoader.listAllDrives();
         for (Drive drive : drives) {
-            DriveViewModel driveViewModel = viewModelFactory.getDriveViewModel(drive);
+            DriveViewModel driveViewModel = viewModelFactory.drive(drive);
             drivesProperty.add(driveViewModel);
         }
     }

@@ -37,7 +37,7 @@ public class PlatformViewModel {
         this.platformsRepo = platformsRepo;
         this.imagesRepo = imagesRepo;
         this.logger = logger;
-        claimMapViewModel = viewModelFactory.getClaimMapViewModel();
+        claimMapViewModel = viewModelFactory.claimMap();
         idProperty = new SimpleObjectProperty<>(UUIDUtil.empty());
         nameProperty = new SimpleStringProperty();
         imageIdProperty = new SimpleObjectProperty<>(UUIDUtil.empty());

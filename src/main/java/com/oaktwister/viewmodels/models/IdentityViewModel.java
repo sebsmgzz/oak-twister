@@ -2,8 +2,6 @@ package com.oaktwister.viewmodels.models;
 
 import com.oaktwister.core.ViewModelFactory;
 import com.oaktwister.models.Identity;
-import com.oaktwister.models.claims.Claim;
-import com.oaktwister.models.grants.Grant;
 import com.oaktwister.models.grants.GrantMap;
 import com.oaktwister.services.logging.Logger;
 import com.oaktwister.services.repos.IdentitiesRepo;
@@ -11,7 +9,6 @@ import com.oaktwister.utils.extensions.UUIDUtil;
 
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.ObservableList;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -29,7 +26,7 @@ public class IdentityViewModel {
     public IdentityViewModel(ViewModelFactory viewModelFactory, IdentitiesRepo identitiesRepo, Logger logger) {
         this.identitiesRepo = identitiesRepo;
         this.logger = logger;
-        grantMapViewModel = viewModelFactory.getGrantMapViewModel();
+        grantMapViewModel = viewModelFactory.grantMap();
         idProperty = new SimpleObjectProperty<>(UUIDUtil.empty());
         createdAtProperty = new SimpleObjectProperty<>(LocalDateTime.MIN);
     }

@@ -1,7 +1,6 @@
 package com.oaktwister.controllers.controls;
 
-import com.oaktwister.core.Navigation;
-import com.oaktwister.core.ViewModelFactory;
+import com.oaktwister.core.UIContext;
 import com.oaktwister.events.IdentityPaneActionEvent;
 import com.oaktwister.services.resources.StringResources;
 import com.oaktwister.utils.listeners.ListItemAddedListener;
@@ -10,16 +9,14 @@ import com.oaktwister.viewmodels.collections.IdentitiesViewModel;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
 import com.oaktwister.views.controls.IdentityPane;
 import com.oaktwister.views.controls.PagePane;
-import javafx.event.ActionEvent;
-import javafx.fxml.Initializable;
 
-import java.net.URL;
+import javafx.event.ActionEvent;
+
 import java.util.HashMap;
-import java.util.ResourceBundle;
 
 public class IdentitiesController {
 
-    private final Navigation navigation;
+    private final UIContext ui;
 
     private final IdentitiesViewModel viewModel;
     private final PagePane<IdentityPane> view;
@@ -28,9 +25,9 @@ public class IdentitiesController {
     private final ListItemAddedListener<IdentityViewModel> identityViewModelAddedListener;
     private final ListItemRemovedListener<IdentityViewModel> identityViewModelRemovedListener;
 
-    public IdentitiesController(Navigation navigation, ViewModelFactory viewModelFactory) {
-        this.navigation = navigation;
-        viewModel = viewModelFactory.getIdentitiesViewModel();
+    public IdentitiesController(UIContext ui) {
+        this.ui = ui;
+        viewModel = ui.viewModels().identities();
         view = new PagePane<>();
         identitiesMap = new HashMap<>();
         identityViewModelAddedListener = new ListItemAddedListener<>(this::onIdentityViewModelAdded);
@@ -48,7 +45,7 @@ public class IdentitiesController {
         return view;
     }
 
-    public void onShowing() {
+    public void reloadIdentities() {
         viewModel.clear();
         viewModel.load();
     }

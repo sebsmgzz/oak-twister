@@ -13,10 +13,11 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextField?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.oaktwister.controllers.layouts.LoginController"
-            prefHeight="400.0" prefWidth="600.0">
+<fx:root xmlns="http://javafx.com/javafx/8"
+         xmlns:fx="http://javafx.com/fxml/1"
+         type="javafx.scene.layout.AnchorPane"
+         fx:controller="com.oaktwister.views.layouts.LoginLayout"
+         prefHeight="400.0" prefWidth="600.0">
     <BorderPane prefHeight="200.0" prefWidth="200.0"
                 AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                 AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -93,4 +94,4 @@
         </center>
 
     </BorderPane>
-</AnchorPane>
+</fx:root>

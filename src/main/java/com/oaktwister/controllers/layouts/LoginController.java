@@ -1,87 +1,72 @@
 package com.oaktwister.controllers.layouts;
 
-import com.oaktwister.annotations.ViewDescriptor;
-import com.oaktwister.core.Navigation;
+import com.oaktwister.core.UIContext;
 import com.oaktwister.services.resources.StringResources;
-import com.oaktwister.services.resources.ViewResources;
-import com.oaktwister.viewmodels.models.DriveViewModel;
 import com.oaktwister.viewmodels.roots.LoginViewModel;
+import com.oaktwister.views.layouts.LoginLayout;
 import com.oaktwister.views.layouts.LoginLayoutDriveCell;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.TextField;
+import javafx.scene.Parent;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+public class LoginController {
 
-@ViewDescriptor(location = ViewResources.Windows.LOGIN)
-public class LoginController implements Initializable {
+    private final UIContext ui;
 
-    private final Navigation navigation;
     private final LoginViewModel viewModel;
+    private final LoginLayout view;
 
-    @FXML private Button newUserButton;
-    @FXML private Button newDriveButton;
-    @FXML private Hyperlink websiteHyperlink;
-    @FXML private Hyperlink documentationHyperlink;
-    @FXML private Hyperlink repositoryHyperlink;
-    @FXML private ComboBox<DriveViewModel> driveComboBox;
-    @FXML private TextField usernameTextField;
-    @FXML private TextField passwordTextField;
-    @FXML private Button loginButton;
-
-    public LoginController(Navigation navigation, LoginViewModel viewModel) {
-        this.navigation = navigation;
-        this.viewModel = viewModel;
+    public LoginController(UIContext ui) {
+        this.ui = ui;
+        viewModel = ui.viewModels().login();
+        view = new LoginLayout();
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public Parent getView() {
+        return view;
+    }
 
+    public void initialize() {
         // Set button's actions
-        newUserButton.setOnAction(this::onNewUserButtonClick);
-        newDriveButton.setOnAction(this::onNewDriveButtonClick);
-        loginButton.setOnAction(this::onLoginButtonClick);
+        view.onNewUserActionProperty().set(this::onNewUserButtonClick);
+        view.onNewDriveActionProperty().set(this::onNewDriveButtonClick);
+        view.onLoginActionProperty().set(this::onLoginButtonClick);
 
         // Configure combo box
-        driveComboBox.setButtonCell(new LoginLayoutDriveCell());
-        driveComboBox.setCellFactory(listView -> new LoginLayoutDriveCell());
-        driveComboBox.itemsProperty().bind(viewModel.drivesProperty());
-        driveComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+        view.driveButtonCellProperty().set(new LoginLayoutDriveCell());
+        view.driveCellFactoryProperty().set(listView -> new LoginLayoutDriveCell());
+        view.drivesProperty().bind(viewModel.drivesProperty());
+        view.driveProperty().addListener((observable, oldValue, newValue) -> {
             viewModel.selectedDriveProperty().set(newValue);
         });
-        driveComboBox.setOnShowing(event -> {
+        view.onShowingDrivesProperty().set(event -> {
             viewModel.loadDrives();
         });
 
         // Set hyperlink's actions
-        websiteHyperlink.setOnAction(event -> viewModel.browse(StringResources.Url.WEBSITE));
-        documentationHyperlink.setOnAction(event -> viewModel.browse(StringResources.Url.DOCUMENTATION));
-        repositoryHyperlink.setOnAction(event -> viewModel.browse(StringResources.Url.REPOSITORY));
+        view.onWebsiteLinkActionProperty().set(event -> viewModel.browse(StringResources.Url.WEBSITE));
+        view.onDocumentationLinkActionProperty().set(event -> viewModel.browse(StringResources.Url.DOCUMENTATION));
+        view.onRepositoryLinkActionProperty().set(event -> viewModel.browse(StringResources.Url.REPOSITORY));
 
         // Bind properties
-        usernameTextField.textProperty().bindBidirectional(viewModel.usernameProperty());
-        passwordTextField.textProperty().bindBidirectional(viewModel.passwordProperty());
-
+        view.usernameProperty().bindBidirectional(viewModel.usernameProperty());
+        view.passwordProperty().bindBidirectional(viewModel.passwordProperty());
     }
 
     private void onNewDriveButtonClick(ActionEvent actionEvent) {
+        // TODO: Show FormatDriveDialog
     }
 
     private void onNewUserButtonClick(ActionEvent actionEvent) {
+        // TODO: Show FormatUserDialog
     }
 
     private void onLoginButtonClick(ActionEvent actionEvent) {
         boolean loggedIn = viewModel.tryLogin();
         if(loggedIn) {
-            navigation.goToMain();
+            ui.navigation().goToMain();
         } else {
             String errorMessage = viewModel.loginErrorMessageProperty().get();
-            navigation.showLoginFailedAlert(errorMessage);
+            ui.navigation().showLoginFailedAlert(errorMessage);
         }
     }
 

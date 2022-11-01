@@ -1,7 +1,6 @@
 package com.oaktwister.controllers.controls;
 
-import com.oaktwister.core.Navigation;
-import com.oaktwister.core.ViewModelFactory;
+import com.oaktwister.core.UIContext;
 import com.oaktwister.events.AccountPaneActionEvent;
 import com.oaktwister.services.resources.StringResources;
 import com.oaktwister.utils.listeners.ListItemAddedListener;
@@ -16,7 +15,7 @@ import java.util.HashMap;
 
 public class AccountsController {
 
-    private final Navigation navigation;
+    private final UIContext ui;
 
     private final AccountsViewModel viewModel;
     private final PagePane<AccountPane> view;
@@ -25,9 +24,9 @@ public class AccountsController {
     private final ListItemAddedListener<AccountViewModel> accountViewModelAddedListener;
     private final ListItemRemovedListener<AccountViewModel> accountViewModelRemovedListener;
 
-    public AccountsController(Navigation navigation, ViewModelFactory viewModelFactory) {
-        this.navigation = navigation;
-        viewModel = viewModelFactory.getAccountsViewModel();
+    public AccountsController(UIContext ui) {
+        this.ui = ui;
+        viewModel = ui.viewModels().accounts();
         view = new PagePane<>();
         accountsMap = new HashMap<>();
         accountViewModelAddedListener = new ListItemAddedListener<>(this::onAccountViewModelAdded);
@@ -45,7 +44,7 @@ public class AccountsController {
         return view;
     }
 
-    public void onShowing() {
+    public void reloadAccounts() {
         viewModel.clear();
         viewModel.load();
     }

@@ -33,7 +33,7 @@ public class AccountsViewModel {
         logger.debug("Loading accounts");
         List<Account> accounts = accountsRepo.findAll();
         for(Account account : accounts) {
-            AccountViewModel accountViewModel = viewModelFactory.getAccountViewModel();
+            AccountViewModel accountViewModel = viewModelFactory.account();
             accountViewModel.setAccount(account);
             accountsProperty.add(accountViewModel);
         }

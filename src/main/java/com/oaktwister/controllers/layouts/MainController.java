@@ -1,54 +1,41 @@
 package com.oaktwister.controllers.layouts;
 
-import com.oaktwister.controllers.controls.AccountsController;
-import com.oaktwister.controllers.controls.IdentitiesController;
-import com.oaktwister.controllers.controls.PlatformsController;
-import com.oaktwister.core.Navigation;
-import com.oaktwister.core.ViewModelFactory;
+import com.oaktwister.core.UIContext;
 
-import com.oaktwister.utils.extensions.NodeUtil;
 import com.oaktwister.views.layouts.MainLayout;
 import com.oaktwister.views.layouts.MainLayoutPage;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.Parent;
 
 public class MainController {
 
-    private final Navigation navigation;
+    private final UIContext ui;
+
     private final MainLayout view;
 
-    private final AccountsController accountsController;
-    private final PlatformsController platformsController;
-    private final IdentitiesController identitiesController;
-
-    public MainController(Navigation navigation, ViewModelFactory viewModelFactory) {
-        this.navigation = navigation;
+    public MainController(UIContext ui) {
+        this.ui = ui;
         view = new MainLayout();
-        accountsController = new AccountsController(navigation, viewModelFactory);
-        platformsController = new PlatformsController(navigation, viewModelFactory);
-        identitiesController = new IdentitiesController(navigation, viewModelFactory);
     }
 
-    public Parent load() {
-        Parent parent = NodeUtil.loadWindow(view);
+    public MainLayout getView() {
+        return view;
+    }
+
+    public void initialize() {
         view.pageProperty().addListener(this::onPagePropertyChanged);
-        view.accountPageProperty().set(accountsController.getView());
-        view.platformsPageProperty().set(platformsController.getView());
-        view.identitiesPageProperty().set(identitiesController.getView());
-        view.onBackActionProperty().set(event -> navigation.goToLogin());
+        view.accountPageProperty().set(ui.controllers().accounts().getView());
+        view.platformsPageProperty().set(ui.controllers().platforms().getView());
+        view.identitiesPageProperty().set(ui.controllers().identities().getView());
+        view.onBackActionProperty().set(event -> ui.navigation().goToLogin());
         view.onSettingsActionProperty().set(event -> { /* TODO */ });
-        accountsController.initialize();
-        platformsController.initialize();
-        identitiesController.initialize();
-        return parent;
     }
 
     private void onPagePropertyChanged(ObservableValue<? extends MainLayoutPage> observable,
                                        MainLayoutPage oldValue, MainLayoutPage newValue) {
         switch (newValue) {
-            case ACCOUNTS -> accountsController.onShowing();
-            case PLATFORMS -> platformsController.onShowing();
-            case IDENTITIES -> identitiesController.onShowing();
+            case ACCOUNTS -> ui.controllers().accounts().reloadAccounts();
+            case PLATFORMS -> ui.controllers().platforms().reloadPlatforms();
+            case IDENTITIES -> ui.controllers().identities().reloadIdentities();
         }
     }
 

@@ -29,7 +29,7 @@ public class ClaimMapViewModel {
     public void setClaimMap(ClaimMap claimMap) {
         Collection<Claim> claims = claimMap.claims();
         for(Claim claim : claims) {
-            ClaimViewModel claimViewModel = viewModelFactory.getClaimViewModel();
+            ClaimViewModel claimViewModel = viewModelFactory.claim();
             claimViewModel.setClaim(claim);
             claimsProperty.add(claimViewModel);
         }

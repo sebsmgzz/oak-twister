@@ -13,6 +13,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 
@@ -20,7 +21,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 @ViewDescriptor(location = ViewResources.Windows.MAIN)
-public class MainLayout implements Initializable {
+public class MainLayout extends Parent implements Initializable {
 
     @FXML private BorderPane borderPane;
     @FXML private ImageButtonBox accountsImageButtonBox;
@@ -39,6 +40,7 @@ public class MainLayout implements Initializable {
         accountPageProperty = new SimpleObjectProperty<>();
         platformsPageProperty = new SimpleObjectProperty<>();
         identitiesPageProperty = new SimpleObjectProperty<>();
+        NodeUtil.loadControl(this);
     }
 
     @Override

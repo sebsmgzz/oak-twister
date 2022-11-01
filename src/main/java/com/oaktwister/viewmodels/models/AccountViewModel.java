@@ -13,7 +13,6 @@ import com.oaktwister.utils.extensions.UUIDUtil;
 
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.event.EventHandler;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -40,9 +39,9 @@ public class AccountViewModel {
         this.platformsRepo = platformsRepo;
         this.identitiesRepo = identitiesRepo;
         this.logger = logger;
-        identityViewModel = viewModelFactory.getIdentityViewModel();
-        platformViewModel = viewModelFactory.getPlatformViewModel();
-        grantMapViewModel = viewModelFactory.getGrantMapViewModel();
+        identityViewModel = viewModelFactory.identity();
+        platformViewModel = viewModelFactory.platform();
+        grantMapViewModel = viewModelFactory.grantMap();
         idProperty = new SimpleObjectProperty<>(UUIDUtil.empty());
         platformIdProperty = new SimpleObjectProperty<>(UUIDUtil.empty());
         identityIdProperty = new SimpleObjectProperty<>(UUIDUtil.empty());

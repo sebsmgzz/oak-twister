@@ -33,7 +33,7 @@ public class IdentitiesViewModel {
         logger.debug("Loading identities");
         ArrayList<Identity> identities = identitiesRepo.findAll();
         for(Identity identity : identities) {
-            IdentityViewModel identityViewModel = viewModelFactory.getIdentityViewModel();
+            IdentityViewModel identityViewModel = viewModelFactory.identity();
             identitiesProperty.add(identityViewModel);
             identityViewModel.setIdentity(identity);
         }
