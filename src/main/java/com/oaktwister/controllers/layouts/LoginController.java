@@ -5,7 +5,7 @@ import com.oaktwister.core.UIContext;
 import com.oaktwister.services.resources.StringResources;
 import com.oaktwister.viewmodels.roots.LoginViewModel;
 import com.oaktwister.views.layouts.LoginLayout;
-import com.oaktwister.views.layouts.LoginLayoutDriveCell;
+import com.oaktwister.views.layouts.LoginDriveCell;
 
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
@@ -29,13 +29,12 @@ public class LoginController {
 
     public void initialize() {
         // Set button's actions
-        view.onNewUserActionProperty().set(this::onNewUserButtonClick);
-        view.onNewDriveActionProperty().set(this::onNewDriveButtonClick);
         view.onLoginActionProperty().set(this::onLoginButtonClick);
+        view.onNewDriveLinkActionProperty().set(this::onNewDriveClick);
 
         // Configure combo box
-        view.driveButtonCellProperty().set(new LoginLayoutDriveCell());
-        view.driveCellFactoryProperty().set(listView -> new LoginLayoutDriveCell());
+        view.driveButtonCellProperty().set(new LoginDriveCell());
+        view.driveCellFactoryProperty().set(listView -> new LoginDriveCell());
         view.drivesProperty().bind(viewModel.drivesProperty());
         view.driveProperty().addListener((observable, oldValue, newValue) -> {
             viewModel.selectedDriveProperty().set(newValue);
@@ -54,12 +53,8 @@ public class LoginController {
         view.passwordProperty().bindBidirectional(viewModel.passwordProperty());
     }
 
-    private void onNewDriveButtonClick(ActionEvent actionEvent) {
+    private void onNewDriveClick(ActionEvent actionEvent) {
         // TODO: Show FormatDriveDialog
-    }
-
-    private void onNewUserButtonClick(ActionEvent actionEvent) {
-        // TODO: Show FormatUserDialog
     }
 
     private void onLoginButtonClick(ActionEvent actionEvent) {

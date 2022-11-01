@@ -1,6 +1,6 @@
 package com.oaktwister.views.layouts;
 
-public enum MainLayoutPage {
+public enum MainPage {
     IDENTITIES,
     PLATFORMS,
     ACCOUNTS

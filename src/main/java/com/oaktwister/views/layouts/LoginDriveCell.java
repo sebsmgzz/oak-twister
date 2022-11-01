@@ -3,7 +3,7 @@ package com.oaktwister.views.layouts;
 import com.oaktwister.viewmodels.models.DriveViewModel;
 import javafx.scene.control.ListCell;
 
-public class LoginLayoutDriveCell extends ListCell<DriveViewModel> {
+public class LoginDriveCell extends ListCell<DriveViewModel> {
 
     @Override
     protected void updateItem(DriveViewModel item, boolean empty) {

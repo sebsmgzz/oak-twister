@@ -30,13 +30,13 @@ public class MainLayout extends Parent implements Initializable {
     @FXML private Button backButton;
     @FXML private Button settingsButton;
 
-    private final SimpleObjectProperty<MainLayoutPage> pageProperty;
+    private final SimpleObjectProperty<MainPage> pageProperty;
     private final SimpleObjectProperty<Node> accountPageProperty;
     private final SimpleObjectProperty<Node> platformsPageProperty;
     private final SimpleObjectProperty<Node> identitiesPageProperty;
 
     public MainLayout() {
-        pageProperty = new SimpleObjectProperty<>(MainLayoutPage.ACCOUNTS);
+        pageProperty = new SimpleObjectProperty<>(MainPage.ACCOUNTS);
         accountPageProperty = new SimpleObjectProperty<>();
         platformsPageProperty = new SimpleObjectProperty<>();
         identitiesPageProperty = new SimpleObjectProperty<>();
@@ -46,12 +46,12 @@ public class MainLayout extends Parent implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         pageProperty.addListener(this::onPagePropertyChanged);
-        accountsImageButtonBox.setOnAction(event -> pageProperty.set(MainLayoutPage.ACCOUNTS));
-        platformsImageButtonBox.setOnAction(event -> pageProperty.set(MainLayoutPage.PLATFORMS));
-        identitiesImageButtonBox.setOnAction(event -> pageProperty.set(MainLayoutPage.IDENTITIES));
+        accountsImageButtonBox.setOnAction(event -> pageProperty.set(MainPage.ACCOUNTS));
+        platformsImageButtonBox.setOnAction(event -> pageProperty.set(MainPage.PLATFORMS));
+        identitiesImageButtonBox.setOnAction(event -> pageProperty.set(MainPage.IDENTITIES));
     }
 
-    public ReadOnlyObjectProperty<MainLayoutPage> pageProperty() {
+    public ReadOnlyObjectProperty<MainPage> pageProperty() {
         return pageProperty;
     }
 
@@ -75,8 +75,8 @@ public class MainLayout extends Parent implements Initializable {
         return settingsButton.onActionProperty();
     }
 
-    private void onPagePropertyChanged(ObservableValue<? extends MainLayoutPage> observable,
-                                       MainLayoutPage oldValue, MainLayoutPage newValue) {
+    private void onPagePropertyChanged(ObservableValue<? extends MainPage> observable,
+                                       MainPage oldValue, MainPage newValue) {
         switch (newValue) {
             case ACCOUNTS -> {
                 Node centerNode = accountPageProperty.get();

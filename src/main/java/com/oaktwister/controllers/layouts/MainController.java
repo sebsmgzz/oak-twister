@@ -2,7 +2,7 @@ package com.oaktwister.controllers.layouts;
 
 import com.oaktwister.core.UIContext;
 import com.oaktwister.views.layouts.MainLayout;
-import com.oaktwister.views.layouts.MainLayoutPage;
+import com.oaktwister.views.layouts.MainPage;
 
 import javafx.beans.value.ObservableValue;
 
@@ -30,8 +30,8 @@ public class MainController {
         view.onSettingsActionProperty().set(event -> { /* TODO */ });
     }
 
-    private void onPagePropertyChanged(ObservableValue<? extends MainLayoutPage> observable,
-                                       MainLayoutPage oldValue, MainLayoutPage newValue) {
+    private void onPagePropertyChanged(ObservableValue<? extends MainPage> observable,
+                                       MainPage oldValue, MainPage newValue) {
         switch (newValue) {
             case ACCOUNTS -> ui.controllers().accounts().reloadAccounts();
             case PLATFORMS -> ui.controllers().platforms().reloadPlatforms();
