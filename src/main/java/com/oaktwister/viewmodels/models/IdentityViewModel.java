@@ -9,6 +9,9 @@ import com.oaktwister.utils.extensions.UUIDUtil;
 
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -21,12 +24,14 @@ public class IdentityViewModel {
     private final GrantMapViewModel grantMapViewModel;
 
     private final SimpleObjectProperty<UUID> idProperty;
+    private final SimpleStringProperty nameProperty;
     private final SimpleObjectProperty<LocalDateTime> createdAtProperty;
 
     public IdentityViewModel(ViewModelFactory viewModelFactory, IdentitiesRepo identitiesRepo, Logger logger) {
         this.identitiesRepo = identitiesRepo;
         this.logger = logger;
         grantMapViewModel = viewModelFactory.grantMap();
+        nameProperty = new SimpleStringProperty();
         idProperty = new SimpleObjectProperty<>(UUIDUtil.empty());
         createdAtProperty = new SimpleObjectProperty<>(LocalDateTime.MIN);
     }
@@ -34,6 +39,8 @@ public class IdentityViewModel {
     public void setIdentity(Identity identity) {
         UUID id = identity.getId();
         idProperty.set(id);
+        String name = identity.getName();
+        nameProperty.set(name);
         LocalDateTime createdAt = identity.getCreatedAt();
         createdAtProperty.set(createdAt);
         GrantMap grantMap = identity.getGrantMap();
@@ -43,7 +50,9 @@ public class IdentityViewModel {
     public Identity getIdentity() {
         UUID id = idProperty.get();
         LocalDateTime createdAt = createdAtProperty.get();
+        String name = nameProperty.get();
         Identity identity = new Identity(id, createdAt);
+        identity.setName(name);
         GrantMap grantMap = identity.getGrantMap();
         /*
         ObservableList<GrantViewModel<?>> grantViewModels = grantMapViewModel.grantsProperty().get();
@@ -61,6 +70,10 @@ public class IdentityViewModel {
 
     public ReadOnlyObjectProperty<UUID> idProperty() {
         return idProperty;
+    }
+
+    public StringProperty nameProperty() {
+        return nameProperty;
     }
 
     public ReadOnlyObjectProperty<LocalDateTime> createdAtProperty() {

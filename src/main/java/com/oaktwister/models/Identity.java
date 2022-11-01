@@ -10,6 +10,7 @@ public class Identity extends Entity {
 
     private LocalDateTime createdAt;
     private GrantMap grants;
+    private String name;
 
     public Identity(UUID id, LocalDateTime createdAt) {
         super(id);
@@ -35,6 +36,14 @@ public class Identity extends Entity {
 
     public void setGrants(GrantMap grants) {
         this.grants = grants;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 }

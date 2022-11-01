@@ -59,6 +59,7 @@ public class IdentitiesController {
         identityPane.onMainActionProperty().set(this::onIdentityPaneMainAction);
         identityPane.onDeleteActionProperty().set(this::onIdentityPaneDeleteAction);
         identityPane.identifierProperty().bind(identityViewModel.idProperty());
+        identityPane.nameProperty().bind(identityViewModel.nameProperty());
         identityPane.grantsCountProperty().bind(identityViewModel.grantMap().grantCountProperty());
         identityPane.createdAtProperty().bind(identityViewModel.createdAtProperty());
         view.panesProperty().add(identityPane);

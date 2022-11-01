@@ -11,6 +11,7 @@ public class IdentitySerializer implements JsonObjectSerializer<Identity> {
 
     private final static String ID_KEY = "id";
     private final static String CREATED_AT_KEY = "createdAt";
+    private final static String NAME_KEY = "name";
     private final static String GRANT_MAP_KEY = "grants";
 
     private final GrantMapSerializer grantMapSerializer;
@@ -24,6 +25,7 @@ public class IdentitySerializer implements JsonObjectSerializer<Identity> {
         Identity identity = new Identity(
             UUID.fromString(identityJson.getString(ID_KEY)),
             LocalDateTimeUtil.fromIso8601(identityJson.getString(CREATED_AT_KEY)));
+        identity.setName(identityJson.getString(NAME_KEY));
         identity.setGrants(grantMapSerializer.deserialize(identityJson.getJSONArray(GRANT_MAP_KEY)));
         return identity;
     }
@@ -33,6 +35,7 @@ public class IdentitySerializer implements JsonObjectSerializer<Identity> {
         JSONObject identityJson = new JSONObject();
         identityJson.put(ID_KEY, identity.getId());
         identityJson.put(CREATED_AT_KEY, identity.getCreatedAt());
+        identityJson.put(NAME_KEY, identity.getName());
         identityJson.put(GRANT_MAP_KEY, grantMapSerializer.serialize(identity.getGrantMap()));
         return identityJson;
     }

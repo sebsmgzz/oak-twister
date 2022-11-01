@@ -7,10 +7,7 @@ import com.oaktwister.utils.extensions.LocalDateTimeUtil;
 import com.oaktwister.utils.extensions.NodeUtil;
 import com.oaktwister.utils.extensions.UUIDUtil;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -35,6 +32,7 @@ public class IdentityPane extends StackPane implements Initializable {
 
     @FXML private Button mainButton;
     @FXML private Label identifierLabel;
+    @FXML private Label nameLabel;
     @FXML private Label grantsCountLabel;
     @FXML private Label createdAtLabel;
     @FXML private Button deleteButton;
@@ -85,6 +83,10 @@ public class IdentityPane extends StackPane implements Initializable {
 
     public ObjectProperty<UUID> identifierProperty() {
         return identifierProperty;
+    }
+
+    public StringProperty nameProperty() {
+        return nameLabel.textProperty();
     }
 
     public IntegerProperty grantsCountProperty() {
