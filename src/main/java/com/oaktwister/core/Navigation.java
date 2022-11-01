@@ -11,6 +11,7 @@ import com.oaktwister.views.dialogs.EditPlatformDialogResult;
 import com.oaktwister.controllers.layouts.LoginController;
 import com.oaktwister.controllers.layouts.MainController;
 
+import com.oaktwister.views.layouts.MainLayout;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -50,8 +51,8 @@ public class Navigation {
 
     public void goToMain() {
         MainController controller = new MainController(this, viewModelFactory);
-        Parent node = NodeUtil.loadWindow(controller);
-        Scene scene = new Scene(node);
+        Parent view = controller.load();
+        Scene scene = new Scene(view);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

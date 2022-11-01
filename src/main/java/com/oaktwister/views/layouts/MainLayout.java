@@ -39,7 +39,6 @@ public class MainLayout implements Initializable {
         accountPageProperty = new SimpleObjectProperty<>();
         platformsPageProperty = new SimpleObjectProperty<>();
         identitiesPageProperty = new SimpleObjectProperty<>();
-        NodeUtil.loadWindow(this);
     }
 
     @Override

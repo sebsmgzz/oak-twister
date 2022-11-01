@@ -6,9 +6,11 @@ import com.oaktwister.controllers.controls.PlatformsController;
 import com.oaktwister.core.Navigation;
 import com.oaktwister.core.ViewModelFactory;
 
+import com.oaktwister.utils.extensions.NodeUtil;
 import com.oaktwister.views.layouts.MainLayout;
 import com.oaktwister.views.layouts.MainLayoutPage;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.Parent;
 
 public class MainController {
 
@@ -27,7 +29,8 @@ public class MainController {
         identitiesController = new IdentitiesController(navigation, viewModelFactory);
     }
 
-    public void initialize() {
+    public Parent load() {
+        Parent parent = NodeUtil.loadWindow(view);
         view.pageProperty().addListener(this::onPagePropertyChanged);
         view.accountPageProperty().set(accountsController.getView());
         view.platformsPageProperty().set(platformsController.getView());
@@ -37,6 +40,7 @@ public class MainController {
         accountsController.initialize();
         platformsController.initialize();
         identitiesController.initialize();
+        return parent;
     }
 
     private void onPagePropertyChanged(ObservableValue<? extends MainLayoutPage> observable,
