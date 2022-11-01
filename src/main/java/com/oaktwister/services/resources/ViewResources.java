@@ -11,7 +11,7 @@ public interface ViewResources {
     }
 
     interface Dialogs {
-        String EDIT_PLATFORM = "/com/oaktwister/views/dialogs/EditPlatformDialogPane.fxml";
+        String EDIT_PLATFORM = "/com/oaktwister/views/dialogs/EditPlatformDialog.fxml";
         String FAILED_LOGIN = "/com/oaktwister/views/dialogs/LoginFailedAlert.fxml";
     }
 

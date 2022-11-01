@@ -3,50 +3,38 @@ package com.oaktwister.controllers.dialogs;
 import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.services.resources.ViewResources;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.StringProperty;
-import javafx.fxml.FXML;
+import com.oaktwister.views.dialogs.LoginFailedAlert;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-@ViewDescriptor(location = ViewResources.Dialogs.FAILED_LOGIN)
-public class LoginFailedController implements Initializable {
+public class LoginFailedController {
 
     private final Stage stage;
 
-    @FXML private ImageView iconImageView;
-    @FXML private Label titleLabel;
-    @FXML private Label messageLabel;
-    @FXML private Button okayButton;
+    private final LoginFailedAlert view;
 
     public LoginFailedController(Stage stage) {
         this.stage = stage;
+        this.view = new LoginFailedAlert();
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        okayButton.setOnAction(event -> {
-            stage.close();
-        });
+    public void initialize() {
+        view.resultProperty().addListener((observable, oldValue, newValue) -> stage.close());
     }
 
-    public ObjectProperty<Image> iconProperty() {
-        return iconImageView.imageProperty();
+    public LoginFailedAlert getView() {
+        return view;
     }
 
-    public StringProperty titleProperty() {
-        return titleLabel.textProperty();
+    public void setMessage(String message) {
+        view.messageProperty().set(message);
     }
 
-    public StringProperty messageProperty() {
-        return messageLabel.textProperty();
+    public void showAndWait() {
+        stage.showAndWait();
     }
 
 }

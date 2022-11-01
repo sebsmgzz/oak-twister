@@ -1,6 +1,7 @@
 package com.oaktwister.views.dialogs;
 
-public enum EditPlatformDialogResult {
+public enum DialogResult {
     CANCELED,
+    OKAY,
     SAVED
 }

@@ -3,12 +3,22 @@ package com.oaktwister.core;
 import com.oaktwister.controllers.controls.AccountsController;
 import com.oaktwister.controllers.controls.IdentitiesController;
 import com.oaktwister.controllers.controls.PlatformsController;
+import com.oaktwister.controllers.dialogs.EditPlatformController;
+import com.oaktwister.controllers.dialogs.LoginFailedController;
 import com.oaktwister.controllers.layouts.LoginController;
 import com.oaktwister.controllers.layouts.MainController;
 import com.oaktwister.utils.Lazy;
+import com.oaktwister.utils.extensions.NodeUtil;
+import com.oaktwister.viewmodels.models.PlatformViewModel;
+import com.oaktwister.views.dialogs.EditPlatformDialog;
+import com.oaktwister.views.dialogs.LoginFailedAlert;
+
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 public class ControllerFactory {
 
+    private final Stage primaryStage;
     private final UIContext ui;
 
     private final Lazy<MainController> mainController;
@@ -17,7 +27,8 @@ public class ControllerFactory {
     private final Lazy<PlatformsController> platformsController;
     private final Lazy<IdentitiesController> identitiesController;
 
-    public ControllerFactory(UIContext ui) {
+    public ControllerFactory(Stage primaryStage, UIContext ui) {
+        this.primaryStage = primaryStage;
         this.ui = ui;
         mainController = new Lazy<>(this::getMainController);
         loginController = new Lazy<>(this::getLoginController);
@@ -74,6 +85,31 @@ public class ControllerFactory {
 
     public IdentitiesController identities() {
         return identitiesController.value();
+    }
+
+    public EditPlatformController editPlatform() {
+        Stage stage = NodeUtil.getDialogStage(primaryStage);
+        EditPlatformController controller = new EditPlatformController(stage);
+        EditPlatformDialog view = controller.getView();
+        Scene scene = new Scene(view);
+        stage.setScene(scene);
+        return controller;
+    }
+
+    public EditPlatformController editPlatform(PlatformViewModel viewModel) {
+        EditPlatformController controller = editPlatform();
+        controller.setPlatform(viewModel);
+        return controller;
+    }
+
+    public LoginFailedController loginFailed() {
+        Stage stage = NodeUtil.getDialogStage(primaryStage);
+        LoginFailedController controller = new LoginFailedController(stage);
+        controller.initialize();
+        LoginFailedAlert view = controller.getView();
+        Scene scene = new Scene(view);
+        stage.setScene(scene);
+        return controller;
     }
 
 }

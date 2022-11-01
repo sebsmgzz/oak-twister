@@ -1,5 +1,6 @@
 package com.oaktwister.controllers.layouts;
 
+import com.oaktwister.controllers.dialogs.LoginFailedController;
 import com.oaktwister.core.UIContext;
 import com.oaktwister.services.resources.StringResources;
 import com.oaktwister.viewmodels.roots.LoginViewModel;
@@ -67,7 +68,9 @@ public class LoginController {
             ui.navigation().goToMain();
         } else {
             String errorMessage = viewModel.loginErrorMessageProperty().get();
-            ui.navigation().showLoginFailedAlert(errorMessage);
+            LoginFailedController loginFailed = ui.controllers().loginFailed();
+            loginFailed.setMessage(errorMessage);
+            loginFailed.showAndWait();
         }
     }
 

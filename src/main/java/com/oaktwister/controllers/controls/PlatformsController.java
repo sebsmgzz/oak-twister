@@ -1,5 +1,6 @@
 package com.oaktwister.controllers.controls;
 
+import com.oaktwister.controllers.dialogs.EditPlatformController;
 import com.oaktwister.core.UIContext;
 import com.oaktwister.services.resources.StringResources;
 import com.oaktwister.utils.extensions.MapUtil;
@@ -10,7 +11,7 @@ import com.oaktwister.viewmodels.models.PlatformViewModel;
 import com.oaktwister.views.controls.PagePane;
 import com.oaktwister.views.controls.PlatformPane;
 import com.oaktwister.views.controls.PlatformPaneEvent;
-import com.oaktwister.views.dialogs.EditPlatformDialogResult;
+import com.oaktwister.views.dialogs.DialogResult;
 
 import javafx.event.ActionEvent;
 
@@ -54,8 +55,9 @@ public class PlatformsController {
 
     private void onAddPlatformPane(ActionEvent actionEvent) {
         PlatformViewModel platformViewModel = ui.viewModels().platform();
-        EditPlatformDialogResult result = ui.navigation().showEditPlatformDialog(platformViewModel);
-        if(result == EditPlatformDialogResult.SAVED) {
+        EditPlatformController dialogController = ui.controllers().editPlatform(platformViewModel);
+        dialogController.showAndWait();
+        if(dialogController.getResult() == DialogResult.SAVED) {
             // TODO: Save to database
             System.out.println("Saving platform to database");
         }
@@ -85,8 +87,8 @@ public class PlatformsController {
             // TODO: Throw exception? This should never happen
             return;
         }
-        EditPlatformDialogResult result = ui.navigation().showEditPlatformDialog(platformViewModel);
-        if(result == EditPlatformDialogResult.SAVED) {
+        EditPlatformController dialogController = ui.controllers().editPlatform(platformViewModel);
+        if(dialogController.getResult() == DialogResult.SAVED) {
             // TODO: Save to database
             System.out.println("Updating platform to database");
         }

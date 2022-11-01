@@ -13,7 +13,7 @@ public class UIContext {
         this.primaryStage = primaryStage;
         this.viewModelFactory = viewModelFactory;
         navigation = new Navigation(primaryStage, this);
-        controllerFactory = new ControllerFactory(this);
+        controllerFactory = new ControllerFactory(primaryStage, this);
     }
 
     public ViewModelFactory viewModels() {

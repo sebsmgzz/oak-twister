@@ -4,6 +4,9 @@ import com.oaktwister.annotations.ViewDescriptor;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -46,6 +49,14 @@ public class NodeUtil {
             ex.printStackTrace();
             throw new RuntimeException(ex);
         }
+    }
+
+    public static Stage getDialogStage(Stage primaryStage) {
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        Window window = primaryStage.getScene().getWindow();
+        stage.initOwner(window);
+        return stage;
     }
 
 }
