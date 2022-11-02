@@ -1,8 +1,8 @@
 package com.oaktwister.controllers.dialogs;
 
 import com.oaktwister.viewmodels.models.PlatformViewModel;
-import com.oaktwister.views.dialogs.DialogResult;
-import com.oaktwister.views.dialogs.EditPlatformDialog;
+import com.oaktwister.views.DialogResult;
+import com.oaktwister.views.platforms.EditPlatformDialog;
 
 import javafx.stage.Stage;
 

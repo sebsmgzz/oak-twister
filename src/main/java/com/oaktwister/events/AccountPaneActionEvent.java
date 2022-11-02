@@ -1,6 +1,6 @@
 package com.oaktwister.events;
 
-import com.oaktwister.views.controls.AccountPane;
+import com.oaktwister.views.accounts.AccountPane;
 import javafx.event.ActionEvent;
 
 public class AccountPaneActionEvent extends ControlEvent<AccountPane, ActionEvent> {

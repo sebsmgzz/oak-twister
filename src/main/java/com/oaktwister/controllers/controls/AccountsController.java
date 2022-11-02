@@ -7,8 +7,8 @@ import com.oaktwister.utils.listeners.ListItemAddedListener;
 import com.oaktwister.utils.listeners.ListItemRemovedListener;
 import com.oaktwister.viewmodels.collections.AccountsViewModel;
 import com.oaktwister.viewmodels.models.AccountViewModel;
-import com.oaktwister.views.controls.AccountPane;
-import com.oaktwister.views.controls.PagePane;
+import com.oaktwister.views.accounts.AccountPane;
+import com.oaktwister.views.widgets.PagePane;
 
 import javafx.event.ActionEvent;
 

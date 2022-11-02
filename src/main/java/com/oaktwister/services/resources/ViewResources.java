@@ -2,22 +2,32 @@ package com.oaktwister.services.resources;
 
 public interface ViewResources {
 
-    interface Controls {
-        String ACCOUNT_PANE = "/com/oaktwister/views/controls/AccountPane.fxml";
-        String PLATFORM_PANE = "/com/oaktwister/views/controls/PlatformPane.fxml";
-        String IDENTITY_PANE = "/com/oaktwister/views/controls/IdentityPane.fxml";
-        String IMAGE_BUTTON_BOX = "/com/oaktwister/views/controls/ImageButtonBox.fxml";
-        String PAGE_PANE = "/com/oaktwister/views/controls/PagePane.fxml";
+    interface Accounts {
+        String PANE = "/com/oaktwister/views/accounts/AccountPane.fxml";
     }
 
-    interface Dialogs {
-        String EDIT_PLATFORM = "/com/oaktwister/views/dialogs/EditPlatformDialog.fxml";
-        String FAILED_LOGIN = "/com/oaktwister/views/dialogs/LoginFailedAlert.fxml";
+    interface Identities {
+        String PANE = "/com/oaktwister/views/identities/IdentityPane.fxml";
     }
 
-    interface Windows {
-        String MAIN = "/com/oaktwister/views/layouts/MainLayout.fxml";
-        String LOGIN = "/com/oaktwister/views/layouts/LoginLayout.fxml";
+    interface Login {
+        String FAILED_ALERT = "/com/oaktwister/views/login/LoginFailedAlert.fxml";
+        String LAYOUT = "/com/oaktwister/views/login/LoginLayout.fxml";
+    }
+
+    interface Main {
+        String LAYOUT = "/com/oaktwister/views/main/MainLayout.fxml";
+    }
+
+    interface Platforms {
+        String PANE = "/com/oaktwister/views/platforms/PlatformPane.fxml";
+        String EDIT_DIALOG = "/com/oaktwister/views/platforms/EditPlatformDialog.fxml";
+    }
+
+    interface Widgets {
+        String GROUP_BOX = "/com/oaktwister/views/widgets/GroupBox.fxml";
+        String IMAGE_BUTTON_BOX = "/com/oaktwister/views/widgets/ImageButtonBox.fxml";
+        String PAGE_PANE = "/com/oaktwister/views/widgets/PagePane.fxml";
     }
 
 }

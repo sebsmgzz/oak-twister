@@ -10,8 +10,8 @@ import com.oaktwister.controllers.layouts.MainController;
 import com.oaktwister.utils.Lazy;
 import com.oaktwister.utils.extensions.NodeUtil;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
-import com.oaktwister.views.dialogs.EditPlatformDialog;
-import com.oaktwister.views.dialogs.LoginFailedAlert;
+import com.oaktwister.views.platforms.EditPlatformDialog;
+import com.oaktwister.views.login.LoginFailedAlert;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;

@@ -1,10 +1,10 @@
 package com.oaktwister.controllers.layouts;
 
 import com.oaktwister.core.UIContext;
-import com.oaktwister.views.controls.IdentityPane;
-import com.oaktwister.views.controls.PagePane;
-import com.oaktwister.views.layouts.MainLayout;
-import com.oaktwister.views.layouts.MainPage;
+import com.oaktwister.views.identities.IdentityPane;
+import com.oaktwister.views.widgets.PagePane;
+import com.oaktwister.views.main.MainLayout;
+import com.oaktwister.views.main.MainPage;
 
 import javafx.beans.value.ObservableValue;
 

@@ -8,10 +8,10 @@ import com.oaktwister.utils.listeners.ListItemAddedListener;
 import com.oaktwister.utils.listeners.ListItemRemovedListener;
 import com.oaktwister.viewmodels.collections.PlatformsViewModel;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
-import com.oaktwister.views.controls.PagePane;
-import com.oaktwister.views.controls.PlatformPane;
-import com.oaktwister.views.controls.PlatformPaneEvent;
-import com.oaktwister.views.dialogs.DialogResult;
+import com.oaktwister.views.widgets.PagePane;
+import com.oaktwister.views.platforms.PlatformPane;
+import com.oaktwister.views.platforms.PlatformPaneEvent;
+import com.oaktwister.views.DialogResult;
 
 import javafx.event.ActionEvent;
 

@@ -4,7 +4,7 @@ import com.oaktwister.services.resources.ImageResources;
 import com.oaktwister.services.resources.StringResources;
 import com.oaktwister.controllers.layouts.LoginController;
 import com.oaktwister.controllers.layouts.MainController;
-import com.oaktwister.views.layouts.MainLayout;
+import com.oaktwister.views.main.MainLayout;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;

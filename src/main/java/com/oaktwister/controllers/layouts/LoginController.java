@@ -4,8 +4,8 @@ import com.oaktwister.controllers.dialogs.LoginFailedController;
 import com.oaktwister.core.UIContext;
 import com.oaktwister.services.resources.StringResources;
 import com.oaktwister.viewmodels.roots.LoginViewModel;
-import com.oaktwister.views.layouts.LoginLayout;
-import com.oaktwister.views.layouts.LoginDriveCell;
+import com.oaktwister.views.login.LoginLayout;
+import com.oaktwister.views.login.LoginDriveCell;
 
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;

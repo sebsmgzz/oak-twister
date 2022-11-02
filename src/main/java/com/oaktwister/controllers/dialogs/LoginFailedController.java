@@ -1,14 +1,7 @@
 package com.oaktwister.controllers.dialogs;
 
-import com.oaktwister.annotations.ViewDescriptor;
-import com.oaktwister.services.resources.ViewResources;
-
-import com.oaktwister.views.dialogs.LoginFailedAlert;
-import javafx.fxml.Initializable;
+import com.oaktwister.views.login.LoginFailedAlert;
 import javafx.stage.Stage;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class LoginFailedController {
 
