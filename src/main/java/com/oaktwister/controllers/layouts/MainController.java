@@ -27,8 +27,7 @@ public class MainController {
         view.pageProperty().addListener(this::onPagePropertyChanged);
         view.accountPageProperty().set(ui.controllers().accounts().getView());
         view.platformsPageProperty().set(ui.controllers().platforms().getView());
-        PagePane<IdentityPane> identitiesPanePage = ui.controllers().identities().getView();
-        view.identitiesPageProperty().set(identitiesPanePage);
+        view.identitiesPageProperty().set(ui.controllers().identities().getView());
         view.onBackActionProperty().set(event -> ui.navigation().goToLogin());
         view.onSettingsActionProperty().set(event -> { /* TODO */ });
         view.pageProperty().set(MainPage.ACCOUNTS);

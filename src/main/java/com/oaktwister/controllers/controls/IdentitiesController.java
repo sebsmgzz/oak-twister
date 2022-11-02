@@ -8,6 +8,7 @@ import com.oaktwister.utils.listeners.ListItemRemovedListener;
 import com.oaktwister.viewmodels.collections.IdentitiesViewModel;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
 import com.oaktwister.views.identities.IdentityPane;
+import com.oaktwister.views.widgets.FlowPage;
 import com.oaktwister.views.widgets.PagePane;
 
 import javafx.event.ActionEvent;
@@ -19,7 +20,7 @@ public class IdentitiesController {
     private final UIContext ui;
 
     private final IdentitiesViewModel viewModel;
-    private final PagePane<IdentityPane> view;
+    private final FlowPage<IdentityPane> view;
 
     private final HashMap<IdentityViewModel, IdentityPane> identitiesMap;
     private final ListItemAddedListener<IdentityViewModel> identityViewModelAddedListener;
@@ -28,7 +29,7 @@ public class IdentitiesController {
     public IdentitiesController(UIContext ui) {
         this.ui = ui;
         viewModel = ui.viewModels().identities();
-        view = new PagePane<>();
+        view = new FlowPage<>();
         identitiesMap = new HashMap<>();
         identityViewModelAddedListener = new ListItemAddedListener<>(this::onIdentityViewModelAdded);
         identityViewModelRemovedListener = new ListItemRemovedListener<>(this::onIdentityViewModelRemoved);
@@ -41,7 +42,7 @@ public class IdentitiesController {
         viewModel.identitiesProperty().addListener(identityViewModelRemovedListener);
     }
 
-    public PagePane<IdentityPane> getView() {
+    public FlowPage<IdentityPane> getView() {
         return view;
     }
 

@@ -2,14 +2,10 @@ package com.oaktwister.views.widgets;
 
 import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.services.resources.ViewResources;
-import com.oaktwister.utils.extensions.NodeUtil;
 import com.oaktwister.utils.listeners.ListItemAddedListener;
 import com.oaktwister.utils.listeners.ListItemRemovedListener;
 
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -27,44 +23,38 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 @ViewDescriptor(location = ViewResources.Widgets.PAGE_PANE)
-public class PagePane<T extends Node> extends AnchorPane implements Initializable {
-
-    private final SimpleListProperty<T> panesProperty;
-
-    private final ListItemAddedListener<T> onPaneAddedListener;
-    private final ListItemRemovedListener<T> onPaneRemovedListener;
+public abstract class PagePane<T extends Node> extends AnchorPane implements Initializable {
 
     @FXML private VBox vbox;
     @FXML private Label titleLabel;
     @FXML private ScrollPane scrollPane;
-    @FXML private FlowPane flowPane;
     @FXML private Button addButton;
 
+    private final SimpleObjectProperty<T> contentProperty;
+
     public PagePane() {
-        panesProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
-        onPaneAddedListener = new ListItemAddedListener<>(this::onPaneAdded);
-        onPaneRemovedListener = new ListItemRemovedListener<>(this::onPaneRemoved);
-        NodeUtil.loadControl(this);
+        contentProperty = new SimpleObjectProperty<>();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        scrollPane.widthProperty().addListener((observable, oldValue, newValue) -> {
-            flowPane.setPrefWidth(newValue.doubleValue());
-        });
-        scrollPane.heightProperty().addListener((observable, oldValue, newValue) -> {
-            flowPane.setPrefHeight(newValue.doubleValue());
-        });
         AnchorPane.setTopAnchor(vbox, 0.0);
         AnchorPane.setRightAnchor(vbox, 0.0);
         AnchorPane.setBottomAnchor(vbox, 0.0);
         AnchorPane.setLeftAnchor(vbox, 0.0);
-        panesProperty.addListener(onPaneAddedListener);
-        panesProperty.addListener(onPaneRemovedListener);
+        scrollPane.contentProperty().bind(contentProperty);
     }
 
-    public ListProperty<T> panesProperty() {
-        return panesProperty;
+    protected ReadOnlyDoubleProperty innerWidthProperty() {
+        return scrollPane.widthProperty();
+    }
+
+    protected ReadOnlyDoubleProperty innerHeightProperty() {
+        return scrollPane.heightProperty();
+    }
+
+    protected ObjectProperty<T> contentProperty() {
+        return contentProperty;
     }
 
     public StringProperty titleProperty() {
@@ -73,14 +63,6 @@ public class PagePane<T extends Node> extends AnchorPane implements Initializabl
 
     public ObjectProperty<EventHandler<ActionEvent>> onAddActionProperty() {
         return addButton.onActionProperty();
-    }
-
-    private void onPaneAdded(T pane) {
-        flowPane.getChildren().add(pane);
-    }
-
-    private void onPaneRemoved(T pane) {
-        flowPane.getChildren().remove(pane);
     }
 
 }

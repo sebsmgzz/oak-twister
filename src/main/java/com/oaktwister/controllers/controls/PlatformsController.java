@@ -8,6 +8,7 @@ import com.oaktwister.utils.listeners.ListItemAddedListener;
 import com.oaktwister.utils.listeners.ListItemRemovedListener;
 import com.oaktwister.viewmodels.collections.PlatformsViewModel;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
+import com.oaktwister.views.widgets.FlowPage;
 import com.oaktwister.views.widgets.PagePane;
 import com.oaktwister.views.platforms.PlatformPane;
 import com.oaktwister.views.platforms.PlatformPaneEvent;
@@ -22,7 +23,7 @@ public class PlatformsController {
     private final UIContext ui;
 
     private final PlatformsViewModel viewModel;
-    private final PagePane<PlatformPane> view;
+    private final FlowPage<PlatformPane> view;
 
     private final HashMap<PlatformViewModel, PlatformPane> platformsMap;
     private final ListItemAddedListener<PlatformViewModel> platformViewModelAddedListener;
@@ -31,7 +32,7 @@ public class PlatformsController {
     public PlatformsController(UIContext ui) {
         this.ui = ui;
         viewModel = ui.viewModels().platforms();
-        view = new PagePane<>();
+        view = new FlowPage<>();
         platformsMap = new HashMap<>();
         platformViewModelAddedListener = new ListItemAddedListener<>(this::onPlatformViewModelAdded);
         platformViewModelRemovedListener = new ListItemRemovedListener<>(this::onPlatformViewModelRemoved);
@@ -44,7 +45,7 @@ public class PlatformsController {
         viewModel.platformsProperty().addListener(platformViewModelRemovedListener);
     }
 
-    public PagePane<PlatformPane> getView() {
+    public FlowPage<PlatformPane> getView() {
         return view;
     }
 

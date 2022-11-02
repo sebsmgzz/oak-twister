@@ -8,6 +8,7 @@ import com.oaktwister.utils.listeners.ListItemRemovedListener;
 import com.oaktwister.viewmodels.collections.AccountsViewModel;
 import com.oaktwister.viewmodels.models.AccountViewModel;
 import com.oaktwister.views.accounts.AccountPane;
+import com.oaktwister.views.widgets.FlowPage;
 import com.oaktwister.views.widgets.PagePane;
 
 import javafx.event.ActionEvent;
@@ -19,7 +20,7 @@ public class AccountsController {
     private final UIContext ui;
 
     private final AccountsViewModel viewModel;
-    private final PagePane<AccountPane> view;
+    private final FlowPage<AccountPane> view;
 
     private final HashMap<AccountViewModel, AccountPane> accountsMap;
     private final ListItemAddedListener<AccountViewModel> accountViewModelAddedListener;
@@ -28,7 +29,7 @@ public class AccountsController {
     public AccountsController(UIContext ui) {
         this.ui = ui;
         viewModel = ui.viewModels().accounts();
-        view = new PagePane<>();
+        view = new FlowPage<>();
         accountsMap = new HashMap<>();
         accountViewModelAddedListener = new ListItemAddedListener<>(this::onAccountViewModelAdded);
         accountViewModelRemovedListener = new ListItemRemovedListener<>(this::onAccountViewModelRemoved);
@@ -41,7 +42,7 @@ public class AccountsController {
         viewModel.accountsProperty().addListener(accountViewModelRemovedListener);
     }
 
-    public PagePane<AccountPane> getView() {
+    public FlowPage<AccountPane> getView() {
         return view;
     }
 
