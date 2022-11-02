@@ -7,9 +7,8 @@ import com.oaktwister.utils.listeners.ListItemAddedListener;
 import com.oaktwister.utils.listeners.ListItemRemovedListener;
 import com.oaktwister.viewmodels.collections.IdentitiesViewModel;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
+import com.oaktwister.views.identities.IdentitiesPage;
 import com.oaktwister.views.identities.IdentityPane;
-import com.oaktwister.views.widgets.FlowPage;
-import com.oaktwister.views.widgets.PagePane;
 
 import javafx.event.ActionEvent;
 
@@ -20,7 +19,7 @@ public class IdentitiesController {
     private final UIContext ui;
 
     private final IdentitiesViewModel viewModel;
-    private final FlowPage<IdentityPane> view;
+    private final IdentitiesPage view;
 
     private final HashMap<IdentityViewModel, IdentityPane> identitiesMap;
     private final ListItemAddedListener<IdentityViewModel> identityViewModelAddedListener;
@@ -29,7 +28,7 @@ public class IdentitiesController {
     public IdentitiesController(UIContext ui) {
         this.ui = ui;
         viewModel = ui.viewModels().identities();
-        view = new FlowPage<>();
+        view = new IdentitiesPage();
         identitiesMap = new HashMap<>();
         identityViewModelAddedListener = new ListItemAddedListener<>(this::onIdentityViewModelAdded);
         identityViewModelRemovedListener = new ListItemRemovedListener<>(this::onIdentityViewModelRemoved);
@@ -42,7 +41,7 @@ public class IdentitiesController {
         viewModel.identitiesProperty().addListener(identityViewModelRemovedListener);
     }
 
-    public FlowPage<IdentityPane> getView() {
+    public IdentitiesPage getView() {
         return view;
     }
 
@@ -63,13 +62,13 @@ public class IdentitiesController {
         identityPane.nameProperty().bind(identityViewModel.nameProperty());
         identityPane.grantsCountProperty().bind(identityViewModel.grantMap().grantCountProperty());
         identityPane.createdAtProperty().bind(identityViewModel.createdAtProperty());
-        view.panesProperty().add(identityPane);
+        view.identitiesProperty().get().add(identityViewModel);
         identitiesMap.put(identityViewModel, identityPane);
     }
 
     private void onIdentityViewModelRemoved(IdentityViewModel identityViewModel) {
         IdentityPane identityPane = identitiesMap.remove(identityViewModel);
-        view.panesProperty().remove(identityPane);
+        view.identitiesProperty().get().remove(identityViewModel);
     }
 
     private void onIdentityPaneMainAction(IdentityPaneActionEvent event) {

@@ -8,6 +8,7 @@ public interface ViewResources {
 
     interface Identities {
         String PANE = "/com/oaktwister/views/identities/IdentityPane.fxml";
+        String PAGE = "/com/oaktwister/views/identities/IdentitiesPage.fxml";;
     }
 
     interface Login {

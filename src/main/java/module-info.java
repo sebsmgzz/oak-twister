@@ -40,5 +40,7 @@ module oaktwister.main {
 
     exports com.oaktwister.views.identities;
     opens com.oaktwister.views.identities to javafx.fxml;
+    exports com.oaktwister.utils.tables;
+    opens com.oaktwister.utils.tables to javafx.fxml;
 
 }
