@@ -8,15 +8,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.control.Button?>
 
-<?import javafx.geometry.Insets?>
 <fx:root xmlns="http://javafx.com/javafx/8"
          xmlns:fx="http://javafx.com/fxml/1"
          type="javafx.scene.layout.StackPane"
-         fx:controller="com.oaktwister.views.accounts.AccountPane"
-         stylesheets="/com/oaktwister/styles/accounts/account-box.css"
-         styleClass="root">
+         fx:controller="com.oaktwister.views.accounts.AccountPane">
     <AnchorPane>
-        <Button fx:id="mainButton" styleClass="btn" mnemonicParsing="false"
+        <Button fx:id="mainButton" mnemonicParsing="false"
                 AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0"
                 AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
             <graphic>
@@ -47,7 +44,7 @@
             </graphic>
         </Button>
     </AnchorPane>
-    <Button fx:id="deleteButton" styleClass="close-btn"
-            visible="false" mnemonicParsing="false" text="X"
+    <Button fx:id="deleteButton" text="X"
+            visible="false" mnemonicParsing="false"
             translateX="5.0" translateY="-5.0"/>
 </fx:root>

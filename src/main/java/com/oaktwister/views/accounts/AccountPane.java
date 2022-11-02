@@ -12,6 +12,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -54,10 +55,45 @@ public class AccountPane extends StackPane implements Initializable {
         NodeUtil.loadControl(this);
     }
 
+    private void onHover(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+        if(newValue) {
+            super.setStyle("""
+                -fx-background-color: #E8CFB5; 
+                -fx-background-radius: 10px;
+                
+                -fx-border-color: #c12126;
+                -fx-border-width: 3px;
+                -fx-border-insets: -3px;
+                -fx-border-radius: 10px;
+                """);
+        } else {
+            super.setStyle("""
+                -fx-background-color: #E8CFB5; 
+                -fx-background-radius: 10px;
+                
+                -fx-border-width: 0px;
+                -fx-border-insets: 0px;
+                """);
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.setOnMouseEntered(event -> deleteButton.setVisible(true));
         super.setOnMouseExited(event -> deleteButton.setVisible(false));
+        super.hoverProperty().addListener(this::onHover);
+        super.setStyle("""
+                -fx-background-color: #E8CFB5;
+                -fx-background-radius: 10px;
+                """);
+        mainButton.setStyle("""                
+                -fx-cursor: hand;
+                -fx-background-color: transparent;
+                """);
+        deleteButton.setStyle("""                
+                -fx-background-radius: 5em;
+                -fx-background-color: #c12126;
+                """);
         StackPane.setAlignment(deleteButton, Pos.TOP_RIGHT);
         identifierProperty.addListener((observer, oldValue, newValue) -> {
             identifierLabel.setText(newValue.toString());
