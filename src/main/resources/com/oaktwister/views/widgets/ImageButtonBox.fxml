@@ -4,14 +4,16 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 
+<?import javafx.geometry.Insets?>
 <fx:root type="javafx.scene.layout.HBox"
          xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
          fx:controller="com.oaktwister.views.widgets.ImageButtonBox"
-         stylesheets="/com/oaktwister/styles/laterals/image-button-box.css"
-         styleClass="background"
-         alignment="CENTER_LEFT">
-    <Button fx:id="button" styleClass="clickable" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+         alignment="CENTER">
+    <Button fx:id="button" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+        <padding>
+            <Insets top="10" right="5" bottom="10" left="0" />
+        </padding>
         <graphic>
             <ImageView fx:id="imageView" fitHeight="30" fitWidth="30"/>
         </graphic>
