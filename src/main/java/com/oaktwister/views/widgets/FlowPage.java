@@ -52,6 +52,7 @@ public class FlowPage<T extends Node> extends PagePane<FlowPane> implements Init
         panesProperty.addListener(onPaneAddedListener);
         panesProperty.addListener(onPaneRemovedListener);
         flowPane.getStyleClass().add("flow-pane");
+        flowPane.setStyle("-fx-background-color: #717782;");
         flowPane.setPadding(new Insets(10));
         flowPane.setHgap(10);
         flowPane.setVgap(10);

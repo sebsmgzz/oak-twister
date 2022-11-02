@@ -10,7 +10,6 @@ public interface StyleResources {
     }
 
     interface Layouts {
-        String ACCOUNTS_PANE = "/com/oaktwister/styles/accounts/accounts-pane.css";
         String IDENTITIES_PANE = "/com/oaktwister/styles/identities/identities-pane.css";
         String PLATFORMS_PANE = "/com/oaktwister/styles/platforms/platforms-pane.css";
     }

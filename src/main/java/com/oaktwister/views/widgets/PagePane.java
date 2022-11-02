@@ -25,7 +25,6 @@ import java.util.ResourceBundle;
 @ViewDescriptor(location = ViewResources.Widgets.PAGE_PANE)
 public abstract class PagePane<T extends Node> extends AnchorPane implements Initializable {
 
-    @FXML private VBox vbox;
     @FXML private Label titleLabel;
     @FXML private ScrollPane scrollPane;
     @FXML private Button addButton;
@@ -38,10 +37,6 @@ public abstract class PagePane<T extends Node> extends AnchorPane implements Ini
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        AnchorPane.setTopAnchor(vbox, 0.0);
-        AnchorPane.setRightAnchor(vbox, 0.0);
-        AnchorPane.setBottomAnchor(vbox, 0.0);
-        AnchorPane.setLeftAnchor(vbox, 0.0);
         scrollPane.contentProperty().bind(contentProperty);
     }
 
