@@ -12,10 +12,10 @@
          xmlns:fx="http://javafx.com/fxml"
          type="javafx.scene.layout.StackPane"
          fx:controller="com.oaktwister.views.platforms.PlatformPane"
-         stylesheets="/com/oaktwister/styles/platforms/platform-pane.css"
-         styleClass="root">
+         style="-fx-background-color: #E8CFB5; -fx-background-radius: 10px;">
     <AnchorPane>
-        <Button fx:id="mainButton" styleClass="btn" mnemonicParsing="false"
+        <Button fx:id="mainButton" mnemonicParsing="false"
+                style="-fx-cursor: hand; -fx-background-color: transparent;"
                 AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0"
                 AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
             <graphic>
@@ -40,5 +40,6 @@
     </AnchorPane>
     <Button fx:id="deleteButton" styleClass="close-btn"
             visible="false" mnemonicParsing="false" text="X"
-            translateX="5.0" translateY="-5.0"/>
+            translateX="5.0" translateY="-5.0"
+            style="-fx-background-radius: 5em; -fx-background-color: #c12126;"/>
 </fx:root>

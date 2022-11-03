@@ -53,6 +53,26 @@ public class PlatformPane extends StackPane implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         super.setOnMouseEntered(event -> deleteButton.setVisible(true));
         super.setOnMouseExited(event -> deleteButton.setVisible(false));
+        super.hoverProperty().addListener(((observable, oldValue, newValue) -> {
+            if(newValue) {
+                super.setStyle("""      
+                    -fx-background-color: #E8CFB5; 
+                    -fx-background-radius: 10px;    
+                    
+                    -fx-border-width: 3px;
+                    -fx-border-insets: -3px;          
+                    -fx-border-color: #c12126;
+                    -fx-border-radius: 10px;
+                    """);
+            } else {
+                super.setStyle("""
+                        -fx-background-color: #E8CFB5; 
+                        -fx-background-radius: 10px;
+                        -fx-border-width: 0;
+                        -fx-border-insets: 0;   
+                        """);
+            }
+        }));
         StackPane.setAlignment(deleteButton, Pos.TOP_RIGHT);
         identifierProperty.addListener((observer, oldValue, newValue) -> {
             identifierLabel.setText(newValue.toString());

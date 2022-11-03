@@ -9,11 +9,6 @@ public interface StyleResources {
         String PLATFORM_PANE = "/com/oaktwister/styles/platforms/platform-pane.css";
     }
 
-    interface Layouts {
-        String IDENTITIES_PANE = "/com/oaktwister/styles/identities/identities-pane.css";
-        String PLATFORMS_PANE = "/com/oaktwister/styles/platforms/platforms-pane.css";
-    }
-
     interface Roots {
         String MAIN = "/com/oaktwister/styles/landing/landing.css";
         String LANDING = "/com/oaktwister/styles/landing/landing.css";
