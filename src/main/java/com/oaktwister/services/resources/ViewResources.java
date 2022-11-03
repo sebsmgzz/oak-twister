@@ -29,6 +29,7 @@ public interface ViewResources {
         String GROUP_BOX = "/com/oaktwister/views/widgets/GroupBox.fxml";
         String IMAGE_BUTTON_BOX = "/com/oaktwister/views/widgets/ImageButtonBox.fxml";
         String PAGE_PANE = "/com/oaktwister/views/widgets/PagePane.fxml";
+        String FLOW_PANE = "/com/oaktwister/views/widgets/FlowPage.fxml";
     }
 
 }

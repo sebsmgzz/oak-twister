@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -21,10 +22,12 @@ import javafx.scene.layout.FlowPane;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-@ViewDescriptor(location = ViewResources.Widgets.PAGE_PANE)
-public class FlowPage<T extends Node> extends PagePane<FlowPane> implements Initializable {
+@ViewDescriptor(location = ViewResources.Widgets.FLOW_PANE)
+public class FlowPage<T extends Node> extends AnchorPane implements Initializable {
 
-    private FlowPane flowPane;
+    @FXML private PagePane pagePane;
+    @FXML private ScrollPane scrollPane;
+    @FXML private FlowPane flowPane;
 
     private final SimpleListProperty<T> panesProperty;
 
@@ -32,7 +35,6 @@ public class FlowPage<T extends Node> extends PagePane<FlowPane> implements Init
     private final ListItemRemovedListener<T> onPaneRemovedListener;
 
     public FlowPage() {
-        flowPane = new FlowPane();
         panesProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
         onPaneAddedListener = new ListItemAddedListener<>(this::onPaneAdded);
         onPaneRemovedListener = new ListItemRemovedListener<>(this::onPaneRemoved);
@@ -41,14 +43,12 @@ public class FlowPage<T extends Node> extends PagePane<FlowPane> implements Init
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        super.initialize(location, resources);
-        innerWidthProperty().addListener((observable, oldValue, newValue) -> {
+        scrollPane.widthProperty().addListener((observable, oldValue, newValue) -> {
             flowPane.setPrefWidth(newValue.doubleValue());
         });
-        innerHeightProperty().addListener((observable, oldValue, newValue) -> {
+        scrollPane.widthProperty().addListener((observable, oldValue, newValue) -> {
             flowPane.setPrefHeight(newValue.doubleValue());
         });
-        contentProperty().set(flowPane);
         panesProperty.addListener(onPaneAddedListener);
         panesProperty.addListener(onPaneRemovedListener);
         flowPane.getStyleClass().add("flow-pane");
@@ -56,6 +56,10 @@ public class FlowPage<T extends Node> extends PagePane<FlowPane> implements Init
         flowPane.setPadding(new Insets(10));
         flowPane.setHgap(10);
         flowPane.setVgap(10);
+    }
+
+    public PagePane page() {
+        return pagePane;
     }
 
     public ListProperty<T> panesProperty() {

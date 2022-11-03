@@ -36,8 +36,8 @@ public class AccountsController {
     }
 
     public void initialize() {
-        view.titleProperty().set(StringResources.ACCOUNTS);
-        view.onAddActionProperty().set(this::onAddAccountPane);
+        view.page().titleProperty().set(StringResources.ACCOUNTS);
+        view.page().onAddActionProperty().set(this::onAddAccountPane);
         viewModel.accountsProperty().addListener(accountViewModelAddedListener);
         viewModel.accountsProperty().addListener(accountViewModelRemovedListener);
     }

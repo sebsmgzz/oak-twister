@@ -2,6 +2,7 @@ package com.oaktwister.views.widgets;
 
 import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.services.resources.ViewResources;
+import com.oaktwister.utils.extensions.NodeUtil;
 import com.oaktwister.utils.listeners.ListItemAddedListener;
 import com.oaktwister.utils.listeners.ListItemRemovedListener;
 
@@ -23,33 +24,49 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 @ViewDescriptor(location = ViewResources.Widgets.PAGE_PANE)
-public abstract class PagePane<T extends Node> extends AnchorPane implements Initializable {
+public class PagePane extends VBox implements Initializable {
 
     @FXML private Label titleLabel;
-    @FXML private ScrollPane scrollPane;
+    @FXML private AnchorPane anchorPane;
     @FXML private Button addButton;
 
-    private final SimpleObjectProperty<T> contentProperty;
+    private final SimpleObjectProperty<Node> contentProperty;
 
     public PagePane() {
         contentProperty = new SimpleObjectProperty<>();
+        NodeUtil.loadControl(this);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        scrollPane.contentProperty().bind(contentProperty);
+        contentProperty.addListener((observable, oldValue, newValue) -> {
+            anchorPane.getChildren().remove(oldValue);
+            anchorPane.getChildren().add(newValue);
+            AnchorPane.setTopAnchor(newValue,0.0 );
+            AnchorPane.setRightAnchor(newValue,0.0 );
+            AnchorPane.setBottomAnchor(newValue,0.0 );
+            AnchorPane.setLeftAnchor(newValue,0.0 );
+        });
     }
 
-    protected ReadOnlyDoubleProperty innerWidthProperty() {
-        return scrollPane.widthProperty();
+    public ReadOnlyDoubleProperty innerWidthProperty() {
+        return anchorPane.widthProperty();
     }
 
-    protected ReadOnlyDoubleProperty innerHeightProperty() {
-        return scrollPane.heightProperty();
+    public ReadOnlyDoubleProperty innerHeightProperty() {
+        return anchorPane.heightProperty();
     }
 
-    protected ObjectProperty<T> contentProperty() {
+    public ObjectProperty<Node> contentProperty() {
         return contentProperty;
+    }
+
+    public Node getContent() {
+        return contentProperty().get();
+    }
+
+    public void setContent(Node value) {
+        contentProperty().set(value);
     }
 
     public StringProperty titleProperty() {
