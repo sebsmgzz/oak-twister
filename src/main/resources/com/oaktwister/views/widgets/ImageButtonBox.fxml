@@ -15,7 +15,7 @@
             <Insets top="10" right="5" bottom="10" left="0" />
         </padding>
         <graphic>
-            <ImageView fx:id="imageView" fitHeight="30" fitWidth="30"/>
+            <ImageView fx:id="imageView" fitHeight="30" preserveRatio="true"/>
         </graphic>
     </Button>
 </fx:root>

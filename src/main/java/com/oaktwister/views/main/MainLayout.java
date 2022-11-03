@@ -25,8 +25,8 @@ public class MainLayout extends BorderPane implements Initializable {
     @FXML private ImageButtonBox accountsImageButtonBox;
     @FXML private ImageButtonBox platformsImageButtonBox;
     @FXML private ImageButtonBox identitiesImageButtonBox;
-    @FXML private Button backButton;
-    @FXML private Button settingsButton;
+    @FXML private ImageButtonBox backButton;
+    @FXML private ImageButtonBox settingsButton;
 
     private final SimpleObjectProperty<MainPage> pageProperty;
     private final SimpleObjectProperty<Node> accountPageProperty;
@@ -43,6 +43,7 @@ public class MainLayout extends BorderPane implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        super.setStyle("-fx-background-color: #FDF8F8;");
         pageProperty.addListener(this::onPagePropertyChanged);
         accountsImageButtonBox.setOnAction(event -> pageProperty.set(MainPage.ACCOUNTS));
         platformsImageButtonBox.setOnAction(event -> pageProperty.set(MainPage.PLATFORMS));
