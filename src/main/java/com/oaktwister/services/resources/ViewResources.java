@@ -18,6 +18,7 @@ public interface ViewResources {
 
     interface Main {
         String LAYOUT = "/com/oaktwister/views/main/MainLayout.fxml";
+        String HEADER = "/com/oaktwister/views/main/Header.fxml";
     }
 
     interface Platforms {

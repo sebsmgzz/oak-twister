@@ -15,17 +15,6 @@
          fx:controller="com.oaktwister.views.widgets.PagePane"
          alignment="TOP_CENTER">
 
-    <Label fx:id="titleLabel" text="Title"
-           maxWidth="Infinity" alignment="CENTER"
-           style="-fx-background-color: #A2C6BB;">
-        <font>
-            <Font name="System Bold" size="30.0"/>
-        </font>
-        <padding>
-            <Insets bottom="22.0" top="10.0"/>
-        </padding>
-    </Label>
-
     <AnchorPane fx:id="anchorPane" VBox.vgrow="ALWAYS" />
 
     <HBox alignment="CENTER_RIGHT">

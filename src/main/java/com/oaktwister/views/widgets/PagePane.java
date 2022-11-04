@@ -24,7 +24,6 @@ import java.util.ResourceBundle;
 @ViewDescriptor(location = ViewResources.Widgets.PAGE_PANE)
 public class PagePane extends VBox implements Initializable {
 
-    @FXML private Label titleLabel;
     @FXML private AnchorPane anchorPane;
     @FXML private Button addButton;
 
@@ -57,18 +56,6 @@ public class PagePane extends VBox implements Initializable {
 
     public void setContent(Node value) {
         contentProperty().set(value);
-    }
-
-    public StringProperty titleProperty() {
-        return titleLabel.textProperty();
-    }
-
-    public String getTitle() {
-        return titleProperty().get();
-    }
-
-    public void setTitle(String value) {
-        titleProperty().set(value);
     }
 
     public ObjectProperty<EventHandler<ActionEvent>> onAddActionProperty() {

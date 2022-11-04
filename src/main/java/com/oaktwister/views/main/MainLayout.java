@@ -4,29 +4,33 @@ import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.utils.extensions.NodeUtil;
 import com.oaktwister.views.widgets.ImageButtonBox;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 @ViewDescriptor(location = ViewResources.Main.LAYOUT)
-public class MainLayout extends BorderPane implements Initializable {
+public class MainLayout extends GridPane implements Initializable {
 
-    @FXML private BorderPane borderPane;
+    @FXML private Label titleLabel;
     @FXML private ImageButtonBox accountsImageButtonBox;
     @FXML private ImageButtonBox platformsImageButtonBox;
     @FXML private ImageButtonBox identitiesImageButtonBox;
     @FXML private ImageButtonBox backButton;
     @FXML private ImageButtonBox settingsButton;
+    @FXML private AnchorPane anchorPane;
 
     private final SimpleObjectProperty<MainPage> pageProperty;
     private final SimpleObjectProperty<Node> accountPageProperty;
@@ -47,6 +51,10 @@ public class MainLayout extends BorderPane implements Initializable {
         accountsImageButtonBox.setOnAction(event -> pageProperty.set(MainPage.ACCOUNTS));
         platformsImageButtonBox.setOnAction(event -> pageProperty.set(MainPage.PLATFORMS));
         identitiesImageButtonBox.setOnAction(event -> pageProperty.set(MainPage.IDENTITIES));
+    }
+
+    public StringProperty titleProperty() {
+        return titleLabel.textProperty();
     }
 
     public ObjectProperty<MainPage> pageProperty() {
@@ -75,23 +83,17 @@ public class MainLayout extends BorderPane implements Initializable {
 
     private void onPagePropertyChanged(ObservableValue<? extends MainPage> observable,
                                        MainPage oldValue, MainPage newValue) {
-        switch (newValue) {
-            case ACCOUNTS -> {
-                Node centerNode = accountPageProperty.get();
-                borderPane.setCenter(centerNode);
-            }
-            case PLATFORMS -> {
-                Node centerNode = platformsPageProperty.get();
-                borderPane.setCenter(centerNode);
-            }
-            case IDENTITIES -> {
-                Node centerNode = identitiesPageProperty.get();
-                borderPane.setCenter(centerNode);
-            }
-            default -> {
-                borderPane.setCenter(null);
-            }
-        }
+        anchorPane.getChildren().clear();
+        Node node = switch (newValue) {
+            case ACCOUNTS -> accountPageProperty.get();
+            case PLATFORMS -> platformsPageProperty.get();
+            case IDENTITIES -> identitiesPageProperty.get();
+        };
+        anchorPane.getChildren().add(node);
+        AnchorPane.setTopAnchor(node, 0.0);
+        AnchorPane.setRightAnchor(node, 0.0);
+        AnchorPane.setBottomAnchor(node, 0.0);
+        AnchorPane.setLeftAnchor(node, 0.0);
     }
 
 }

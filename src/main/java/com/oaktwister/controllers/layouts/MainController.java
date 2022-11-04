@@ -1,6 +1,7 @@
 package com.oaktwister.controllers.layouts;
 
 import com.oaktwister.core.UIContext;
+import com.oaktwister.services.resources.StringResources;
 import com.oaktwister.views.identities.IdentityPane;
 import com.oaktwister.views.widgets.PagePane;
 import com.oaktwister.views.main.MainLayout;
@@ -36,9 +37,18 @@ public class MainController {
     private void onPagePropertyChanged(ObservableValue<? extends MainPage> observable,
                                        MainPage oldValue, MainPage newValue) {
         switch (newValue) {
-            case ACCOUNTS -> ui.controllers().accounts().reloadAccounts();
-            case PLATFORMS -> ui.controllers().platforms().reloadPlatforms();
-            case IDENTITIES -> ui.controllers().identities().reloadIdentities();
+            case ACCOUNTS -> {
+                ui.controllers().accounts().reloadAccounts();
+                view.titleProperty().set(StringResources.ACCOUNTS);
+            }
+            case PLATFORMS -> {
+                ui.controllers().platforms().reloadPlatforms();
+                view.titleProperty().set(StringResources.PLATFORMS);
+            }
+            case IDENTITIES -> {
+                ui.controllers().identities().reloadIdentities();
+                view.titleProperty().set(StringResources.IDENTITIES);
+            }
         }
     }
 

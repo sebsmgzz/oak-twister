@@ -39,7 +39,6 @@ public class PlatformsController {
     }
 
     public void initialize() {
-        view.page().titleProperty().set(StringResources.PLATFORMS);
         view.page().onAddActionProperty().set(this::onAddPlatformPane);
         viewModel.platformsProperty().addListener(platformViewModelAddedListener);
         viewModel.platformsProperty().addListener(platformViewModelRemovedListener);
