@@ -8,38 +8,30 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.HBox?>
 
+<?import com.oaktwister.views.widgets.ImageFrame?>
 <fx:root xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
-         type="javafx.scene.layout.StackPane"
+         type="javafx.scene.layout.AnchorPane"
          fx:controller="com.oaktwister.views.platforms.PlatformPane"
          style="-fx-background-color: #E8CFB5; -fx-background-radius: 10px;">
-    <AnchorPane>
-        <Button fx:id="mainButton" mnemonicParsing="false"
-                style="-fx-cursor: hand; -fx-background-color: transparent;"
-                AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
-            <graphic>
-                <AnchorPane>
-                    <VBox alignment="CENTER"
-                          AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
-                        <Label fx:id="identifierLabel" text="00000000-0000-0000-0000-000000000000" VBox.vgrow="NEVER"/>
-                        <ImageView fx:id="imageView" styleClass="imageView" VBox.vgrow="ALWAYS"
-                                   preserveRatio="true" fitHeight="100.0">
-                            <Image url="/com/oaktwister/images/placeholders/image.png"/>
-                        </ImageView>
-                        <Label fx:id="nameLabel" text="title" VBox.vgrow="NEVER"/>
-                        <HBox VBox.vgrow="NEVER" alignment="CENTER">
-                            <Label text="Created at: "/>
-                            <Label fx:id="createdAtLabel" text="yyyy/MM/dd"/>
-                        </HBox>
-                    </VBox>
-                </AnchorPane>
-            </graphic>
-        </Button>
-    </AnchorPane>
-    <Button fx:id="deleteButton" styleClass="close-btn"
-            visible="false" mnemonicParsing="false" text="X"
-            translateX="5.0" translateY="-5.0"
-            style="-fx-background-radius: 5em; -fx-background-color: #c12126;"/>
+    <ImageFrame fx:id="imageFrame"
+                AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0"
+                AnchorPane.leftAnchor="0" AnchorPane.bottomAnchor="0">
+        <graphic>
+            <VBox alignment="CENTER"
+                  AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+                <Label fx:id="identifierLabel" text="00000000-0000-0000-0000-000000000000" VBox.vgrow="NEVER"/>
+                <ImageView fx:id="imageView" styleClass="imageView" VBox.vgrow="ALWAYS"
+                           preserveRatio="true" fitHeight="100.0">
+                    <Image url="/com/oaktwister/images/placeholders/image.png"/>
+                </ImageView>
+                <Label fx:id="nameLabel" text="title" VBox.vgrow="NEVER"/>
+                <HBox VBox.vgrow="NEVER" alignment="CENTER">
+                    <Label text="Created at: "/>
+                    <Label fx:id="createdAtLabel" text="yyyy/MM/dd"/>
+                </HBox>
+            </VBox>
+        </graphic>
+    </ImageFrame>
 </fx:root>

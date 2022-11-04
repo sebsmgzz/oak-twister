@@ -7,21 +7,19 @@ import com.oaktwister.utils.extensions.LocalDateTimeUtil;
 import com.oaktwister.utils.extensions.NodeUtil;
 import com.oaktwister.utils.extensions.UUIDUtil;
 
+import com.oaktwister.views.widgets.ImageFrame;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -29,7 +27,7 @@ import java.util.ResourceBundle;
 import java.util.UUID;
 
 @ViewDescriptor(location = ViewResources.Accounts.PANE)
-public class AccountPane extends StackPane implements Initializable {
+public class AccountPane extends AnchorPane implements Initializable {
 
     private final SimpleObjectProperty<UUID> identifierProperty;
     private final SimpleObjectProperty<LocalDateTime> createdAtProperty;
@@ -37,13 +35,12 @@ public class AccountPane extends StackPane implements Initializable {
     private final SimpleObjectProperty<EventHandler<AccountPaneActionEvent>> onDeleteActionProperty;
     private final SimpleObjectProperty<EventHandler<AccountPaneActionEvent>> onMainActionProperty;
 
-    @FXML private Button mainButton;
+    @FXML private ImageFrame imageFrame;
     @FXML private ImageView imageView;
     @FXML private Label platformNameLabel;
     @FXML private Label identifierLabel;
     @FXML private Label grantsCountLabel;
     @FXML private Label createdAtLabel;
-    @FXML private Button deleteButton;
 
     public AccountPane() {
         super();
@@ -55,46 +52,8 @@ public class AccountPane extends StackPane implements Initializable {
         NodeUtil.loadControl(this);
     }
 
-    private void onHover(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-        if(newValue) {
-            super.setStyle("""
-                -fx-background-color: #E8CFB5; 
-                -fx-background-radius: 10px;
-                
-                -fx-border-color: #c12126;
-                -fx-border-width: 3px;
-                -fx-border-insets: -3px;
-                -fx-border-radius: 10px;
-                """);
-        } else {
-            super.setStyle("""
-                -fx-background-color: #E8CFB5; 
-                -fx-background-radius: 10px;
-                
-                -fx-border-width: 0px;
-                -fx-border-insets: 0px;
-                """);
-        }
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        super.setOnMouseEntered(event -> deleteButton.setVisible(true));
-        super.setOnMouseExited(event -> deleteButton.setVisible(false));
-        super.hoverProperty().addListener(this::onHover);
-        super.setStyle("""
-                -fx-background-color: #E8CFB5;
-                -fx-background-radius: 10px;
-                """);
-        mainButton.setStyle("""                
-                -fx-cursor: hand;
-                -fx-background-color: transparent;
-                """);
-        deleteButton.setStyle("""                
-                -fx-background-radius: 5em;
-                -fx-background-color: #c12126;
-                """);
-        StackPane.setAlignment(deleteButton, Pos.TOP_RIGHT);
         identifierProperty.addListener((observer, oldValue, newValue) -> {
             identifierLabel.setText(newValue.toString());
         });
@@ -104,14 +63,14 @@ public class AccountPane extends StackPane implements Initializable {
         grantsCountProperty.addListener((observable, oldValue, newValue) -> {
             grantsCountLabel.setText(newValue.toString());
         });
-        deleteButton.setOnAction(actionEvent -> {
+        imageFrame.onImageActionProperty().set(actionEvent -> {
             EventHandler<AccountPaneActionEvent> eventHandler = onDeleteActionProperty.get();
             if(eventHandler != null) {
                 AccountPaneActionEvent event = new AccountPaneActionEvent(this, actionEvent);
                 eventHandler.handle(event);
             }
         });
-        mainButton.setOnAction(actionEvent -> {
+        imageFrame.onMainActionProperty().set(actionEvent -> {
             EventHandler<AccountPaneActionEvent> eventHandler = onMainActionProperty.get();
             if(eventHandler != null) {
                 AccountPaneActionEvent event = new AccountPaneActionEvent(this, actionEvent);

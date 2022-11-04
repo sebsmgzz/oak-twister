@@ -51,11 +51,6 @@ public class FlowPage<T extends Node> extends AnchorPane implements Initializabl
         });
         panesProperty.addListener(onPaneAddedListener);
         panesProperty.addListener(onPaneRemovedListener);
-        flowPane.getStyleClass().add("flow-pane");
-        flowPane.setStyle("-fx-background-color: #717782;");
-        flowPane.setPadding(new Insets(10));
-        flowPane.setHgap(10);
-        flowPane.setVgap(10);
     }
 
     public PagePane page() {

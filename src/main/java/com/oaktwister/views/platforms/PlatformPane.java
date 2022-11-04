@@ -6,6 +6,7 @@ import com.oaktwister.utils.extensions.LocalDateTimeUtil;
 import com.oaktwister.utils.extensions.NodeUtil;
 import com.oaktwister.utils.extensions.UUIDUtil;
 
+import com.oaktwister.views.widgets.ImageFrame;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
@@ -18,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 
 import java.net.URL;
@@ -26,19 +28,18 @@ import java.util.ResourceBundle;
 import java.util.UUID;
 
 @ViewDescriptor(location = ViewResources.Platforms.PANE)
-public class PlatformPane extends StackPane implements Initializable {
+public class PlatformPane extends AnchorPane implements Initializable {
 
     private final SimpleObjectProperty<EventHandler<PlatformPaneEvent>> onMainActionProperty;
     private final SimpleObjectProperty<EventHandler<PlatformPaneEvent>> onDeleteActionProperty;
     private final SimpleObjectProperty<UUID> identifierProperty;
     private final SimpleObjectProperty<LocalDateTime> createdAtProperty;
 
-    @FXML private Button mainButton;
+    @FXML private ImageFrame imageFrame;
     @FXML private Label identifierLabel;
     @FXML private ImageView imageView;
     @FXML private Label nameLabel;
     @FXML private Label createdAtLabel;
-    @FXML private Button deleteButton;
 
     public PlatformPane() {
         super();
@@ -51,37 +52,24 @@ public class PlatformPane extends StackPane implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        super.setOnMouseEntered(event -> deleteButton.setVisible(true));
-        super.setOnMouseExited(event -> deleteButton.setVisible(false));
-        super.hoverProperty().addListener(((observable, oldValue, newValue) -> {
-            if(newValue) {
-                super.setStyle("""      
-                    -fx-background-color: #E8CFB5; 
-                    -fx-background-radius: 10px;    
-                    
-                    -fx-border-width: 3px;
-                    -fx-border-insets: -3px;          
-                    -fx-border-color: #c12126;
-                    -fx-border-radius: 10px;
-                    """);
-            } else {
-                super.setStyle("""
-                        -fx-background-color: #E8CFB5; 
-                        -fx-background-radius: 10px;
-                        -fx-border-width: 0;
-                        -fx-border-insets: 0;   
-                        """);
-            }
-        }));
-        StackPane.setAlignment(deleteButton, Pos.TOP_RIGHT);
         identifierProperty.addListener((observer, oldValue, newValue) -> {
             identifierLabel.setText(newValue.toString());
         });
         createdAtProperty.addListener((observer, oldValue, newValue) -> {
             createdAtLabel.setText(LocalDateTimeUtil.toDefault(newValue));
         });
-        mainButton.setOnAction(this::onMainButtonClick);
-        deleteButton.setOnAction(this::onDeleteButtonClick);
+        imageFrame.onMainActionProperty().set(event -> {
+            if (onMainActionProperty.isNotNull().get()) {
+                PlatformPaneEvent platformPaneEvent = new PlatformPaneEvent(this);
+                onMainActionProperty.get().handle(platformPaneEvent);
+            }
+        });
+        imageFrame.onImageActionProperty().set(event -> {
+            if (onDeleteActionProperty.isNotNull().get()) {
+                PlatformPaneEvent platformPaneEvent = new PlatformPaneEvent(this);
+                onDeleteActionProperty.get().handle(platformPaneEvent);
+            }
+        });
     }
 
     public ObjectProperty<UUID> identifierProperty() {
@@ -106,20 +94,6 @@ public class PlatformPane extends StackPane implements Initializable {
 
     public ObjectProperty<EventHandler<PlatformPaneEvent>> onDeleteActionProperty() {
         return onDeleteActionProperty;
-    }
-
-    private void onMainButtonClick(ActionEvent actionEvent) {
-        if (onMainActionProperty.isNotNull().get()) {
-            PlatformPaneEvent platformPaneEvent = new PlatformPaneEvent(this);
-            onMainActionProperty.get().handle(platformPaneEvent);
-        }
-    }
-
-    private void onDeleteButtonClick(ActionEvent actionEvent) {
-        if (onDeleteActionProperty.isNotNull().get()) {
-            PlatformPaneEvent platformPaneEvent = new PlatformPaneEvent(this);
-            onDeleteActionProperty.get().handle(platformPaneEvent);
-        }
     }
 
 }
