@@ -43,7 +43,6 @@ public class MainLayout extends BorderPane implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        super.setStyle("-fx-background-color: #FDF8F8;");
         pageProperty.addListener(this::onPagePropertyChanged);
         accountsImageButtonBox.setOnAction(event -> pageProperty.set(MainPage.ACCOUNTS));
         platformsImageButtonBox.setOnAction(event -> pageProperty.set(MainPage.PLATFORMS));

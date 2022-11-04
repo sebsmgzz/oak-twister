@@ -4,6 +4,7 @@ import com.oaktwister.services.resources.ImageResources;
 import com.oaktwister.services.resources.StringResources;
 import com.oaktwister.controllers.layouts.LoginController;
 import com.oaktwister.controllers.layouts.MainController;
+import com.oaktwister.utils.Lazy;
 import com.oaktwister.views.main.MainLayout;
 
 import javafx.scene.Parent;
@@ -16,15 +17,30 @@ public class Navigation {
     private final Stage primaryStage;
     private final UIContext ui;
 
+    private final Lazy<Scene> loginScene;
+    private final Lazy<Scene> mainScene;
+
     public Navigation(Stage primaryStage, UIContext ui) {
         this.primaryStage = primaryStage;
         this.ui = ui;
+        loginScene = new Lazy<>(this::getLoginScene);
+        mainScene = new Lazy<>(this::getMainScene);
+    }
+
+    private Scene getLoginScene() {
+        LoginController controller = ui.controllers().login();
+        Parent view = controller.getView();
+        return new Scene(view);
+    }
+
+    private Scene getMainScene() {
+        MainController controller = ui.controllers().main();
+        MainLayout view = controller.getView();
+        return new Scene(view);
     }
 
     public void goToLogin() {
-        LoginController controller = ui.controllers().login();
-        Parent view = controller.getView();
-        Scene scene = new Scene(view);
+        Scene scene = loginScene.value();
         primaryStage.setScene(scene);
         primaryStage.getIcons().add(new Image(ImageResources.Vikings.OAK));
         primaryStage.setTitle(StringResources.App.TITLE);
@@ -32,9 +48,7 @@ public class Navigation {
     }
 
     public void goToMain() {
-        MainController controller = ui.controllers().main();
-        MainLayout view = controller.getView();
-        Scene scene = new Scene(view);
+        Scene scene = mainScene.value();
         primaryStage.setScene(scene);
         primaryStage.show();
     }

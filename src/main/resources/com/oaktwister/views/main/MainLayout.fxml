@@ -14,6 +14,7 @@
          fx:controller="com.oaktwister.views.main.MainLayout"
          type="javafx.scene.layout.BorderPane"
          fx:id="borderPane"
+         style="-fx-background-color: #FDF8F8;"
          prefWidth="1000" prefHeight="600">
     <left>
         <VBox prefWidth="200">
