@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.oaktwister.views.widgets.ImageFrame?>
+<?import com.oaktwister.views.widgets.DeleteFrame?>
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
@@ -13,9 +13,9 @@
          xmlns:fx="http://javafx.com/fxml/1"
          type="javafx.scene.layout.AnchorPane"
          fx:controller="com.oaktwister.views.accounts.AccountPane">
-    <ImageFrame fx:id="imageFrame"
-                AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0"
-                AnchorPane.leftAnchor="0" AnchorPane.bottomAnchor="0">
+    <DeleteFrame fx:id="deleteFrame"
+                 AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0"
+                 AnchorPane.leftAnchor="0" AnchorPane.bottomAnchor="0">
         <graphic>
             <HBox spacing="5"
                   AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0"
@@ -40,5 +40,5 @@
                 </VBox>
             </HBox>
         </graphic>
-    </ImageFrame>
+    </DeleteFrame>
 </fx:root>

@@ -7,16 +7,12 @@ import com.oaktwister.utils.listeners.ListItemAddedListener;
 import com.oaktwister.utils.listeners.ListItemRemovedListener;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.FlowPane;
 
 import java.net.URL;
@@ -59,6 +55,14 @@ public class FlowPage<T extends Node> extends AnchorPane implements Initializabl
 
     public ListProperty<T> panesProperty() {
         return panesProperty;
+    }
+
+    public ObservableList<T> getPanes() {
+        return panesProperty().get();
+    }
+
+    public void setPanes(ObservableList<T> value) {
+        panesProperty().set(value);
     }
 
     private void onPaneAdded(T pane) {

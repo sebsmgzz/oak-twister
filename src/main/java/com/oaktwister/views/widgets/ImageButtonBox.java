@@ -37,30 +37,6 @@ public class ImageButtonBox extends HBox implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        button.setStyle("""
-                -fx-background-radius: 0;
-                -fx-background-color: transparent;
-                """);
-        button.hoverProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue) {
-                super.setStyle("""
-                        -fx-background-radius: 0;
-                        -fx-background-color: #E8CFB5;
-                
-                        -fx-border-color: #c12126;
-                        -fx-cursor: hand;
-                        -fx-border-width: 0 0 0 5px;
-                        """);
-            } else {
-                super.setStyle("""
-                        -fx-background-radius: 0;
-                        -fx-background-color: transparent;
-                
-                        -fx-cursor: none;
-                        -fx-border-width: 0;
-                        """);
-            }
-        });
     }
 
     public StringProperty textProperty() {

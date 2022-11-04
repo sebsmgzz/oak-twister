@@ -9,8 +9,10 @@
          xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
          fx:controller="com.oaktwister.views.widgets.ImageButtonBox"
+         stylesheets="/com/oaktwister/views/widgets/ImageButtonBox.css"
+         styleClass="root"
          alignment="CENTER">
-    <Button fx:id="button" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+    <Button fx:id="button" styleClass="button" HBox.hgrow="ALWAYS" maxWidth="Infinity">
         <padding>
             <Insets top="10" right="5" bottom="10" left="0" />
         </padding>

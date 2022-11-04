@@ -8,15 +8,15 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.HBox?>
 
-<?import com.oaktwister.views.widgets.ImageFrame?>
+<?import com.oaktwister.views.widgets.DeleteFrame?>
 <fx:root xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
          type="javafx.scene.layout.AnchorPane"
          fx:controller="com.oaktwister.views.platforms.PlatformPane"
          style="-fx-background-color: #E8CFB5; -fx-background-radius: 10px;">
-    <ImageFrame fx:id="imageFrame"
-                AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0"
-                AnchorPane.leftAnchor="0" AnchorPane.bottomAnchor="0">
+    <DeleteFrame fx:id="deleteFrame"
+                 AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0"
+                 AnchorPane.leftAnchor="0" AnchorPane.bottomAnchor="0">
         <graphic>
             <VBox alignment="CENTER"
                   AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0"
@@ -33,5 +33,5 @@
                 </HBox>
             </VBox>
         </graphic>
-    </ImageFrame>
+    </DeleteFrame>
 </fx:root>

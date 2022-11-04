@@ -1,0 +1,19 @@
+
+.root {
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+    -fx-border-color: #c12126;
+    -fx-border-width: 0;
+    -fx-cursor: none;
+}
+
+.root:hover {
+    -fx-background-color: #E8CFB5;
+    -fx-border-width: 0 0 0 5px;
+    -fx-cursor: hand;
+}
+
+.button {
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+}

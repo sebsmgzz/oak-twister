@@ -7,7 +7,7 @@ import com.oaktwister.utils.extensions.LocalDateTimeUtil;
 import com.oaktwister.utils.extensions.NodeUtil;
 import com.oaktwister.utils.extensions.UUIDUtil;
 
-import com.oaktwister.views.widgets.ImageFrame;
+import com.oaktwister.views.widgets.DeleteFrame;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -35,7 +35,7 @@ public class AccountPane extends AnchorPane implements Initializable {
     private final SimpleObjectProperty<EventHandler<AccountPaneActionEvent>> onDeleteActionProperty;
     private final SimpleObjectProperty<EventHandler<AccountPaneActionEvent>> onMainActionProperty;
 
-    @FXML private ImageFrame imageFrame;
+    @FXML private DeleteFrame deleteFrame;
     @FXML private ImageView imageView;
     @FXML private Label platformNameLabel;
     @FXML private Label identifierLabel;
@@ -63,14 +63,14 @@ public class AccountPane extends AnchorPane implements Initializable {
         grantsCountProperty.addListener((observable, oldValue, newValue) -> {
             grantsCountLabel.setText(newValue.toString());
         });
-        imageFrame.onImageActionProperty().set(actionEvent -> {
+        deleteFrame.onDeleteActionProperty().set(actionEvent -> {
             EventHandler<AccountPaneActionEvent> eventHandler = onDeleteActionProperty.get();
             if(eventHandler != null) {
                 AccountPaneActionEvent event = new AccountPaneActionEvent(this, actionEvent);
                 eventHandler.handle(event);
             }
         });
-        imageFrame.onMainActionProperty().set(actionEvent -> {
+        deleteFrame.onMainActionProperty().set(actionEvent -> {
             EventHandler<AccountPaneActionEvent> eventHandler = onMainActionProperty.get();
             if(eventHandler != null) {
                 AccountPaneActionEvent event = new AccountPaneActionEvent(this, actionEvent);
@@ -106,21 +106,5 @@ public class AccountPane extends AnchorPane implements Initializable {
     public SimpleObjectProperty<EventHandler<AccountPaneActionEvent>> onDeleteActionProperty() {
         return onDeleteActionProperty;
     }
-
-    /*
-    private void onDeleteButtonClick(ActionEvent event) {
-        // TODO: Move to alert factory? Event system?
-        AccountViewModel accountViewModel = getViewModel();
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Delete account");
-        alert.setContentText(String.format(
-                "Do you really want to delete account %s? %nThis action cannot be undone.",
-                accountViewModel.idProperty().get()));
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && !ButtonType.CANCEL.equals(result.get())) {
-            getViewModel().delete();
-        }
-    }
-    */
 
 }

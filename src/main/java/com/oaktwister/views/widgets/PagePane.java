@@ -3,11 +3,11 @@ package com.oaktwister.views.widgets;
 import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.utils.extensions.NodeUtil;
-import com.oaktwister.utils.listeners.ListItemAddedListener;
-import com.oaktwister.utils.listeners.ListItemRemovedListener;
 
-import javafx.beans.property.*;
-import javafx.collections.FXCollections;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -15,9 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -49,14 +47,6 @@ public class PagePane extends VBox implements Initializable {
         });
     }
 
-    public ReadOnlyDoubleProperty innerWidthProperty() {
-        return anchorPane.widthProperty();
-    }
-
-    public ReadOnlyDoubleProperty innerHeightProperty() {
-        return anchorPane.heightProperty();
-    }
-
     public ObjectProperty<Node> contentProperty() {
         return contentProperty;
     }
@@ -73,8 +63,24 @@ public class PagePane extends VBox implements Initializable {
         return titleLabel.textProperty();
     }
 
+    public String getTitle() {
+        return titleProperty().get();
+    }
+
+    public void setTitle(String value) {
+        titleProperty().set(value);
+    }
+
     public ObjectProperty<EventHandler<ActionEvent>> onAddActionProperty() {
         return addButton.onActionProperty();
+    }
+
+    public EventHandler<ActionEvent> getOnAddAction() {
+        return onAddActionProperty().get();
+    }
+
+    public void setOnAddAction(EventHandler<ActionEvent> value) {
+        onAddActionProperty().set(value);
     }
 
 }

@@ -6,21 +6,17 @@ import com.oaktwister.utils.extensions.LocalDateTimeUtil;
 import com.oaktwister.utils.extensions.NodeUtil;
 import com.oaktwister.utils.extensions.UUIDUtil;
 
-import com.oaktwister.views.widgets.ImageFrame;
+import com.oaktwister.views.widgets.DeleteFrame;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -35,7 +31,7 @@ public class PlatformPane extends AnchorPane implements Initializable {
     private final SimpleObjectProperty<UUID> identifierProperty;
     private final SimpleObjectProperty<LocalDateTime> createdAtProperty;
 
-    @FXML private ImageFrame imageFrame;
+    @FXML private DeleteFrame deleteFrame;
     @FXML private Label identifierLabel;
     @FXML private ImageView imageView;
     @FXML private Label nameLabel;
@@ -58,13 +54,13 @@ public class PlatformPane extends AnchorPane implements Initializable {
         createdAtProperty.addListener((observer, oldValue, newValue) -> {
             createdAtLabel.setText(LocalDateTimeUtil.toDefault(newValue));
         });
-        imageFrame.onMainActionProperty().set(event -> {
+        deleteFrame.onMainActionProperty().set(event -> {
             if (onMainActionProperty.isNotNull().get()) {
                 PlatformPaneEvent platformPaneEvent = new PlatformPaneEvent(this);
                 onMainActionProperty.get().handle(platformPaneEvent);
             }
         });
-        imageFrame.onImageActionProperty().set(event -> {
+        deleteFrame.onDeleteActionProperty().set(event -> {
             if (onDeleteActionProperty.isNotNull().get()) {
                 PlatformPaneEvent platformPaneEvent = new PlatformPaneEvent(this);
                 onDeleteActionProperty.get().handle(platformPaneEvent);
