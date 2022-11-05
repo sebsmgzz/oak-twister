@@ -1,53 +1,53 @@
-package com.oaktwister.controllers.controls;
+package com.oaktwister.views.accounts;
 
+import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.core.UIContext;
 import com.oaktwister.events.AccountPaneActionEvent;
-import com.oaktwister.services.resources.StringResources;
+import com.oaktwister.services.resources.ViewResources;
+import com.oaktwister.utils.extensions.NodeUtil;
 import com.oaktwister.utils.listeners.ListItemAddedListener;
 import com.oaktwister.utils.listeners.ListItemRemovedListener;
 import com.oaktwister.viewmodels.collections.AccountsViewModel;
 import com.oaktwister.viewmodels.models.AccountViewModel;
-import com.oaktwister.views.accounts.AccountPane;
+import com.oaktwister.views.widgets.CrudPage;
 import com.oaktwister.views.widgets.FlowPage;
-import com.oaktwister.views.widgets.PagePane;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.layout.AnchorPane;
 
+import java.net.URL;
 import java.util.HashMap;
+import java.util.ResourceBundle;
 
-public class AccountsController {
+@ViewDescriptor(location = ViewResources.Accounts.PAGE)
+public class AccountsPage extends AnchorPane implements Initializable {
 
     private final UIContext ui;
-
     private final AccountsViewModel viewModel;
-    private final FlowPage<AccountPane> view;
+
+    @FXML private FlowPage<AccountPane> flowPage;
+    @FXML private CrudPage crudPage;
 
     private final HashMap<AccountViewModel, AccountPane> accountsMap;
     private final ListItemAddedListener<AccountViewModel> accountViewModelAddedListener;
     private final ListItemRemovedListener<AccountViewModel> accountViewModelRemovedListener;
 
-    public AccountsController(UIContext ui) {
+    public AccountsPage(UIContext ui) {
         this.ui = ui;
         viewModel = ui.viewModels().accounts();
-        view = new FlowPage<>();
         accountsMap = new HashMap<>();
         accountViewModelAddedListener = new ListItemAddedListener<>(this::onAccountViewModelAdded);
         accountViewModelRemovedListener = new ListItemRemovedListener<>(this::onAccountViewModelRemoved);
+        NodeUtil.loadControl(this);
     }
 
-    public void initialize() {
-        view.page().onAddActionProperty().set(this::onAddAccountPane);
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        crudPage.onAddActionProperty().set(this::onAddAccountPane);
         viewModel.accountsProperty().addListener(accountViewModelAddedListener);
         viewModel.accountsProperty().addListener(accountViewModelRemovedListener);
-    }
-
-    public FlowPage<AccountPane> getView() {
-        return view;
-    }
-
-    public void reloadAccounts() {
-        viewModel.clear();
-        viewModel.load();
     }
 
     private void onAddAccountPane(ActionEvent actionEvent) {
@@ -63,13 +63,13 @@ public class AccountsController {
         accountPane.imageProperty().bind(accountViewModel.platform().imageProperty());
         accountPane.platformNameProperty().bind(accountViewModel.platform().nameProperty());
         accountPane.grantsCountProperty().bind(accountViewModel.grantMap().grantCountProperty());
-        view.panesProperty().add(accountPane);
+        flowPage.panesProperty().add(accountPane);
         accountsMap.put(accountViewModel, accountPane);
     }
 
     private void onAccountViewModelRemoved(AccountViewModel accountViewModel) {
         AccountPane accountPane = accountsMap.remove(accountViewModel);
-        view.panesProperty().remove(accountPane);
+        flowPage.panesProperty().remove(accountPane);
     }
 
     private void onAccountPaneMainAction(AccountPaneActionEvent event) {
@@ -78,6 +78,11 @@ public class AccountsController {
 
     private void onAccountPaneDeleteAction(AccountPaneActionEvent event) {
         // TODO: Show DeleteAccountAlert
+    }
+
+    public void reloadAccounts() {
+        viewModel.clear();
+        viewModel.load();
     }
 
 }

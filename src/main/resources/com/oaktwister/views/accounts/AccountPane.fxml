@@ -20,10 +20,13 @@
             <HBox spacing="5"
                   AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0"
                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+
                 <ImageView fx:id="imageView" fitHeight="50" preserveRatio="true">
                     <Image url="/com/oaktwister/images/placeholders/image.png"/>
                 </ImageView>
+
                 <Label fx:id="platformNameLabel"/>
+
                 <VBox styleClass="vbox">
                     <HBox>
                         <Label text="Account: "/>
@@ -38,6 +41,7 @@
                         <Label fx:id="createdAtLabel"/>
                     </HBox>
                 </VBox>
+
             </HBox>
         </graphic>
     </DeleteFrame>

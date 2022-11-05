@@ -1,51 +1,50 @@
-package com.oaktwister.controllers.controls;
+package com.oaktwister.views.platforms;
 
+import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.controllers.dialogs.EditPlatformController;
 import com.oaktwister.core.UIContext;
-import com.oaktwister.services.resources.StringResources;
+import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.utils.extensions.MapUtil;
+import com.oaktwister.utils.extensions.NodeUtil;
 import com.oaktwister.utils.listeners.ListItemAddedListener;
 import com.oaktwister.utils.listeners.ListItemRemovedListener;
 import com.oaktwister.viewmodels.collections.PlatformsViewModel;
 import com.oaktwister.viewmodels.models.PlatformViewModel;
-import com.oaktwister.views.widgets.FlowPage;
-import com.oaktwister.views.widgets.PagePane;
-import com.oaktwister.views.platforms.PlatformPane;
-import com.oaktwister.views.platforms.PlatformPaneEvent;
 import com.oaktwister.views.DialogResult;
-
+import com.oaktwister.views.widgets.CrudPage;
+import com.oaktwister.views.widgets.FlowPage;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.layout.AnchorPane;
 
 import java.util.HashMap;
 
-public class PlatformsController {
+@ViewDescriptor(location = ViewResources.Platforms.PAGE)
+public class PlatformsPage extends AnchorPane {
 
     private final UIContext ui;
-
     private final PlatformsViewModel viewModel;
-    private final FlowPage<PlatformPane> view;
+
+    @FXML private CrudPage crudPage;
+    @FXML private FlowPage<PlatformPane> flowPage;
 
     private final HashMap<PlatformViewModel, PlatformPane> platformsMap;
     private final ListItemAddedListener<PlatformViewModel> platformViewModelAddedListener;
     private final ListItemRemovedListener<PlatformViewModel> platformViewModelRemovedListener;
 
-    public PlatformsController(UIContext ui) {
+    public PlatformsPage(UIContext ui) {
         this.ui = ui;
         viewModel = ui.viewModels().platforms();
-        view = new FlowPage<>();
         platformsMap = new HashMap<>();
         platformViewModelAddedListener = new ListItemAddedListener<>(this::onPlatformViewModelAdded);
         platformViewModelRemovedListener = new ListItemRemovedListener<>(this::onPlatformViewModelRemoved);
+        NodeUtil.loadControl(this);
     }
 
     public void initialize() {
-        view.page().onAddActionProperty().set(this::onAddPlatformPane);
+        crudPage.onAddActionProperty().set(this::onAddPlatformPane);
         viewModel.platformsProperty().addListener(platformViewModelAddedListener);
         viewModel.platformsProperty().addListener(platformViewModelRemovedListener);
-    }
-
-    public FlowPage<PlatformPane> getView() {
-        return view;
     }
 
     public void reloadPlatforms() {
@@ -71,13 +70,13 @@ public class PlatformsController {
         platformPane.imageProperty().bind(platformViewModel.imageProperty());
         platformPane.nameProperty().bind(platformViewModel.nameProperty());
         platformPane.createdAtProperty().bind(platformViewModel.createdAtProperty());
-        view.panesProperty().add(platformPane);
+        flowPage.panesProperty().add(platformPane);
         platformsMap.put(platformViewModel, platformPane);
     }
 
     private void onPlatformViewModelRemoved(PlatformViewModel platformViewModel) {
         PlatformPane platformPane = platformsMap.remove(platformViewModel);
-        view.panesProperty().remove(platformPane);
+        flowPage.panesProperty().remove(platformPane);
     }
 
     private void onPlatformPaneClick(PlatformPaneEvent actionEvent) {

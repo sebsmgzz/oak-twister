@@ -21,7 +21,6 @@ import java.util.ResourceBundle;
 @ViewDescriptor(location = ViewResources.Widgets.FLOW_PANE)
 public class FlowPage<T extends Node> extends AnchorPane implements Initializable {
 
-    @FXML private PagePane pagePane;
     @FXML private ScrollPane scrollPane;
     @FXML private FlowPane flowPane;
 
@@ -47,10 +46,6 @@ public class FlowPage<T extends Node> extends AnchorPane implements Initializabl
         });
         panesProperty.addListener(onPaneAddedListener);
         panesProperty.addListener(onPaneRemovedListener);
-    }
-
-    public PagePane page() {
-        return pagePane;
     }
 
     public ListProperty<T> panesProperty() {

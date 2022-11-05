@@ -3,6 +3,7 @@ package com.oaktwister.views.main;
 import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.utils.extensions.NodeUtil;
+import com.oaktwister.utils.nodes.AnchorPaneUtil;
 import com.oaktwister.views.widgets.ImageButtonBox;
 
 import javafx.beans.property.ObjectProperty;
@@ -89,11 +90,8 @@ public class MainLayout extends GridPane implements Initializable {
             case PLATFORMS -> platformsPageProperty.get();
             case IDENTITIES -> identitiesPageProperty.get();
         };
+        AnchorPaneUtil.setEmptyAnchors(node);
         anchorPane.getChildren().add(node);
-        AnchorPane.setTopAnchor(node, 0.0);
-        AnchorPane.setRightAnchor(node, 0.0);
-        AnchorPane.setBottomAnchor(node, 0.0);
-        AnchorPane.setLeftAnchor(node, 0.0);
     }
 
 }

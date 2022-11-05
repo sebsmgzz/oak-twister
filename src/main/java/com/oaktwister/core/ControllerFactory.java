@@ -1,8 +1,6 @@
 package com.oaktwister.core;
 
-import com.oaktwister.controllers.controls.AccountsController;
 import com.oaktwister.controllers.controls.IdentitiesController;
-import com.oaktwister.controllers.controls.PlatformsController;
 import com.oaktwister.controllers.dialogs.EditPlatformController;
 import com.oaktwister.controllers.dialogs.LoginFailedController;
 import com.oaktwister.controllers.layouts.LoginController;
@@ -23,8 +21,6 @@ public class ControllerFactory {
 
     private final Lazy<MainController> mainController;
     private final Lazy<LoginController> loginController;
-    private final Lazy<AccountsController> accountsController;
-    private final Lazy<PlatformsController> platformsController;
     private final Lazy<IdentitiesController> identitiesController;
 
     public ControllerFactory(Stage primaryStage, UIContext ui) {
@@ -32,8 +28,6 @@ public class ControllerFactory {
         this.ui = ui;
         mainController = new Lazy<>(this::getMainController);
         loginController = new Lazy<>(this::getLoginController);
-        accountsController = new Lazy<>(this::getAccountsController);
-        platformsController = new Lazy<>(this::getPlatformsController);
         identitiesController = new Lazy<>(this::getIdentitiesController);
     }
 
@@ -55,26 +49,6 @@ public class ControllerFactory {
 
     public LoginController login() {
         return loginController.value();
-    }
-
-    private AccountsController getAccountsController() {
-        AccountsController accountsController = new AccountsController(ui);
-        accountsController.initialize();
-        return accountsController;
-    }
-
-    public AccountsController accounts() {
-        return accountsController.value();
-    }
-
-    private PlatformsController getPlatformsController() {
-        PlatformsController platformsController = new PlatformsController(ui);
-        platformsController.initialize();
-        return platformsController;
-    }
-
-    public PlatformsController platforms() {
-        return platformsController.value();
     }
 
     private IdentitiesController getIdentitiesController() {

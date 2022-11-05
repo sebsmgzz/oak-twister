@@ -27,8 +27,8 @@
     </columnConstraints>
 
     <rowConstraints>
-        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-        <RowConstraints minHeight="10.0" vgrow="ALWAYS" />
+        <RowConstraints vgrow="NEVER" />
+        <RowConstraints vgrow="ALWAYS" />
     </rowConstraints>
 
     <StackPane GridPane.rowIndex="0" GridPane.columnIndex="0">
