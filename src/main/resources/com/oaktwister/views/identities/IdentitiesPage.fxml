@@ -1,54 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.text.Font?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.Button?>
+<?import com.oaktwister.views.widgets.CrudPage?>
+<?import com.oaktwister.views.identities.IdentitiesTable?>
 
 <fx:root type="javafx.scene.layout.AnchorPane"
          xmlns="http://javafx.com/javafx/8"
          xmlns:fx="http://javafx.com/fxml/1"
          fx:controller="com.oaktwister.views.identities.IdentitiesPage">
-    <VBox alignment="TOP_CENTER"
-          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-
-        <Label fx:id="titleLabel" text="Title"
-               alignment="CENTER" maxWidth="Infinity"
-               style="-fx-background-color: #A2C6BB;">
-            <font>
-                <Font name="System Bold" size="30.0"/>
-            </font>
-            <padding>
-                <Insets bottom="22.0" top="10.0"/>
-            </padding>
-        </Label>
-
-        <AnchorPane VBox.vgrow="ALWAYS">
-            <TableView fx:id="tableView" tableMenuButtonVisible="true"
-                       AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                       AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"
-                       style="-fx-text-fill: black; -fx-background-color: #717782;">
-                <columns>
-                    <TableColumn fx:id="idColumn" text="Id"/>
-                    <TableColumn fx:id="nameColumn" text="Name"/>
-                    <TableColumn fx:id="grantsCountColumn" text="Grants"/>
-                    <TableColumn fx:id="createdAtColumn" text="Created"/>
-                </columns>
-            </TableView>
-        </AnchorPane>
-
-        <HBox alignment="CENTER_RIGHT">
-            <padding>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-            </padding>
-            <Button fx:id="addButton" minWidth="100" text="Add"/>
-        </HBox>
-
-    </VBox>
+    <CrudPage
+            AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0"
+            AnchorPane.leftAnchor="0" AnchorPane.bottomAnchor="0">
+        <content>
+            <IdentitiesTable fx:id="identitiesTable" />
+        </content>
+    </CrudPage>
 </fx:root>

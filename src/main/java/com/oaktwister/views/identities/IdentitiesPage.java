@@ -1,63 +1,82 @@
 package com.oaktwister.views.identities;
 
 import com.oaktwister.annotations.ViewDescriptor;
+import com.oaktwister.core.UIContext;
+import com.oaktwister.events.IdentityPaneActionEvent;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.utils.extensions.NodeUtil;
-import com.oaktwister.utils.tables.CellValueFactory;
+
+import com.oaktwister.utils.listeners.ListItemAddedListener;
+import com.oaktwister.utils.listeners.ListItemRemovedListener;
+import com.oaktwister.viewmodels.collections.IdentitiesViewModel;
 import com.oaktwister.viewmodels.models.IdentityViewModel;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.StringProperty;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.VBox;
 
 import java.net.URL;
-import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.ResourceBundle;
-import java.util.UUID;
 
 @ViewDescriptor(location = ViewResources.Identities.PAGE)
 public class IdentitiesPage extends AnchorPane implements Initializable {
 
-    @FXML private Label titleLabel;
-    @FXML private Button addButton;
+    private final UIContext ui;
+    private final IdentitiesViewModel viewModel;
 
-    @FXML private TableView<IdentityViewModel> tableView;
-    @FXML private TableColumn<IdentityViewModel, UUID> idColumn;
-    @FXML private TableColumn<IdentityViewModel, String> nameColumn;
-    @FXML private TableColumn<IdentityViewModel, Integer> grantsCountColumn;
-    @FXML private TableColumn<IdentityViewModel, LocalDateTime> createdAtColumn;
+    @FXML private IdentitiesTable identitiesTable;
 
-    public IdentitiesPage() {
+    private final HashMap<IdentityViewModel, IdentityPane> identitiesMap;
+    private final ListItemAddedListener<IdentityViewModel> identityViewModelAddedListener;
+    private final ListItemRemovedListener<IdentityViewModel> identityViewModelRemovedListener;
+
+    public IdentitiesPage(UIContext ui) {
+        this.ui = ui;
+        viewModel = ui.viewModels().identities();
+        identitiesMap = new HashMap<>();
+        identityViewModelAddedListener = new ListItemAddedListener<>(this::onIdentityViewModelAdded);
+        identityViewModelRemovedListener = new ListItemRemovedListener<>(this::onIdentityViewModelRemoved);
         NodeUtil.loadControl(this);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        idColumn.setCellValueFactory(cell -> cell.getValue().idProperty());
-        nameColumn.setCellValueFactory(cell -> cell.getValue().nameProperty());
-        createdAtColumn.setCellValueFactory(new CellValueFactory<>(identity ->
-                identity.createdAtProperty().get()));
-        grantsCountColumn.setCellValueFactory(new CellValueFactory<>(identity ->
-                identity.grantMap().grantCountProperty().get()));
+        viewModel.identitiesProperty().addListener(identityViewModelAddedListener);
+        viewModel.identitiesProperty().addListener(identityViewModelRemovedListener);
+    }
+    public void reloadIdentities() {
+        viewModel.clear();
+        viewModel.load();
     }
 
-    public StringProperty titleProperty() {
-        return titleLabel.textProperty();
+    private void onAddIdentityPane(ActionEvent actionEvent) {
+        // TODO: Show EditIdentityDialog
     }
 
-    public ObjectProperty<EventHandler<ActionEvent>> onAddActionProperty() {
-        return addButton.onActionProperty();
+    private void onIdentityViewModelAdded(IdentityViewModel identityViewModel) {
+        IdentityPane identityPane = new IdentityPane();
+        identityPane.onMainActionProperty().set(this::onIdentityPaneMainAction);
+        identityPane.onDeleteActionProperty().set(this::onIdentityPaneDeleteAction);
+        identityPane.identifierProperty().bind(identityViewModel.idProperty());
+        identityPane.nameProperty().bind(identityViewModel.nameProperty());
+        identityPane.grantsCountProperty().bind(identityViewModel.grantMap().grantCountProperty());
+        identityPane.createdAtProperty().bind(identityViewModel.createdAtProperty());
+        identitiesMap.put(identityViewModel, identityPane);
+        identitiesTable.itemsProperty().get().add(identityViewModel);
     }
 
-    public ObjectProperty<ObservableList<IdentityViewModel>> identitiesProperty() {
-        return tableView.itemsProperty();
+    private void onIdentityViewModelRemoved(IdentityViewModel identityViewModel) {
+        identitiesMap.remove(identityViewModel);
+        identitiesTable.itemsProperty().get().remove(identityViewModel);
+    }
+
+    private void onIdentityPaneMainAction(IdentityPaneActionEvent event) {
+        // TODO: Show EditIdentityDialog
+    }
+
+    private void onIdentityPaneDeleteAction(IdentityPaneActionEvent event) {
+        // TODO: Show DeleteIdentityAlert
     }
 
 }

@@ -17,9 +17,6 @@ module oaktwister.main {
     exports com.oaktwister.controllers.layouts;
     opens com.oaktwister.controllers.layouts to javafx.fxml;
 
-    exports com.oaktwister.controllers.controls;
-    opens com.oaktwister.controllers.controls to javafx.fxml;
-
     exports com.oaktwister.views;
     opens com.oaktwister.views to javafx.fxml;
 

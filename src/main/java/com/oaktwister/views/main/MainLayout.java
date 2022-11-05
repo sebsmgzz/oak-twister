@@ -3,7 +3,7 @@ package com.oaktwister.views.main;
 import com.oaktwister.annotations.ViewDescriptor;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.utils.extensions.NodeUtil;
-import com.oaktwister.utils.nodes.AnchorPaneUtil;
+import com.oaktwister.utils.extensions.AnchorPaneUtil;
 import com.oaktwister.views.widgets.ImageButtonBox;
 
 import javafx.beans.property.ObjectProperty;

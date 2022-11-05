@@ -1,6 +1,5 @@
 package com.oaktwister.core;
 
-import com.oaktwister.controllers.controls.IdentitiesController;
 import com.oaktwister.controllers.dialogs.EditPlatformController;
 import com.oaktwister.controllers.dialogs.LoginFailedController;
 import com.oaktwister.controllers.layouts.LoginController;
@@ -21,14 +20,12 @@ public class ControllerFactory {
 
     private final Lazy<MainController> mainController;
     private final Lazy<LoginController> loginController;
-    private final Lazy<IdentitiesController> identitiesController;
 
     public ControllerFactory(Stage primaryStage, UIContext ui) {
         this.primaryStage = primaryStage;
         this.ui = ui;
         mainController = new Lazy<>(this::getMainController);
         loginController = new Lazy<>(this::getLoginController);
-        identitiesController = new Lazy<>(this::getIdentitiesController);
     }
 
     private MainController getMainController() {
@@ -49,16 +46,6 @@ public class ControllerFactory {
 
     public LoginController login() {
         return loginController.value();
-    }
-
-    private IdentitiesController getIdentitiesController() {
-        IdentitiesController identitiesController = new IdentitiesController(ui);
-        identitiesController.initialize();
-        return identitiesController;
-    }
-
-    public IdentitiesController identities() {
-        return identitiesController.value();
     }
 
     public EditPlatformController editPlatform() {

@@ -1,4 +1,4 @@
-package com.oaktwister.utils.nodes;
+package com.oaktwister.utils.extensions;
 
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;

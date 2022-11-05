@@ -3,9 +3,8 @@ package com.oaktwister.controllers.layouts;
 import com.oaktwister.core.UIContext;
 import com.oaktwister.services.resources.StringResources;
 import com.oaktwister.views.accounts.AccountsPage;
-import com.oaktwister.views.identities.IdentityPane;
+import com.oaktwister.views.identities.IdentitiesPage;
 import com.oaktwister.views.platforms.PlatformsPage;
-import com.oaktwister.views.widgets.PagePane;
 import com.oaktwister.views.main.MainLayout;
 import com.oaktwister.views.main.MainPage;
 
@@ -18,12 +17,14 @@ public class MainController {
     private final MainLayout view;
     private final AccountsPage accountsPage;
     private final PlatformsPage platformsPage;
+    private final IdentitiesPage identitiesPage;
 
     public MainController(UIContext ui) {
         this.ui = ui;
         view = new MainLayout();
         accountsPage = new AccountsPage(ui);
         platformsPage = new PlatformsPage(ui);
+        identitiesPage = new IdentitiesPage(ui);
     }
 
     public MainLayout getView() {
@@ -34,7 +35,7 @@ public class MainController {
         view.pageProperty().addListener(this::onPagePropertyChanged);
         view.accountPageProperty().set(accountsPage);
         view.platformsPageProperty().set(platformsPage);
-        view.identitiesPageProperty().set(ui.controllers().identities().getView());
+        view.identitiesPageProperty().set(identitiesPage);
         view.onBackActionProperty().set(event -> ui.navigation().goToLogin());
         view.onSettingsActionProperty().set(event -> { /* TODO */ });
         view.pageProperty().set(MainPage.ACCOUNTS);
@@ -52,7 +53,7 @@ public class MainController {
                 view.titleProperty().set(StringResources.PLATFORMS);
             }
             case IDENTITIES -> {
-                ui.controllers().identities().reloadIdentities();
+                identitiesPage.reloadIdentities();
                 view.titleProperty().set(StringResources.IDENTITIES);
             }
         }

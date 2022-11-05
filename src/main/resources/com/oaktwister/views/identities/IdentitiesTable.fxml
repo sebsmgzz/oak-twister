@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+
+<fx:root xmlns="http://javafx.com/javafx"
+         xmlns:fx="http://javafx.com/fxml"
+         type="javafx.scene.control.TableView"
+         fx:controller="com.oaktwister.views.identities.IdentitiesTable"
+         fx:id="root"
+         tableMenuButtonVisible="true"
+         style="-fx-text-fill: black; -fx-background-color: #717782;">
+    <columns>
+        <TableColumn fx:id="idColumn" text="Id"/>
+        <TableColumn fx:id="nameColumn" text="Name"/>
+        <TableColumn fx:id="grantsCountColumn" text="Grants"/>
+        <TableColumn fx:id="createdAtColumn" text="Created"/>
+    </columns>
+</fx:root>
