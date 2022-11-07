@@ -1,16 +1,11 @@
 package com.oaktwister.app.core;
 
-import com.oaktwister.app.services.resources.ImageResources;
-import com.oaktwister.app.services.resources.StringResources;
-import com.oaktwister.app.controllers.layouts.LoginController;
-import com.oaktwister.app.controllers.layouts.MainController;
-import com.oaktwister.app.utils.Lazy;
 import com.oaktwister.app.utils.extensions.FXMLUtil;
-import com.oaktwister.app.views.main.MainLayout;
+import com.oaktwister.app.views.login.LoginController;
+import com.oaktwister.app.views.main.MainController;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Navigation {
@@ -18,38 +13,28 @@ public class Navigation {
     private final Stage primaryStage;
     private final UIContext ui;
 
-    private final Lazy<Scene> loginScene;
-    private final Lazy<Scene> mainScene;
+    private final LoginController loginController;
+    private final MainController mainController;
 
     public Navigation(Stage primaryStage, UIContext ui) {
         this.primaryStage = primaryStage;
         this.ui = ui;
-        loginScene = new Lazy<>(this::getLoginScene);
-        mainScene = new Lazy<>(this::getMainScene);
-    }
-
-    private Scene getLoginScene() {
-        LoginController controller = ui.controllers().login();
-        Parent view = controller.getView();
-        return new Scene(view);
-    }
-
-    private Scene getMainScene() {
-        MainController controller = ui.controllers().main();
-        MainLayout view = controller.getView();
-        return new Scene(view);
+        loginController = new LoginController(ui);
+        mainController = new MainController(ui);
     }
 
     public void goToLogin() {
-        Scene scene = loginScene.value();
+        Parent node = loginController.getNode();
+        Scene scene = new Scene(node);
+        loginController.configStage(primaryStage);
         primaryStage.setScene(scene);
-        primaryStage.getIcons().add(new Image(ImageResources.Vikings.OAK));
-        primaryStage.setTitle(StringResources.App.TITLE);
         primaryStage.show();
     }
 
     public void goToMain() {
-        Scene scene = mainScene.value();
+        Parent node = mainController.getNode();
+        Scene scene = new Scene(node);
+        mainController.configStage(primaryStage);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
