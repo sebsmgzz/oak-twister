@@ -5,6 +5,7 @@ import com.oaktwister.services.resources.StringResources;
 import com.oaktwister.controllers.layouts.LoginController;
 import com.oaktwister.controllers.layouts.MainController;
 import com.oaktwister.utils.Lazy;
+import com.oaktwister.utils.extensions.NodeUtil;
 import com.oaktwister.views.main.MainLayout;
 
 import javafx.scene.Parent;
@@ -51,6 +52,13 @@ public class Navigation {
         Scene scene = mainScene.value();
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    public Stage getDialogStage(Parent node) {
+        Scene scene = new Scene(node);
+        Stage stage = NodeUtil.getDialogStage(primaryStage);
+        stage.setScene(scene);
+        return stage;
     }
 
 }

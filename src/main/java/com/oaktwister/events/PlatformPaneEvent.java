@@ -1,5 +1,6 @@
-package com.oaktwister.views.platforms;
+package com.oaktwister.events;
 
+import com.oaktwister.views.platforms.PlatformPane;
 import javafx.event.Event;
 import javafx.event.EventType;
 

@@ -1,6 +1,7 @@
 package com.oaktwister.views.platforms;
 
 import com.oaktwister.annotations.ViewDescriptor;
+import com.oaktwister.events.PlatformPaneEvent;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.utils.extensions.LocalDateTimeUtil;
 import com.oaktwister.utils.extensions.NodeUtil;

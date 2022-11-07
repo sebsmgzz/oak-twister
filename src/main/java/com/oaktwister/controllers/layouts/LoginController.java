@@ -1,14 +1,16 @@
 package com.oaktwister.controllers.layouts;
 
-import com.oaktwister.controllers.dialogs.LoginFailedController;
 import com.oaktwister.core.UIContext;
 import com.oaktwister.services.resources.StringResources;
 import com.oaktwister.viewmodels.roots.LoginViewModel;
+import com.oaktwister.views.DialogResult;
+import com.oaktwister.views.login.LoginFailedAlert;
 import com.oaktwister.views.login.LoginLayout;
 import com.oaktwister.views.login.LoginDriveCell;
 
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
+import javafx.stage.Stage;
 
 public class LoginController {
 
@@ -62,10 +64,14 @@ public class LoginController {
         if(loggedIn) {
             ui.navigation().goToMain();
         } else {
-            String errorMessage = viewModel.loginErrorMessageProperty().get();
-            LoginFailedController loginFailed = ui.controllers().loginFailed();
-            loginFailed.setMessage(errorMessage);
-            loginFailed.showAndWait();
+            LoginFailedAlert alert = new LoginFailedAlert();
+            alert.messageProperty().bind(viewModel.loginErrorMessageProperty());
+            Stage stage = ui.navigation().getDialogStage(alert);
+            alert.stageProperty().set(stage);
+            if(alert.resultProperty().get() == DialogResult.SAVED) {
+                // TODO: Save to database
+                System.out.println("Saving platform to database");
+            }
         }
     }
 

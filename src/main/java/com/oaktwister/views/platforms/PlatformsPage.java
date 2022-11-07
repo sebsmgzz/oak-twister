@@ -1,8 +1,8 @@
 package com.oaktwister.views.platforms;
 
 import com.oaktwister.annotations.ViewDescriptor;
-import com.oaktwister.controllers.dialogs.EditPlatformController;
 import com.oaktwister.core.UIContext;
+import com.oaktwister.events.PlatformPaneEvent;
 import com.oaktwister.services.resources.ViewResources;
 import com.oaktwister.utils.extensions.MapUtil;
 import com.oaktwister.utils.extensions.NodeUtil;
@@ -13,9 +13,11 @@ import com.oaktwister.viewmodels.models.PlatformViewModel;
 import com.oaktwister.views.DialogResult;
 import com.oaktwister.views.widgets.CrudPage;
 import com.oaktwister.views.widgets.FlowPage;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.util.HashMap;
 
@@ -53,10 +55,12 @@ public class PlatformsPage extends AnchorPane {
     }
 
     private void onAddPlatformPane(ActionEvent actionEvent) {
+        EditPlatformDialog dialog = new EditPlatformDialog();
         PlatformViewModel platformViewModel = ui.viewModels().platform();
-        EditPlatformController dialogController = ui.controllers().editPlatform(platformViewModel);
-        dialogController.showAndWait();
-        if(dialogController.getResult() == DialogResult.SAVED) {
+        dialog.platformProperty().set(platformViewModel);
+        Stage stage = ui.navigation().getDialogStage(dialog);
+        dialog.stageProperty().set(stage);
+        if(dialog.resultProperty().get() == DialogResult.SAVED) {
             // TODO: Save to database
             System.out.println("Saving platform to database");
         }
@@ -86,8 +90,10 @@ public class PlatformsPage extends AnchorPane {
             // TODO: Throw exception? This should never happen
             return;
         }
-        EditPlatformController dialogController = ui.controllers().editPlatform(platformViewModel);
-        if(dialogController.getResult() == DialogResult.SAVED) {
+        EditPlatformDialog dialog = new EditPlatformDialog();
+        dialog.platformProperty().set(platformViewModel);
+        ui.navigation().getDialogStage(dialog);
+        if(dialog.resultProperty().get() == DialogResult.SAVED) {
             // TODO: Save to database
             System.out.println("Updating platform to database");
         }

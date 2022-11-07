@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -29,9 +30,11 @@ public class LoginFailedAlert extends AnchorPane implements Initializable {
     @FXML private Button okayButton;
 
     private final SimpleObjectProperty<DialogResult> resultProperty;
+    private final SimpleObjectProperty<Stage> stageProperty;
 
     public LoginFailedAlert() {
         resultProperty = new SimpleObjectProperty<>();
+        stageProperty = new SimpleObjectProperty<>();
         NodeUtil.loadControl(this);
     }
 
@@ -39,7 +42,19 @@ public class LoginFailedAlert extends AnchorPane implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         okayButton.setOnAction(event -> {
             resultProperty.set(DialogResult.OKAY);
+            Stage stage = stageProperty.get();
+            if(stage != null) {
+                stage.close();
+            }
         });
+    }
+
+    public ReadOnlyObjectProperty<DialogResult> resultProperty() {
+        return resultProperty;
+    }
+
+    public SimpleObjectProperty<Stage> stageProperty() {
+        return stageProperty;
     }
 
     public StringProperty titleProperty() {
@@ -52,10 +67,6 @@ public class LoginFailedAlert extends AnchorPane implements Initializable {
 
     public ObjectProperty<Image> iconProperty() {
         return iconImageView.imageProperty();
-    }
-
-    public ReadOnlyObjectProperty<DialogResult> resultProperty() {
-        return resultProperty;
     }
 
 }

@@ -11,9 +11,6 @@ module oaktwister.main {
     exports com.oaktwister.core;
     opens com.oaktwister.core to javafx.graphics;
 
-    exports com.oaktwister.controllers.dialogs;
-    opens com.oaktwister.controllers.dialogs to javafx.fxml;
-
     exports com.oaktwister.controllers.layouts;
     opens com.oaktwister.controllers.layouts to javafx.fxml;
 
@@ -37,7 +34,11 @@ module oaktwister.main {
 
     exports com.oaktwister.views.identities;
     opens com.oaktwister.views.identities to javafx.fxml;
+
     exports com.oaktwister.utils.tables;
     opens com.oaktwister.utils.tables to javafx.fxml;
+
+    exports com.oaktwister.events;
+    opens com.oaktwister.events to javafx.fxml;
 
 }
