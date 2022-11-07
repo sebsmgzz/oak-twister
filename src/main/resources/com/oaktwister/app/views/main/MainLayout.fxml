@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.oaktwister.app.views.widgets.ImageButtonBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+<fx:root xmlns="http://javafx.com/javafx/8"
+         xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="com.oaktwister.app.views.main.MainLayout"
+         type="javafx.scene.layout.GridPane"
+         style="-fx-background-color: #FDF8F8;"
+         prefWidth="1000" prefHeight="600">
+
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" />
+        <ColumnConstraints hgrow="ALWAYS" minWidth="100.0" />
+    </columnConstraints>
+
+    <rowConstraints>
+        <RowConstraints vgrow="NEVER" />
+        <RowConstraints vgrow="ALWAYS" />
+    </rowConstraints>
+
+    <StackPane GridPane.rowIndex="0" GridPane.columnIndex="0">
+        <padding>
+            <Insets top="10" right="10" bottom="10" left="10" />
+        </padding>
+        <ImageView fitWidth="75" preserveRatio="true" StackPane.alignment="CENTER">
+            <Image url="/com/oaktwister/app/images/vikings/oak.png"/>
+        </ImageView>
+    </StackPane>
+
+    <Label fx:id="titleLabel" text="OakTwister"
+           GridPane.hgrow="ALWAYS"
+           GridPane.rowIndex="0" GridPane.columnIndex="1">
+        <font>
+            <Font name="System Bold" size="30.0"/>
+        </font>
+        <padding>
+            <Insets left="10" />
+        </padding>
+    </Label>
+
+    <VBox prefWidth="200" alignment="CENTER"
+          GridPane.columnIndex="0" GridPane.rowIndex="1">
+
+        <VBox BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
+            <ImageButtonBox fx:id="accountsImageButtonBox" text="Accounts">
+                <image>
+                    <Image url="/com/oaktwister/app/images/font-awesome/users-solid.png" />
+                </image>
+            </ImageButtonBox>
+            <ImageButtonBox fx:id="platformsImageButtonBox" text="Platforms">
+                <image>
+                    <Image url="/com/oaktwister/app/images/font-awesome/layer-group-solid.png" />
+                </image>
+            </ImageButtonBox>
+            <ImageButtonBox fx:id="identitiesImageButtonBox" text="Identities">
+                <image>
+                    <Image url="/com/oaktwister/app/images/font-awesome/fingerprint-solid.png" />
+                </image>
+            </ImageButtonBox>
+        </VBox>
+
+        <ImageButtonBox fx:id="backButton" text="Back" maxWidth="Infinity" VBox.vgrow="NEVER" />
+        <ImageButtonBox fx:id="settingsButton" text="Settings" maxWidth="Infinity" VBox.vgrow="NEVER" />
+
+    </VBox>
+
+    <AnchorPane fx:id="anchorPane" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+</fx:root>

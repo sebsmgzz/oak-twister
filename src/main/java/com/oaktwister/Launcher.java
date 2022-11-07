@@ -1,6 +1,6 @@
 package com.oaktwister;
 
-import com.oaktwister.core.OakTwisterApp;
+import com.oaktwister.app.core.OakTwisterApp;
 import javafx.application.Application;
 
 public class Launcher {

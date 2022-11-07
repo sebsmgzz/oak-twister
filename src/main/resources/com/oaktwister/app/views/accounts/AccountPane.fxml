@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.oaktwister.app.views.widgets.DeleteFrame?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<fx:root xmlns="http://javafx.com/javafx/8"
+         xmlns:fx="http://javafx.com/fxml/1"
+         type="javafx.scene.layout.AnchorPane"
+         fx:controller="com.oaktwister.app.views.accounts.AccountPane">
+    <DeleteFrame fx:id="deleteFrame"
+                 AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0"
+                 AnchorPane.leftAnchor="0" AnchorPane.bottomAnchor="0">
+        <graphic>
+            <HBox spacing="5"
+                  AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+
+                <ImageView fx:id="imageView" fitHeight="50" preserveRatio="true">
+                    <Image url="/com/oaktwister/app/images/placeholders/image.png"/>
+                </ImageView>
+
+                <Label fx:id="platformNameLabel"/>
+
+                <VBox styleClass="vbox">
+                    <HBox>
+                        <Label text="Account: "/>
+                        <Label fx:id="identifierLabel"/>
+                    </HBox>
+                    <HBox>
+                        <Label text="Grants: "/>
+                        <Label fx:id="grantsCountLabel"/>
+                    </HBox>
+                    <HBox>
+                        <Label text="Created at: "/>
+                        <Label fx:id="createdAtLabel"/>
+                    </HBox>
+                </VBox>
+
+            </HBox>
+        </graphic>
+    </DeleteFrame>
+</fx:root>
