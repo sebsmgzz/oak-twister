@@ -2,7 +2,7 @@ package com.oaktwister.app.controllers.layouts;
 
 import com.oaktwister.app.core.UIContext;
 import com.oaktwister.app.services.resources.StringResources;
-import com.oaktwister.app.viewmodels.roots.LoginViewModel;
+import com.oaktwister.app.viewmodels.views.LoginViewModel;
 import com.oaktwister.app.views.DialogResult;
 import com.oaktwister.app.views.login.LoginFailedAlert;
 import com.oaktwister.app.views.login.LoginLayout;

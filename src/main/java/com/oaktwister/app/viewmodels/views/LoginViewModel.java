@@ -1,4 +1,4 @@
-package com.oaktwister.app.viewmodels.roots;
+package com.oaktwister.app.viewmodels.views;
 
 import com.oaktwister.app.core.ViewModelFactory;
 import com.oaktwister.domain.models.drives.Drive;

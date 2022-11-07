@@ -8,7 +8,7 @@ import com.oaktwister.app.utils.extensions.MapUtil;
 import com.oaktwister.app.utils.extensions.FXMLUtil;
 import com.oaktwister.app.utils.listeners.ListItemAddedListener;
 import com.oaktwister.app.utils.listeners.ListItemRemovedListener;
-import com.oaktwister.app.viewmodels.collections.PlatformsViewModel;
+import com.oaktwister.app.viewmodels.views.PlatformsViewModel;
 import com.oaktwister.app.viewmodels.models.PlatformViewModel;
 import com.oaktwister.app.views.DialogResult;
 import com.oaktwister.app.views.widgets.CrudPage;

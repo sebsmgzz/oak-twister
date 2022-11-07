@@ -7,7 +7,7 @@ import com.oaktwister.app.services.resources.ViewResources;
 import com.oaktwister.app.utils.extensions.FXMLUtil;
 import com.oaktwister.app.utils.listeners.ListItemAddedListener;
 import com.oaktwister.app.utils.listeners.ListItemRemovedListener;
-import com.oaktwister.app.viewmodels.collections.AccountsViewModel;
+import com.oaktwister.app.viewmodels.views.AccountsViewModel;
 import com.oaktwister.app.viewmodels.models.AccountViewModel;
 import com.oaktwister.app.views.widgets.CrudPage;
 import com.oaktwister.app.views.widgets.FlowPage;

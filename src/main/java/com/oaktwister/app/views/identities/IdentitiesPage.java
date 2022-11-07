@@ -8,7 +8,7 @@ import com.oaktwister.app.utils.extensions.FXMLUtil;
 
 import com.oaktwister.app.utils.listeners.ListItemAddedListener;
 import com.oaktwister.app.utils.listeners.ListItemRemovedListener;
-import com.oaktwister.app.viewmodels.collections.IdentitiesViewModel;
+import com.oaktwister.app.viewmodels.views.IdentitiesViewModel;
 import com.oaktwister.app.viewmodels.models.IdentityViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -10,9 +10,9 @@ import com.oaktwister.infrastructure.repos.IdentitiesRepo;
 import com.oaktwister.infrastructure.repos.ImagesRepo;
 import com.oaktwister.infrastructure.repos.PlatformsRepo;
 import com.oaktwister.app.utils.Lazy;
-import com.oaktwister.app.viewmodels.collections.AccountsViewModel;
-import com.oaktwister.app.viewmodels.collections.IdentitiesViewModel;
-import com.oaktwister.app.viewmodels.collections.PlatformsViewModel;
+import com.oaktwister.app.viewmodels.views.AccountsViewModel;
+import com.oaktwister.app.viewmodels.views.IdentitiesViewModel;
+import com.oaktwister.app.viewmodels.views.PlatformsViewModel;
 import com.oaktwister.app.viewmodels.models.AccountViewModel;
 import com.oaktwister.app.viewmodels.models.ClaimMapViewModel;
 import com.oaktwister.app.viewmodels.models.ClaimViewModel;
@@ -20,7 +20,7 @@ import com.oaktwister.app.viewmodels.models.DriveViewModel;
 import com.oaktwister.app.viewmodels.models.GrantMapViewModel;
 import com.oaktwister.app.viewmodels.models.IdentityViewModel;
 import com.oaktwister.app.viewmodels.models.PlatformViewModel;
-import com.oaktwister.app.viewmodels.roots.LoginViewModel;
+import com.oaktwister.app.viewmodels.views.LoginViewModel;
 
 public class ViewModelFactory {
 

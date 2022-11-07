@@ -1,4 +1,4 @@
-package com.oaktwister.app.viewmodels.collections;
+package com.oaktwister.app.viewmodels.views;
 
 import com.oaktwister.app.core.ViewModelFactory;
 import com.oaktwister.domain.models.Platform;
