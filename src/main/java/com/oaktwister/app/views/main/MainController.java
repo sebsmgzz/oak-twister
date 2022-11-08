@@ -1,7 +1,6 @@
 package com.oaktwister.app.views.main;
 
 import com.oaktwister.app.core.UIContext;
-import com.oaktwister.app.services.resources.ImageResources;
 import com.oaktwister.app.services.resources.StringResources;
 import com.oaktwister.app.utils.Lazy;
 import com.oaktwister.app.views.Controller;
@@ -10,53 +9,54 @@ import com.oaktwister.app.views.identities.IdentitiesPage;
 import com.oaktwister.app.views.platforms.PlatformsPage;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
 
 public final class MainController extends Controller<MainLayout> {
 
     private final UIContext ui;
 
-    private final Lazy<AccountsPage> accountsPage;
-    private final Lazy<PlatformsPage> platformsPage;
-    private final Lazy<IdentitiesPage> identitiesPage;
+    private final MainLayout node;
+    private final AccountsPage accountsPage;
+    private final PlatformsPage platformsPage;
+    private final IdentitiesPage identitiesPage;
 
     public MainController(UIContext ui) {
         this.ui = ui;
-        accountsPage = new Lazy<>(() -> new AccountsPage(this.ui));
-        platformsPage = new Lazy<>(() -> new PlatformsPage(this.ui));
-        identitiesPage = new Lazy<>(() -> new IdentitiesPage(this.ui));
+        node = new MainLayout();
+        accountsPage = new AccountsPage(this.ui);
+        platformsPage = new PlatformsPage(this.ui);
+        identitiesPage = new IdentitiesPage(this.ui);
     }
 
     @Override
-    protected MainLayout initializeNode() {
-        MainLayout layout = new MainLayout();
-        layout.pageProperty().addListener(this::onPagePropertyChanged);
-        layout.accountPageProperty().set(accountsPage.value());
-        layout.platformsPageProperty().set(platformsPage.value());
-        layout.identitiesPageProperty().set(identitiesPage.value());
-        layout.onBackActionProperty().set(event -> ui.navigation().goToLogin());
-        layout.onSettingsActionProperty().set(event -> { /* TODO */ });
-        layout.pageProperty().set(MainPage.ACCOUNTS);
-        return layout;
+    protected MainLayout instantiate() {
+        node.pageProperty().addListener(this::onPagePropertyChanged);
+        return node;
+    }
+
+    @Override
+    protected void initialize(MainLayout node) {
+        node.accountPageProperty().set(accountsPage);
+        node.platformsPageProperty().set(platformsPage);
+        node.identitiesPageProperty().set(identitiesPage);
+        node.onBackActionProperty().set(event -> ui.navigation().goToLogin());
+        node.onSettingsActionProperty().set(event -> { /* TODO */ });
+        node.pageProperty().set(MainPage.ACCOUNTS);
     }
 
     private void onPagePropertyChanged(ObservableValue<? extends MainPage> observable,
                                        MainPage oldValue, MainPage newValue) {
-        StringProperty titleProperty = node.value().titleProperty();
+        StringProperty titleProperty = getNode().titleProperty();
         switch (newValue) {
             case ACCOUNTS -> {
-                accountsPage.value().reloadAccounts();
+                accountsPage.reloadAccounts();
                 titleProperty.set(StringResources.ACCOUNTS);
             }
             case PLATFORMS -> {
-                platformsPage.value().reloadPlatforms();
+                platformsPage.reloadPlatforms();
                 titleProperty.set(StringResources.PLATFORMS);
             }
             case IDENTITIES -> {
-                identitiesPage.value().reloadIdentities();
+                identitiesPage.reloadIdentities();
                 titleProperty.set(StringResources.IDENTITIES);
             }
         }

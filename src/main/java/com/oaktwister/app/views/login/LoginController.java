@@ -24,7 +24,7 @@ public final class LoginController extends Controller<LoginLayout> {
     }
 
     @Override
-    protected LoginLayout initializeNode() {
+    protected LoginLayout instantiate() {
         // Set button's actions
         layout.onLoginActionProperty().set(this::onLoginButtonClick);
         layout.onNewDriveLinkActionProperty().set(this::onNewDriveClick);

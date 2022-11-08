@@ -6,16 +6,22 @@ import javafx.stage.Stage;
 
 public abstract class Controller<T extends Parent> {
 
-    protected final Lazy<T> node;
+    private T node;
 
     public Controller() {
-        node = new Lazy<>(this::initializeNode);
     }
 
-    protected abstract T initializeNode();
+    public T getNode() {
+        if(node == null) {
+            node = instantiate();
+            initialize(node);
+        }
+        return node;
+    }
 
-    public Parent getNode() {
-        return node.value();
+    protected abstract T instantiate();
+
+    protected void initialize(T node) {
     }
 
     public void configStage(Stage stage) {
