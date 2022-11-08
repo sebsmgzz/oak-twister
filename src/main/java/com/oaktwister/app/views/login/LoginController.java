@@ -15,16 +15,16 @@ public final class LoginController extends Controller<LoginLayout> {
 
     private final UIContext ui;
     private final LoginViewModel viewModel;
+    private final LoginLayout layout;
 
     public LoginController(UIContext ui) {
         this.ui = ui;
         viewModel = ui.viewModels().login();
+        layout = new LoginLayout();
     }
 
     @Override
     protected LoginLayout initializeNode() {
-        LoginLayout layout = new LoginLayout();
-
         // Set button's actions
         layout.onLoginActionProperty().set(this::onLoginButtonClick);
         layout.onNewDriveLinkActionProperty().set(this::onNewDriveClick);
@@ -48,7 +48,7 @@ public final class LoginController extends Controller<LoginLayout> {
         // Bind properties
         layout.usernameProperty().bindBidirectional(viewModel.usernameProperty());
         layout.passwordProperty().bindBidirectional(viewModel.passwordProperty());
-        return new LoginLayout();
+        return layout;
     }
 
     @Override
