@@ -30,7 +30,7 @@ public class CrudPage extends VBox implements Initializable {
 
     public CrudPage() {
         contentProperty = new SimpleObjectProperty<>();
-        FXMLUtil.loadControl(CrudPage.class, this);
+        FXMLUtil.loadControl(this);
     }
 
     @Override

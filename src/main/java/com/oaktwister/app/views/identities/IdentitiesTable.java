@@ -25,7 +25,7 @@ public class IdentitiesTable extends TableView<IdentityViewModel> implements Ini
     @FXML private TableColumn<IdentityViewModel, LocalDateTime> createdAtColumn;
 
     public IdentitiesTable() {
-        FXMLUtil.loadControl(IdentitiesTable.class, this);
+        FXMLUtil.loadControl(this);
     }
 
     @Override

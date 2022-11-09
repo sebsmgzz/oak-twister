@@ -49,7 +49,7 @@ public class AccountPane extends AnchorPane implements Initializable {
         grantsCountProperty = new SimpleIntegerProperty();
         onDeleteActionProperty = new SimpleObjectProperty<>();
         onMainActionProperty = new SimpleObjectProperty<>();
-        FXMLUtil.loadControl(AccountPane.class, this);
+        FXMLUtil.loadControl(this);
     }
 
     @Override

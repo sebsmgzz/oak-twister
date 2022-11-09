@@ -37,7 +37,7 @@ public class IdentitiesPage extends AnchorPane implements Initializable {
         identitiesMap = new HashMap<>();
         identityViewModelAddedListener = new ListItemAddedListener<>(this::onIdentityViewModelAdded);
         identityViewModelRemovedListener = new ListItemRemovedListener<>(this::onIdentityViewModelRemoved);
-        FXMLUtil.loadControl(IdentitiesPage.class, this);
+        FXMLUtil.loadControl(this);
     }
 
     @Override

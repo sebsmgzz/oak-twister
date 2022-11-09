@@ -38,7 +38,7 @@ public class LoginLayout extends AnchorPane implements Initializable {
     @FXML private Hyperlink newDriveHyperlink;
 
     public LoginLayout() {
-        FXMLUtil.loadControl(LoginLayout.class, this);
+        FXMLUtil.loadControl(this);
     }
 
     @Override

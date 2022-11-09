@@ -43,7 +43,7 @@ public class MainLayout extends GridPane implements Initializable {
         accountPageProperty = new SimpleObjectProperty<>();
         platformsPageProperty = new SimpleObjectProperty<>();
         identitiesPageProperty = new SimpleObjectProperty<>();
-        FXMLUtil.loadControl(MainLayout.class, this);
+        FXMLUtil.loadControl(this);
     }
 
     @Override

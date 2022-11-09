@@ -26,7 +26,7 @@ public class ImageButtonBox extends HBox implements Initializable {
 
     public ImageButtonBox() {
         super();
-        FXMLUtil.loadControl(ImageButtonBox.class, this);
+        FXMLUtil.loadControl(this);
     }
 
     @Override

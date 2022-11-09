@@ -35,7 +35,7 @@ public class LoginFailedAlert extends AnchorPane implements Initializable {
     public LoginFailedAlert() {
         resultProperty = new SimpleObjectProperty<>();
         stageProperty = new SimpleObjectProperty<>();
-        FXMLUtil.loadControl(LoginFailedAlert.class, this);
+        FXMLUtil.loadControl(this);
     }
 
     @Override

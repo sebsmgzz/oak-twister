@@ -28,7 +28,7 @@ public class PagePane extends VBox implements Initializable {
 
     public PagePane() {
         contentProperty = new SimpleObjectProperty<>();
-        FXMLUtil.loadControl(PagePane.class, this);
+        FXMLUtil.loadControl(this);
     }
 
     @Override

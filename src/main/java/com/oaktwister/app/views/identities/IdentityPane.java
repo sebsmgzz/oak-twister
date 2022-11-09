@@ -44,7 +44,7 @@ public class IdentityPane extends StackPane implements Initializable {
         grantsCountProperty = new SimpleIntegerProperty();
         onMainActionProperty = new SimpleObjectProperty<>();
         onDeleteActionProperty = new SimpleObjectProperty<>();
-        FXMLUtil.loadControl(IdentityPane.class, this);
+        FXMLUtil.loadControl(this);
     }
 
     @Override

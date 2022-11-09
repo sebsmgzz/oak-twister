@@ -46,7 +46,7 @@ public class EditPlatformDialog extends AnchorPane implements Initializable {
         platformProperty = new SimpleObjectProperty<>();
         resultProperty = new SimpleObjectProperty<>();
         stageProperty = new SimpleObjectProperty<>();
-        FXMLUtil.loadControl(EditPlatformDialog.class, this);
+        FXMLUtil.loadControl(this);
     }
 
     @Override

@@ -16,13 +16,16 @@ import com.oaktwister.app.views.widgets.FlowPage;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.net.URL;
 import java.util.HashMap;
+import java.util.ResourceBundle;
 
 @ViewDescriptor(location = ViewResources.Platforms.PAGE)
-public class PlatformsPage extends AnchorPane {
+public class PlatformsPage extends AnchorPane implements Initializable {
 
     private final UIContext ui;
     private final PlatformsViewModel viewModel;
@@ -40,10 +43,11 @@ public class PlatformsPage extends AnchorPane {
         platformsMap = new HashMap<>();
         platformViewModelAddedListener = new ListItemAddedListener<>(this::onPlatformViewModelAdded);
         platformViewModelRemovedListener = new ListItemRemovedListener<>(this::onPlatformViewModelRemoved);
-        FXMLUtil.loadControl(PlatformsPage.class, this);
+        FXMLUtil.loadControl(this);
     }
 
-    public void initialize() {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
         crudPage.onAddActionProperty().set(this::onAddPlatformPane);
         viewModel.platformsProperty().addListener(platformViewModelAddedListener);
         viewModel.platformsProperty().addListener(platformViewModelRemovedListener);

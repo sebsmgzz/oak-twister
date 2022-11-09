@@ -33,7 +33,7 @@ public class FlowPage<T extends Node> extends AnchorPane implements Initializabl
         panesProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
         onPaneAddedListener = new ListItemAddedListener<>(this::onPaneAdded);
         onPaneRemovedListener = new ListItemRemovedListener<>(this::onPaneRemoved);
-        FXMLUtil.loadControl(FlowPage.class, this);
+        FXMLUtil.loadControl(this);
     }
 
     @Override

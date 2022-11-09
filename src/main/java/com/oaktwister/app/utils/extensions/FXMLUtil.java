@@ -24,9 +24,29 @@ public class FXMLUtil {
         return viewClass.getResource(viewLocation);
     }
 
-    public static <T extends Node> T loadControl(Class<T> nodeClass, @NotNull Node node) {
+    public static <T extends Node> T loadControl(@NotNull T node) {
+        try {
+            Class<? extends Node> nodeClass = node.getClass();
+            URL resourceUrl = getViewResourceUrl(nodeClass);
+            return loadControl(resourceUrl, node);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public static <T extends Node> T loadControl(@NotNull Class<T> nodeClass, @NotNull T node) {
         try {
             URL resourceUrl = getViewResourceUrl(nodeClass);
+            return loadControl(resourceUrl, node);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public static <T extends Node> T loadControl(@NotNull URL resourceUrl, @NotNull Node node) {
+        try {
             FXMLLoader loader = new FXMLLoader(resourceUrl);
             loader.setLocation(resourceUrl);
             loader.setRoot(node);

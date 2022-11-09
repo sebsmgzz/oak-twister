@@ -22,7 +22,7 @@ public class DeleteFrame extends StackPane implements Initializable {
     @FXML private Button deleteButton;
 
     public DeleteFrame() {
-        FXMLUtil.loadControl(DeleteFrame.class, this);
+        FXMLUtil.loadControl(this);
     }
 
     @Override

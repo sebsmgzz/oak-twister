@@ -44,7 +44,7 @@ public class PlatformPane extends AnchorPane implements Initializable {
         createdAtProperty = new SimpleObjectProperty<>(LocalDateTime.MIN);
         onMainActionProperty = new SimpleObjectProperty<>();
         onDeleteActionProperty = new SimpleObjectProperty<>();
-        FXMLUtil.loadControl(PlatformPane.class, this);
+        FXMLUtil.loadControl(this);
     }
 
     @Override

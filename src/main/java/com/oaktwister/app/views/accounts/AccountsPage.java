@@ -40,7 +40,7 @@ public class AccountsPage extends AnchorPane implements Initializable {
         accountsMap = new HashMap<>();
         accountViewModelAddedListener = new ListItemAddedListener<>(this::onAccountViewModelAdded);
         accountViewModelRemovedListener = new ListItemRemovedListener<>(this::onAccountViewModelRemoved);
-        FXMLUtil.loadControl(AccountsPage.class, this);
+        FXMLUtil.loadControl(this);
     }
 
     @Override
