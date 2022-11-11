@@ -20,7 +20,6 @@ public class FXMLUtil {
         }
         ViewDescriptor viewDescriptor = viewClass.getAnnotation(ViewDescriptor.class);
         String viewLocation = viewDescriptor.location();
-        System.out.println("RESOURCE: " + viewLocation);
         return viewClass.getResource(viewLocation);
     }
 

@@ -2,26 +2,18 @@
 .root {
     -fx-background-color: #E8CFB5;
     -fx-background-radius: 10px;
-    -fx-border-color: #c12126;
-    -fx-border-radius: 10px;
     -fx-border-width: 0px;
     -fx-border-insets: 0px;
 }
 
-.root:hover {
+.root:hover, .selected {
+    -fx-border-color: #B69EE8;
+    -fx-border-radius: 10px;
     -fx-border-width: 3px;
     -fx-border-insets: -3px;
 }
 
-.main-button {
+.button {
     -fx-cursor: hand;
     -fx-background-color: transparent;
-}
-
-.delete-button {
-    -fx-cursor: hand;
-    -fx-background-color: transparent;
-    -fx-background-radius: 5em;
-    -fx-translate-x: 15px;
-    -fx-translate-y: -10px;
 }

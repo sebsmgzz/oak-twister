@@ -10,7 +10,7 @@
 <fx:root type="javafx.scene.layout.VBox"
          xmlns="http://javafx.com/javafx/8"
          xmlns:fx="http://javafx.com/fxml/1"
-         fx:controller="com.oaktwister.app.views.widgets.CrudPage"
+         fx:controller="com.oaktwister.app.views.widgets.crud.CrudFrame"
          alignment="TOP_CENTER">
 
     <AnchorPane fx:id="anchorPane" VBox.vgrow="ALWAYS" />

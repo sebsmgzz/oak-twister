@@ -7,7 +7,6 @@ import com.oaktwister.app.utils.extensions.LocalDateTimeUtil;
 import com.oaktwister.app.utils.extensions.FXMLUtil;
 import com.oaktwister.app.utils.extensions.UUIDUtil;
 
-import com.oaktwister.app.views.widgets.DeleteFrame;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -32,10 +31,7 @@ public class AccountPane extends AnchorPane implements Initializable {
     private final SimpleObjectProperty<UUID> identifierProperty;
     private final SimpleObjectProperty<LocalDateTime> createdAtProperty;
     private final SimpleIntegerProperty grantsCountProperty;
-    private final SimpleObjectProperty<EventHandler<AccountPaneActionEvent>> onDeleteActionProperty;
-    private final SimpleObjectProperty<EventHandler<AccountPaneActionEvent>> onMainActionProperty;
 
-    @FXML private DeleteFrame deleteFrame;
     @FXML private ImageView imageView;
     @FXML private Label platformNameLabel;
     @FXML private Label identifierLabel;
@@ -43,12 +39,9 @@ public class AccountPane extends AnchorPane implements Initializable {
     @FXML private Label createdAtLabel;
 
     public AccountPane() {
-        super();
         identifierProperty = new SimpleObjectProperty<>(UUIDUtil.empty());
         createdAtProperty = new SimpleObjectProperty<>(LocalDateTime.MIN);
         grantsCountProperty = new SimpleIntegerProperty();
-        onDeleteActionProperty = new SimpleObjectProperty<>();
-        onMainActionProperty = new SimpleObjectProperty<>();
         FXMLUtil.loadControl(this);
     }
 
@@ -63,48 +56,56 @@ public class AccountPane extends AnchorPane implements Initializable {
         grantsCountProperty.addListener((observable, oldValue, newValue) -> {
             grantsCountLabel.setText(newValue.toString());
         });
-        deleteFrame.onDeleteActionProperty().set(actionEvent -> {
-            EventHandler<AccountPaneActionEvent> eventHandler = onDeleteActionProperty.get();
-            if(eventHandler != null) {
-                AccountPaneActionEvent event = new AccountPaneActionEvent(this, actionEvent);
-                eventHandler.handle(event);
-            }
-        });
-        deleteFrame.onMainActionProperty().set(actionEvent -> {
-            EventHandler<AccountPaneActionEvent> eventHandler = onMainActionProperty.get();
-            if(eventHandler != null) {
-                AccountPaneActionEvent event = new AccountPaneActionEvent(this, actionEvent);
-                eventHandler.handle(event);
-            }
-        });
-    }
-
-    public SimpleObjectProperty<EventHandler<AccountPaneActionEvent>> onMainActionProperty() {
-        return onMainActionProperty;
     }
 
     public ObjectProperty<Image> imageProperty() {
         return imageView.imageProperty();
     }
+    public Image getImage() {
+        return imageProperty().get();
+    }
+    public void setImage(Image value) {
+        imageProperty().set(value);
+    }
 
     public StringProperty platformNameProperty() {
         return platformNameLabel.textProperty();
+    }
+    public String getPlatformName() {
+        return platformNameProperty().get();
+    }
+    public void setPlatformName(String value) {
+        platformNameProperty().set(value);
     }
 
     public ObjectProperty<UUID> identifierProperty() {
         return identifierProperty;
     }
+    public UUID getIdentifier() {
+        return identifierProperty().get();
+    }
+    public void setIdentifier(UUID value) {
+        identifierProperty().set(value);
+    }
 
     public IntegerProperty grantsCountProperty() {
         return grantsCountProperty;
+    }
+    public Integer getGrantsCount() {
+        return grantsCountProperty().get();
+    }
+    public void setGrantsCount(Integer value) {
+        grantsCountProperty().set(value);
     }
 
     public ObjectProperty<LocalDateTime> createdAtProperty() {
         return createdAtProperty;
     }
-
-    public SimpleObjectProperty<EventHandler<AccountPaneActionEvent>> onDeleteActionProperty() {
-        return onDeleteActionProperty;
+    public LocalDateTime getCreatedAt() {
+        return createdAtProperty().get();
+    }
+    public void setCreatedAt(LocalDateTime value) {
+        createdAtProperty().set(value);
     }
 
 }

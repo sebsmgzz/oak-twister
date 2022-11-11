@@ -11,15 +11,13 @@ import com.oaktwister.app.utils.listeners.ListItemRemovedListener;
 import com.oaktwister.app.viewmodels.views.PlatformsViewModel;
 import com.oaktwister.app.viewmodels.models.PlatformViewModel;
 import com.oaktwister.app.views.DialogResult;
-import com.oaktwister.app.views.widgets.CrudPage;
-import com.oaktwister.app.views.widgets.FlowPage;
-
+import com.oaktwister.app.views.widgets.crud.CrudFrame;
+import com.oaktwister.app.views.widgets.crud.CrudPage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -30,35 +28,32 @@ public class PlatformsPage extends AnchorPane implements Initializable {
     private final UIContext ui;
     private final PlatformsViewModel viewModel;
 
-    @FXML private CrudPage crudPage;
-    @FXML private FlowPage<PlatformPane> flowPage;
+    @FXML private CrudPage<PlatformPane> crudPage;
+    @FXML private CrudFrame crudFrame;
 
     private final HashMap<PlatformViewModel, PlatformPane> platformsMap;
-    private final ListItemAddedListener<PlatformViewModel> platformViewModelAddedListener;
-    private final ListItemRemovedListener<PlatformViewModel> platformViewModelRemovedListener;
+    private final ListItemAddedListener<PlatformViewModel> platformAddedListener;
+    private final ListItemRemovedListener<PlatformViewModel> platformRemovedListener;
 
     public PlatformsPage(UIContext ui) {
         this.ui = ui;
         viewModel = ui.viewModels().platforms();
         platformsMap = new HashMap<>();
-        platformViewModelAddedListener = new ListItemAddedListener<>(this::onPlatformViewModelAdded);
-        platformViewModelRemovedListener = new ListItemRemovedListener<>(this::onPlatformViewModelRemoved);
+        platformAddedListener = new ListItemAddedListener<>(this::onPlatformAdded);
+        platformRemovedListener = new ListItemRemovedListener<>(this::onPlatformRemoved);
         FXMLUtil.loadControl(this);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        crudPage.onAddActionProperty().set(this::onAddPlatformPane);
-        viewModel.platformsProperty().addListener(platformViewModelAddedListener);
-        viewModel.platformsProperty().addListener(platformViewModelRemovedListener);
+        crudFrame.onAddActionProperty().set(this::addPlatform);
+        crudFrame.onEditActionProperty().set(this::editPlatform);
+        crudFrame.onRemoveActionProperty().set(this::removePlatform);
+        viewModel.platformsProperty().addListener(platformAddedListener);
+        viewModel.platformsProperty().addListener(platformRemovedListener);
     }
 
-    public void reloadPlatforms() {
-        viewModel.clear();
-        viewModel.load();
-    }
-
-    private void onAddPlatformPane(ActionEvent actionEvent) {
+    private void addPlatform(ActionEvent actionEvent) {
         EditPlatformDialog dialog = new EditPlatformDialog();
         PlatformViewModel platformViewModel = ui.viewModels().platform();
         dialog.platformProperty().set(platformViewModel);
@@ -70,21 +65,27 @@ public class PlatformsPage extends AnchorPane implements Initializable {
         }
     }
 
-    private void onPlatformViewModelAdded(PlatformViewModel platformViewModel) {
+    private void editPlatform(ActionEvent actionEvent) {
+        // TODO
+    }
+
+    private void removePlatform(ActionEvent actionEvent) {
+        // TODO
+    }
+
+    private void onPlatformAdded(PlatformViewModel platformViewModel) {
         PlatformPane platformPane = new PlatformPane();
-        platformPane.onMainActionProperty().set(this::onPlatformPaneClick);
-        platformPane.onDeleteActionProperty().set(this::onPlatformPaneDeleteClick);
         platformPane.identifierProperty().bind(platformViewModel.idProperty());
         platformPane.imageProperty().bind(platformViewModel.imageProperty());
         platformPane.nameProperty().bind(platformViewModel.nameProperty());
         platformPane.createdAtProperty().bind(platformViewModel.createdAtProperty());
-        flowPage.panesProperty().add(platformPane);
+        crudPage.add(platformPane);
         platformsMap.put(platformViewModel, platformPane);
     }
 
-    private void onPlatformViewModelRemoved(PlatformViewModel platformViewModel) {
+    private void onPlatformRemoved(PlatformViewModel platformViewModel) {
         PlatformPane platformPane = platformsMap.remove(platformViewModel);
-        flowPage.panesProperty().remove(platformPane);
+        crudPage.remove(platformPane);
     }
 
     private void onPlatformPaneClick(PlatformPaneEvent actionEvent) {
@@ -103,8 +104,9 @@ public class PlatformsPage extends AnchorPane implements Initializable {
         }
     }
 
-    private void onPlatformPaneDeleteClick(PlatformPaneEvent actionEvent) {
-        // TODO: Show DeletePlatformAlert
+    public void reloadPlatforms() {
+        viewModel.clear();
+        viewModel.load();
     }
 
 }

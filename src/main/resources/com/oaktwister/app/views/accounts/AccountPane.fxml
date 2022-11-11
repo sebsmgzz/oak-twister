@@ -13,36 +13,30 @@
          xmlns:fx="http://javafx.com/fxml/1"
          type="javafx.scene.layout.AnchorPane"
          fx:controller="com.oaktwister.app.views.accounts.AccountPane">
-    <DeleteFrame fx:id="deleteFrame"
-                 AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0"
-                 AnchorPane.leftAnchor="0" AnchorPane.bottomAnchor="0">
-        <graphic>
-            <HBox spacing="5"
-                  AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+        <HBox spacing="5"
+              AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0"
+              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
 
-                <ImageView fx:id="imageView" fitHeight="50" preserveRatio="true">
-                    <Image url="/com/oaktwister/app/images/placeholders/image.png"/>
-                </ImageView>
+            <ImageView fx:id="imageView" fitHeight="50" preserveRatio="true">
+                <Image url="/com/oaktwister/app/images/placeholders/image.png"/>
+            </ImageView>
 
-                <Label fx:id="platformNameLabel"/>
+            <Label fx:id="platformNameLabel"/>
 
-                <VBox styleClass="vbox">
-                    <HBox>
-                        <Label text="Account: "/>
-                        <Label fx:id="identifierLabel"/>
-                    </HBox>
-                    <HBox>
-                        <Label text="Grants: "/>
-                        <Label fx:id="grantsCountLabel"/>
-                    </HBox>
-                    <HBox>
-                        <Label text="Created at: "/>
-                        <Label fx:id="createdAtLabel"/>
-                    </HBox>
-                </VBox>
+            <VBox styleClass="vbox">
+                <HBox>
+                    <Label text="Account: "/>
+                    <Label fx:id="identifierLabel"/>
+                </HBox>
+                <HBox>
+                    <Label text="Grants: "/>
+                    <Label fx:id="grantsCountLabel"/>
+                </HBox>
+                <HBox>
+                    <Label text="Created at: "/>
+                    <Label fx:id="createdAtLabel"/>
+                </HBox>
+            </VBox>
 
-            </HBox>
-        </graphic>
-    </DeleteFrame>
+        </HBox>
 </fx:root>

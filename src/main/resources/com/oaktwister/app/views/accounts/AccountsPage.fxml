@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.AnchorPane?>
-
-<?import com.oaktwister.app.views.widgets.CrudPage?>
-<?import com.oaktwister.app.views.widgets.FlowPage?>
+<?import com.oaktwister.app.views.widgets.crud.CrudFrame?>
+<?import com.oaktwister.app.views.widgets.crud.CrudPage?>
 
 <fx:root type="javafx.scene.layout.AnchorPane"
          xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
          fx:controller="com.oaktwister.app.views.accounts.AccountsPage">
-    <CrudPage fx:id="crudPage"
-              AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0"
-              AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
+    <CrudFrame fx:id="crudFrame"
+               AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0"
+               AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
         <content>
-            <FlowPage fx:id="flowPage" />
+            <CrudPage fx:id="crudPage" />
         </content>
-    </CrudPage>
+    </CrudFrame>
 </fx:root>

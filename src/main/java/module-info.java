@@ -37,5 +37,7 @@ module oaktwister.main {
 
     exports com.oaktwister.app.events;
     opens com.oaktwister.app.events to javafx.fxml;
+    exports com.oaktwister.app.views.widgets.crud;
+    opens com.oaktwister.app.views.widgets.crud to javafx.fxml;
 
 }

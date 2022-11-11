@@ -1,6 +1,5 @@
 package com.oaktwister.app.views;
 
-import com.oaktwister.app.utils.Lazy;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
 

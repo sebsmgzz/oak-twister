@@ -1,4 +1,4 @@
-package com.oaktwister.app.views.widgets;
+package com.oaktwister.app.views.widgets.crud;
 
 import com.oaktwister.app.annotations.ViewDescriptor;
 import com.oaktwister.app.services.resources.ViewResources;
@@ -18,8 +18,8 @@ import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-@ViewDescriptor(location = ViewResources.Widgets.CRUD_PAGE)
-public class CrudPage extends VBox implements Initializable {
+@ViewDescriptor(location = ViewResources.Widgets.CRUD_FRAME)
+public class CrudFrame extends VBox implements Initializable {
 
     @FXML private AnchorPane anchorPane;
     @FXML private Button addButton;
@@ -28,7 +28,7 @@ public class CrudPage extends VBox implements Initializable {
 
     private final SimpleObjectProperty<Node> contentProperty;
 
-    public CrudPage() {
+    public CrudFrame() {
         contentProperty = new SimpleObjectProperty<>();
         FXMLUtil.loadControl(this);
     }
