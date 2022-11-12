@@ -4,8 +4,8 @@ import com.oaktwister.app.core.UIContext;
 import com.oaktwister.app.services.resources.StringResources;
 import com.oaktwister.app.views.Controller;
 import com.oaktwister.app.views.accounts.AccountsController;
-import com.oaktwister.app.views.identities.IdentitiesPage;
-import com.oaktwister.app.views.platforms.PlatformsPage;
+import com.oaktwister.app.views.identities.IdentitiesController;
+import com.oaktwister.app.views.platforms.PlatformsController;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 
@@ -15,15 +15,15 @@ public final class MainController extends Controller<MainLayout> {
 
     private final MainLayout node;
     private final AccountsController accounts;
-    private final PlatformsPage platformsPage;
-    private final IdentitiesPage identitiesPage;
+    private final PlatformsController platforms;
+    private final IdentitiesController identities;
 
     public MainController(UIContext ui) {
         this.ui = ui;
         node = new MainLayout();
-        accounts = new AccountsController(this.ui);
-        platformsPage = new PlatformsPage(this.ui);
-        identitiesPage = new IdentitiesPage(this.ui);
+        accounts = new AccountsController(ui);
+        platforms = new PlatformsController(ui);
+        identities = new IdentitiesController(ui);
     }
 
     @Override
@@ -35,8 +35,8 @@ public final class MainController extends Controller<MainLayout> {
     @Override
     protected void initialize(MainLayout node) {
         node.accountPageProperty().set(accounts.getNode());
-        node.platformsPageProperty().set(platformsPage);
-        node.identitiesPageProperty().set(identitiesPage);
+        node.platformsPageProperty().set(platforms.getNode());
+        node.identitiesPageProperty().set(identities.getNode());
         node.onBackActionProperty().set(event -> ui.navigation().goToLogin());
         node.onSettingsActionProperty().set(event -> { /* TODO */ });
         node.pageProperty().set(MainPage.ACCOUNTS);
@@ -51,11 +51,11 @@ public final class MainController extends Controller<MainLayout> {
                 titleProperty.set(StringResources.ACCOUNTS);
             }
             case PLATFORMS -> {
-                platformsPage.reloadPlatforms();
+                platforms.reloadPlatforms();
                 titleProperty.set(StringResources.PLATFORMS);
             }
             case IDENTITIES -> {
-                identitiesPage.reloadIdentities();
+                identities.reloadIdentities();
                 titleProperty.set(StringResources.IDENTITIES);
             }
         }

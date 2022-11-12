@@ -1,56 +1,51 @@
 package com.oaktwister.app.views.platforms;
 
-import com.oaktwister.app.annotations.ViewDescriptor;
 import com.oaktwister.app.core.UIContext;
 import com.oaktwister.app.events.PlatformPaneEvent;
-import com.oaktwister.app.services.resources.ViewResources;
 import com.oaktwister.app.utils.extensions.MapUtil;
-import com.oaktwister.app.utils.extensions.FXMLUtil;
 import com.oaktwister.app.utils.listeners.ListItemAddedListener;
 import com.oaktwister.app.utils.listeners.ListItemRemovedListener;
-import com.oaktwister.app.viewmodels.views.PlatformsViewModel;
 import com.oaktwister.app.viewmodels.models.PlatformViewModel;
+import com.oaktwister.app.viewmodels.views.PlatformsViewModel;
+import com.oaktwister.app.views.Controller;
 import com.oaktwister.app.views.DialogResult;
 import com.oaktwister.app.views.widgets.crud.CrudFrame;
 import com.oaktwister.app.views.widgets.crud.CrudPage;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import java.net.URL;
 import java.util.HashMap;
-import java.util.ResourceBundle;
 
-@ViewDescriptor(location = ViewResources.Platforms.PAGE)
-public class PlatformsPage extends AnchorPane implements Initializable {
+public final class PlatformsController extends Controller<CrudFrame> {
 
     private final UIContext ui;
     private final PlatformsViewModel viewModel;
 
-    @FXML private CrudPage<PlatformPane> crudPage;
-    @FXML private CrudFrame crudFrame;
+    private final CrudFrame crudFrame;
+    private final CrudPage<PlatformPane> crudPage;
 
     private final HashMap<PlatformViewModel, PlatformPane> platformsMap;
     private final ListItemAddedListener<PlatformViewModel> platformAddedListener;
     private final ListItemRemovedListener<PlatformViewModel> platformRemovedListener;
 
-    public PlatformsPage(UIContext ui) {
+    public PlatformsController(UIContext ui) {
         this.ui = ui;
         viewModel = ui.viewModels().platforms();
+        crudFrame = new CrudFrame();
+        crudPage = new CrudPage<>();
         platformsMap = new HashMap<>();
         platformAddedListener = new ListItemAddedListener<>(this::onPlatformAdded);
         platformRemovedListener = new ListItemRemovedListener<>(this::onPlatformRemoved);
-        FXMLUtil.loadControl(this);
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    protected CrudFrame instantiate() {
+        crudFrame.setContent(crudPage);
         crudFrame.onAddActionProperty().set(this::addPlatform);
         crudFrame.onEditActionProperty().set(this::editPlatform);
         crudFrame.onRemoveActionProperty().set(this::removePlatform);
         viewModel.platformsProperty().addListener(platformAddedListener);
         viewModel.platformsProperty().addListener(platformRemovedListener);
+        return crudFrame;
     }
 
     private void addPlatform(ActionEvent actionEvent) {
