@@ -2,9 +2,8 @@ package com.oaktwister.app.views.main;
 
 import com.oaktwister.app.core.UIContext;
 import com.oaktwister.app.services.resources.StringResources;
-import com.oaktwister.app.utils.Lazy;
 import com.oaktwister.app.views.Controller;
-import com.oaktwister.app.views.accounts.AccountsPage;
+import com.oaktwister.app.views.accounts.AccountsController;
 import com.oaktwister.app.views.identities.IdentitiesPage;
 import com.oaktwister.app.views.platforms.PlatformsPage;
 import javafx.beans.property.StringProperty;
@@ -15,14 +14,14 @@ public final class MainController extends Controller<MainLayout> {
     private final UIContext ui;
 
     private final MainLayout node;
-    private final AccountsPage accountsPage;
+    private final AccountsController accounts;
     private final PlatformsPage platformsPage;
     private final IdentitiesPage identitiesPage;
 
     public MainController(UIContext ui) {
         this.ui = ui;
         node = new MainLayout();
-        accountsPage = new AccountsPage(this.ui);
+        accounts = new AccountsController(this.ui);
         platformsPage = new PlatformsPage(this.ui);
         identitiesPage = new IdentitiesPage(this.ui);
     }
@@ -35,7 +34,7 @@ public final class MainController extends Controller<MainLayout> {
 
     @Override
     protected void initialize(MainLayout node) {
-        node.accountPageProperty().set(accountsPage);
+        node.accountPageProperty().set(accounts.getNode());
         node.platformsPageProperty().set(platformsPage);
         node.identitiesPageProperty().set(identitiesPage);
         node.onBackActionProperty().set(event -> ui.navigation().goToLogin());
@@ -48,7 +47,7 @@ public final class MainController extends Controller<MainLayout> {
         StringProperty titleProperty = getNode().titleProperty();
         switch (newValue) {
             case ACCOUNTS -> {
-                accountsPage.reloadAccounts();
+                accounts.reloadAccounts();
                 titleProperty.set(StringResources.ACCOUNTS);
             }
             case PLATFORMS -> {
