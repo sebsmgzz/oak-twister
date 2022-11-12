@@ -3,6 +3,7 @@ package com.oaktwister.app.views.login;
 import com.oaktwister.app.core.UIContext;
 import com.oaktwister.app.services.resources.ImageResources;
 import com.oaktwister.app.services.resources.StringResources;
+import com.oaktwister.app.utils.Lazy;
 import com.oaktwister.app.viewmodels.views.LoginViewModel;
 import com.oaktwister.app.views.Controller;
 import com.oaktwister.app.views.DialogResult;
@@ -15,6 +16,7 @@ public final class LoginController extends Controller<LoginLayout> {
 
     private final UIContext ui;
     private final LoginViewModel viewModel;
+
     private final LoginLayout layout;
 
     public LoginController(UIContext ui) {
@@ -24,7 +26,8 @@ public final class LoginController extends Controller<LoginLayout> {
     }
 
     @Override
-    protected LoginLayout instantiate() {
+    protected LoginLayout initialize() {
+
         // Set button's actions
         layout.onLoginActionProperty().set(this::onLoginButtonClick);
         layout.onNewDriveLinkActionProperty().set(this::onNewDriveClick);
@@ -48,10 +51,10 @@ public final class LoginController extends Controller<LoginLayout> {
         // Bind properties
         layout.usernameProperty().bindBidirectional(viewModel.usernameProperty());
         layout.passwordProperty().bindBidirectional(viewModel.passwordProperty());
+
         return layout;
     }
 
-    @Override
     public void configStage(Stage stage) {
         stage.getIcons().add(new Image(ImageResources.Vikings.OAK));
         stage.setTitle(StringResources.App.TITLE);

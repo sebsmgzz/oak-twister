@@ -24,7 +24,7 @@ public class Navigation {
     }
 
     public void goToLogin() {
-        Parent node = loginController.getNode();
+        Parent node = loginController.getRoot();
         Scene scene = new Scene(node);
         loginController.configStage(primaryStage);
         primaryStage.setScene(scene);
@@ -32,9 +32,8 @@ public class Navigation {
     }
 
     public void goToMain() {
-        Parent node = mainController.getNode();
+        Parent node = mainController.getRoot();
         Scene scene = new Scene(node);
-        mainController.configStage(primaryStage);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

@@ -13,38 +13,35 @@ public final class MainController extends Controller<MainLayout> {
 
     private final UIContext ui;
 
-    private final MainLayout node;
     private final AccountsController accounts;
     private final PlatformsController platforms;
     private final IdentitiesController identities;
 
+    private final MainLayout layout;
+
     public MainController(UIContext ui) {
         this.ui = ui;
-        node = new MainLayout();
+        layout = new MainLayout();
         accounts = new AccountsController(ui);
         platforms = new PlatformsController(ui);
         identities = new IdentitiesController(ui);
     }
 
     @Override
-    protected MainLayout instantiate() {
-        node.pageProperty().addListener(this::onPagePropertyChanged);
-        return node;
-    }
-
-    @Override
-    protected void initialize(MainLayout node) {
-        node.accountPageProperty().set(accounts.getNode());
-        node.platformsPageProperty().set(platforms.getNode());
-        node.identitiesPageProperty().set(identities.getNode());
-        node.onBackActionProperty().set(event -> ui.navigation().goToLogin());
-        node.onSettingsActionProperty().set(event -> { /* TODO */ });
-        node.pageProperty().set(MainPage.ACCOUNTS);
+    protected MainLayout initialize() {
+        layout.pageProperty().addListener(this::onPagePropertyChanged);
+        layout.accountPageProperty().set(accounts.getRoot());
+        layout.platformsPageProperty().set(platforms.getRoot());
+        layout.identitiesPageProperty().set(identities.getRoot());
+        layout.onBackActionProperty().set(event -> ui.navigation().goToLogin());
+        layout.onSettingsActionProperty().set(event -> { /* TODO */ });
+        layout.pageProperty().set(MainPage.ACCOUNTS);
+        return layout;
     }
 
     private void onPagePropertyChanged(ObservableValue<? extends MainPage> observable,
                                        MainPage oldValue, MainPage newValue) {
-        StringProperty titleProperty = getNode().titleProperty();
+        StringProperty titleProperty = getRoot().titleProperty();
         switch (newValue) {
             case ACCOUNTS -> {
                 accounts.reloadAccounts();

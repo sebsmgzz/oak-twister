@@ -1,6 +1,7 @@
 package com.oaktwister.app.views.accounts;
 
 import com.oaktwister.app.core.UIContext;
+import com.oaktwister.app.utils.Lazy;
 import com.oaktwister.app.utils.listeners.ListItemAddedListener;
 import com.oaktwister.app.utils.listeners.ListItemRemovedListener;
 import com.oaktwister.app.viewmodels.models.AccountViewModel;
@@ -33,18 +34,14 @@ public final class AccountsController extends Controller<CrudFrame> {
     }
 
     @Override
-    protected CrudFrame instantiate() {
-        return crudFrame;
-    }
-
-    @Override
-    protected void initialize(CrudFrame crudFrame) {
+    protected CrudFrame initialize() {
         crudFrame.setContent(crudPage);
         crudFrame.onAddActionProperty().set(this::addAccount);
         crudFrame.onEditActionProperty().set(this::editAccount);
         crudFrame.onRemoveActionProperty().set(this::removeAccount);
         viewModel.accountsProperty().addListener(accountAddedListener);
         viewModel.accountsProperty().addListener(accountRemovedListener);
+        return crudFrame;
     }
 
     private void addAccount(ActionEvent actionEvent) {

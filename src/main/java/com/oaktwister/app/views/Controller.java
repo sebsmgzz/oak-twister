@@ -1,29 +1,19 @@
 package com.oaktwister.app.views;
 
 import javafx.scene.Parent;
-import javafx.stage.Stage;
 
 public abstract class Controller<T extends Parent> {
 
-    private T node;
+    private T root;
 
-    public Controller() {
-    }
-
-    public T getNode() {
-        if(node == null) {
-            node = instantiate();
-            initialize(node);
+    public T getRoot() {
+        if(root == null) {
+            root = initialize();
         }
-        return node;
+        return root;
     }
 
-    protected abstract T instantiate();
+    protected abstract T initialize();
 
-    protected void initialize(T node) {
-    }
-
-    public void configStage(Stage stage) {
-    }
 
 }

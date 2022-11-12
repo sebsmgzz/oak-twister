@@ -1,7 +1,7 @@
 package com.oaktwister.app.views.identities;
 
 import com.oaktwister.app.core.UIContext;
-import com.oaktwister.app.events.IdentityPaneActionEvent;
+import com.oaktwister.app.utils.Lazy;
 import com.oaktwister.app.utils.listeners.ListItemAddedListener;
 import com.oaktwister.app.utils.listeners.ListItemRemovedListener;
 import com.oaktwister.app.viewmodels.models.IdentityViewModel;
@@ -12,7 +12,7 @@ import javafx.event.ActionEvent;
 
 import java.util.HashMap;
 
-public class IdentitiesController extends Controller<CrudFrame> {
+public final class IdentitiesController extends Controller<CrudFrame> {
 
     private final UIContext ui;
     private final IdentitiesViewModel viewModel;
@@ -35,24 +35,16 @@ public class IdentitiesController extends Controller<CrudFrame> {
     }
 
     @Override
-    protected CrudFrame instantiate() {
-        return crudFrame;
-    }
-
-    @Override
-    protected void initialize(CrudFrame crudFrame) {
+    protected CrudFrame initialize() {
         crudFrame.setContent(identitiesTable);
         crudFrame.onAddActionProperty().set(this::addIdentity);
         crudFrame.onEditActionProperty().set(this::editIdentity);
         crudFrame.onRemoveActionProperty().set(this::removeIdentity);
         viewModel.identitiesProperty().addListener(identityAddedListener);
         viewModel.identitiesProperty().addListener(identityRemovedListener);
+        return crudFrame;
     }
 
-    public void reloadIdentities() {
-        viewModel.clear();
-        viewModel.load();
-    }
 
     private void addIdentity(ActionEvent actionEvent) {
         // TODO
@@ -79,6 +71,11 @@ public class IdentitiesController extends Controller<CrudFrame> {
     private void onIdentityRemoved(IdentityViewModel identityViewModel) {
         identityMapping.remove(identityViewModel);
         identitiesTable.itemsProperty().get().remove(identityViewModel);
+    }
+
+    public void reloadIdentities() {
+        viewModel.clear();
+        viewModel.load();
     }
 
 }

@@ -2,6 +2,7 @@ package com.oaktwister.app.views.platforms;
 
 import com.oaktwister.app.core.UIContext;
 import com.oaktwister.app.events.PlatformPaneEvent;
+import com.oaktwister.app.utils.Lazy;
 import com.oaktwister.app.utils.extensions.MapUtil;
 import com.oaktwister.app.utils.listeners.ListItemAddedListener;
 import com.oaktwister.app.utils.listeners.ListItemRemovedListener;
@@ -38,7 +39,7 @@ public final class PlatformsController extends Controller<CrudFrame> {
     }
 
     @Override
-    protected CrudFrame instantiate() {
+    protected CrudFrame initialize() {
         crudFrame.setContent(crudPage);
         crudFrame.onAddActionProperty().set(this::addPlatform);
         crudFrame.onEditActionProperty().set(this::editPlatform);
