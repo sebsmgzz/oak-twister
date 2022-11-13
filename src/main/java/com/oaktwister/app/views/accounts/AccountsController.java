@@ -1,7 +1,6 @@
 package com.oaktwister.app.views.accounts;
 
 import com.oaktwister.app.core.UIContext;
-import com.oaktwister.app.utils.Lazy;
 import com.oaktwister.app.utils.listeners.ListItemAddedListener;
 import com.oaktwister.app.utils.listeners.ListItemRemovedListener;
 import com.oaktwister.app.viewmodels.models.AccountViewModel;
@@ -16,6 +15,7 @@ public final class AccountsController extends Controller<CrudFrame> {
 
     private final UIContext ui;
     private final AccountsViewModel viewModel;
+
     private final CrudFrame crudFrame;
     private final CrudPage<AccountPane> crudPage;
 
@@ -36,24 +36,40 @@ public final class AccountsController extends Controller<CrudFrame> {
     @Override
     protected CrudFrame initialize() {
         crudFrame.setContent(crudPage);
+        crudPage.selectedPaneProperty().addListener((observable, oldValue, newValue) -> {
+            // TODO: Instead of iterating over all accounts, let the account pane take a AccountViewModelProperty
+            AccountPane selectedAccountPane = newValue.getGraphic();
+            for(AccountViewModel accountViewModel : accountMapping.keySet()) {
+                AccountPane accountPane = accountMapping.get(accountViewModel);
+                if(selectedAccountPane == accountPane) {
+                    viewModel.setSelectedAccount(accountViewModel);
+                }
+            }
+        });
         crudFrame.onAddActionProperty().set(this::addAccount);
-        crudFrame.onEditActionProperty().set(this::editAccount);
         crudFrame.onRemoveActionProperty().set(this::removeAccount);
+        crudFrame.onEditActionProperty().set(this::editAccount);
         viewModel.accountsProperty().addListener(accountAddedListener);
         viewModel.accountsProperty().addListener(accountRemovedListener);
         return crudFrame;
     }
 
     private void addAccount(ActionEvent actionEvent) {
-        // TODO
-    }
-
-    private void editAccount(ActionEvent actionEvent) {
-        // TODO
+        // TODO: Show EditAccountDialog with empty account
+        // If dialog.result() == SAVE then
+        // viewModel.add(dialog.account());
     }
 
     private void removeAccount(ActionEvent actionEvent) {
-        // TODO
+        // TODO: Show DeleteAccountAlert
+        // If alert.result() == OK then
+        // viewModel.remove(alert.account());
+    }
+
+    private void editAccount(ActionEvent actionEvent) {
+        // TODO: Show EditAccountDialog with selected account
+        // If dialog.result() == SAVE then
+        // viewModel.update();
     }
 
     private void onAccountAdded(AccountViewModel accountViewModel) {

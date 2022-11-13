@@ -25,6 +25,10 @@ public class ServiceFactory {
     private final HashMap<Class<?>, Object> singletons = new HashMap<>();
     private final HashMap<Class<?>, Object> scoped = new HashMap<>();
 
+    public <T> Logger getLogger(Class<T> loggerClass) {
+        return new Logger(loggerClass);
+    }
+
     public SessionSettings getSessionSettings() {
         if(singletons.containsKey(SessionSettings.class)) {
             return (SessionSettings) singletons.get(SessionSettings.class);
@@ -60,7 +64,7 @@ public class ServiceFactory {
             return (DriveLoader) scoped.get(DriveLoader.class);
         } else {
             Environment environment = getEnvironment();
-            Logger logger = new Logger(DriveLoader.class);
+            Logger logger = getLogger(DriveLoader.class);
             DriveLoader service = new DriveLoader(environment);
             scoped.put(DriveLoader.class, service);
             return service;
@@ -71,7 +75,7 @@ public class ServiceFactory {
         if(scoped.containsKey(GrantTypeParser.class)) {
             return (GrantTypeParser) scoped.get(GrantTypeParser.class);
         } else {
-            Logger logger = new Logger(GrantTypeParser.class);
+            Logger logger = getLogger(GrantTypeParser.class);
             GrantTypeParser service = new GrantTypeParser();
             scoped.put(GrantTypeParser.class, service);
             return service;
@@ -95,7 +99,7 @@ public class ServiceFactory {
             return (GrantMapSerializer) scoped.get(GrantMapSerializer.class);
         } else {
             GrantSerializer grantSerializer = getGrantSerializer();
-            Logger logger = new Logger(GrantMapSerializer.class);
+            Logger logger = getLogger(GrantMapSerializer.class);
             GrantMapSerializer service = new GrantMapSerializer(grantSerializer, logger);
             scoped.put(GrantMapSerializer.class, service);
             return service;
@@ -129,7 +133,7 @@ public class ServiceFactory {
             return (ImagesRepo) scoped.get(ImagesRepo.class);
         } else {
             SessionSettings sessionSettings = getSessionSettings();
-            Logger logger = new Logger(ImagesRepo.class);
+            Logger logger = getLogger(ImagesRepo.class);
             ImagesRepo service = new ImagesRepo(sessionSettings, logger);
             scoped.put(ImagesRepo.class, service);
             return service;
@@ -143,7 +147,7 @@ public class ServiceFactory {
             SessionSettings sessionSettings = getSessionSettings();
             AccountsRepo accountsRepo = getAccountsRepo();
             IdentitySerializer identitySerializer = getIdentitySerializer();
-            Logger logger = new Logger(IdentitiesRepo.class);
+            Logger logger = getLogger(IdentitiesRepo.class);
             IdentitiesRepo service = new IdentitiesRepo(sessionSettings, accountsRepo, identitySerializer, logger);
             scoped.put(IdentitiesRepo.class, service);
             return service;
@@ -155,7 +159,7 @@ public class ServiceFactory {
             return (PlatformSerializer) scoped.get(PlatformSerializer.class);
         } else {
             ClaimMapSerializer claimMapSerializer = getClaimMapSerializer();
-            Logger logger = new Logger(PlatformSerializer.class);
+            Logger logger = getLogger(PlatformSerializer.class);
             PlatformSerializer service = new PlatformSerializer(claimMapSerializer, logger);
             scoped.put(PlatformSerializer.class, service);
             return service;
@@ -167,7 +171,7 @@ public class ServiceFactory {
             return (ClaimSerializer) scoped.get(ClaimSerializer.class);
         } else {
             GrantTypeParser grantTypeParser = getGrantTypeParser();
-            Logger logger = new Logger(ClaimSerializer.class);
+            Logger logger = getLogger(ClaimSerializer.class);
             ClaimSerializer service = new ClaimSerializer(grantTypeParser, logger);
             scoped.put(ClaimSerializer.class, service);
             return service;
@@ -179,7 +183,7 @@ public class ServiceFactory {
             return (ClaimMapSerializer) scoped.get(ClaimMapSerializer.class);
         } else {
             ClaimSerializer claimSerializer = getClaimSerializer();
-            Logger logger = new Logger(ClaimMapSerializer.class);
+            Logger logger = getLogger(ClaimMapSerializer.class);
             ClaimMapSerializer service = new ClaimMapSerializer(claimSerializer, logger);
             scoped.put(ClaimMapSerializer.class, service);
             return service;
@@ -192,7 +196,7 @@ public class ServiceFactory {
         } else {
             SessionSettings sessionSettings = getSessionSettings();
             AccountSerializer accountSerializer = getAccountSerializer();
-            Logger logger = new Logger(AccountsRepo.class);
+            Logger logger = getLogger(AccountsRepo.class);
             AccountsRepo service = new AccountsRepo(sessionSettings, accountSerializer, logger);
             scoped.put(AccountsRepo.class, service);
             return service;
@@ -206,7 +210,7 @@ public class ServiceFactory {
             SessionSettings sessionSettings = getSessionSettings();
             PlatformSerializer platformSerializer = getPlatformSerializer();
             AccountsRepo accountsRepo = getAccountsRepo();
-            Logger logger = new Logger(PlatformsRepo.class);
+            Logger logger = getLogger(PlatformsRepo.class);
             PlatformsRepo service = new PlatformsRepo(sessionSettings, platformSerializer, accountsRepo, logger);
             scoped.put(PlatformsRepo.class, service);
             return service;
