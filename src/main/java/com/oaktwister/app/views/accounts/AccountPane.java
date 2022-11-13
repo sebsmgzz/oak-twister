@@ -1,18 +1,13 @@
 package com.oaktwister.app.views.accounts;
 
 import com.oaktwister.app.annotations.ViewDescriptor;
-import com.oaktwister.app.events.AccountPaneActionEvent;
 import com.oaktwister.app.services.resources.ViewResources;
 import com.oaktwister.app.utils.extensions.LocalDateTimeUtil;
 import com.oaktwister.app.utils.extensions.FXMLUtil;
 import com.oaktwister.app.utils.extensions.UUIDUtil;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.StringProperty;
-import javafx.event.EventHandler;
+import com.oaktwister.app.viewmodels.models.AccountViewModel;
+import javafx.beans.property.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -31,6 +26,7 @@ public class AccountPane extends AnchorPane implements Initializable {
     private final SimpleObjectProperty<UUID> identifierProperty;
     private final SimpleObjectProperty<LocalDateTime> createdAtProperty;
     private final SimpleIntegerProperty grantsCountProperty;
+    private final SimpleObjectProperty<AccountViewModel> accountProperty;
 
     @FXML private ImageView imageView;
     @FXML private Label platformNameLabel;
@@ -39,6 +35,7 @@ public class AccountPane extends AnchorPane implements Initializable {
     @FXML private Label createdAtLabel;
 
     public AccountPane() {
+        accountProperty = new SimpleObjectProperty<>();
         identifierProperty = new SimpleObjectProperty<>(UUIDUtil.empty());
         createdAtProperty = new SimpleObjectProperty<>(LocalDateTime.MIN);
         grantsCountProperty = new SimpleIntegerProperty();
@@ -56,56 +53,58 @@ public class AccountPane extends AnchorPane implements Initializable {
         grantsCountProperty.addListener((observable, oldValue, newValue) -> {
             grantsCountLabel.setText(newValue.toString());
         });
+        accountProperty.addListener((observable, oldValue, newValue) -> {
+            identifierProperty.bind(newValue.idProperty());
+            createdAtProperty.bind(newValue.createdAtProperty());
+            imageView.imageProperty().bind(newValue.platform().imageProperty());
+            platformNameLabel.textProperty().bind(newValue.platform().nameProperty());
+            grantsCountProperty.bind(newValue.grantMap().grantCountProperty());
+        });
     }
 
-    public ObjectProperty<Image> imageProperty() {
+    public ObjectProperty<AccountViewModel> accountProperty() {
+        return accountProperty;
+    }
+    public AccountViewModel getAccount() {
+        return accountProperty().get();
+    }
+    public void setAccount(AccountViewModel value) {
+        accountProperty().set(value);
+    }
+
+    public ReadOnlyObjectProperty<Image> imageProperty() {
         return imageView.imageProperty();
     }
     public Image getImage() {
         return imageProperty().get();
     }
-    public void setImage(Image value) {
-        imageProperty().set(value);
-    }
 
-    public StringProperty platformNameProperty() {
+    public ReadOnlyStringProperty platformNameProperty() {
         return platformNameLabel.textProperty();
     }
     public String getPlatformName() {
         return platformNameProperty().get();
     }
-    public void setPlatformName(String value) {
-        platformNameProperty().set(value);
-    }
 
-    public ObjectProperty<UUID> identifierProperty() {
+    public ReadOnlyObjectProperty<UUID> identifierProperty() {
         return identifierProperty;
     }
     public UUID getIdentifier() {
         return identifierProperty().get();
     }
-    public void setIdentifier(UUID value) {
-        identifierProperty().set(value);
-    }
 
-    public IntegerProperty grantsCountProperty() {
+    public ReadOnlyIntegerProperty grantsCountProperty() {
         return grantsCountProperty;
     }
     public Integer getGrantsCount() {
         return grantsCountProperty().get();
     }
-    public void setGrantsCount(Integer value) {
-        grantsCountProperty().set(value);
-    }
 
-    public ObjectProperty<LocalDateTime> createdAtProperty() {
+    public ReadOnlyObjectProperty<LocalDateTime> createdAtProperty() {
         return createdAtProperty;
     }
     public LocalDateTime getCreatedAt() {
         return createdAtProperty().get();
-    }
-    public void setCreatedAt(LocalDateTime value) {
-        createdAtProperty().set(value);
     }
 
 }

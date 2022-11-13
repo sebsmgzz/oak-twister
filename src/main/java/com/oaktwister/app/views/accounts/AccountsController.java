@@ -37,14 +37,8 @@ public final class AccountsController extends Controller<CrudFrame> {
     protected CrudFrame initialize() {
         crudFrame.setContent(crudPage);
         crudPage.selectedPaneProperty().addListener((observable, oldValue, newValue) -> {
-            // TODO: Instead of iterating over all accounts, let the account pane take a AccountViewModelProperty
-            AccountPane selectedAccountPane = newValue.getGraphic();
-            for(AccountViewModel accountViewModel : accountMapping.keySet()) {
-                AccountPane accountPane = accountMapping.get(accountViewModel);
-                if(selectedAccountPane == accountPane) {
-                    viewModel.setSelectedAccount(accountViewModel);
-                }
-            }
+            AccountViewModel account = newValue.getGraphic().getAccount();
+            viewModel.setSelectedAccount(account);
         });
         crudFrame.onAddActionProperty().set(this::addAccount);
         crudFrame.onRemoveActionProperty().set(this::removeAccount);
@@ -74,11 +68,7 @@ public final class AccountsController extends Controller<CrudFrame> {
 
     private void onAccountAdded(AccountViewModel accountViewModel) {
         AccountPane accountPane = new AccountPane();
-        accountPane.identifierProperty().bind(accountViewModel.idProperty());
-        accountPane.createdAtProperty().bind(accountViewModel.createdAtProperty());
-        accountPane.imageProperty().bind(accountViewModel.platform().imageProperty());
-        accountPane.platformNameProperty().bind(accountViewModel.platform().nameProperty());
-        accountPane.grantsCountProperty().bind(accountViewModel.grantMap().grantCountProperty());
+        accountPane.setAccount(accountViewModel);
         accountMapping.put(accountViewModel, accountPane);
         crudPage.add(accountPane);
     }
