@@ -6,7 +6,7 @@ import com.oaktwister.app.utils.extensions.FXMLUtil;
 import com.oaktwister.app.viewmodels.models.ClaimViewModel;
 
 import com.oaktwister.app.viewmodels.models.PlatformViewModel;
-import com.oaktwister.app.views.DialogResult;
+import com.oaktwister.app.views.widgets.dialogs.DialogResult;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.property.SimpleObjectProperty;

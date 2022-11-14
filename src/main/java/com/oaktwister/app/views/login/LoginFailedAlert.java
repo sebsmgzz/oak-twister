@@ -4,7 +4,7 @@ import com.oaktwister.app.annotations.ViewDescriptor;
 import com.oaktwister.app.services.resources.ViewResources;
 import com.oaktwister.app.utils.extensions.FXMLUtil;
 
-import com.oaktwister.app.views.DialogResult;
+import com.oaktwister.app.views.widgets.dialogs.DialogResult;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;

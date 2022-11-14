@@ -42,6 +42,14 @@ public interface ViewResources {
         String CRUD_FRAME = URL + "/crud/CrudFrame.fxml";
         String CRUD_PANE = URL + "/crud/CrudPane.fxml";
         String CRUD_PAGE = URL + "/crud/CrudPage.fxml";
+
+        interface Dialogs {
+            String URL = Widgets.URL + "/dialogs";
+            String ALERT = URL + "/Alert.fxml";
+            String DIALOG_FRAME = URL + "/DialogFrame.fxml";
+            String DIALOG_BUTTON = URL + "/DialogButton.fxml";
+        }
+
     }
 
 }

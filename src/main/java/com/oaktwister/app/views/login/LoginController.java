@@ -3,10 +3,9 @@ package com.oaktwister.app.views.login;
 import com.oaktwister.app.core.UIContext;
 import com.oaktwister.app.services.resources.ImageResources;
 import com.oaktwister.app.services.resources.StringResources;
-import com.oaktwister.app.utils.Lazy;
 import com.oaktwister.app.viewmodels.views.LoginViewModel;
 import com.oaktwister.app.views.Controller;
-import com.oaktwister.app.views.DialogResult;
+import com.oaktwister.app.views.widgets.dialogs.DialogResult;
 
 import javafx.event.ActionEvent;
 import javafx.scene.image.Image;

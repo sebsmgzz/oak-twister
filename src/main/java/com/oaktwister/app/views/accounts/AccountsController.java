@@ -8,10 +8,18 @@ import com.oaktwister.app.viewmodels.views.AccountsViewModel;
 import com.oaktwister.app.views.Controller;
 import com.oaktwister.app.views.widgets.crud.CrudFrame;
 import com.oaktwister.app.views.widgets.crud.CrudPage;
+import com.oaktwister.app.views.widgets.dialogs.Alert;
+import com.oaktwister.app.views.widgets.dialogs.AlertType;
+import com.oaktwister.app.views.widgets.dialogs.DialogResult;
 import javafx.event.ActionEvent;
+import javafx.stage.Stage;
+
 import java.util.HashMap;
 
 public final class AccountsController extends Controller<CrudFrame> {
+
+    private final static String DELETE_CONFIRMATION_MESSAGE =
+            "Are you sure you want to delete %s account? \nThis action cannot be undone.";
 
     private final UIContext ui;
     private final AccountsViewModel viewModel;
@@ -55,8 +63,16 @@ public final class AccountsController extends Controller<CrudFrame> {
     }
 
     private void removeAccount(ActionEvent actionEvent) {
-        // TODO: Show DeleteAccountAlert
-        // If alert.result() == OK then
+        AccountViewModel account = viewModel.getSelectedAccount();
+        Alert alert = new Alert();
+        alert.setAlertType(AlertType.CONFIRM);
+        alert.setMessage(String.format(DELETE_CONFIRMATION_MESSAGE, account.idProperty().get().toString()));
+        Stage stage = ui.navigation().getDialogStage(alert);
+        alert.stageProperty().set(stage);
+        stage.showAndWait();
+        DialogResult result = alert.resultProperty().get();
+        System.out.println(result.getAction());
+        // TODO: Call delete account in view model
         // viewModel.remove(alert.account());
     }
 

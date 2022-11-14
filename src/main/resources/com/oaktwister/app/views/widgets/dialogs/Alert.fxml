@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import com.oaktwister.app.views.widgets.dialogs.DialogFrame?>
+<?import javafx.scene.control.Label?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+
+<fx:root xmlns="http://javafx.com/javafx/8"
+         xmlns:fx="http://javafx.com/fxml/1"
+         type="javafx.scene.layout.AnchorPane"
+         fx:controller="com.oaktwister.app.views.widgets.dialogs.Alert">
+    <DialogFrame fx:id="dialogFrame">
+        <content>
+            <Label fx:id="messageLabel">
+                <padding>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                </padding>
+                <font>
+                    <Font name="System" />
+                </font>
+            </Label>
+        </content>
+    </DialogFrame>
+</fx:root>

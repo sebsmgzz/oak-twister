@@ -16,7 +16,10 @@ public class FXMLUtil {
     public static URL getViewResourceUrl(@NotNull Class<?> viewClass) throws IOException {
         if (!viewClass.isAnnotationPresent(ViewDescriptor.class)) {
             // TODO: Create AnnotationNotFoundException class
-            throw new IOException("View is missing the ViewDescriptor annotation. Cannot find view location.");
+            throw new IOException(String.format(
+                    "View of type %s is missing the %s annotation.",
+                    viewClass.getTypeName(),
+                    ViewDescriptor.class.getTypeName()));
         }
         ViewDescriptor viewDescriptor = viewClass.getAnnotation(ViewDescriptor.class);
         String viewLocation = viewDescriptor.location();
