@@ -60,12 +60,4 @@ public class FXMLUtil {
         }
     }
 
-    public static Stage getDialogStage(Stage primaryStage) {
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        Window window = primaryStage.getScene().getWindow();
-        stage.initOwner(window);
-        return stage;
-    }
-
 }

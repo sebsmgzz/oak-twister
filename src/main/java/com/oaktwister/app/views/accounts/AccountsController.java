@@ -68,8 +68,7 @@ public final class AccountsController extends Controller<CrudFrame> {
         alert.setAlertType(AlertType.CONFIRM);
         alert.setMessage(String.format(DELETE_CONFIRMATION_MESSAGE, account.idProperty().get().toString()));
         Stage stage = ui.navigation().getDialogStage(alert);
-        alert.stageProperty().set(stage);
-        stage.showAndWait();
+        alert.showAndWait(stage);
         DialogResult result = alert.resultProperty().get();
         System.out.println(result.getAction());
         // TODO: Call delete account in view model

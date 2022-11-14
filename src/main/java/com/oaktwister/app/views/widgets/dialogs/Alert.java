@@ -1,6 +1,7 @@
 package com.oaktwister.app.views.widgets.dialogs;
 
 import com.oaktwister.app.annotations.ViewDescriptor;
+import com.oaktwister.app.services.resources.ImageResources;
 import com.oaktwister.app.services.resources.ViewResources;
 import com.oaktwister.app.utils.extensions.FXMLUtil;
 import javafx.beans.property.ObjectProperty;
@@ -10,7 +11,9 @@ import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -18,7 +21,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 @ViewDescriptor(location = ViewResources.Widgets.Dialogs.ALERT)
-public class Alert extends AnchorPane implements Initializable {
+public class Alert extends AnchorPane implements Initializable, DialogControl {
 
     private final SimpleObjectProperty<AlertType> alertTypeProperty;
 
@@ -33,6 +36,11 @@ public class Alert extends AnchorPane implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         alertTypeProperty.addListener(this::onAlertTypeChanged);
+    }
+
+    public void showAndWait(Stage stage) {
+        stage.getIcons().add(new Image(ImageResources.Vikings.OAK));
+        dialogFrame.showAndWait(stage);
     }
 
     private void onAlertTypeChanged(ObservableValue<? extends AlertType> observable, AlertType oldValue, AlertType newValue) {
@@ -84,16 +92,6 @@ public class Alert extends AnchorPane implements Initializable {
     }
     public DialogResult getResult() {
         return resultProperty().get();
-    }
-
-    public ObjectProperty<Stage> stageProperty() {
-        return dialogFrame.stageProperty();
-    }
-    public Stage getStage() {
-        return stageProperty().get();
-    }
-    public void setStage(Stage value) {
-        stageProperty().set(value);
     }
 
 }

@@ -16,6 +16,7 @@ import javafx.collections.ObservableSet;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -28,23 +29,22 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 
 @ViewDescriptor(location = ViewResources.Widgets.Dialogs.DIALOG_FRAME)
-public class DialogFrame extends AnchorPane implements Initializable {
+public class DialogFrame extends AnchorPane implements Initializable, DialogControl {
 
     @FXML private ImageView iconImageView;
     @FXML private Label titleLabel;
     @FXML private AnchorPane contentAnchorPane;
     @FXML private HBox buttonsHBox;
 
-    private final SimpleObjectProperty<Stage> stageProperty;
     private final SimpleObjectProperty<Node> contentProperty;
     private final SimpleObjectProperty<DialogResult> resultProperty;
     private final SimpleListProperty<DialogButton> buttonsProperty;
 
+    private Stage stage;
     private final ListItemAddedListener<DialogButton> onButtonAddedListener;
     private final ListItemRemovedListener<DialogButton> onButtonRemovedListener;
 
     public DialogFrame() {
-        stageProperty = new SimpleObjectProperty<>();
         contentProperty = new SimpleObjectProperty<>();
         resultProperty = new SimpleObjectProperty<>();
         buttonsProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
@@ -65,11 +65,19 @@ public class DialogFrame extends AnchorPane implements Initializable {
         });
     }
 
+    public void showAndWait(Stage stage) {
+        this.stage = stage;
+        stage.showAndWait();
+        this.stage = null;
+    }
+
     private void onButtonAdded(DialogButton dialogButton) {
         dialogButton.setOnAction(event -> {
             DialogButton button = event.getSender();
             resultProperty.set(button.getResult());
-            PropertyUtil.tryClose(stageProperty);
+            if(stage != null) {
+                stage.close();
+            }
         });
         buttonsHBox.getChildren().add(dialogButton);
     }
@@ -113,16 +121,6 @@ public class DialogFrame extends AnchorPane implements Initializable {
     }
     public DialogResult getResult() {
         return resultProperty().get();
-    }
-
-    public ObjectProperty<Stage> stageProperty() {
-        return stageProperty;
-    }
-    public Stage getStage() {
-        return stageProperty().get();
-    }
-    public void setStage(Stage value) {
-        stageProperty().set(value);
     }
 
     public ListProperty<DialogButton> buttonsProperty() {

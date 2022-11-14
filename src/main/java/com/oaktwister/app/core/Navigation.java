@@ -6,6 +6,7 @@ import com.oaktwister.app.views.main.MainController;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class Navigation {
@@ -40,7 +41,9 @@ public class Navigation {
 
     public Stage getDialogStage(Parent node) {
         Scene scene = new Scene(node);
-        Stage stage = FXMLUtil.getDialogStage(primaryStage);
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner(primaryStage.getScene().getWindow());
         stage.setScene(scene);
         return stage;
     }
