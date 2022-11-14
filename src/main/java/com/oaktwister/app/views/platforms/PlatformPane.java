@@ -6,9 +6,8 @@ import com.oaktwister.app.utils.extensions.LocalDateTimeUtil;
 import com.oaktwister.app.utils.extensions.FXMLUtil;
 import com.oaktwister.app.utils.extensions.UUIDUtil;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.StringProperty;
+import com.oaktwister.app.viewmodels.models.PlatformViewModel;
+import javafx.beans.property.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -26,6 +25,7 @@ public class PlatformPane extends AnchorPane implements Initializable {
 
     private final SimpleObjectProperty<UUID> identifierProperty;
     private final SimpleObjectProperty<LocalDateTime> createdAtProperty;
+    private final SimpleObjectProperty<PlatformViewModel> platformProperty;
 
     @FXML private Label identifierLabel;
     @FXML private ImageView imageView;
@@ -33,9 +33,9 @@ public class PlatformPane extends AnchorPane implements Initializable {
     @FXML private Label createdAtLabel;
 
     public PlatformPane() {
-        super();
         identifierProperty = new SimpleObjectProperty<>(UUIDUtil.empty());
         createdAtProperty = new SimpleObjectProperty<>(LocalDateTime.MIN);
+        platformProperty = new SimpleObjectProperty<>();
         FXMLUtil.loadControl(this);
     }
 
@@ -47,46 +47,50 @@ public class PlatformPane extends AnchorPane implements Initializable {
         createdAtProperty.addListener((observer, oldValue, newValue) -> {
             createdAtLabel.setText(LocalDateTimeUtil.toDefault(newValue));
         });
+        platformProperty.addListener((observer, oldValue, newValue) -> {
+            identifierProperty.bind(newValue.idProperty());
+            imageView.imageProperty().bind(newValue.imageProperty());
+            nameLabel.textProperty().bind(newValue.nameProperty());
+            createdAtProperty.bind(newValue.createdAtProperty());
+        });
     }
 
-    public ObjectProperty<UUID> identifierProperty() {
+    public ObjectProperty<PlatformViewModel> platformProperty() {
+        return platformProperty;
+    }
+    public PlatformViewModel getPlatform() {
+        return platformProperty().get();
+    }
+    public void setPlatform(PlatformViewModel value) {
+        platformProperty().set(value);
+    }
+
+    public ReadOnlyObjectProperty<UUID> identifierProperty() {
         return identifierProperty;
     }
     public UUID getIdentifier() {
         return identifierProperty().get();
     }
-    public void setIdentifier(UUID value) {
-        identifierProperty.set(value);
-    }
 
-    public ObjectProperty<Image> imageProperty() {
+    public ReadOnlyObjectProperty<Image> imageProperty() {
         return imageView.imageProperty();
     }
     public Image getImage() {
         return imageProperty().get();
     }
-    public void setImage(Image value) {
-        imageProperty().set(value);
-    }
 
-    public StringProperty nameProperty() {
+    public ReadOnlyStringProperty nameProperty() {
         return nameLabel.textProperty();
     }
     public String getName() {
         return nameProperty().get();
     }
-    public void setName(String value) {
-        nameProperty().set(value);
-    }
 
-    public ObjectProperty<LocalDateTime> createdAtProperty() {
+    public ReadOnlyObjectProperty<LocalDateTime> createdAtProperty() {
         return createdAtProperty;
     }
     public LocalDateTime getCreatedAt() {
         return createdAtProperty.get();
-    }
-    public void setCreatedAt(LocalDateTime value) {
-        createdAtProperty().set(value);
     }
 
 }

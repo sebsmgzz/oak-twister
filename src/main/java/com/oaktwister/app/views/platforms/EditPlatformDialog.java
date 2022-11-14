@@ -76,6 +76,10 @@ public class EditPlatformDialog extends AnchorPane implements Initializable {
         });
     }
 
+    public void showAndWait(Stage stage) {
+        // TODO
+    }
+
     public ReadOnlyObjectProperty<DialogResult> resultProperty() {
         return resultProperty;
     }

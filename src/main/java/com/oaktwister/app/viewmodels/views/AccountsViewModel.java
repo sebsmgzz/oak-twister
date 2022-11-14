@@ -11,8 +11,6 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
 
 public class AccountsViewModel {
@@ -32,23 +30,6 @@ public class AccountsViewModel {
         accountsProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
     }
 
-    public ReadOnlyListProperty<AccountViewModel> accountsProperty() {
-        return accountsProperty;
-    }
-    public ObservableList<AccountViewModel> getAccounts() {
-        return accountsProperty().get();
-    }
-
-    public ObjectProperty<AccountViewModel> selectedAccountProperty() {
-        return selectedAccountProperty;
-    }
-    public AccountViewModel getSelectedAccount() {
-        return selectedAccountProperty().get();
-    }
-    public void setSelectedAccount(AccountViewModel value) {
-        selectedAccountProperty().set(value);
-    }
-
     public void load() {
         logger.debug("Loading accounts");
         List<Account> accounts = accountsRepo.findAll();
@@ -60,35 +41,36 @@ public class AccountsViewModel {
         logger.debug("Loaded %s accounts", accounts.size());
     }
 
-    public void clear() {
-        accountsProperty.clear();
+    public ReadOnlyListProperty<AccountViewModel> accountsProperty() {
+        return accountsProperty;
+    }
+    public ObservableList<AccountViewModel> getAccounts() {
+        return accountsProperty().get();
+    }
+    public boolean addAccount(AccountViewModel account) {
+        return accountsProperty().add(account);
+    }
+    public boolean addAccounts(AccountViewModel... accounts) {
+        return accountsProperty().addAll(accounts);
+    }
+    public boolean removeAccount(AccountViewModel account) {
+        return accountsProperty().remove(account);
+    }
+    public boolean removeAccounts(AccountViewModel... accounts) {
+        return accountsProperty().removeAll(accounts);
+    }
+    public void clearAccounts() {
+        accountsProperty().clear();
     }
 
-    public boolean add(@NotNull AccountViewModel accountViewModel) {
-        Account account = accountViewModel.getAccount();
-        return accountsRepo.add(account);
+    public ObjectProperty<AccountViewModel> selectedAccountProperty() {
+        return selectedAccountProperty;
     }
-
-    public boolean remove() {
-        AccountViewModel accountViewModel = getSelectedAccount();
-        if(accountViewModel == null) {
-            return false;
-        }
-        Account account = accountViewModel.getAccount();
-        boolean removed = accountsRepo.remove(account);
-        if(removed) {
-            accountsProperty().remove(accountViewModel);
-        }
-        return removed;
+    public AccountViewModel getSelectedAccount() {
+        return selectedAccountProperty().get();
     }
-
-    public boolean update() {
-        AccountViewModel accountViewModel = getSelectedAccount();
-        if(accountViewModel == null) {
-            return false;
-        }
-        Account account = accountViewModel.getAccount();
-        return accountsRepo.update(account);
+    public void setSelectedAccount(AccountViewModel value) {
+        selectedAccountProperty().set(value);
     }
 
 }

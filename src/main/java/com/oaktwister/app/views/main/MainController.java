@@ -41,7 +41,7 @@ public final class MainController extends Controller<MainLayout> {
 
     private void onPagePropertyChanged(ObservableValue<? extends MainPage> observable,
                                        MainPage oldValue, MainPage newValue) {
-        StringProperty titleProperty = getRoot().titleProperty();
+        StringProperty titleProperty = layout.titleProperty();
         switch (newValue) {
             case ACCOUNTS -> {
                 accounts.reloadAccounts();

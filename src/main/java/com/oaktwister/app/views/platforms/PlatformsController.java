@@ -1,13 +1,13 @@
 package com.oaktwister.app.views.platforms;
 
 import com.oaktwister.app.core.UIContext;
-import com.oaktwister.app.events.PlatformPaneEvent;
-import com.oaktwister.app.utils.extensions.MapUtil;
 import com.oaktwister.app.utils.listeners.ListItemAddedListener;
 import com.oaktwister.app.utils.listeners.ListItemRemovedListener;
 import com.oaktwister.app.viewmodels.models.PlatformViewModel;
 import com.oaktwister.app.viewmodels.views.PlatformsViewModel;
 import com.oaktwister.app.views.Controller;
+import com.oaktwister.app.views.widgets.dialogs.Alert;
+import com.oaktwister.app.views.widgets.dialogs.AlertType;
 import com.oaktwister.app.views.widgets.dialogs.DialogResult;
 import com.oaktwister.app.views.widgets.crud.CrudFrame;
 import com.oaktwister.app.views.widgets.crud.CrudPage;
@@ -17,13 +17,17 @@ import java.util.HashMap;
 
 public final class PlatformsController extends Controller<CrudFrame> {
 
+    private final static String DELETE_CONFIRMATION_MESSAGE =
+            "Are you sure you want to delete %s platform? \n" +
+            "This action will delete all related accounts as well and cannot be undone.";
+
     private final UIContext ui;
     private final PlatformsViewModel viewModel;
 
     private final CrudFrame crudFrame;
     private final CrudPage<PlatformPane> crudPage;
 
-    private final HashMap<PlatformViewModel, PlatformPane> platformsMap;
+    private final HashMap<PlatformViewModel, PlatformPane> platformMapping;
     private final ListItemAddedListener<PlatformViewModel> platformAddedListener;
     private final ListItemRemovedListener<PlatformViewModel> platformRemovedListener;
 
@@ -32,7 +36,7 @@ public final class PlatformsController extends Controller<CrudFrame> {
         viewModel = ui.viewModels().platforms();
         crudFrame = new CrudFrame();
         crudPage = new CrudPage<>();
-        platformsMap = new HashMap<>();
+        platformMapping = new HashMap<>();
         platformAddedListener = new ListItemAddedListener<>(this::onPlatformAdded);
         platformRemovedListener = new ListItemRemovedListener<>(this::onPlatformRemoved);
     }
@@ -40,15 +44,19 @@ public final class PlatformsController extends Controller<CrudFrame> {
     @Override
     protected CrudFrame initialize() {
         crudFrame.setContent(crudPage);
-        crudFrame.onAddActionProperty().set(this::addPlatform);
-        crudFrame.onEditActionProperty().set(this::editPlatform);
-        crudFrame.onRemoveActionProperty().set(this::removePlatform);
+        crudPage.selectedPaneProperty().addListener((observable, oldValue, newValue) -> {
+            PlatformViewModel platform = newValue.getGraphic().getPlatform();
+            viewModel.setSelectedPlatform(platform);
+        });
+        crudFrame.onAddActionProperty().set(this::onAddPlatform);
+        crudFrame.onEditActionProperty().set(this::onEditPlatform);
+        crudFrame.onRemoveActionProperty().set(this::onRemovePlatform);
         viewModel.platformsProperty().addListener(platformAddedListener);
         viewModel.platformsProperty().addListener(platformRemovedListener);
         return crudFrame;
     }
 
-    private void addPlatform(ActionEvent actionEvent) {
+    private void onAddPlatform(ActionEvent actionEvent) {
         EditPlatformDialog dialog = new EditPlatformDialog();
         PlatformViewModel platformViewModel = ui.viewModels().platform();
         dialog.platformProperty().set(platformViewModel);
@@ -60,47 +68,58 @@ public final class PlatformsController extends Controller<CrudFrame> {
         }
     }
 
-    private void editPlatform(ActionEvent actionEvent) {
+    private void onEditPlatform(ActionEvent actionEvent) {
         // TODO
-    }
-
-    private void removePlatform(ActionEvent actionEvent) {
-        // TODO
-    }
-
-    private void onPlatformAdded(PlatformViewModel platformViewModel) {
-        PlatformPane platformPane = new PlatformPane();
-        platformPane.identifierProperty().bind(platformViewModel.idProperty());
-        platformPane.imageProperty().bind(platformViewModel.imageProperty());
-        platformPane.nameProperty().bind(platformViewModel.nameProperty());
-        platformPane.createdAtProperty().bind(platformViewModel.createdAtProperty());
-        crudPage.add(platformPane);
-        platformsMap.put(platformViewModel, platformPane);
-    }
-
-    private void onPlatformRemoved(PlatformViewModel platformViewModel) {
-        PlatformPane platformPane = platformsMap.remove(platformViewModel);
-        crudPage.remove(platformPane);
-    }
-
-    private void onPlatformPaneClick(PlatformPaneEvent actionEvent) {
-        PlatformPane platformPane = actionEvent.getPlatformPane();
-        PlatformViewModel platformViewModel = MapUtil.getKeyByValue(platformsMap, platformPane);
-        if(platformViewModel == null) {
+        PlatformViewModel platform = viewModel.getSelectedPlatform();
+        if(platform == null) {
             // TODO: Throw exception? This should never happen
             return;
         }
         EditPlatformDialog dialog = new EditPlatformDialog();
-        dialog.platformProperty().set(platformViewModel);
-        ui.navigation().getDialogStage(dialog);
+        dialog.platformProperty().set(platform);
+        Stage stage = ui.navigation().getDialogStage(dialog);
+        dialog.showAndWait(stage);
         if(dialog.resultProperty().get() == DialogResult.SAVED) {
             // TODO: Save to database
             System.out.println("Updating platform to database");
         }
     }
 
+    private void onRemovePlatform(ActionEvent actionEvent) {
+        PlatformViewModel platform = viewModel.getSelectedPlatform();
+        Alert alert = new Alert();
+        alert.setAlertType(AlertType.CONFIRM);
+        alert.setMessage(String.format(DELETE_CONFIRMATION_MESSAGE, platform.getId()));
+        Stage stage = ui.navigation().getDialogStage(alert);
+        alert.showAndWait(stage);
+        DialogResult result = alert.resultProperty().get();
+        if(result == DialogResult.YES) {
+            boolean deleted = platform.delete();
+            if(deleted) {
+                viewModel.removePlatform(platform);
+            }  else {
+                // TODO: Alert the exception
+                Exception error = platform.getError();
+                error.printStackTrace();
+                platform.clearError();
+            }
+        }
+    }
+
+    private void onPlatformAdded(PlatformViewModel platform) {
+        PlatformPane platformPane = new PlatformPane();
+        platformPane.setPlatform(platform);
+        platformMapping.put(platform, platformPane);
+        crudPage.add(platformPane);
+    }
+
+    private void onPlatformRemoved(PlatformViewModel platform) {
+        PlatformPane platformPane = platformMapping.remove(platform);
+        crudPage.remove(platformPane);
+    }
+
     public void reloadPlatforms() {
-        viewModel.clear();
+        viewModel.clearPlatforms();
         viewModel.load();
     }
 

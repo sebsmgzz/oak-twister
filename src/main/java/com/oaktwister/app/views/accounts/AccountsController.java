@@ -13,7 +13,6 @@ import com.oaktwister.app.views.widgets.dialogs.AlertType;
 import com.oaktwister.app.views.widgets.dialogs.DialogResult;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
-
 import java.util.HashMap;
 
 public final class AccountsController extends Controller<CrudFrame> {
@@ -48,53 +47,56 @@ public final class AccountsController extends Controller<CrudFrame> {
             AccountViewModel account = newValue.getGraphic().getAccount();
             viewModel.setSelectedAccount(account);
         });
-        crudFrame.onAddActionProperty().set(this::addAccount);
-        crudFrame.onRemoveActionProperty().set(this::removeAccount);
-        crudFrame.onEditActionProperty().set(this::editAccount);
+        crudFrame.onAddActionProperty().set(this::onAddAccount);
+        crudFrame.onRemoveActionProperty().set(this::onRemoveAccount);
+        crudFrame.onEditActionProperty().set(this::onEditAccount);
         viewModel.accountsProperty().addListener(accountAddedListener);
         viewModel.accountsProperty().addListener(accountRemovedListener);
         return crudFrame;
     }
 
-    private void addAccount(ActionEvent actionEvent) {
+    private void onAddAccount(ActionEvent actionEvent) {
         // TODO: Show EditAccountDialog with empty account
         // If dialog.result() == SAVE then
         // viewModel.add(dialog.account());
     }
 
-    private void removeAccount(ActionEvent actionEvent) {
-        AccountViewModel account = viewModel.getSelectedAccount();
-        Alert alert = new Alert();
-        alert.setAlertType(AlertType.CONFIRM);
-        alert.setMessage(String.format(DELETE_CONFIRMATION_MESSAGE, account.idProperty().get().toString()));
-        Stage stage = ui.navigation().getDialogStage(alert);
-        alert.showAndWait(stage);
-        DialogResult result = alert.resultProperty().get();
-        if(result == DialogResult.YES) {
-            viewModel.remove();
-        }
-    }
-
-    private void editAccount(ActionEvent actionEvent) {
+    private void onEditAccount(ActionEvent actionEvent) {
         // TODO: Show EditAccountDialog with selected account
         // If dialog.result() == SAVE then
         // viewModel.update();
     }
 
-    private void onAccountAdded(AccountViewModel accountViewModel) {
+    private void onRemoveAccount(ActionEvent actionEvent) {
+        AccountViewModel account = viewModel.getSelectedAccount();
+        Alert alert = new Alert();
+        alert.setAlertType(AlertType.CONFIRM);
+        alert.setMessage(String.format(DELETE_CONFIRMATION_MESSAGE, account.getId()));
+        Stage stage = ui.navigation().getDialogStage(alert);
+        alert.showAndWait(stage);
+        DialogResult result = alert.resultProperty().get();
+        if(result == DialogResult.YES) {
+            boolean deleted = account.delete();
+            if(deleted) {
+                viewModel.removeAccount(account);
+            }
+        }
+    }
+
+    private void onAccountAdded(AccountViewModel account) {
         AccountPane accountPane = new AccountPane();
-        accountPane.setAccount(accountViewModel);
-        accountMapping.put(accountViewModel, accountPane);
+        accountPane.setAccount(account);
+        accountMapping.put(account, accountPane);
         crudPage.add(accountPane);
     }
 
-    private void onAccountRemoved(AccountViewModel accountViewModel) {
-        AccountPane accountPane = accountMapping.remove(accountViewModel);
+    private void onAccountRemoved(AccountViewModel account) {
+        AccountPane accountPane = accountMapping.remove(account);
         crudPage.remove(accountPane);
     }
 
     public void reloadAccounts() {
-        viewModel.clear();
+        viewModel.clearAccounts();
         viewModel.load();
     }
 

@@ -10,10 +10,8 @@ import com.oaktwister.infrastructure.repos.AccountsRepo;
 import com.oaktwister.infrastructure.repos.IdentitiesRepo;
 import com.oaktwister.infrastructure.repos.PlatformsRepo;
 import com.oaktwister.app.utils.extensions.UUIDUtil;
-
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -48,6 +46,11 @@ public class AccountViewModel {
         createdAtProperty = new SimpleObjectProperty<>(LocalDateTime.MIN);
     }
 
+    public boolean delete() {
+        Account account = getAccount();
+        return accountsRepo.remove(account);
+    }
+
     public void setAccount(Account account) {
         UUID id = account.getId();
         idProperty.set(id);
@@ -73,13 +76,6 @@ public class AccountViewModel {
         UUID identityId = identityIdProperty.get();
         LocalDateTime createdAt = createdAtProperty.get();
         Account account = new Account(id, platformId, identityId, createdAt);
-        /*
-        ListProperty<GrantViewModel<?>> grantViewModels = grantMapViewModel.grantsProperty();
-        for(GrantViewModel<?> grantViewModel : grantViewModels) {
-            Grant<?> grant = grantViewModel.getGrant();
-            account.getGrants().add(grant);
-        }
-        */
         return account;
     }
 
@@ -98,26 +94,29 @@ public class AccountViewModel {
     public ReadOnlyObjectProperty<UUID> idProperty() {
         return idProperty;
     }
+    public UUID getId() {
+        return idProperty().get();
+    }
 
     public ReadOnlyObjectProperty<UUID> platformIdProperty() {
         return platformIdProperty;
+    }
+    public UUID getPlatformId() {
+        return platformIdProperty().get();
     }
 
     public ReadOnlyObjectProperty<UUID> identityIdProperty() {
         return identityIdProperty;
     }
+    public UUID getIdentityId() {
+        return identityIdProperty().get();
+    }
 
     public ReadOnlyObjectProperty<LocalDateTime> createdAtProperty() {
         return createdAtProperty;
     }
-
-    public boolean delete() {
-        Account account = getAccount();
-        boolean deleted = accountsRepo.remove(account);
-        if(!deleted) {
-            logger.error("Failed to delete account %s", account.getId());
-        }
-        return deleted;
+    public LocalDateTime getCreatedAt() {
+        return createdAtProperty().get();
     }
 
 }

@@ -51,17 +51,17 @@ public class CrudPage<T extends Node> extends AnchorPane implements Initializabl
         }
     }
 
-    public void add(T pane) {
+    public boolean add(T pane) {
         CrudPane<T> crudPane = new CrudPane<>();
         crudPane.setGraphic(pane);
         crudPane.setOnSelectedAction(this::onPaneSelected);
         paneMapping.put(pane, crudPane);
-        flowPane.getChildren().add(crudPane);
+        return flowPane.getChildren().add(crudPane);
     }
 
-    public void remove(T pane) {
+    public boolean remove(T pane) {
         CrudPane<T> crudPane = paneMapping.get(pane);
-        flowPane.getChildren().remove(crudPane);
+        return flowPane.getChildren().remove(crudPane);
     }
 
     public ReadOnlyObjectProperty<CrudPane<T>> selectedPaneProperty() {
