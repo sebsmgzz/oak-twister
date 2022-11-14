@@ -75,7 +75,11 @@ public class AccountsViewModel {
             return false;
         }
         Account account = accountViewModel.getAccount();
-        return accountsRepo.remove(account);
+        boolean removed = accountsRepo.remove(account);
+        if(removed) {
+            accountsProperty().remove(accountViewModel);
+        }
+        return removed;
     }
 
     public boolean update() {

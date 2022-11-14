@@ -1,5 +1,7 @@
 package com.oaktwister.app.views.widgets.dialogs;
 
+import java.util.Objects;
+
 public final class DialogResult {
 
     public final static DialogResult CANCELED = new DialogResult("Cancel");
@@ -16,6 +18,14 @@ public final class DialogResult {
 
     public String getAction() {
         return action;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if(object instanceof DialogResult other) {
+            return Objects.equals(action, other.getAction());
+        }
+        return false;
     }
 
 }

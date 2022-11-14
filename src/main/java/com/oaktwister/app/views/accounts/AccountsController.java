@@ -70,9 +70,9 @@ public final class AccountsController extends Controller<CrudFrame> {
         Stage stage = ui.navigation().getDialogStage(alert);
         alert.showAndWait(stage);
         DialogResult result = alert.resultProperty().get();
-        System.out.println(result.getAction());
-        // TODO: Call delete account in view model
-        // viewModel.remove(alert.account());
+        if(result == DialogResult.YES) {
+            viewModel.remove();
+        }
     }
 
     private void editAccount(ActionEvent actionEvent) {
