@@ -45,13 +45,31 @@ public class ClaimViewModel {
     public StringProperty nameProperty() {
         return nameProperty;
     }
+    public String getName() {
+        return nameProperty().get();
+    }
+    public void setName(String value) {
+        nameProperty().set(value);
+    }
 
     public StringProperty grantTypeNameProperty() {
         return grantTypeNameProperty;
     }
+    public String getGrantTypeName() {
+        return grantTypeNameProperty().get();
+    }
+    public void setGrantTypeName(String value) {
+        grantTypeNameProperty().set(value);
+    }
 
     public BooleanProperty isOptionalProperty() {
         return isOptionalProperty;
+    }
+    public Boolean getIsOptional() {
+        return isOptionalProperty().get();
+    }
+    public void setIsOptional(Boolean value) {
+        isOptionalProperty().set(value);
     }
 
 }

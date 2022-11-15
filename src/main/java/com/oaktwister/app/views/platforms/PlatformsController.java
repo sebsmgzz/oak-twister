@@ -1,6 +1,7 @@
 package com.oaktwister.app.views.platforms;
 
 import com.oaktwister.app.core.UIContext;
+import com.oaktwister.app.services.parsers.GrantTypeParser;
 import com.oaktwister.app.utils.listeners.ListItemAddedListener;
 import com.oaktwister.app.utils.listeners.ListItemRemovedListener;
 import com.oaktwister.app.viewmodels.models.PlatformViewModel;
@@ -11,9 +12,14 @@ import com.oaktwister.app.views.widgets.dialogs.AlertType;
 import com.oaktwister.app.views.widgets.dialogs.DialogResult;
 import com.oaktwister.app.views.widgets.crud.CrudFrame;
 import com.oaktwister.app.views.widgets.crud.CrudPage;
+import com.oaktwister.domain.models.grants.Grant;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 public final class PlatformsController extends Controller<CrudFrame> {
 
@@ -58,9 +64,11 @@ public final class PlatformsController extends Controller<CrudFrame> {
     }
 
     private void onAddPlatform(ActionEvent actionEvent) {
+        PlatformViewModel platform = ui.viewModels().platform();
         EditPlatformDialog dialog = new EditPlatformDialog();
-        PlatformViewModel platformViewModel = ui.viewModels().platform();
-        dialog.platformProperty().set(platformViewModel);
+        dialog.setPlatform(platform);
+        dialog.setClaimFactory(() -> ui.viewModels().claim());
+        dialog.setGrantTypesFactory(this::getGrantTypes);
         Stage stage = ui.navigation().getDialogStage(dialog);
         dialog.showAndWait(stage);
         if(dialog.resultProperty().get() == DialogResult.SAVED) {
@@ -79,7 +87,9 @@ public final class PlatformsController extends Controller<CrudFrame> {
             alert.showAndWait(stage);
         } else {
             EditPlatformDialog dialog = new EditPlatformDialog();
-            dialog.platformProperty().set(platform);
+            dialog.setPlatform(platform);
+            dialog.setClaimFactory(() -> ui.viewModels().claim());
+            dialog.setGrantTypesFactory(this::getGrantTypes);
             Stage stage = ui.navigation().getDialogStage(dialog);
             dialog.showAndWait(stage);
             if(dialog.resultProperty().get() == DialogResult.SAVED) {
@@ -87,6 +97,11 @@ public final class PlatformsController extends Controller<CrudFrame> {
                 System.out.println("Updating platform to database");
             }
         }
+    }
+
+    private Collection<String> getGrantTypes() {
+        GrantTypeParser parser = ui.services().getGrantTypeParser();
+        return parser.getGrantTypes().stream().map(parser::getGrantTypeName).toList();
     }
 
     private void onRemovePlatform(ActionEvent actionEvent) {

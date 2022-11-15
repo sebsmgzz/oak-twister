@@ -21,6 +21,7 @@ public interface ViewResources {
         String URL = BASE_URL + "/login";
         String FAILED_ALERT = URL + "/LoginFailedAlert.fxml";
         String LAYOUT = URL + "/LoginLayout.fxml";
+        String DRIVES_COMBO_BOX = URL + "/DrivesComboBox.fxml";
     }
 
     interface Main {
@@ -32,7 +33,8 @@ public interface ViewResources {
         String URL = BASE_URL + "/platforms";
         String PANE = URL + "/PlatformPane.fxml";
         String EDIT_DIALOG = URL + "/EditPlatformDialog.fxml";
-        String PAGE = URL + "/PlatformsPage.fxml";
+        String CLAIMS_TABLE = URL + "/ClaimsTable.fxml";
+        String GRANT_TYPES_COMBO_BOX = URL + "/GrantTypesComboBox.fxml";
     }
 
     interface Widgets {

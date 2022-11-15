@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.ComboBox?>
+
+<fx:root xmlns="http://javafx.com/javafx"
+         xmlns:fx="http://javafx.com/fxml"
+         fx:controller="com.oaktwister.app.views.login.DrivesComboBox"
+         type="javafx.scene.layout.AnchorPane">
+    <ComboBox fx:id="comboBox"
+              AnchorPane.topAnchor="0" AnchorPane.rightAnchor="0"
+              AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" />
+</fx:root>

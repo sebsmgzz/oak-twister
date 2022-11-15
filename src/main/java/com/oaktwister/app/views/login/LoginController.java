@@ -3,6 +3,9 @@ package com.oaktwister.app.views.login;
 import com.oaktwister.app.core.UIContext;
 import com.oaktwister.app.services.resources.ImageResources;
 import com.oaktwister.app.services.resources.StringResources;
+import com.oaktwister.app.utils.listeners.ListItemAddedListener;
+import com.oaktwister.app.utils.listeners.ListItemRemovedListener;
+import com.oaktwister.app.viewmodels.models.DriveViewModel;
 import com.oaktwister.app.viewmodels.views.LoginViewModel;
 import com.oaktwister.app.views.Controller;
 import com.oaktwister.app.views.widgets.dialogs.DialogResult;
@@ -18,10 +21,15 @@ public final class LoginController extends Controller<LoginLayout> {
 
     private final LoginLayout layout;
 
+    private final ListItemAddedListener<DriveViewModel> driveAddedListener;
+    private final ListItemRemovedListener<DriveViewModel> driveRemovedListener;
+
     public LoginController(UIContext ui) {
         this.ui = ui;
         viewModel = ui.viewModels().login();
         layout = new LoginLayout();
+        driveAddedListener = new ListItemAddedListener<>(this::onDriveAdded);
+        driveRemovedListener = new ListItemRemovedListener<>(this::onDriveRemoved);
     }
 
     @Override
@@ -32,15 +40,10 @@ public final class LoginController extends Controller<LoginLayout> {
         layout.onNewDriveLinkActionProperty().set(this::onNewDriveClick);
 
         // Configure combo box
-        layout.driveButtonCellProperty().set(new LoginDriveCell());
-        layout.driveCellFactoryProperty().set(listView -> new LoginDriveCell());
-        layout.drivesProperty().bind(viewModel.drivesProperty());
-        layout.driveProperty().addListener((observable, oldValue, newValue) -> {
-            viewModel.selectedDriveProperty().set(newValue);
-        });
-        layout.onShowingDrivesProperty().set(event -> {
-            viewModel.loadDrives();
-        });
+        viewModel.drivesProperty().addListener(driveAddedListener);
+        viewModel.drivesProperty().addListener(driveRemovedListener);
+        viewModel.selectedDriveProperty().bind(layout.drives().selectedDriveProperty());
+        layout.drives().setOnShowing(event -> viewModel.loadDrives());
 
         // Set hyperlink's actions
         layout.onWebsiteLinkActionProperty().set(event -> viewModel.browse(StringResources.Url.WEBSITE));
@@ -57,6 +60,14 @@ public final class LoginController extends Controller<LoginLayout> {
     public void configStage(Stage stage) {
         stage.getIcons().add(new Image(ImageResources.Vikings.OAK));
         stage.setTitle(StringResources.App.TITLE);
+    }
+
+    private void onDriveAdded(DriveViewModel drive) {
+        layout.drives().addDrive(drive);
+    }
+
+    private void onDriveRemoved(DriveViewModel drive) {
+        layout.drives().removeDrive(drive);
     }
 
     private void onNewDriveClick(ActionEvent actionEvent) {

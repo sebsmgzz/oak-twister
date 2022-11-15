@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+
+<fx:root xmlns="http://javafx.com/javafx"
+         xmlns:fx="http://javafx.com/fxml"
+         type="javafx.scene.layout.AnchorPane"
+         fx:controller="com.oaktwister.app.views.platforms.ClaimsTable">
+    <TableView fx:id="tableView" editable="true"
+               AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0"
+               AnchorPane.bottomAnchor="0" AnchorPane.rightAnchor="0">
+        <columns>
+            <TableColumn fx:id="nameColumn" minWidth="100.0" text="Name"/>
+            <TableColumn fx:id="grantTypeColumn" minWidth="100.0" text="Grant type"/>
+            <TableColumn fx:id="optionalColumn" minWidth="100.0" text="Optional"/>
+        </columns>
+    </TableView>
+</fx:root>

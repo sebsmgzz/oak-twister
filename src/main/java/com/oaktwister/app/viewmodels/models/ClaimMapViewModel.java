@@ -10,6 +10,7 @@ import javafx.beans.property.ListProperty;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.util.Collection;
 
@@ -50,6 +51,24 @@ public class ClaimMapViewModel {
 
     public ListProperty<ClaimViewModel> claimsProperty() {
         return claimsProperty;
+    }
+    public ObservableList<ClaimViewModel> getClaims() {
+        return claimsProperty().get();
+    }
+    public boolean addClaim(ClaimViewModel claim) {
+        return getClaims().add(claim);
+    }
+    public boolean addClaims(ClaimViewModel... claims) {
+        return getClaims().addAll(claims);
+    }
+    public boolean removeClaim(ClaimViewModel claim) {
+        return getClaims().remove(claim);
+    }
+    public boolean removeClaims(ClaimViewModel... claims) {
+        return getClaims().removeAll(claims);
+    }
+    public void clearClaims() {
+        getClaims().clear();
     }
 
     public ReadOnlyIntegerProperty sizeProperty() {

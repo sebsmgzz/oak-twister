@@ -1,18 +1,17 @@
-package com.oaktwister.app.views.login;
+package com.oaktwister.app.views.platforms;
 
 import com.oaktwister.app.viewmodels.models.DriveViewModel;
 import javafx.scene.control.ListCell;
 
-public class LoginDriveCell extends ListCell<DriveViewModel> {
+public class GrantTypesComboBoxCell extends ListCell<String> {
 
     @Override
-    protected void updateItem(DriveViewModel item, boolean empty) {
+    protected void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
         if (item == null || empty) {
             super.setText(null);
         } else {
-            String path = item.pathProperty().get();
-            super.setText(path);
+            super.setText(item);
         }
     }
 

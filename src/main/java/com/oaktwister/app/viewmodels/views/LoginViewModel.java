@@ -6,7 +6,6 @@ import com.oaktwister.domain.models.drives.DriveMeta;
 import com.oaktwister.app.services.configs.SessionSettings;
 import com.oaktwister.app.services.drives.DriveLoader;
 import com.oaktwister.app.viewmodels.models.DriveViewModel;
-
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyListProperty;
 import javafx.beans.property.ReadOnlyStringProperty;
@@ -15,7 +14,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
-
+import javafx.collections.ObservableList;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -47,26 +46,6 @@ public class LoginViewModel {
         loginErrorMessageProperty = new SimpleStringProperty();
     }
 
-    public StringProperty usernameProperty() {
-        return usernameProperty;
-    }
-
-    public StringProperty passwordProperty() {
-        return passwordProperty;
-    }
-
-    public ReadOnlyListProperty<DriveViewModel> drivesProperty() {
-        return drivesProperty;
-    }
-
-    public ObjectProperty<DriveViewModel> selectedDriveProperty() {
-        return selectedDriveProperty;
-    }
-
-    public ReadOnlyStringProperty loginErrorMessageProperty() {
-        return loginErrorMessageProperty;
-    }
-
     public void loadDrives() {
         drivesProperty.clear();
         List<Drive> drives = driveLoader.listAllDrives();
@@ -82,7 +61,7 @@ public class LoginViewModel {
         DriveViewModel driveViewModel = selectedDriveProperty.get();
         if(driveViewModel == null) {
             loginErrorMessageProperty.set("No drive has been selected. " +
-                "Please select an oak capable drive before logging in");
+                    "Please select an oak capable drive before logging in");
             return false;
         }
         Drive drive = driveViewModel.getDrive();
@@ -106,6 +85,65 @@ public class LoginViewModel {
         } catch (URISyntaxException | IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public StringProperty usernameProperty() {
+        return usernameProperty;
+    }
+    public String getUsername() {
+        return usernameProperty().get();
+    }
+    public void setUsername(String value) {
+        usernameProperty().set(value);
+    }
+
+    public StringProperty passwordProperty() {
+        return passwordProperty;
+    }
+    public String getPassword() {
+        return passwordProperty().get();
+    }
+    public void setPassword(String value) {
+        passwordProperty().set(value);
+    }
+
+    public ReadOnlyListProperty<DriveViewModel> drivesProperty() {
+        return drivesProperty;
+    }
+    public ObservableList<DriveViewModel> getDrives() {
+        return drivesProperty().get();
+    }
+    public boolean addDrive(DriveViewModel drive) {
+        return getDrives().add(drive);
+    }
+    public boolean addDrives(DriveViewModel... drives) {
+        return getDrives().addAll(drives);
+    }
+    public boolean removeDrive(DriveViewModel drive) {
+        return getDrives().remove(drive);
+    }
+    public boolean removeDrives(DriveViewModel... drives) {
+        return getDrives().remove(drives);
+    }
+    public void clear() {
+        getDrives().clear();
+    }
+
+    public ObjectProperty<DriveViewModel> selectedDriveProperty() {
+        return selectedDriveProperty;
+    }
+    public DriveViewModel getSelectedDrive() {
+        return selectedDriveProperty().get();
+    }
+    public void setSelectedDrive(DriveViewModel value) {
+        selectedDriveProperty().set(value);
+    }
+
+    public ReadOnlyStringProperty loginErrorMessageProperty() {
+        return loginErrorMessageProperty;
+    }
+    public String getLoginErrorMessage() {
+        return loginErrorMessageProperty().get();
     }
 
 }

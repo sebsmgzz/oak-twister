@@ -12,11 +12,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.image.Image?>
 <?import com.oaktwister.app.views.widgets.dialogs.DialogFrame?>
+<?import com.oaktwister.app.views.platforms.ClaimsTable?>
+<?import javafx.scene.layout.HBox?>
 
+<?import javafx.scene.control.RadioButton?>
+<?import com.oaktwister.app.views.platforms.GrantTypesComboBox?>
 <fx:root xmlns="http://javafx.com/javafx/8"
          xmlns:fx="http://javafx.com/fxml/1"
          type="javafx.scene.layout.AnchorPane"
@@ -29,81 +31,127 @@
             <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
 
                 <Tab text="Overview">
-                    <AnchorPane prefHeight="180.0" prefWidth="200.0">
-                        <GridPane AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                                  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+                    <GridPane AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
 
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="NEVER"/>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints vgrow="NEVER"/>
-                                <RowConstraints vgrow="NEVER"/>
-                                <RowConstraints vgrow="ALWAYS"/>
-                            </rowConstraints>
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="NEVER"/>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints vgrow="NEVER"/>
+                            <RowConstraints vgrow="NEVER"/>
+                            <RowConstraints vgrow="ALWAYS"/>
+                        </rowConstraints>
 
-                            <Label alignment="CENTER_RIGHT" maxWidth="Infinity" text="Name"
+                        <Label alignment="CENTER_RIGHT" maxWidth="Infinity" text="Name:"
+                               GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                            <GridPane.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                            </GridPane.margin>
+                        </Label>
+
+                        <Label text="URL:" alignment="CENTER_RIGHT" maxWidth="Infinity"
+                               GridPane.halignment="CENTER" GridPane.valignment="CENTER"
+                               GridPane.rowIndex="1">
+                            <GridPane.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                            </GridPane.margin>
+                        </Label>
+
+                        <TextField fx:id="platformNameTextField" GridPane.columnIndex="1"
                                    GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                <GridPane.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-                                </GridPane.margin>
-                            </Label>
+                            <GridPane.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                            </GridPane.margin>
+                        </TextField>
 
-                            <Label text="URL" alignment="CENTER_RIGHT" maxWidth="Infinity"
-                                   GridPane.halignment="CENTER" GridPane.valignment="CENTER"
-                                   GridPane.rowIndex="1">
-                                <GridPane.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-                                </GridPane.margin>
-                            </Label>
+                        <TextField fx:id="platformUrlTextField"
+                                   GridPane.rowIndex="1" GridPane.columnIndex="1"
+                                   GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                            <GridPane.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                            </GridPane.margin>
+                        </TextField>
 
-                            <TextField fx:id="nameTextField" GridPane.columnIndex="1"
-                                       GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                <GridPane.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-                                </GridPane.margin>
-                            </TextField>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0"
+                              GridPane.rowIndex="2" GridPane.columnSpan="2"
+                              GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS"
+                              GridPane.valignment="CENTER" GridPane.halignment="CENTER">
+                            <GridPane.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                            </GridPane.margin>
+                            <ImageView fx:id="platformImageView" fitWidth="200.0" pickOnBounds="true"
+                                       preserveRatio="true" VBox.vgrow="ALWAYS">
+                                <Image url="/com/oaktwister/app/images/placeholders/image.png"/>
+                            </ImageView>
+                            <Button text="Browse" minWidth="100.0"
+                                    mnemonicParsing="false" VBox.vgrow="NEVER"/>
+                        </VBox>
 
-                            <TextField fx:id="urlTextField"
-                                       GridPane.rowIndex="1" GridPane.columnIndex="1"
-                                       GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                <GridPane.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-                                </GridPane.margin>
-                            </TextField>
-
-                            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0"
-                                  GridPane.rowIndex="2" GridPane.columnSpan="2"
-                                  GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS"
-                                  GridPane.valignment="CENTER" GridPane.halignment="CENTER">
-                                <GridPane.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-                                </GridPane.margin>
-                                <ImageView fx:id="imageView" fitWidth="200.0" pickOnBounds="true"
-                                           preserveRatio="true" VBox.vgrow="ALWAYS">
-                                    <Image url="/com/oaktwister/app/images/placeholders/image.png"/>
-                                </ImageView>
-                                <Button text="Browse" minWidth="100.0"
-                                        mnemonicParsing="false" VBox.vgrow="NEVER"/>
-                            </VBox>
-
-                        </GridPane>
-                    </AnchorPane>
+                    </GridPane>
                 </Tab>
 
                 <Tab text="Claims">
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                        <TableView fx:id="claimsTableView" editable="true" layoutX="27.0" layoutY="89.0"
-                                   AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
-                            <columns>
-                                <TableColumn fx:id="nameColumn" minWidth="100.0" text="Name"/>
-                                <TableColumn fx:id="grantTypeColumn" minWidth="100.0" text="Grant type"/>
-                                <TableColumn fx:id="optionalColumn" minWidth="100.0" text="Optional"/>
-                            </columns>
-                        </TableView>
-                    </AnchorPane>
+                    <GridPane>
+
+                        <padding>
+                            <Insets left="10.0" right="10.0" top="10.0"/>
+                        </padding>
+
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="ALWAYS" minWidth="100" />
+                            <ColumnConstraints hgrow="SOMETIMES" />
+                        </columnConstraints>
+
+                        <rowConstraints>
+                            <RowConstraints vgrow="NEVER" />
+                            <RowConstraints vgrow="NEVER" />
+                            <RowConstraints vgrow="NEVER" />
+                            <RowConstraints vgrow="ALWAYS" />
+                        </rowConstraints>
+
+                        <HBox spacing="10" alignment="CENTER_LEFT"
+                              GridPane.rowIndex="0" GridPane.columnIndex="0">
+                            <padding>
+                                <Insets left="5.0" right="5.0" top="5.0" bottom="5"/>
+                            </padding>
+                            <Label text="Name:" HBox.hgrow="SOMETIMES" />
+                            <TextField fx:id="claimNameTextField" HBox.hgrow="ALWAYS" />
+                        </HBox>
+
+                        <HBox spacing="10" alignment="CENTER_LEFT"
+                              GridPane.rowIndex="1" GridPane.columnIndex="0">
+                            <padding>
+                                <Insets left="5.0" right="5.0" top="5.0" bottom="5"/>
+                            </padding>
+                            <Label text="Grant type:" HBox.hgrow="SOMETIMES" />
+                            <GrantTypesComboBox fx:id="claimGrantTypeComboBox" HBox.hgrow="ALWAYS"/>
+                        </HBox>
+
+                        <HBox spacing="10" alignment="CENTER_LEFT"
+                              GridPane.rowIndex="2" GridPane.columnIndex="0">
+                            <padding>
+                                <Insets left="5.0" right="5.0" top="5.0" bottom="5"/>
+                            </padding>
+                            <Label text="Is optional:" />
+                            <RadioButton fx:id="claimOptionalRadioButton" HBox.hgrow="ALWAYS"/>
+                        </HBox>
+
+                        <VBox spacing="10" HBox.hgrow="NEVER"
+                              GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.rowSpan="3">
+                            <padding>
+                                <Insets left="5.0" right="5.0" top="5.0" bottom="5"/>
+                            </padding>
+                            <Button fx:id="addClaimButton" text="Add" minWidth="100"/>
+                            <Button fx:id="updateClaimButton" text="Update" minWidth="100"/>
+                            <Button fx:id="removeClaimButton" text="Remove" minWidth="100"/>
+                        </VBox>
+
+                        <ClaimsTable fx:id="claimsTable"
+                                     GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+
+                    </GridPane>
                 </Tab>
 
             </TabPane>

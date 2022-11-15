@@ -11,20 +11,22 @@ import com.oaktwister.app.views.widgets.dialogs.DialogFrame;
 import com.oaktwister.app.views.widgets.dialogs.DialogResult;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
+import java.lang.reflect.Array;
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.concurrent.Callable;
 
 @ViewDescriptor(location = ViewResources.Platforms.EDIT_DIALOG)
 public class EditPlatformDialog extends AnchorPane implements Initializable {
@@ -32,45 +34,83 @@ public class EditPlatformDialog extends AnchorPane implements Initializable {
     private final static String TITLE = "Edit platform";
 
     @FXML private DialogFrame dialogFrame;
-    @FXML private TextField nameTextField;
-    @FXML private TextField urlTextField;
-    @FXML private ImageView imageView;
-    @FXML private TableView<ClaimViewModel> claimsTableView;
-    @FXML private TableColumn<ClaimViewModel, String> nameColumn;
-    @FXML private TableColumn<ClaimViewModel, String> grantTypeColumn;
-    @FXML private TableColumn<ClaimViewModel, Boolean> optionalColumn;
+
+    // Overview tab
+    @FXML private TextField platformNameTextField;
+    @FXML private TextField platformUrlTextField;
+    @FXML private ImageView platformImageView;
+
+    // Claims tab
+    @FXML private TextField claimNameTextField;
+    @FXML private GrantTypesComboBox claimGrantTypeComboBox;
+    @FXML private RadioButton claimOptionalRadioButton;
+    @FXML private Button addClaimButton;
+    @FXML private Button updateClaimButton;
+    @FXML private Button removeClaimButton;
+    @FXML private ClaimsTable claimsTable;
 
     private final SimpleObjectProperty<PlatformViewModel> platformProperty;
-    private final SimpleObjectProperty<DialogResult> resultProperty;
-    private final SimpleObjectProperty<Stage> stageProperty;
+    private final SimpleObjectProperty<Callable<ClaimViewModel>> claimFactoryProperty;
+    private final SimpleObjectProperty<Callable<Collection<String>>> grantTypesFactoryProperty;
 
     public EditPlatformDialog() {
         platformProperty = new SimpleObjectProperty<>();
-        resultProperty = new SimpleObjectProperty<>();
-        stageProperty = new SimpleObjectProperty<>();
+        claimFactoryProperty = new SimpleObjectProperty<>();
+        grantTypesFactoryProperty = new SimpleObjectProperty<>();
         FXMLUtil.loadControl(this);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        nameColumn.setCellValueFactory(cell -> cell.getValue().nameProperty());
-        grantTypeColumn.setCellValueFactory(cell -> cell.getValue().grantTypeNameProperty());
-        optionalColumn.setCellValueFactory(cell -> cell.getValue().isOptionalProperty());
-        platformProperty.addListener((observable, oldValue, newValue) -> {
-            nameTextField.textProperty().bindBidirectional(newValue.nameProperty());
-            urlTextField.textProperty().bindBidirectional(newValue.urlProperty());
-            imageView.imageProperty().bindBidirectional(newValue.imageProperty());
-            claimsTableView.itemsProperty().bind(newValue.claimMap().claimsProperty());
-        });
         dialogFrame.setTitle(TITLE);
         dialogFrame.setIcon(new Image(ImageResources.FontAwesome.LAYER_GROUP_SOLID));
         dialogFrame.addButtons(
                 DialogButton.fromResult(DialogResult.SAVED),
                 DialogButton.fromResult(DialogResult.CANCELED));
+        platformProperty.addListener((observable, oldValue, newValue) -> {
+            platformNameTextField.textProperty().bindBidirectional(newValue.nameProperty());
+            platformUrlTextField.textProperty().bindBidirectional(newValue.urlProperty());
+            platformImageView.imageProperty().bindBidirectional(newValue.imageProperty());
+            claimsTable.claimsProperty().bind(newValue.claimMap().claimsProperty());
+        });
+        claimGrantTypeComboBox.setOnShowing(event -> {
+            try {
+                Callable<Collection<String>> grantsFactory = grantTypesFactoryProperty.get();
+                Collection<String> grants = grantsFactory.call();
+                claimGrantTypeComboBox.clearGrantTypes();
+                claimGrantTypeComboBox.addGrantTypes(grants.toArray(new String[0]));
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        addClaimButton.setOnAction(this::onAddClaim);
+        updateClaimButton.setOnAction(this::onUpdateClaim);
+        removeClaimButton.setOnAction(this::onRemoveClaim);
     }
 
     public void showAndWait(Stage stage) {
+        stage.getIcons().add(new Image(ImageResources.FontAwesome.LAYER_GROUP_SOLID));
         dialogFrame.showAndWait(stage);
+    }
+
+    private void onAddClaim(ActionEvent actionEvent) {
+        try {
+            PlatformViewModel platform = getPlatform();
+            ClaimViewModel claim = getClaimFactory().call();
+            claim.setName(claimNameTextField.getText());
+            claim.setGrantTypeName(claimGrantTypeComboBox.getSelectedGrantType());
+            claim.setIsOptional(claimOptionalRadioButton.isSelected());
+            platform.claimMap().addClaim(claim);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    private void onUpdateClaim(ActionEvent actionEvent) {
+
+    }
+
+    private void onRemoveClaim(ActionEvent actionEvent) {
     }
 
     public ReadOnlyObjectProperty<DialogResult> resultProperty() {
@@ -90,47 +130,24 @@ public class EditPlatformDialog extends AnchorPane implements Initializable {
         platformProperty().set(value);
     }
 
-    public ReadOnlyStringProperty nameProperty() {
-        return nameTextField.textProperty();
+    public ObjectProperty<Callable<ClaimViewModel>> claimFactoryProperty() {
+        return claimFactoryProperty;
     }
-    public String getName() {
-        return nameProperty().get();
+    public Callable<ClaimViewModel> getClaimFactory() {
+        return claimFactoryProperty().get();
     }
-
-    public ReadOnlyStringProperty urlProperty() {
-        return urlTextField.textProperty();
-    }
-    public String getUrl() {
-        return urlProperty().get();
+    public void setClaimFactory(Callable<ClaimViewModel> value) {
+        claimFactoryProperty().set(value);
     }
 
-    public ReadOnlyObjectProperty<Image> imageProperty() {
-        return imageView.imageProperty();
+    public ObjectProperty<Callable<Collection<String>>> grantTypesFactoryProperty() {
+        return grantTypesFactoryProperty;
     }
-    public Image getImage() {
-        return imageProperty().get();
+    public Callable<Collection<String>> getGrantTypesFactory() {
+        return grantTypesFactoryProperty().get();
     }
-
-    public ReadOnlyObjectProperty<ObservableList<ClaimViewModel>> claimsProperty() {
-        return claimsTableView.itemsProperty();
-    }
-    public ObservableList<ClaimViewModel> getClaims() {
-        return claimsProperty().get();
-    }
-    public boolean addClaim(ClaimViewModel claim) {
-        return getClaims().add(claim);
-    }
-    public boolean addClaims(ClaimViewModel... claims) {
-        return getClaims().addAll(claims);
-    }
-    public boolean removeClaim(ClaimViewModel claim) {
-        return getClaims().remove(claim);
-    }
-    public boolean removeClaims(ClaimViewModel... claims) {
-        return getClaims().addAll(claims);
-    }
-    public void clearClaims() {
-        getClaims().clear();
+    public void setGrantTypesFactory(Callable<Collection<String>> value) {
+        grantTypesFactoryProperty().set(value);
     }
 
 }
