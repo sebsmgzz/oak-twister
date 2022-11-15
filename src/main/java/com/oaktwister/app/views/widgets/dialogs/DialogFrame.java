@@ -31,6 +31,7 @@ import java.util.ResourceBundle;
 @ViewDescriptor(location = ViewResources.Widgets.Dialogs.DIALOG_FRAME)
 public class DialogFrame extends AnchorPane implements Initializable, DialogControl {
 
+    @FXML private HBox headerHBox;
     @FXML private ImageView iconImageView;
     @FXML private Label titleLabel;
     @FXML private AnchorPane contentAnchorPane;

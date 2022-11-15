@@ -20,6 +20,7 @@ public final class PlatformsController extends Controller<CrudFrame> {
     private final static String DELETE_CONFIRMATION_MESSAGE =
             "Are you sure you want to delete %s platform? \n" +
             "This action will delete all related accounts as well and cannot be undone.";
+    private final static String NO_PLATFORM_SELECTED_MESSAGE = "Please select a platform before continuing.";
 
     private final UIContext ui;
     private final PlatformsViewModel viewModel;
@@ -61,7 +62,7 @@ public final class PlatformsController extends Controller<CrudFrame> {
         PlatformViewModel platformViewModel = ui.viewModels().platform();
         dialog.platformProperty().set(platformViewModel);
         Stage stage = ui.navigation().getDialogStage(dialog);
-        dialog.stageProperty().set(stage);
+        dialog.showAndWait(stage);
         if(dialog.resultProperty().get() == DialogResult.SAVED) {
             // TODO: Save to database
             System.out.println("Saving platform to database");
@@ -69,19 +70,22 @@ public final class PlatformsController extends Controller<CrudFrame> {
     }
 
     private void onEditPlatform(ActionEvent actionEvent) {
-        // TODO
         PlatformViewModel platform = viewModel.getSelectedPlatform();
         if(platform == null) {
-            // TODO: Throw exception? This should never happen
-            return;
-        }
-        EditPlatformDialog dialog = new EditPlatformDialog();
-        dialog.platformProperty().set(platform);
-        Stage stage = ui.navigation().getDialogStage(dialog);
-        dialog.showAndWait(stage);
-        if(dialog.resultProperty().get() == DialogResult.SAVED) {
-            // TODO: Save to database
-            System.out.println("Updating platform to database");
+            Alert alert = new Alert();
+            alert.setAlertType(AlertType.INFO);
+            alert.setMessage(NO_PLATFORM_SELECTED_MESSAGE);
+            Stage stage = ui.navigation().getDialogStage(alert);
+            alert.showAndWait(stage);
+        } else {
+            EditPlatformDialog dialog = new EditPlatformDialog();
+            dialog.platformProperty().set(platform);
+            Stage stage = ui.navigation().getDialogStage(dialog);
+            dialog.showAndWait(stage);
+            if(dialog.resultProperty().get() == DialogResult.SAVED) {
+                // TODO: Save to database
+                System.out.println("Updating platform to database");
+            }
         }
     }
 
