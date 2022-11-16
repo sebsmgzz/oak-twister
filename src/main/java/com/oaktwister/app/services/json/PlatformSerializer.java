@@ -1,6 +1,6 @@
 package com.oaktwister.app.services.json;
 
-import com.oaktwister.domain.models.Platform;
+import com.oaktwister.domain.models.platforms.Platform;
 import com.oaktwister.app.exceptions.UnknownGrantTypeException;
 import com.oaktwister.domain.models.claims.ClaimMap;
 import com.oaktwister.app.services.logging.Logger;

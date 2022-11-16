@@ -2,7 +2,7 @@ package com.oaktwister.app.viewmodels.models;
 
 import com.oaktwister.app.core.ViewModelFactory;
 import com.oaktwister.app.exceptions.UnknownGrantTypeException;
-import com.oaktwister.domain.models.Platform;
+import com.oaktwister.domain.models.platforms.Platform;
 import com.oaktwister.domain.models.claims.Claim;
 import com.oaktwister.domain.models.claims.ClaimMap;
 import com.oaktwister.app.services.logging.Logger;

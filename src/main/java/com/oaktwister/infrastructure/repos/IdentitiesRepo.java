@@ -1,7 +1,7 @@
 package com.oaktwister.infrastructure.repos;
 
-import com.oaktwister.domain.models.Account;
-import com.oaktwister.domain.models.Identity;
+import com.oaktwister.domain.models.accounts.Account;
+import com.oaktwister.domain.models.identities.Identity;
 import com.oaktwister.app.services.configs.SessionSettings;
 import com.oaktwister.app.services.json.IdentitySerializer;
 import com.oaktwister.app.services.logging.Logger;

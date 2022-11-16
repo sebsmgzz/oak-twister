@@ -1,7 +1,7 @@
 package com.oaktwister.app.viewmodels.models;
 
 import com.oaktwister.app.core.ViewModelFactory;
-import com.oaktwister.domain.models.Identity;
+import com.oaktwister.domain.models.identities.Identity;
 import com.oaktwister.domain.models.grants.GrantMap;
 import com.oaktwister.app.services.logging.Logger;
 import com.oaktwister.infrastructure.repos.IdentitiesRepo;

@@ -1,12 +1,13 @@
-package com.oaktwister.domain.models;
+package com.oaktwister.domain.models.platforms;
 
 import com.oaktwister.domain.models.claims.ClaimMap;
+import com.oaktwister.domain.seedwork.Aggregate;
 import com.oaktwister.domain.seedwork.Entity;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Platform extends Entity {
+public class Platform extends Entity implements Aggregate {
 
     private String name;
     private UUID imageId;
@@ -65,11 +66,6 @@ public class Platform extends Entity {
 
     public void setClaims(ClaimMap claims) {
         this.claims = claims;
-    }
-
-    @Override
-    public String toString() {
-        return "Platform (" + getId() + ", " + name + ", " + url + ")";
     }
 
 }

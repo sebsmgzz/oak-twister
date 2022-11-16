@@ -1,7 +1,7 @@
 package com.oaktwister.app.viewmodels.views;
 
 import com.oaktwister.app.core.ViewModelFactory;
-import com.oaktwister.domain.models.Platform;
+import com.oaktwister.domain.models.platforms.Platform;
 import com.oaktwister.app.services.logging.Logger;
 import com.oaktwister.infrastructure.repos.PlatformsRepo;
 import com.oaktwister.app.viewmodels.models.PlatformViewModel;

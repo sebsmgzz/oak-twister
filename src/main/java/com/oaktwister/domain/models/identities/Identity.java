@@ -1,12 +1,13 @@
-package com.oaktwister.domain.models;
+package com.oaktwister.domain.models.identities;
 
 import com.oaktwister.domain.models.grants.GrantMap;
+import com.oaktwister.domain.seedwork.Aggregate;
 import com.oaktwister.domain.seedwork.Entity;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Identity extends Entity {
+public class Identity extends Entity implements Aggregate {
 
     private LocalDateTime createdAt;
     private GrantMap grants;

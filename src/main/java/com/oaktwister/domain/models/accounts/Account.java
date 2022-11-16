@@ -1,12 +1,13 @@
-package com.oaktwister.domain.models;
+package com.oaktwister.domain.models.accounts;
 
 import com.oaktwister.domain.models.grants.GrantMap;
+import com.oaktwister.domain.seedwork.Aggregate;
 import com.oaktwister.domain.seedwork.Entity;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Account extends Entity {
+public class Account extends Entity implements Aggregate {
 
     private UUID platformId;
     private UUID identityId;
