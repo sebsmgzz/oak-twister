@@ -86,9 +86,8 @@ public class ServiceFactory {
         if(scoped.containsKey(GrantSerializer.class)) {
             return (GrantSerializer) scoped.get(GrantSerializer.class);
         } else {
-            GrantTypeParser grantTypeParser = getGrantTypeParser();
             Logger logger = new Logger(GrantSerializer.class);
-            GrantSerializer service = new GrantSerializer(grantTypeParser, logger);
+            GrantSerializer service = new GrantSerializer(logger);
             scoped.put(GrantSerializer.class, service);
             return service;
         }
@@ -170,9 +169,8 @@ public class ServiceFactory {
         if(scoped.containsKey(ClaimSerializer.class)) {
             return (ClaimSerializer) scoped.get(ClaimSerializer.class);
         } else {
-            GrantTypeParser grantTypeParser = getGrantTypeParser();
             Logger logger = getLogger(ClaimSerializer.class);
-            ClaimSerializer service = new ClaimSerializer(grantTypeParser, logger);
+            ClaimSerializer service = new ClaimSerializer(logger);
             scoped.put(ClaimSerializer.class, service);
             return service;
         }

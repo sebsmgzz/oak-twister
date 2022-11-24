@@ -6,12 +6,12 @@
     "grants": [
         {
             "name": "Email",
-            "type": "TextGrant",
+            "type": "Text",
             "value": "someone.else@gmail.com"
         },
         {
             "name": "Password",
-            "type": "SecretGrant",
+            "type": "Secret",
             "value": {
                 "value": "123456",
                 "hint": "one...six"
@@ -19,7 +19,7 @@
         },
         {
             "name": "Username",
-            "type": "TextGrant",
+            "type": "Text",
             "value": "anonUser123"
         }
     ]

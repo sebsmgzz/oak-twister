@@ -5,22 +5,22 @@
     "grants": [
         {
             "name": "First name",
-            "type": "TextGrant",
+            "type": "Text",
             "value": "Jane"
         },
         {
             "name": "Last name",
-            "type": "TextGrant",
+            "type": "Text",
             "value": "Doe"
         },
         {
             "name": "Email",
-            "type": "TextGrant",
+            "type": "Text",
             "value": "jane.doe@outlook.com"
         },
         {
             "name": "Gender",
-            "type": "TextGrant",
+            "type": "Text",
             "value": "female"
         }
     ]

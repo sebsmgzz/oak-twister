@@ -6,7 +6,7 @@
     "grants": [
         {
             "name": "Password",
-            "type": "SecretGrant",
+            "type": "Secret",
             "value": {
                 "value": "rockyou",
                 "hint": "We will ___"
@@ -14,7 +14,7 @@
         },
         {
             "name": "Username",
-            "type": "TextGrant",
+            "type": "Text",
             "value": "john.smith"
         }
     ]

@@ -5,7 +5,6 @@ import com.oaktwister.app.services.resources.ViewResources;
 import com.oaktwister.app.utils.extensions.FXMLUtil;
 import com.oaktwister.app.viewmodels.models.ClaimViewModel;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,7 +20,7 @@ public class ClaimsTable extends AnchorPane implements Initializable {
 
     @FXML private TableView<ClaimViewModel> tableView;
     @FXML private TableColumn<ClaimViewModel, String> nameColumn;
-    @FXML private TableColumn<ClaimViewModel, String> grantTypeColumn;
+    @FXML private TableColumn<ClaimViewModel, String> metaGrantColumn;
     @FXML private TableColumn<ClaimViewModel, Boolean> optionalColumn;
 
     public ClaimsTable() {
@@ -31,7 +30,7 @@ public class ClaimsTable extends AnchorPane implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         nameColumn.setCellValueFactory(cell -> cell.getValue().nameProperty());
-        grantTypeColumn.setCellValueFactory(cell -> cell.getValue().grantTypeNameProperty());
+        metaGrantColumn.setCellValueFactory(cell -> cell.getValue().metaGrantNameProperty());
         optionalColumn.setCellValueFactory(cell -> cell.getValue().isOptionalProperty());
     }
 

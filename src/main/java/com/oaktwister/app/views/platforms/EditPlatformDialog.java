@@ -98,7 +98,7 @@ public class EditPlatformDialog extends AnchorPane implements Initializable {
             PlatformViewModel platform = getPlatform();
             ClaimViewModel claim = getClaimFactory().call();
             claim.setName(claimNameTextField.getText());
-            claim.setGrantTypeName(claimGrantTypeComboBox.getSelectedGrantType());
+            claim.setMetaGrantName(claimGrantTypeComboBox.getSelectedGrantType());
             claim.setIsOptional(claimOptionalRadioButton.isSelected());
             platform.claimMap().addClaim(claim);
         } catch (Exception ex) {

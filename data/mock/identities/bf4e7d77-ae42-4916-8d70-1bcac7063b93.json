@@ -5,17 +5,17 @@
     "grants": [
         {
             "name": "First name",
-            "type": "TextGrant",
+            "type": "Text",
             "value": "John"
         },
         {
             "name": "Last name",
-            "type": "TextGrant",
+            "type": "Text",
             "value": "Smith"
         },
         {
             "name": "Email",
-            "type": "TextGrant",
+            "type": "Text",
             "value": "john.smith@gmail.com"
         }
     ]

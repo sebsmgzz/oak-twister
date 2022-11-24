@@ -4,6 +4,7 @@ import com.oaktwister.app.core.ViewModelFactory;
 import com.oaktwister.app.exceptions.UnknownGrantTypeException;
 import com.oaktwister.domain.models.claims.Claim;
 import com.oaktwister.domain.models.claims.ClaimMap;
+import com.oaktwister.domain.models.claims.MetaGrant;
 import com.oaktwister.domain.models.grants.Grant;
 import com.oaktwister.app.services.parsers.GrantTypeParser;
 import javafx.beans.property.ListProperty;
@@ -17,13 +18,11 @@ import java.util.Collection;
 public class ClaimMapViewModel {
 
     private final ViewModelFactory viewModelFactory;
-    private final GrantTypeParser grantTypeParser;
 
     private final SimpleListProperty<ClaimViewModel> claimsProperty;
 
-    public ClaimMapViewModel(ViewModelFactory viewModelFactory, GrantTypeParser grantTypeParser) {
+    public ClaimMapViewModel(ViewModelFactory viewModelFactory) {
         this.viewModelFactory = viewModelFactory;
-        this.grantTypeParser = grantTypeParser;
         claimsProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
     }
 
@@ -36,14 +35,10 @@ public class ClaimMapViewModel {
         }
     }
 
-    public ClaimMap getClaimMap() throws UnknownGrantTypeException {
+    public ClaimMap getClaimMap() {
         ClaimMap claimMap = new ClaimMap();
         for(ClaimViewModel viewModel : claimsProperty.get()) {
-            String name = viewModel.nameProperty().get();
-            String grantTypeName = viewModel.grantTypeNameProperty().get();
-            Class<? extends Grant<?>> grantType = grantTypeParser.getGrantType(grantTypeName);
-            boolean isOptional = viewModel.isOptionalProperty().get();
-            Claim claim = new Claim(name, grantType, isOptional);
+            Claim claim = viewModel.getClaim();
             claimMap.add(claim);
         }
         return claimMap;

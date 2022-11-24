@@ -120,8 +120,7 @@ public class ViewModelFactory {
     }
 
     public ClaimMapViewModel claimMap() {
-        GrantTypeParser grantTypeParser = serviceFactory.getGrantTypeParser();
-        ClaimMapViewModel viewModel = new ClaimMapViewModel(this, grantTypeParser);
+        ClaimMapViewModel viewModel = new ClaimMapViewModel(this);
         serviceFactory.clearScope();
         return viewModel;
     }
@@ -133,8 +132,7 @@ public class ViewModelFactory {
     }
 
     public ClaimViewModel claim() {
-        GrantTypeParser grantTypeParser = serviceFactory.getGrantTypeParser();
-        ClaimViewModel claimViewModel = new ClaimViewModel(grantTypeParser);
+        ClaimViewModel claimViewModel = new ClaimViewModel();
         serviceFactory.clearScope();
         return claimViewModel;
     }

@@ -13,7 +13,7 @@
                AnchorPane.bottomAnchor="0" AnchorPane.rightAnchor="0">
         <columns>
             <TableColumn fx:id="nameColumn" minWidth="100.0" text="Name"/>
-            <TableColumn fx:id="grantTypeColumn" minWidth="100.0" text="Grant type"/>
+            <TableColumn fx:id="metaGrantColumn" minWidth="100.0" text="Grant type"/>
             <TableColumn fx:id="optionalColumn" minWidth="100.0" text="Optional"/>
         </columns>
     </TableView>

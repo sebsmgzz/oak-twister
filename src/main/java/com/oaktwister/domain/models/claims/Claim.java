@@ -1,16 +1,18 @@
 package com.oaktwister.domain.models.claims;
 
-import com.oaktwister.domain.models.grants.Grant;
+import com.oaktwister.domain.seedwork.ValueObject;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Claim {
+public class Claim extends ValueObject {
 
-    private String name;
-    private Class<? extends Grant<?>> grantType;
-    private boolean isOptional;
+    private final String name;
+    private final MetaGrant metaGrant;
+    private final boolean isOptional;
 
-    public Claim(String name, Class<? extends Grant<?>> grantType, boolean isOptional) {
+    public Claim(String name, MetaGrant metaGrant, boolean isOptional) {
         this.name = name;
-        this.grantType = grantType;
+        this.metaGrant = metaGrant;
         this.isOptional = isOptional;
     }
 
@@ -18,24 +20,21 @@ public class Claim {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Class<? extends Grant<?>> getGrantType() {
-        return grantType;
-    }
-
-    public void setGrantType(Class<? extends Grant<?>> grantType) {
-        this.grantType = grantType;
+    public MetaGrant getMetaGrant() {
+        return metaGrant;
     }
 
     public boolean getIsOptional() {
         return isOptional;
     }
 
-    public void setIsOptional(boolean isOptional) {
-        this.isOptional = isOptional;
+    @Override
+    protected List<Object> getComponents() {
+        ArrayList<Object> components = new ArrayList<>();
+        components.add(name);
+        components.add(metaGrant);
+        components.add(isOptional);
+        return components;
     }
 
 }

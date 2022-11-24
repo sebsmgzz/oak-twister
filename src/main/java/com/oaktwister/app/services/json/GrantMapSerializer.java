@@ -20,8 +20,7 @@ public class GrantMapSerializer implements JsonArraySerializer<GrantMap> {
     @Override
     public GrantMap deserialize(JSONArray grantMapJson) throws UnknownGrantTypeException {
         GrantMap grantMap = new GrantMap();
-        for(int i = 0; i < grantMapJson.length(); i++)
-        {
+        for(int i = 0; i < grantMapJson.length(); i++) {
             JSONObject grantJson = grantMapJson.getJSONObject(i);
             Grant<?> grant = grantSerializer.deserialize(grantJson);
             grantMap.add(grant);

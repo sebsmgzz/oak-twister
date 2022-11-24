@@ -1,6 +1,7 @@
 package com.oaktwister.app.services.json;
 
 import com.oaktwister.app.exceptions.UnknownGrantTypeException;
+import com.oaktwister.domain.models.claims.MetaGrant;
 import com.oaktwister.domain.models.grants.DateTimeGrant;
 import com.oaktwister.domain.models.grants.FlagGrant;
 import com.oaktwister.domain.models.grants.Grant;
@@ -18,27 +19,25 @@ public class GrantSerializer implements JsonObjectSerializer<Grant<?>> {
     private final static String TYPE_KEY = "type";
     private final static String VALUE_KEY = "value";
 
-    private final GrantTypeParser grantTypeParser;
     private final Logger logger;
 
-    public GrantSerializer(GrantTypeParser grantTypeParser, Logger logger) {
-        this.grantTypeParser = grantTypeParser;
+    public GrantSerializer(Logger logger) {
         this.logger = logger;
     }
 
     @Override
     public Grant<?> deserialize(JSONObject grantJson) throws UnknownGrantTypeException {
         String grantTypeName = grantJson.getString(TYPE_KEY);
-        Class<? extends Grant<?>> grantType = grantTypeParser.getGrantType(grantTypeName);
-        if(grantType == DateTimeGrant.class) {
+        MetaGrant metaGrant = MetaGrant.tryParse(grantTypeName);
+        if(metaGrant == MetaGrant.DATE_TIME_META) {
             return deserializeDateTimeGrant(grantJson);
-        } else if (grantType == FlagGrant.class) {
+        } else if (metaGrant == MetaGrant.FLAG_GRANT_META) {
             return deserializeFlagGrant(grantJson);
-        } else if (grantType == NumberGrant.class) {
+        } else if (metaGrant == MetaGrant.NUMBER_GRANT_META) {
             return deserializeNumberGrant(grantJson);
-        } else if (grantType == SecretGrant.class) {
+        } else if (metaGrant == MetaGrant.SECRET_GRANT_META) {
             return deserializeSecretGrant(grantJson);
-        } else if (grantType == TextGrant.class) {
+        } else if (metaGrant == MetaGrant.TEXT_GRANT_META) {
             return deserializeTextGrant(grantJson);
         } else {
             throw new UnknownGrantTypeException(grantTypeName);
@@ -58,8 +57,7 @@ public class GrantSerializer implements JsonObjectSerializer<Grant<?>> {
         } else if (grant instanceof TextGrant) {
             return serializeTextGrant((TextGrant) grant);
         } else {
-            String grantTypeName = grantTypeParser.getGrantTypeName(grant.getClass());
-            throw new UnknownGrantTypeException(grantTypeName);
+            throw new UnknownGrantTypeException(grant.getName());
         }
     }
 

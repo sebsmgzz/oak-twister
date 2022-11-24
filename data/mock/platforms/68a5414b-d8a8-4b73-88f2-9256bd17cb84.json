@@ -7,27 +7,27 @@
     "claims": [
         {
             "name": "First name",
-            "grantType": "TextGrant",
+            "grantName": "Text",
             "isOptional": false
         },
         {
             "name": "Last name",
-            "grantType": "TextGrant",
+            "grantName": "Text",
             "isOptional": false
         },
         {
             "name": "Email",
-            "grantType": "TextGrant",
+            "grantName": "Text",
             "isOptional": false
         },
         {
             "name": "Password",
-            "grantType": "SecretGrant",
+            "grantName": "Secret",
             "isOptional": false
         },
         {
             "name": "Birthday",
-            "grantType": "DateTimeGrant",
+            "grantName": "DateTime",
             "isOptional": false
         }
     ]

@@ -23,7 +23,7 @@
         },
         {
             "name": "Birthday",
-            "type": "DateTimeGrant"
+            "type": "DateTime"
         }
     ]
 }
