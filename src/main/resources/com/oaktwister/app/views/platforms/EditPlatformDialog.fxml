@@ -16,9 +16,9 @@
 <?import com.oaktwister.app.views.widgets.dialogs.DialogFrame?>
 <?import com.oaktwister.app.views.platforms.ClaimsTable?>
 <?import javafx.scene.layout.HBox?>
-
 <?import javafx.scene.control.RadioButton?>
 <?import com.oaktwister.app.views.platforms.MetaGrantNamesComboBox?>
+
 <fx:root xmlns="http://javafx.com/javafx/8"
          xmlns:fx="http://javafx.com/fxml/1"
          type="javafx.scene.layout.AnchorPane"
@@ -100,6 +100,7 @@
                         </padding>
 
                         <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" />
                             <ColumnConstraints hgrow="ALWAYS" minWidth="100" />
                             <ColumnConstraints hgrow="SOMETIMES" />
                         </columnConstraints>
@@ -111,35 +112,58 @@
                             <RowConstraints vgrow="ALWAYS" />
                         </rowConstraints>
 
-                        <HBox spacing="10" alignment="CENTER_LEFT"
-                              GridPane.rowIndex="0" GridPane.columnIndex="0">
-                            <padding>
-                                <Insets left="5.0" right="5.0" top="5.0" bottom="5"/>
-                            </padding>
-                            <Label text="Name:" HBox.hgrow="SOMETIMES" />
-                            <TextField fx:id="claimNameTextField" HBox.hgrow="ALWAYS" />
-                        </HBox>
+                        <Label text="Name:" alignment="CENTER_RIGHT"
+                               GridPane.rowIndex="0" GridPane.columnIndex="0"
+                               GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                            <GridPane.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                            </GridPane.margin>
+                        </Label>
 
-                        <HBox spacing="10" alignment="CENTER_LEFT"
-                              GridPane.rowIndex="1" GridPane.columnIndex="0">
-                            <padding>
-                                <Insets left="5.0" right="5.0" top="5.0" bottom="5"/>
-                            </padding>
-                            <Label text="Grant type:" HBox.hgrow="SOMETIMES" />
-                            <MetaGrantNamesComboBox fx:id="claimGrantTypeComboBox" HBox.hgrow="ALWAYS"/>
-                        </HBox>
+                        <TextField fx:id="claimNameTextField"
+                                   GridPane.rowIndex="0" GridPane.columnIndex="1"
+                                   GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                            <GridPane.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                            </GridPane.margin>
+                        </TextField>
 
-                        <HBox spacing="10" alignment="CENTER_LEFT"
-                              GridPane.rowIndex="2" GridPane.columnIndex="0">
-                            <padding>
-                                <Insets left="5.0" right="5.0" top="5.0" bottom="5"/>
-                            </padding>
-                            <Label text="Is optional:" />
-                            <RadioButton fx:id="claimOptionalRadioButton" HBox.hgrow="ALWAYS"/>
-                        </HBox>
+                        <Label text="Grant type:" alignment="CENTER_RIGHT"
+                               GridPane.rowIndex="1" GridPane.columnIndex="0"
+                               GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                            <GridPane.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                            </GridPane.margin>
+                        </Label>
 
-                        <VBox spacing="10" HBox.hgrow="NEVER"
-                              GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.rowSpan="3">
+                        <MetaGrantNamesComboBox fx:id="claimGrantTypeComboBox"
+                                                GridPane.rowIndex="1" GridPane.columnIndex="1"
+                                                GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                            <GridPane.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                            </GridPane.margin>
+                        </MetaGrantNamesComboBox>
+
+
+                        <Label text="Is optional:" alignment="CENTER_RIGHT"
+                               GridPane.rowIndex="2" GridPane.columnIndex="0"
+                               GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                            <GridPane.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                            </GridPane.margin>
+                        </Label>
+
+                        <RadioButton fx:id="claimOptionalRadioButton" alignment="CENTER_RIGHT"
+                                     GridPane.rowIndex="2" GridPane.columnIndex="1"
+                                     GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                            <GridPane.margin>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                            </GridPane.margin>
+                        </RadioButton>
+
+                        <VBox spacing="10" HBox.hgrow="NEVER" alignment="CENTER"
+                              GridPane.rowIndex="0" GridPane.columnIndex="2"
+                              GridPane.rowSpan="3">
                             <padding>
                                 <Insets left="5.0" right="5.0" top="5.0" bottom="5"/>
                             </padding>
@@ -149,7 +173,8 @@
                         </VBox>
 
                         <ClaimsTable fx:id="claimsTable"
-                                     GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="2"/>
+                                     GridPane.rowIndex="3" GridPane.columnIndex="0"
+                                     GridPane.columnSpan="3"/>
 
                     </GridPane>
                 </Tab>
