@@ -75,8 +75,7 @@ public class ServiceFactory {
             return (ImagesRepo) scoped.get(ImagesRepo.class);
         } else {
             Session session = getSession();
-            Logger logger = getLogger(ImagesRepo.class);
-            ImagesRepo service = new ImagesRepo(session, logger);
+            ImagesRepo service = new ImagesRepo(session);
             scoped.put(ImagesRepo.class, service);
             return service;
         }

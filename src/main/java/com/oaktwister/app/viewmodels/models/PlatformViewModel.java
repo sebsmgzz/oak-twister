@@ -1,8 +1,10 @@
 package com.oaktwister.app.viewmodels.models;
 
 import com.oaktwister.app.core.ViewModelFactory;
+import com.oaktwister.app.viewmodels.ErrorViewModel;
 import com.oaktwister.app.viewmodels.models.claims.ClaimMapViewModel;
 import com.oaktwister.app.viewmodels.models.claims.ClaimViewModel;
+import com.oaktwister.domain.exceptions.InvalidSessionPropertyException;
 import com.oaktwister.domain.models.platforms.Platform;
 import com.oaktwister.domain.models.claims.Claim;
 import com.oaktwister.domain.models.claims.ClaimMap;
@@ -17,19 +19,22 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
+
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class PlatformViewModel {
+public class PlatformViewModel extends ErrorViewModel {
 
-    private final ViewModelFactory viewModelFactory;
+    // Services
     private final PlatformsRepo platformsRepo;
     private final ImagesRepo imagesRepo;
     private final Logger logger;
 
+    // Other view model
     private final ClaimMapViewModel claimMapViewModel;
-    private final SimpleObjectProperty<Exception> errorProperty;
 
+    // Properties
     private final SimpleObjectProperty<UUID> idProperty;
     private final SimpleStringProperty nameProperty;
     private final SimpleObjectProperty<UUID> imageIdProperty;
@@ -39,12 +44,10 @@ public class PlatformViewModel {
 
     public PlatformViewModel(ViewModelFactory viewModelFactory, PlatformsRepo platformsRepo,
                              ImagesRepo imagesRepo, Logger logger) {
-        this.viewModelFactory = viewModelFactory;
         this.platformsRepo = platformsRepo;
         this.imagesRepo = imagesRepo;
         this.logger = logger;
         claimMapViewModel = viewModelFactory.claimMap();
-        errorProperty = new SimpleObjectProperty<>();
         idProperty = new SimpleObjectProperty<>(UUIDUtil.empty());
         nameProperty = new SimpleStringProperty();
         imageIdProperty = new SimpleObjectProperty<>(UUIDUtil.empty());
@@ -53,12 +56,53 @@ public class PlatformViewModel {
         createdAtProperty = new SimpleObjectProperty<>(LocalDateTime.MIN);
     }
 
-    public boolean delete() {
-        Platform platform = getPlatform();
-        return platformsRepo.remove(platform);
+    public boolean insert() {
+        try {
+            Platform platform = getPlatform();
+            platformsRepo.add(platform);
+            return true;
+        } catch (InvalidSessionPropertyException | IOException ex) {
+            logger.error(ex, ex.getMessage());
+            setError(ex);
+            return false;
+        }
     }
 
-    public void setPlatform(Platform platform) {
+    public boolean update() {
+        try {
+            Platform platform = getPlatform();
+            platformsRepo.update(platform);
+            return true;
+        } catch (IOException | InvalidSessionPropertyException ex) {
+            logger.error(ex, ex.getMessage());
+            setError(ex);
+            return false;
+        }
+    }
+
+    public boolean delete() {
+        try {
+            Platform platform = getPlatform();
+            platformsRepo.remove(platform);
+            return true;
+        } catch (IOException | InvalidSessionPropertyException ex) {
+            logger.error(ex, ex.getMessage());
+            setError(ex);
+            return false;
+        }
+    }
+
+    public void copy(PlatformViewModel source) {
+        idProperty.set(source.getId());
+        nameProperty.set(source.getName());
+        imageProperty.set(source.getImage());
+        imageIdProperty.set(source.getImageId());
+        urlProperty.set(source.getUrl());
+        createdAtProperty.set(source.getCreatedAt());
+        claimMapViewModel.copy(source.claimMap());
+    }
+
+    public void setPlatform(Platform platform) throws InvalidSessionPropertyException {
         idProperty.set(platform.getId());
         nameProperty.set(platform.getName());
         UUID imageId = platform.getImageId();
@@ -85,27 +129,8 @@ public class PlatformViewModel {
         return platform;
     }
 
-    public void copy(PlatformViewModel source) {
-        idProperty.set(source.getId());
-        nameProperty.set(source.getName());
-        imageProperty.set(source.getImage());
-        urlProperty.set(source.getUrl());
-        createdAtProperty.set(source.getCreatedAt());
-        claimMapViewModel.copy(source.claimMap());
-    }
-
     public ClaimMapViewModel claimMap() {
         return claimMapViewModel;
-    }
-
-    public ReadOnlyObjectProperty<Exception> errorProperty() {
-        return errorProperty;
-    }
-    public Exception getError() {
-        return errorProperty().get();
-    }
-    public void clearError() {
-        errorProperty.set(null);
     }
 
     public ReadOnlyObjectProperty<UUID> idProperty() {

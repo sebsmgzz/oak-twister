@@ -1,6 +1,8 @@
 package com.oaktwister.app.viewmodels.views;
 
 import com.oaktwister.app.core.ViewModelFactory;
+import com.oaktwister.app.viewmodels.ErrorViewModel;
+import com.oaktwister.domain.exceptions.InvalidSessionPropertyException;
 import com.oaktwister.domain.models.platforms.Platform;
 import com.oaktwister.app.services.logging.Logger;
 import com.oaktwister.infrastructure.repos.PlatformsRepo;
@@ -12,9 +14,10 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.IOException;
 import java.util.List;
 
-public class PlatformsViewModel {
+public class PlatformsViewModel extends ErrorViewModel {
 
     private final ViewModelFactory viewModelFactory;
     private final PlatformsRepo platformsRepo;
@@ -32,14 +35,19 @@ public class PlatformsViewModel {
     }
 
     public void load() {
-        logger.debug("Loading platforms");
-        List<Platform> platforms = platformsRepo.findAll();
-        for(Platform platform : platforms) {
-            PlatformViewModel platformViewModel = viewModelFactory.platform();
-            platformViewModel.setPlatform(platform);
-            addPlatform(platformViewModel);
+        try {
+            logger.debug("Loading platforms");
+            List<Platform> platforms = platformsRepo.findAll();
+            for(Platform platform : platforms) {
+                PlatformViewModel platformViewModel = viewModelFactory.platform();
+                platformViewModel.setPlatform(platform);
+                addPlatform(platformViewModel);
+            }
+            logger.debug("Loaded %s platforms", platforms.size());
+        } catch (IOException | InvalidSessionPropertyException ex) {
+            logger.error(ex);
+            setError(ex);
         }
-        logger.debug("Loaded %s platforms", platforms.size());
     }
 
     public ReadOnlyListProperty<PlatformViewModel> platformsProperty() {

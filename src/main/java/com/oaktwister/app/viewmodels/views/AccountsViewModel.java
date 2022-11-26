@@ -1,6 +1,8 @@
 package com.oaktwister.app.viewmodels.views;
 
 import com.oaktwister.app.core.ViewModelFactory;
+import com.oaktwister.app.viewmodels.ErrorViewModel;
+import com.oaktwister.domain.exceptions.InvalidSessionPropertyException;
 import com.oaktwister.domain.models.accounts.Account;
 import com.oaktwister.app.services.logging.Logger;
 import com.oaktwister.infrastructure.repos.AccountsRepo;
@@ -11,9 +13,10 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import java.io.IOException;
 import java.util.List;
 
-public class AccountsViewModel {
+public class AccountsViewModel extends ErrorViewModel {
 
     private final ViewModelFactory viewModelFactory;
     private final AccountsRepo accountsRepo;
@@ -31,14 +34,19 @@ public class AccountsViewModel {
     }
 
     public void load() {
-        logger.debug("Loading accounts");
-        List<Account> accounts = accountsRepo.findAll();
-        for(Account account : accounts) {
-            AccountViewModel accountViewModel = viewModelFactory.account();
-            accountViewModel.setAccount(account);
-            accountsProperty.add(accountViewModel);
+        try {
+            logger.debug("Loading accounts");
+            List<Account> accounts = accountsRepo.findAll();
+            for(Account account : accounts) {
+                AccountViewModel accountViewModel = viewModelFactory.account();
+                accountViewModel.setAccount(account);
+                accountsProperty.add(accountViewModel);
+            }
+            logger.debug("Loaded %s accounts", accounts.size());
+        } catch (IOException | InvalidSessionPropertyException ex) {
+            logger.error(ex);
+            setError(ex);
         }
-        logger.debug("Loaded %s accounts", accounts.size());
     }
 
     public ReadOnlyListProperty<AccountViewModel> accountsProperty() {

@@ -1,6 +1,5 @@
 package com.oaktwister.infrastructure.repos;
 
-import com.oaktwister.app.services.logging.Logger;
 import com.oaktwister.domain.exceptions.InvalidSessionPropertyException;
 import com.oaktwister.domain.services.configs.Session;
 import javafx.scene.image.Image;
@@ -15,11 +14,9 @@ public class ImagesRepo {
     public static final String FILE_EXTENSION = ".png";
 
     private final Session session;
-    private final Logger logger;
 
-    public ImagesRepo(Session session, Logger logger) {
+    public ImagesRepo(Session session) {
         this.session = session;
-        this.logger = logger;
     }
 
     private Path getFullRepoLocation() throws InvalidSessionPropertyException {
@@ -33,19 +30,37 @@ public class ImagesRepo {
         return Paths.get(fullRepoLocation, fileName);
     }
 
-    public Image findById(UUID id) {
+    public Image findById(UUID id) throws InvalidSessionPropertyException {
+        String fileLocation = getImageLocation(id).toString();
+        return new Image(fileLocation);
+    }
+
+    public Image tryFindById(UUID id) {
         try {
-            String fileLocation = getImageLocation(id).toString();
-            return new Image(fileLocation);
-        } catch(Exception ex) {
+            return findById(id);
+        } catch (InvalidSessionPropertyException ex) {
             ex.printStackTrace();
             return null;
         }
     }
 
-    public UUID add(Image image) {
+    public void add(Image image) {
         // TODO
-        return UUID.randomUUID();
     }
+
+    public boolean tryAdd(Image image) {
+        add(image);
+        return true;
+    }
+
+    public void remove(Image image) {
+        // TODO
+    }
+
+    public boolean tryRemove(Image image) {
+        remove(image);
+        return true;
+    }
+
 
 }

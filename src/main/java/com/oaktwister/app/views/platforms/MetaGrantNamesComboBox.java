@@ -25,8 +25,8 @@ public class MetaGrantNamesComboBox extends AnchorPane implements Initializable 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        comboBox.setButtonCell(new GrantTypesComboBoxCell());
-        comboBox.setCellFactory(listView -> new GrantTypesComboBoxCell());
+        comboBox.setButtonCell(new MetaGrantNamesComboBoxCell());
+        comboBox.setCellFactory(listView -> new MetaGrantNamesComboBoxCell());
         addMetaGrantNames(MetaGrant.getAll().stream().map(MetaGrant::getName).toList().toArray(new String[0]));
     }
 

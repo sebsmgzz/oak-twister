@@ -1,11 +1,10 @@
 package com.oaktwister.app.viewmodels.models;
 
 import com.oaktwister.app.core.ViewModelFactory;
+import com.oaktwister.app.viewmodels.ErrorViewModel;
 import com.oaktwister.app.viewmodels.models.grants.GrantMapViewModel;
+import com.oaktwister.domain.exceptions.InvalidSessionPropertyException;
 import com.oaktwister.domain.models.accounts.Account;
-import com.oaktwister.domain.models.identities.Identity;
-import com.oaktwister.domain.models.platforms.Platform;
-import com.oaktwister.domain.models.grants.GrantMap;
 import com.oaktwister.app.services.logging.Logger;
 import com.oaktwister.infrastructure.repos.AccountsRepo;
 import com.oaktwister.infrastructure.repos.IdentitiesRepo;
@@ -13,20 +12,25 @@ import com.oaktwister.infrastructure.repos.PlatformsRepo;
 import com.oaktwister.app.utils.extensions.UUIDUtil;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class AccountViewModel {
+public class AccountViewModel extends ErrorViewModel {
 
+    // Services
     private final AccountsRepo accountsRepo;
     private final PlatformsRepo platformsRepo;
     private final IdentitiesRepo identitiesRepo;
     private final Logger logger;
 
+    // Other view models
     private final IdentityViewModel identityViewModel;
     private final PlatformViewModel platformViewModel;
     private final GrantMapViewModel grantMapViewModel;
 
+    // Properties
     private final SimpleObjectProperty<UUID> idProperty;
     private final SimpleObjectProperty<UUID> platformIdProperty;
     private final SimpleObjectProperty<UUID> identityIdProperty;
@@ -47,28 +51,54 @@ public class AccountViewModel {
         createdAtProperty = new SimpleObjectProperty<>(LocalDateTime.MIN);
     }
 
-    public boolean delete() {
-        Account account = getAccount();
-        return accountsRepo.remove(account);
+    public boolean insert() {
+        try {
+            Account account = getAccount();
+            accountsRepo.add(account);
+            return false;
+        } catch (InvalidSessionPropertyException | IOException ex) {
+            logger.error(ex);
+            setError(ex);
+            return false;
+        }
     }
 
-    public void setAccount(Account account) {
-        UUID id = account.getId();
-        idProperty.set(id);
+    public boolean update() {
+        try {
+            Account account = getAccount();
+            accountsRepo.update(account);
+            return false;
+        } catch (InvalidSessionPropertyException | IOException ex) {
+            logger.error(ex);
+            setError(ex);
+            return false;
+        }
+    }
+
+    public boolean delete() {
+        try {
+            Account account = getAccount();
+            accountsRepo.remove(account);
+            return false;
+        } catch (InvalidSessionPropertyException | IOException ex) {
+            logger.error(ex);
+            setError(ex);
+            return false;
+        }
+    }
+
+    public void setAccount(Account account) throws IOException, InvalidSessionPropertyException {
+        idProperty.set(account.getId());
         UUID platformId = account.getPlatformId();
         platformIdProperty.set(platformId);
-        Platform platform = platformsRepo.findById(platformId);
-        platformViewModel.setPlatform(platform);
+        platformViewModel.setPlatform(platformsRepo.findById(platformId));
         if(account.hasIdentity()) {
             UUID identityId = account.getIdentityId();
             identityIdProperty.set(identityId);
-            Identity identity = identitiesRepo.findById(identityId);
-            identityViewModel.setIdentity(identity);
+            identityViewModel.setIdentity(identitiesRepo.findById(identityId));
         }
-        LocalDateTime createdAt = account.getCreatedAt();
-        createdAtProperty.set(createdAt);
-        GrantMap grantMap = account.getGrants();
-        grantMapViewModel.setGrantMap(grantMap);
+        createdAtProperty.set(account.getCreatedAt());
+        grantMapViewModel.setGrantMap(account.getGrants());
     }
 
     public Account getAccount() {
@@ -76,8 +106,7 @@ public class AccountViewModel {
         UUID platformId = platformIdProperty.get();
         UUID identityId = identityIdProperty.get();
         LocalDateTime createdAt = createdAtProperty.get();
-        Account account = new Account(id, platformId, identityId, createdAt);
-        return account;
+        return new Account(id, platformId, identityId, createdAt);
     }
 
     public IdentityViewModel identity() {

@@ -1,9 +1,8 @@
 package com.oaktwister.app.views.platforms;
 
-import com.oaktwister.app.viewmodels.models.DriveViewModel;
 import javafx.scene.control.ListCell;
 
-public class GrantTypesComboBoxCell extends ListCell<String> {
+public class MetaGrantNamesComboBoxCell extends ListCell<String> {
 
     @Override
     protected void updateItem(String item, boolean empty) {

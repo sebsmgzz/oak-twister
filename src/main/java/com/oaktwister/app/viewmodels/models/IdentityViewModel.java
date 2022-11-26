@@ -1,28 +1,34 @@
 package com.oaktwister.app.viewmodels.models;
 
 import com.oaktwister.app.core.ViewModelFactory;
+import com.oaktwister.app.viewmodels.ErrorViewModel;
 import com.oaktwister.app.viewmodels.models.grants.GrantMapViewModel;
+import com.oaktwister.domain.exceptions.InvalidSessionPropertyException;
+import com.oaktwister.domain.models.grants.Grant;
 import com.oaktwister.domain.models.identities.Identity;
 import com.oaktwister.domain.models.grants.GrantMap;
 import com.oaktwister.app.services.logging.Logger;
 import com.oaktwister.infrastructure.repos.IdentitiesRepo;
 import com.oaktwister.app.utils.extensions.UUIDUtil;
-
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class IdentityViewModel {
+public class IdentityViewModel extends ErrorViewModel {
 
+    // Services
     private final IdentitiesRepo identitiesRepo;
     private final Logger logger;
 
+    // Other view models
     private final GrantMapViewModel grantMapViewModel;
 
+    // Properties
     private final SimpleObjectProperty<UUID> idProperty;
     private final SimpleStringProperty nameProperty;
     private final SimpleObjectProperty<LocalDateTime> createdAtProperty;
@@ -36,31 +42,58 @@ public class IdentityViewModel {
         createdAtProperty = new SimpleObjectProperty<>(LocalDateTime.MIN);
     }
 
+    public boolean insert() {
+        try {
+            Identity identity = getIdentity();
+            identitiesRepo.add(identity);
+            return true;
+        } catch (IOException | InvalidSessionPropertyException ex) {
+            logger.error(ex);
+            setError(ex);
+            return false;
+        }
+    }
+
+    public boolean update() {
+        try {
+            Identity identity = getIdentity();
+            identitiesRepo.update(identity);
+            return true;
+        } catch (IOException | InvalidSessionPropertyException ex) {
+            logger.error(ex);
+            setError(ex);
+            return false;
+        }
+    }
+
+    public boolean delete() {
+        try {
+            Identity identity = getIdentity();
+            identitiesRepo.remove(identity);
+            return true;
+        } catch (IOException | InvalidSessionPropertyException ex) {
+            logger.error(ex);
+            setError(ex);
+            return false;
+        }
+    }
+
     public void setIdentity(Identity identity) {
-        UUID id = identity.getId();
-        idProperty.set(id);
-        String name = identity.getName();
-        nameProperty.set(name);
-        LocalDateTime createdAt = identity.getCreatedAt();
-        createdAtProperty.set(createdAt);
-        GrantMap grantMap = identity.getGrantMap();
-        grantMapViewModel.setGrantMap(grantMap);
+        idProperty.set(identity.getId());
+        nameProperty.set(identity.getName());
+        createdAtProperty.set(identity.getCreatedAt());
+        grantMapViewModel.setGrantMap(identity.getGrantMap());
     }
 
     public Identity getIdentity() {
         UUID id = idProperty.get();
         LocalDateTime createdAt = createdAtProperty.get();
-        String name = nameProperty.get();
         Identity identity = new Identity(id, createdAt);
-        identity.setName(name);
+        identity.setName(nameProperty.get());
         GrantMap grantMap = identity.getGrantMap();
-        /*
-        ObservableList<GrantViewModel<?>> grantViewModels = grantMapViewModel.grantsProperty().get();
-        for(GrantViewModel<?> grantViewModel : grantViewModels) {
-            Grant<?> grant = grantViewModel.getGrant();
+        for(Grant<?> grant : grantMapViewModel.getGrantMap()) {
             grantMap.add(grant);
         }
-        */
         return identity;
     }
 
@@ -78,16 +111,6 @@ public class IdentityViewModel {
 
     public ReadOnlyObjectProperty<LocalDateTime> createdAtProperty() {
         return createdAtProperty;
-    }
-
-
-    public boolean delete() {
-        Identity identity = getIdentity();
-        boolean deleted = identitiesRepo.remove(identity);
-        if(!deleted) {
-            logger.error("Failed to delete identity %s", identity.getId());
-        }
-        return deleted;
     }
 
 }

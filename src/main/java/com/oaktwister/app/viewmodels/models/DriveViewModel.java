@@ -8,13 +8,11 @@ import javafx.beans.property.SimpleStringProperty;
 public class DriveViewModel {
 
     private final Drive drive;
-    private final ViewModelFactory viewModelFactory;
 
     private final SimpleStringProperty pathProperty;
 
     public DriveViewModel(Drive drive, ViewModelFactory viewModelFactory) {
         this.drive = drive;
-        this.viewModelFactory = viewModelFactory;
         pathProperty = new SimpleStringProperty(drive.getPath());
     }
 

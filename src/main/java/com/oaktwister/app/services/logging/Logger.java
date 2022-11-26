@@ -64,6 +64,10 @@ public class Logger {
         ex.printStackTrace();
     }
 
+    public void error(Exception ex) {
+        error(ex, ex.getMessage());
+    }
+
     public void critical(String message) {
         log(CRITICAL_PREFIX, message);
     }
