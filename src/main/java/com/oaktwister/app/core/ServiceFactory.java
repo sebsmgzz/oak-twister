@@ -17,6 +17,7 @@ import com.oaktwister.infrastructure.repos.IdentitiesRepo;
 import com.oaktwister.infrastructure.repos.ImagesRepo;
 import com.oaktwister.infrastructure.repos.PlatformsRepo;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 public class ServiceFactory {

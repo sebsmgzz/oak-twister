@@ -12,8 +12,10 @@ public class LocalDateTimeUtil {
     public final static String UTC_ZONE_ID = "UTC";
 
     public static LocalDateTime fromIso8601(String dateTimeString) {
-        return LocalDateTime.parse(dateTimeString,
-                DateTimeFormatter.ofPattern(ISO_8601_PATTERN).withZone(ZoneId.of(UTC_ZONE_ID)));
+        DateTimeFormatter formatter = DateTimeFormatter
+                .ofPattern(ISO_8601_PATTERN)
+                .withZone(ZoneId.of(UTC_ZONE_ID));
+        return LocalDateTime.parse(dateTimeString, formatter);
     }
 
     public static String toIso8601(LocalDateTime dateTime) {
@@ -21,13 +23,19 @@ public class LocalDateTimeUtil {
     }
 
     public static LocalDateTime fromDefault(String dateTimeString) {
-        return LocalDateTime.parse(dateTimeString,
-                DateTimeFormatter.ofPattern(DEFAULT_PATTERN).withZone(ZoneId.of(UTC_ZONE_ID)));
+        DateTimeFormatter formatter = getDefaultPatternFormatter();
+        return LocalDateTime.parse(dateTimeString, formatter);
     }
 
     public static String toDefault(LocalDateTime dateTime) {
-        return dateTime.atZone(ZoneOffset.UTC).format(
-                DateTimeFormatter.ofPattern(DEFAULT_PATTERN).withZone(ZoneId.of(UTC_ZONE_ID)));
+        DateTimeFormatter formatter = getDefaultPatternFormatter();
+        return dateTime.atZone(ZoneOffset.UTC).format(formatter);
+    }
+
+    public static DateTimeFormatter getDefaultPatternFormatter() {
+        return DateTimeFormatter
+                .ofPattern(DEFAULT_PATTERN)
+                .withZone(ZoneId.of(UTC_ZONE_ID));
     }
 
 }

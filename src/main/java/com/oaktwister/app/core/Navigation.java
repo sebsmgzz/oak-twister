@@ -1,6 +1,5 @@
 package com.oaktwister.app.core;
 
-import com.oaktwister.app.utils.extensions.FXMLUtil;
 import com.oaktwister.app.views.login.LoginController;
 import com.oaktwister.app.views.main.MainController;
 
@@ -12,14 +11,12 @@ import javafx.stage.Stage;
 public class Navigation {
 
     private final Stage primaryStage;
-    private final UIContext ui;
 
     private final LoginController loginController;
     private final MainController mainController;
 
     public Navigation(Stage primaryStage, UIContext ui) {
         this.primaryStage = primaryStage;
-        this.ui = ui;
         loginController = new LoginController(ui);
         mainController = new MainController(ui);
     }
