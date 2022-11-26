@@ -1,7 +1,7 @@
 package com.oaktwister.infrastructure.repos;
 
-import com.oaktwister.app.exceptions.UnknownGrantTypeException;
 import com.oaktwister.domain.exceptions.InvalidSessionPropertyException;
+import com.oaktwister.domain.exceptions.UnknownMetaGrantException;
 import com.oaktwister.domain.seedwork.Entity;
 import com.oaktwister.domain.services.configs.Session;
 import com.oaktwister.infrastructure.serializers.JsonObjectSerializer;
@@ -76,7 +76,7 @@ public abstract class JsonRepo<T extends Entity> {
                 entities.add(entity);
             }
             return entities;
-        } catch( InvalidSessionPropertyException ex) {
+        } catch(InvalidSessionPropertyException ex) {
             logger.error(ex, ex.getMessage());
             return null;
         }
@@ -88,7 +88,7 @@ public abstract class JsonRepo<T extends Entity> {
             logger.info("Searching %s", fileLocation);
             JSONObject json = rawJsonRead(fileLocation);
             return jsonObjectSerializer.deserialize(json);
-        } catch (IOException | UnknownGrantTypeException | InvalidSessionPropertyException ex) {
+        } catch (IOException | InvalidSessionPropertyException | UnknownMetaGrantException ex) {
             logger.error(ex, ex.getMessage());
             return null;
         }
@@ -102,7 +102,7 @@ public abstract class JsonRepo<T extends Entity> {
             logger.info("Adding %s", fileLocation.toString());
             Files.writeString(fileLocation, json.toString());
             return true;
-        } catch (IOException | UnknownGrantTypeException | InvalidSessionPropertyException ex) {
+        } catch (IOException | InvalidSessionPropertyException | UnknownMetaGrantException ex) {
             logger.error(ex, ex.getMessage());
             return false;
         }
@@ -128,7 +128,7 @@ public abstract class JsonRepo<T extends Entity> {
             logger.info("Updating %s", fileLocation.toString());
             Files.writeString(fileLocation, json.toString(), StandardOpenOption.TRUNCATE_EXISTING);
             return true;
-        } catch (IOException | UnknownGrantTypeException | InvalidSessionPropertyException ex) {
+        } catch (IOException | InvalidSessionPropertyException | UnknownMetaGrantException ex) {
             logger.error(ex, ex.getMessage());
             return false;
         }

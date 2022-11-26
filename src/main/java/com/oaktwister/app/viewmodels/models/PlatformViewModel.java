@@ -1,9 +1,9 @@
 package com.oaktwister.app.viewmodels.models;
 
 import com.oaktwister.app.core.ViewModelFactory;
-import com.oaktwister.app.exceptions.UnknownGrantTypeException;
 import com.oaktwister.app.viewmodels.models.claims.ClaimMapViewModel;
 import com.oaktwister.app.viewmodels.models.claims.ClaimViewModel;
+import com.oaktwister.domain.exceptions.UnknownMetaGrantException;
 import com.oaktwister.domain.models.platforms.Platform;
 import com.oaktwister.domain.models.claims.Claim;
 import com.oaktwister.domain.models.claims.ClaimMap;
@@ -53,13 +53,8 @@ public class PlatformViewModel {
     }
 
     public boolean delete() {
-        try {
-            Platform platform = getPlatform();
-            return platformsRepo.remove(platform);
-        } catch (UnknownGrantTypeException ex) {
-            errorProperty.set(ex);
-            return false;
-        }
+        Platform platform = getPlatform();
+        return platformsRepo.remove(platform);
     }
 
     public void setPlatform(Platform platform) {
@@ -79,7 +74,7 @@ public class PlatformViewModel {
         claimMapViewModel.setClaimMap(claimMap);
     }
 
-    public Platform getPlatform() throws UnknownGrantTypeException {
+    public Platform getPlatform() {
         UUID id = idProperty.get();
         String name = nameProperty.get();
         UUID imageId = imageIdProperty.get();
