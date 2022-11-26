@@ -1,7 +1,6 @@
 package com.oaktwister.app.views.platforms;
 
 import com.oaktwister.app.core.UIContext;
-import com.oaktwister.app.services.parsers.GrantTypeParser;
 import com.oaktwister.app.utils.listeners.ListItemAddedListener;
 import com.oaktwister.app.utils.listeners.ListItemRemovedListener;
 import com.oaktwister.app.viewmodels.models.PlatformViewModel;
@@ -12,14 +11,11 @@ import com.oaktwister.app.views.widgets.dialogs.AlertType;
 import com.oaktwister.app.views.widgets.dialogs.DialogResult;
 import com.oaktwister.app.views.widgets.crud.CrudFrame;
 import com.oaktwister.app.views.widgets.crud.CrudPage;
-import com.oaktwister.domain.models.grants.Grant;
+import com.oaktwister.domain.models.claims.MetaGrant;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 
 public final class PlatformsController extends Controller<CrudFrame> {
 
@@ -100,8 +96,7 @@ public final class PlatformsController extends Controller<CrudFrame> {
     }
 
     private Collection<String> getGrantTypes() {
-        GrantTypeParser parser = ui.services().getGrantTypeParser();
-        return parser.getGrantTypes().stream().map(parser::getGrantTypeName).toList();
+        return MetaGrant.getAll().stream().map(MetaGrant::getName).toList();
     }
 
     private void onRemovePlatform(ActionEvent actionEvent) {

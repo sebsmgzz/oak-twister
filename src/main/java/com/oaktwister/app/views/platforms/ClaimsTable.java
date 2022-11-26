@@ -3,7 +3,7 @@ package com.oaktwister.app.views.platforms;
 import com.oaktwister.app.annotations.ViewDescriptor;
 import com.oaktwister.app.services.resources.ViewResources;
 import com.oaktwister.app.utils.extensions.FXMLUtil;
-import com.oaktwister.app.viewmodels.models.ClaimViewModel;
+import com.oaktwister.app.viewmodels.models.claims.ClaimViewModel;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

@@ -9,7 +9,6 @@ import com.oaktwister.domain.models.grants.NumberGrant;
 import com.oaktwister.domain.models.grants.SecretGrant;
 import com.oaktwister.domain.models.grants.TextGrant;
 import com.oaktwister.app.services.logging.Logger;
-import com.oaktwister.app.services.parsers.GrantTypeParser;
 import com.oaktwister.app.utils.extensions.LocalDateTimeUtil;
 import org.json.JSONObject;
 

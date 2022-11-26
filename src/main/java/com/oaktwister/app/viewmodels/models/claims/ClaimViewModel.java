@@ -1,4 +1,4 @@
-package com.oaktwister.app.viewmodels.models;
+package com.oaktwister.app.viewmodels.models.claims;
 
 import com.oaktwister.domain.models.claims.Claim;
 import com.oaktwister.domain.models.claims.MetaGrant;

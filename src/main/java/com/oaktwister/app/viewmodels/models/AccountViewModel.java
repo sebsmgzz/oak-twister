@@ -1,6 +1,7 @@
 package com.oaktwister.app.viewmodels.models;
 
 import com.oaktwister.app.core.ViewModelFactory;
+import com.oaktwister.app.viewmodels.models.grants.GrantMapViewModel;
 import com.oaktwister.domain.models.accounts.Account;
 import com.oaktwister.domain.models.identities.Identity;
 import com.oaktwister.domain.models.platforms.Platform;

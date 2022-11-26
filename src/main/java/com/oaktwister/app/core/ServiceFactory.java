@@ -11,7 +11,6 @@ import com.oaktwister.app.services.json.GrantMapSerializer;
 import com.oaktwister.app.services.json.GrantSerializer;
 import com.oaktwister.app.services.json.IdentitySerializer;
 import com.oaktwister.app.services.json.PlatformSerializer;
-import com.oaktwister.app.services.parsers.GrantTypeParser;
 import com.oaktwister.app.services.logging.Logger;
 import com.oaktwister.infrastructure.repos.AccountsRepo;
 import com.oaktwister.infrastructure.repos.IdentitiesRepo;
@@ -67,17 +66,6 @@ public class ServiceFactory {
             Logger logger = getLogger(DriveLoader.class);
             DriveLoader service = new DriveLoader(environment);
             scoped.put(DriveLoader.class, service);
-            return service;
-        }
-    }
-
-    public GrantTypeParser getGrantTypeParser() {
-        if(scoped.containsKey(GrantTypeParser.class)) {
-            return (GrantTypeParser) scoped.get(GrantTypeParser.class);
-        } else {
-            Logger logger = getLogger(GrantTypeParser.class);
-            GrantTypeParser service = new GrantTypeParser();
-            scoped.put(GrantTypeParser.class, service);
             return service;
         }
     }

@@ -1,4 +1,4 @@
-package com.oaktwister.app.viewmodels.models;
+package com.oaktwister.app.viewmodels.models.grants;
 
 import com.oaktwister.app.core.ViewModelFactory;
 import com.oaktwister.domain.models.grants.Grant;

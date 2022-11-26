@@ -4,7 +4,7 @@ import com.oaktwister.app.annotations.ViewDescriptor;
 import com.oaktwister.app.services.resources.ImageResources;
 import com.oaktwister.app.services.resources.ViewResources;
 import com.oaktwister.app.utils.extensions.FXMLUtil;
-import com.oaktwister.app.viewmodels.models.ClaimViewModel;
+import com.oaktwister.app.viewmodels.models.claims.ClaimViewModel;
 import com.oaktwister.app.viewmodels.models.PlatformViewModel;
 import com.oaktwister.app.views.widgets.dialogs.DialogButton;
 import com.oaktwister.app.views.widgets.dialogs.DialogFrame;
@@ -23,7 +23,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.Callable;

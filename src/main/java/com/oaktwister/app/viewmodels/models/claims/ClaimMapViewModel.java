@@ -1,12 +1,8 @@
-package com.oaktwister.app.viewmodels.models;
+package com.oaktwister.app.viewmodels.models.claims;
 
 import com.oaktwister.app.core.ViewModelFactory;
-import com.oaktwister.app.exceptions.UnknownGrantTypeException;
 import com.oaktwister.domain.models.claims.Claim;
 import com.oaktwister.domain.models.claims.ClaimMap;
-import com.oaktwister.domain.models.claims.MetaGrant;
-import com.oaktwister.domain.models.grants.Grant;
-import com.oaktwister.app.services.parsers.GrantTypeParser;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
