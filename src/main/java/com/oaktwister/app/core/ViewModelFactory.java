@@ -1,8 +1,9 @@
 package com.oaktwister.app.core;
 
+import com.oaktwister.app.services.configs.Environment;
 import com.oaktwister.domain.models.drives.Drive;
-import com.oaktwister.app.services.configs.SessionSettings;
-import com.oaktwister.app.services.drives.DriveLoader;
+import com.oaktwister.domain.services.configs.Session;
+import com.oaktwister.domain.services.drives.DriveLoader;
 import com.oaktwister.app.services.logging.Logger;
 import com.oaktwister.infrastructure.repos.AccountsRepo;
 import com.oaktwister.infrastructure.repos.IdentitiesRepo;
@@ -39,10 +40,11 @@ public class ViewModelFactory {
     }
 
     private LoginViewModel getLoginViewModel() {
-        SessionSettings session = serviceFactory.getSessionSettings();
+        Session session = serviceFactory.getSession();
+        Environment environment = serviceFactory.getEnvironment();
         DriveLoader driveLoader = serviceFactory.getDriveLoader();
         serviceFactory.clearScope();
-        return new LoginViewModel(this, session, driveLoader);
+        return new LoginViewModel(this, environment, session, driveLoader);
     }
 
     public LoginViewModel login() {

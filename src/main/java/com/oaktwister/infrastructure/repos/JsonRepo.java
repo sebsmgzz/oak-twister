@@ -2,16 +2,18 @@ package com.oaktwister.infrastructure.repos;
 
 import com.oaktwister.app.exceptions.UnknownGrantTypeException;
 import com.oaktwister.domain.seedwork.Entity;
-import com.oaktwister.app.services.configs.SessionSettings;
-import com.oaktwister.app.services.json.JsonObjectSerializer;
+import com.oaktwister.domain.services.configs.Session;
+import com.oaktwister.infrastructure.serializers.JsonObjectSerializer;
 import com.oaktwister.app.services.logging.Logger;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -19,12 +21,12 @@ public abstract class JsonRepo<T extends Entity> {
 
     public final static String FILE_EXTENSION = ".json";
 
-    private final SessionSettings sessionSettings;
+    private final Session session;
     private final JsonObjectSerializer<T> jsonObjectSerializer;
     private final Logger logger;
 
-    public JsonRepo(SessionSettings sessionSettings, JsonObjectSerializer<T> jsonObjectSerializer, Logger logger) {
-        this.sessionSettings = sessionSettings;
+    public JsonRepo(Session session, JsonObjectSerializer<T> jsonObjectSerializer, Logger logger) {
+        this.session = session;
         this.jsonObjectSerializer = jsonObjectSerializer;
         this.logger = logger;
     }
@@ -32,8 +34,8 @@ public abstract class JsonRepo<T extends Entity> {
     protected abstract String getRepoLocation();
 
     private Path getFullRepoLocation() {
-        if(sessionSettings.hasDrive()) {
-            String drivePath = sessionSettings.getDrive().getPath();
+        if(session.hasDrive()) {
+            String drivePath = session.getDrive().getPath();
             String repoLocation = getRepoLocation();
             return Paths.get(drivePath, repoLocation);
         }

@@ -1,4 +1,4 @@
-package com.oaktwister.app.services.security;
+package com.oaktwister.domain.services.security;
 
 import com.oaktwister.domain.models.drives.EncryptionKey;
 

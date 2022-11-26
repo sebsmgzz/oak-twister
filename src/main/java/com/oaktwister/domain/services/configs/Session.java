@@ -1,12 +1,23 @@
-package com.oaktwister.app.services.configs;
+package com.oaktwister.domain.services.configs;
 
 import com.oaktwister.domain.models.drives.Drive;
 import com.oaktwister.domain.models.drives.DriveMeta;
 
-public class SessionSettings {
+public class Session {
+
+    private static Session instance;
 
     private Drive drive;
     private DriveMeta driveMeta;
+
+    public static Session getInstance() {
+        if(instance == null) {
+            instance = new Session();
+        }
+        return instance;
+    }
+
+    private Session() { }
 
     public void setMeta(DriveMeta driveMeta) {
         this.driveMeta = driveMeta;

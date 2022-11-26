@@ -1,7 +1,7 @@
 package com.oaktwister.infrastructure.repos;
 
-import com.oaktwister.app.services.configs.SessionSettings;
 import com.oaktwister.app.services.logging.Logger;
+import com.oaktwister.domain.services.configs.Session;
 import javafx.scene.image.Image;
 
 import java.nio.file.Path;
@@ -13,17 +13,20 @@ public class ImagesRepo {
     public static final String LOCATION = "images";
     public static final String FILE_EXTENSION = ".png";
 
-    private final SessionSettings sessionSettings;
+    private final Session session;
     private final Logger logger;
 
-    public ImagesRepo(SessionSettings sessionSettings, Logger logger) {
-        this.sessionSettings = sessionSettings;
+    public ImagesRepo(Session session, Logger logger) {
+        this.session = session;
         this.logger = logger;
     }
 
     private Path getFullRepoLocation() {
-        String path = sessionSettings.getDrive().getPath();
-        return Paths.get(path, LOCATION);
+        if(session.hasDrive()) {
+            String path = session.getDrive().getPath();
+            return Paths.get(path, LOCATION);
+        }
+        throw new RuntimeException("No drive has been set");
     }
 
     public Path getImageLocation(UUID id) {

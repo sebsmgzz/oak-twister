@@ -1,4 +1,4 @@
-package com.oaktwister.app.services.json;
+package com.oaktwister.infrastructure.serializers;
 
 import com.oaktwister.domain.models.platforms.Platform;
 import com.oaktwister.app.exceptions.UnknownGrantTypeException;

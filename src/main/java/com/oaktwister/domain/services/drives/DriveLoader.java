@@ -1,4 +1,4 @@
-package com.oaktwister.app.services.drives;
+package com.oaktwister.domain.services.drives;
 
 import com.oaktwister.domain.models.drives.Drive;
 import com.oaktwister.domain.models.drives.DriveMeta;
@@ -69,7 +69,7 @@ public class DriveLoader {
         }
     }
 
-    public List<Drive> listAllDrives() {
+    public List<Drive> listAllDrives(boolean includeMock) {
 
         // Get a list of the paths to the connected drives
         ArrayList<Drive> drives = new ArrayList<Drive>();
@@ -78,7 +78,7 @@ public class DriveLoader {
         ArrayList<File> driveRoots = new ArrayList<>(fsRootPathsList);
 
         // Load mock data in dev env
-        if(environment.isDevelopment()) {
+        if(includeMock) {
             Path exePath = Path.of(System.getProperty(JAVA_CLASS_PATH_KEY));
             Path workDirPath = exePath.getParent().getParent().getParent();
             Path mockDataPath = Paths.get(workDirPath.toString(), "data", "mock");

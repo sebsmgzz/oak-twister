@@ -3,8 +3,8 @@ package com.oaktwister.infrastructure.repos;
 import com.oaktwister.domain.models.accounts.Account;
 import com.oaktwister.domain.models.identities.Identity;
 import com.oaktwister.domain.models.platforms.Platform;
-import com.oaktwister.app.services.configs.SessionSettings;
-import com.oaktwister.app.services.json.AccountSerializer;
+import com.oaktwister.domain.services.configs.Session;
+import com.oaktwister.infrastructure.serializers.AccountSerializer;
 import com.oaktwister.app.services.logging.Logger;
 
 import java.util.ArrayList;
@@ -13,8 +13,8 @@ public class AccountsRepo extends JsonRepo<Account> {
 
     public static final String LOCATION = "accounts";
 
-    public AccountsRepo(SessionSettings sessionSettings, AccountSerializer accountSerializer, Logger logger) {
-        super(sessionSettings, accountSerializer, logger);
+    public AccountsRepo(Session session, AccountSerializer accountSerializer, Logger logger) {
+        super(session, accountSerializer, logger);
     }
 
     @Override
