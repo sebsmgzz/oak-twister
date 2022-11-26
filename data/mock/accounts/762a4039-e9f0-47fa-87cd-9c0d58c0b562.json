@@ -7,10 +7,8 @@
         {
             "name": "Password",
             "type": "Secret",
-            "value": {
-                "value": "rockyou",
-                "hint": "We will ___"
-            }
+            "value": "rockyou",
+            "hint": "We will ___"
         },
         {
             "name": "Username",

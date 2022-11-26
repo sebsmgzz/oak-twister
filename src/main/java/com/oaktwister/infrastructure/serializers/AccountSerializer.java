@@ -1,8 +1,8 @@
 package com.oaktwister.infrastructure.serializers;
 
-import com.oaktwister.domain.exceptions.UnknownMetaGrantException;
 import com.oaktwister.domain.models.accounts.Account;
 import com.oaktwister.app.utils.extensions.LocalDateTimeUtil;
+import com.oaktwister.infrastructure.serializers.grants.GrantMapSerializer;
 import org.json.JSONObject;
 import java.util.UUID;
 
@@ -21,7 +21,7 @@ public class AccountSerializer implements JsonObjectSerializer<Account> {
     }
 
     @Override
-    public Account deserialize(JSONObject json) throws UnknownMetaGrantException {
+    public Account deserialize(JSONObject json) {
 
         UUID identityId = null;
         if(!json.isNull(IDENTITY_ID_KEY)) {
@@ -39,7 +39,7 @@ public class AccountSerializer implements JsonObjectSerializer<Account> {
     }
 
     @Override
-    public JSONObject serialize(Account account) throws UnknownMetaGrantException {
+    public JSONObject serialize(Account account) {
         JSONObject accountJson = new JSONObject();
         accountJson.put(ID_KEY, account.getId());
         accountJson.put(PLATFORM_ID_KEY, account.getPlatformId());

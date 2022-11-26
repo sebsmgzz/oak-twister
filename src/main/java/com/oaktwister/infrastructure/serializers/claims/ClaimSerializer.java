@@ -1,9 +1,9 @@
-package com.oaktwister.infrastructure.serializers;
+package com.oaktwister.infrastructure.serializers.claims;
 
 import com.oaktwister.domain.exceptions.UnknownMetaGrantException;
 import com.oaktwister.domain.models.claims.Claim;
 import com.oaktwister.domain.models.claims.MetaGrant;
-import com.oaktwister.app.services.logging.Logger;
+import com.oaktwister.infrastructure.serializers.JsonObjectSerializer;
 import org.json.JSONObject;
 
 public class ClaimSerializer implements JsonObjectSerializer<Claim> {
@@ -11,12 +11,6 @@ public class ClaimSerializer implements JsonObjectSerializer<Claim> {
     private final static String NAME_KEY = "name";
     private final static String META_GRANT_NAME_KEY = "grantName";
     private final static String IS_OPTIONAL_KEY = "isOptional";
-
-    private final Logger logger;
-
-    public ClaimSerializer(Logger logger) {
-        this.logger = logger;
-    }
 
     @Override
     public Claim deserialize(JSONObject claimJson) {
@@ -26,8 +20,7 @@ public class ClaimSerializer implements JsonObjectSerializer<Claim> {
             boolean isOptional = claimJson.getBoolean(IS_OPTIONAL_KEY);
             return new Claim(name, metaGrant, isOptional);
         } catch (UnknownMetaGrantException ex) {
-            logger.error(ex, ex.getMessage());
-            throw new RuntimeException(ex);
+            throw new UnsupportedOperationException(ex);
         }
     }
 

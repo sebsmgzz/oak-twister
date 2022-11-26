@@ -7,10 +7,8 @@
         {
             "name": "Password",
             "type": "Secret",
-            "value": {
-                "value": "password",
-                "hint": "The most common password"
-            }
+            "value": "password",
+            "hint": "The most common password"
         },
         {
             "name": "Birthday",

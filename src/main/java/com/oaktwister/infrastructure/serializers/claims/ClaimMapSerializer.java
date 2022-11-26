@@ -1,19 +1,17 @@
-package com.oaktwister.infrastructure.serializers;
+package com.oaktwister.infrastructure.serializers.claims;
 
 import com.oaktwister.domain.models.claims.Claim;
 import com.oaktwister.domain.models.claims.ClaimMap;
-import com.oaktwister.app.services.logging.Logger;
+import com.oaktwister.infrastructure.serializers.JsonArraySerializer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class ClaimMapSerializer implements JsonArraySerializer<ClaimMap> {
 
     private final ClaimSerializer claimSerializer;
-    private final Logger logger;
 
-    public ClaimMapSerializer(ClaimSerializer claimSerializer, Logger logger) {
+    public ClaimMapSerializer(ClaimSerializer claimSerializer) {
         this.claimSerializer = claimSerializer;
-        this.logger = logger;
     }
 
     @Override

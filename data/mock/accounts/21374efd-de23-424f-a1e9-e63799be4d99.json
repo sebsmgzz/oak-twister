@@ -12,10 +12,8 @@
         {
             "name": "Password",
             "type": "Secret",
-            "value": {
-                "value": "123456",
-                "hint": "one...six"
-            }
+            "value": "123456",
+            "hint": "one...six"
         },
         {
             "name": "Username",

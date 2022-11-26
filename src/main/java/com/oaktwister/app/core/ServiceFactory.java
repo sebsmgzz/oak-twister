@@ -5,10 +5,9 @@ import com.oaktwister.app.services.configs.Settings;
 import com.oaktwister.domain.services.configs.Session;
 import com.oaktwister.domain.services.drives.DriveLoader;
 import com.oaktwister.infrastructure.serializers.AccountSerializer;
-import com.oaktwister.infrastructure.serializers.ClaimMapSerializer;
-import com.oaktwister.infrastructure.serializers.ClaimSerializer;
-import com.oaktwister.infrastructure.serializers.GrantMapSerializer;
-import com.oaktwister.infrastructure.serializers.GrantSerializer;
+import com.oaktwister.infrastructure.serializers.claims.ClaimMapSerializer;
+import com.oaktwister.infrastructure.serializers.claims.ClaimSerializer;
+import com.oaktwister.infrastructure.serializers.grants.GrantMapSerializer;
 import com.oaktwister.infrastructure.serializers.IdentitySerializer;
 import com.oaktwister.infrastructure.serializers.PlatformSerializer;
 import com.oaktwister.app.services.logging.Logger;
@@ -16,8 +15,8 @@ import com.oaktwister.infrastructure.repos.AccountsRepo;
 import com.oaktwister.infrastructure.repos.IdentitiesRepo;
 import com.oaktwister.infrastructure.repos.ImagesRepo;
 import com.oaktwister.infrastructure.repos.PlatformsRepo;
+import com.oaktwister.infrastructure.serializers.grants.AnyGrantSerializer;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 public class ServiceFactory {
@@ -39,7 +38,7 @@ public class ServiceFactory {
         }
     }
 
-    public Settings getAppConfig() {
+    public Settings getSettings() {
         if(singletons.containsKey(Settings.class)) {
             return (Settings) singletons.get(Settings.class);
         } else {
@@ -71,51 +70,6 @@ public class ServiceFactory {
         }
     }
 
-    public GrantSerializer getGrantSerializer() {
-        if(scoped.containsKey(GrantSerializer.class)) {
-            return (GrantSerializer) scoped.get(GrantSerializer.class);
-        } else {
-            Logger logger = new Logger(GrantSerializer.class);
-            GrantSerializer service = new GrantSerializer(logger);
-            scoped.put(GrantSerializer.class, service);
-            return service;
-        }
-    }
-
-    public GrantMapSerializer getGrantMapSerializer() {
-        if(scoped.containsKey(GrantMapSerializer.class)) {
-            return (GrantMapSerializer) scoped.get(GrantMapSerializer.class);
-        } else {
-            GrantSerializer grantSerializer = getGrantSerializer();
-            Logger logger = getLogger(GrantMapSerializer.class);
-            GrantMapSerializer service = new GrantMapSerializer(grantSerializer, logger);
-            scoped.put(GrantMapSerializer.class, service);
-            return service;
-        }
-    }
-
-    public IdentitySerializer getIdentitySerializer() {
-        if(scoped.containsKey(IdentitySerializer.class)) {
-            return (IdentitySerializer) scoped.get(IdentitySerializer.class);
-        } else {
-            GrantMapSerializer grantMapSerializer = getGrantMapSerializer();
-            IdentitySerializer service = new IdentitySerializer(grantMapSerializer);
-            scoped.put(IdentitySerializer.class, service);
-            return service;
-        }
-    }
-
-    public AccountSerializer getAccountSerializer() {
-        if(scoped.containsKey(AccountSerializer.class)) {
-            return (AccountSerializer) scoped.get(AccountSerializer.class);
-        } else {
-            GrantMapSerializer grantMapSerializer = getGrantMapSerializer();
-            AccountSerializer service = new AccountSerializer(grantMapSerializer);
-            scoped.put(AccountSerializer.class, service);
-            return service;
-        }
-    }
-
     public ImagesRepo getImagesRepo() {
         if(scoped.containsKey(ImagesRepo.class)) {
             return (ImagesRepo) scoped.get(ImagesRepo.class);
@@ -143,41 +97,6 @@ public class ServiceFactory {
         }
     }
 
-    public PlatformSerializer getPlatformSerializer() {
-        if(scoped.containsKey(PlatformSerializer.class)) {
-            return (PlatformSerializer) scoped.get(PlatformSerializer.class);
-        } else {
-            ClaimMapSerializer claimMapSerializer = getClaimMapSerializer();
-            Logger logger = getLogger(PlatformSerializer.class);
-            PlatformSerializer service = new PlatformSerializer(claimMapSerializer, logger);
-            scoped.put(PlatformSerializer.class, service);
-            return service;
-        }
-    }
-
-    public ClaimSerializer getClaimSerializer() {
-        if(scoped.containsKey(ClaimSerializer.class)) {
-            return (ClaimSerializer) scoped.get(ClaimSerializer.class);
-        } else {
-            Logger logger = getLogger(ClaimSerializer.class);
-            ClaimSerializer service = new ClaimSerializer(logger);
-            scoped.put(ClaimSerializer.class, service);
-            return service;
-        }
-    }
-
-    public ClaimMapSerializer getClaimMapSerializer() {
-        if(scoped.containsKey(ClaimMapSerializer.class)) {
-            return (ClaimMapSerializer) scoped.get(ClaimMapSerializer.class);
-        } else {
-            ClaimSerializer claimSerializer = getClaimSerializer();
-            Logger logger = getLogger(ClaimMapSerializer.class);
-            ClaimMapSerializer service = new ClaimMapSerializer(claimSerializer, logger);
-            scoped.put(ClaimMapSerializer.class, service);
-            return service;
-        }
-    }
-
     public AccountsRepo getAccountsRepo() {
         if(scoped.containsKey(AccountsRepo.class)) {
             return (AccountsRepo) scoped.get(AccountsRepo.class);
@@ -201,6 +120,81 @@ public class ServiceFactory {
             Logger logger = getLogger(PlatformsRepo.class);
             PlatformsRepo service = new PlatformsRepo(session, platformSerializer, accountsRepo, logger);
             scoped.put(PlatformsRepo.class, service);
+            return service;
+        }
+    }
+
+    public PlatformSerializer getPlatformSerializer() {
+        if(scoped.containsKey(PlatformSerializer.class)) {
+            return (PlatformSerializer) scoped.get(PlatformSerializer.class);
+        } else {
+            ClaimMapSerializer claimMapSerializer = getClaimMapSerializer();
+            PlatformSerializer service = new PlatformSerializer(claimMapSerializer);
+            scoped.put(PlatformSerializer.class, service);
+            return service;
+        }
+    }
+
+    public AnyGrantSerializer getGrantSerializer() {
+        if(scoped.containsKey(AnyGrantSerializer.class)) {
+            return (AnyGrantSerializer) scoped.get(AnyGrantSerializer.class);
+        } else {
+            AnyGrantSerializer service = new AnyGrantSerializer();
+            scoped.put(AnyGrantSerializer.class, service);
+            return service;
+        }
+    }
+
+    public GrantMapSerializer getGrantMapSerializer() {
+        if(scoped.containsKey(GrantMapSerializer.class)) {
+            return (GrantMapSerializer) scoped.get(GrantMapSerializer.class);
+        } else {
+            AnyGrantSerializer grantSerializer = getGrantSerializer();
+            GrantMapSerializer service = new GrantMapSerializer(grantSerializer);
+            scoped.put(GrantMapSerializer.class, service);
+            return service;
+        }
+    }
+
+    public IdentitySerializer getIdentitySerializer() {
+        if(scoped.containsKey(IdentitySerializer.class)) {
+            return (IdentitySerializer) scoped.get(IdentitySerializer.class);
+        } else {
+            GrantMapSerializer grantMapSerializer = getGrantMapSerializer();
+            IdentitySerializer service = new IdentitySerializer(grantMapSerializer);
+            scoped.put(IdentitySerializer.class, service);
+            return service;
+        }
+    }
+
+    public AccountSerializer getAccountSerializer() {
+        if(scoped.containsKey(AccountSerializer.class)) {
+            return (AccountSerializer) scoped.get(AccountSerializer.class);
+        } else {
+            GrantMapSerializer grantMapSerializer = getGrantMapSerializer();
+            AccountSerializer service = new AccountSerializer(grantMapSerializer);
+            scoped.put(AccountSerializer.class, service);
+            return service;
+        }
+    }
+
+    public ClaimSerializer getClaimSerializer() {
+        if(scoped.containsKey(ClaimSerializer.class)) {
+            return (ClaimSerializer) scoped.get(ClaimSerializer.class);
+        } else {
+            ClaimSerializer service = new ClaimSerializer();
+            scoped.put(ClaimSerializer.class, service);
+            return service;
+        }
+    }
+
+    public ClaimMapSerializer getClaimMapSerializer() {
+        if(scoped.containsKey(ClaimMapSerializer.class)) {
+            return (ClaimMapSerializer) scoped.get(ClaimMapSerializer.class);
+        } else {
+            ClaimSerializer claimSerializer = getClaimSerializer();
+            ClaimMapSerializer service = new ClaimMapSerializer(claimSerializer);
+            scoped.put(ClaimMapSerializer.class, service);
             return service;
         }
     }

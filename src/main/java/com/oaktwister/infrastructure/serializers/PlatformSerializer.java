@@ -2,8 +2,8 @@ package com.oaktwister.infrastructure.serializers;
 
 import com.oaktwister.domain.models.platforms.Platform;
 import com.oaktwister.domain.models.claims.ClaimMap;
-import com.oaktwister.app.services.logging.Logger;
 import com.oaktwister.app.utils.extensions.LocalDateTimeUtil;
+import com.oaktwister.infrastructure.serializers.claims.ClaimMapSerializer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.UUID;
@@ -18,11 +18,9 @@ public class PlatformSerializer implements JsonObjectSerializer<Platform> {
     public final static String CLAIMS_KEY = "claims";
 
     private final ClaimMapSerializer claimMapSerializer;
-    private final Logger logger;
 
-    public PlatformSerializer(ClaimMapSerializer claimMapSerializer, Logger logger) {
+    public PlatformSerializer(ClaimMapSerializer claimMapSerializer) {
         this.claimMapSerializer = claimMapSerializer;
-        this.logger = logger;
     }
 
     @Override
