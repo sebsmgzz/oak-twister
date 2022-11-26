@@ -1,7 +1,6 @@
 package com.oaktwister.infrastructure.serializers;
 
 import com.oaktwister.domain.models.platforms.Platform;
-import com.oaktwister.app.exceptions.UnknownGrantTypeException;
 import com.oaktwister.domain.models.claims.ClaimMap;
 import com.oaktwister.app.services.logging.Logger;
 import com.oaktwister.app.utils.extensions.LocalDateTimeUtil;
@@ -27,7 +26,7 @@ public class PlatformSerializer implements JsonObjectSerializer<Platform> {
     }
 
     @Override
-    public Platform deserialize(JSONObject json) throws UnknownGrantTypeException {
+    public Platform deserialize(JSONObject json) {
         Platform platform = new Platform(
                 UUID.fromString(json.getString(ID_KEY)),
                 json.getString(NAME_KEY),

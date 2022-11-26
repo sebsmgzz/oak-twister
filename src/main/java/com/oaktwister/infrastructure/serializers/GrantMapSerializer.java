@@ -1,6 +1,6 @@
 package com.oaktwister.infrastructure.serializers;
 
-import com.oaktwister.app.exceptions.UnknownGrantTypeException;
+import com.oaktwister.domain.exceptions.UnknownMetaGrantException;
 import com.oaktwister.domain.models.grants.Grant;
 import com.oaktwister.domain.models.grants.GrantMap;
 import com.oaktwister.app.services.logging.Logger;
@@ -18,7 +18,7 @@ public class GrantMapSerializer implements JsonArraySerializer<GrantMap> {
     }
 
     @Override
-    public GrantMap deserialize(JSONArray grantMapJson) throws UnknownGrantTypeException {
+    public GrantMap deserialize(JSONArray grantMapJson) throws UnknownMetaGrantException {
         GrantMap grantMap = new GrantMap();
         for(int i = 0; i < grantMapJson.length(); i++) {
             JSONObject grantJson = grantMapJson.getJSONObject(i);
@@ -29,15 +29,11 @@ public class GrantMapSerializer implements JsonArraySerializer<GrantMap> {
     }
 
     @Override
-    public JSONArray serialize(GrantMap grantMap) {
+    public JSONArray serialize(GrantMap grantMap) throws UnknownMetaGrantException {
         JSONArray grantMapJson = new JSONArray();
         for(Grant<?> grant : grantMap) {
-            try {
-                JSONObject grantJson = grantSerializer.serialize(grant);
-                grantMapJson.put(grantJson);
-            } catch (UnknownGrantTypeException ex) {
-                logger.error(ex, ex.getMessage());
-            }
+            JSONObject grantJson = grantSerializer.serialize(grant);
+            grantMapJson.put(grantJson);
         }
         return grantMapJson;
     }

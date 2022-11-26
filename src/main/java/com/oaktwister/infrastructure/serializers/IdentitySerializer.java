@@ -1,7 +1,7 @@
 package com.oaktwister.infrastructure.serializers;
 
+import com.oaktwister.domain.exceptions.UnknownMetaGrantException;
 import com.oaktwister.domain.models.identities.Identity;
-import com.oaktwister.app.exceptions.UnknownGrantTypeException;
 import com.oaktwister.app.utils.extensions.LocalDateTimeUtil;
 import org.json.JSONObject;
 
@@ -21,7 +21,7 @@ public class IdentitySerializer implements JsonObjectSerializer<Identity> {
     }
 
     @Override
-    public Identity deserialize(JSONObject identityJson) throws UnknownGrantTypeException {
+    public Identity deserialize(JSONObject identityJson) throws UnknownMetaGrantException {
         Identity identity = new Identity(
             UUID.fromString(identityJson.getString(ID_KEY)),
             LocalDateTimeUtil.fromIso8601(identityJson.getString(CREATED_AT_KEY)));
@@ -31,7 +31,7 @@ public class IdentitySerializer implements JsonObjectSerializer<Identity> {
     }
 
     @Override
-    public JSONObject serialize(Identity identity) {
+    public JSONObject serialize(Identity identity) throws UnknownMetaGrantException {
         JSONObject identityJson = new JSONObject();
         identityJson.put(ID_KEY, identity.getId());
         identityJson.put(CREATED_AT_KEY, identity.getCreatedAt());

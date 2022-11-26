@@ -1,6 +1,5 @@
 package com.oaktwister.infrastructure.serializers;
 
-import com.oaktwister.app.exceptions.UnknownGrantTypeException;
 import com.oaktwister.domain.models.claims.Claim;
 import com.oaktwister.domain.models.claims.ClaimMap;
 import com.oaktwister.app.services.logging.Logger;
@@ -18,10 +17,9 @@ public class ClaimMapSerializer implements JsonArraySerializer<ClaimMap> {
     }
 
     @Override
-    public ClaimMap deserialize(JSONArray jsonArray) throws UnknownGrantTypeException {
+    public ClaimMap deserialize(JSONArray jsonArray) {
         ClaimMap claimMap = new ClaimMap();
-        for(int i = 0; i < jsonArray.length(); i++)
-        {
+        for(int i = 0; i < jsonArray.length(); i++) {
             JSONObject jsonClaim = jsonArray.getJSONObject(i);
             Claim claim = claimSerializer.deserialize(jsonClaim);
             claimMap.add(claim);

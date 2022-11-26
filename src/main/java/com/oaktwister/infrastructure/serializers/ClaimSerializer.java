@@ -2,7 +2,6 @@ package com.oaktwister.infrastructure.serializers;
 
 import com.oaktwister.domain.exceptions.UnknownMetaGrantException;
 import com.oaktwister.domain.models.claims.Claim;
-import com.oaktwister.app.exceptions.UnknownGrantTypeException;
 import com.oaktwister.domain.models.claims.MetaGrant;
 import com.oaktwister.app.services.logging.Logger;
 import org.json.JSONObject;
@@ -20,13 +19,14 @@ public class ClaimSerializer implements JsonObjectSerializer<Claim> {
     }
 
     @Override
-    public Claim deserialize(JSONObject claimJson) throws UnknownGrantTypeException {
+    public Claim deserialize(JSONObject claimJson) {
         try {
             String name = claimJson.getString(NAME_KEY);
             MetaGrant metaGrant = MetaGrant.parse(claimJson.getString(META_GRANT_NAME_KEY));
             boolean isOptional = claimJson.getBoolean(IS_OPTIONAL_KEY);
             return new Claim(name, metaGrant, isOptional);
         } catch (UnknownMetaGrantException ex) {
+            logger.error(ex, ex.getMessage());
             throw new RuntimeException(ex);
         }
     }

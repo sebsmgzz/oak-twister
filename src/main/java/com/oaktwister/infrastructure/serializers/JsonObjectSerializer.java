@@ -1,12 +1,12 @@
 package com.oaktwister.infrastructure.serializers;
 
-import com.oaktwister.app.exceptions.UnknownGrantTypeException;
+import com.oaktwister.domain.exceptions.UnknownMetaGrantException;
 import org.json.JSONObject;
 
 public interface JsonObjectSerializer<T> {
 
-    T deserialize(JSONObject json) throws UnknownGrantTypeException;
+    T deserialize(JSONObject json) throws UnknownMetaGrantException;
 
-    JSONObject serialize(T entity) throws UnknownGrantTypeException;
+    JSONObject serialize(T entity) throws UnknownMetaGrantException;
 
 }

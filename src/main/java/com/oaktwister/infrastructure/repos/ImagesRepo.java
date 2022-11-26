@@ -1,6 +1,7 @@
 package com.oaktwister.infrastructure.repos;
 
 import com.oaktwister.app.services.logging.Logger;
+import com.oaktwister.domain.exceptions.InvalidSessionPropertyException;
 import com.oaktwister.domain.services.configs.Session;
 import javafx.scene.image.Image;
 
@@ -21,17 +22,15 @@ public class ImagesRepo {
         this.logger = logger;
     }
 
-    private Path getFullRepoLocation() {
-        if(session.hasDrive()) {
-            String path = session.getDrive().getPath();
-            return Paths.get(path, LOCATION);
-        }
-        throw new RuntimeException("No drive has been set");
+    private Path getFullRepoLocation() throws InvalidSessionPropertyException {
+        String path = session.getDrive().getPath();
+        return Paths.get(path, LOCATION);
     }
 
-    public Path getImageLocation(UUID id) {
+    private Path getImageLocation(UUID id) throws InvalidSessionPropertyException {
         String fileName = id + FILE_EXTENSION;
-        return Paths.get(getFullRepoLocation().toString(), fileName);
+        String fullRepoLocation = getFullRepoLocation().toString();
+        return Paths.get(fullRepoLocation, fileName);
     }
 
     public Image findById(UUID id) {

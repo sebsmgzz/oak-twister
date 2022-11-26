@@ -3,7 +3,7 @@ package com.oaktwister.app.viewmodels.views;
 import com.oaktwister.app.core.ViewModelFactory;
 import com.oaktwister.app.services.configs.Environment;
 import com.oaktwister.domain.models.drives.Drive;
-import com.oaktwister.domain.models.drives.DriveMeta;
+import com.oaktwister.domain.models.drives.MetaDrive;
 import com.oaktwister.domain.services.configs.Session;
 import com.oaktwister.domain.services.drives.DriveLoader;
 import com.oaktwister.app.viewmodels.models.DriveViewModel;
@@ -69,14 +69,14 @@ public class LoginViewModel {
             return false;
         }
         Drive drive = driveViewModel.getDrive();
-        DriveMeta driveMeta = driveLoader.loadMeta(drive);
+        MetaDrive metaDrive = driveLoader.loadMeta(drive);
 
         String username = usernameProperty.get();
         String password = passwordProperty.get();
         // TODO: Try to get the encryption key with the username and password
 
         // TODO: Set the encryption key in the SessionSettings
-        session.setMeta(driveMeta);
+        session.setMetaDrive(metaDrive);
         session.setDrive(drive);
         return true;
     }

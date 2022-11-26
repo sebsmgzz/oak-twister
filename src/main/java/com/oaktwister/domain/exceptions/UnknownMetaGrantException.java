@@ -7,7 +7,7 @@ public class UnknownMetaGrantException extends Exception {
     }
 
     public UnknownMetaGrantException(String metaGrantName) {
-        super(String.format("Unknown meta grant %s", metaGrantName));
+        super(String.format("Unknown meta grant '%s'", metaGrantName));
     }
 
 }

@@ -1,7 +1,7 @@
 package com.oaktwister.domain.services.drives;
 
 import com.oaktwister.domain.models.drives.Drive;
-import com.oaktwister.domain.models.drives.DriveMeta;
+import com.oaktwister.domain.models.drives.MetaDrive;
 import com.oaktwister.domain.models.drives.Version;
 import com.oaktwister.app.services.configs.Environment;
 
@@ -33,7 +33,7 @@ public class DriveLoader {
         this.environment = environment;
     }
 
-    public DriveMeta loadMeta(Drive drive) {
+    public MetaDrive loadMeta(Drive drive) {
         try {
 
             // Get path to metadata
@@ -61,7 +61,7 @@ public class DriveLoader {
             Version version = Version.parse(meta.get(META_VERSION_KEY));
             String username = meta.get(META_USERNAME_KEY);
             UUID userId = UUID.fromString(meta.get(META_USER_ID_KEY));
-            return new DriveMeta(version, username, userId);
+            return new MetaDrive(version, username, userId);
 
         } catch (Exception ex) {
             ex.printStackTrace();

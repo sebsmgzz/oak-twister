@@ -2,13 +2,13 @@ package com.oaktwister.domain.models.drives;
 
 import java.util.UUID;
 
-public class DriveMeta {
+public class MetaDrive {
 
     private final Version version;
     private final String username;
     private final UUID userId;
 
-    public DriveMeta(Version version, String username, UUID userId) {
+    public MetaDrive(Version version, String username, UUID userId) {
         this.version = version;
         this.username = username;
         this.userId = userId;

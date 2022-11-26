@@ -1,6 +1,6 @@
 package com.oaktwister.infrastructure.serializers;
 
-import com.oaktwister.app.exceptions.UnknownGrantTypeException;
+import com.oaktwister.domain.exceptions.UnknownMetaGrantException;
 import com.oaktwister.domain.models.claims.MetaGrant;
 import com.oaktwister.domain.models.grants.DateTimeGrant;
 import com.oaktwister.domain.models.grants.FlagGrant;
@@ -25,7 +25,7 @@ public class GrantSerializer implements JsonObjectSerializer<Grant<?>> {
     }
 
     @Override
-    public Grant<?> deserialize(JSONObject grantJson) throws UnknownGrantTypeException {
+    public Grant<?> deserialize(JSONObject grantJson) throws UnknownMetaGrantException {
         String grantTypeName = grantJson.getString(TYPE_KEY);
         MetaGrant metaGrant = MetaGrant.tryParse(grantTypeName);
         if(metaGrant == MetaGrant.DATE_TIME_META) {
@@ -39,12 +39,12 @@ public class GrantSerializer implements JsonObjectSerializer<Grant<?>> {
         } else if (metaGrant == MetaGrant.TEXT_GRANT_META) {
             return deserializeTextGrant(grantJson);
         } else {
-            throw new UnknownGrantTypeException(grantTypeName);
+            throw new UnknownMetaGrantException(grantTypeName);
         }
     }
 
     @Override
-    public JSONObject serialize(Grant<?> grant) throws UnknownGrantTypeException {
+    public JSONObject serialize(Grant<?> grant) throws UnknownMetaGrantException {
         if(grant instanceof DateTimeGrant) {
             return serializeDateTimeGrant((DateTimeGrant) grant);
         } else if (grant instanceof FlagGrant) {
@@ -56,7 +56,7 @@ public class GrantSerializer implements JsonObjectSerializer<Grant<?>> {
         } else if (grant instanceof TextGrant) {
             return serializeTextGrant((TextGrant) grant);
         } else {
-            throw new UnknownGrantTypeException(grant.getName());
+            throw new UnknownMetaGrantException(grant.getName());
         }
     }
 

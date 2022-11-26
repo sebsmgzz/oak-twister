@@ -1,6 +1,7 @@
 package com.oaktwister.infrastructure.repos;
 
 import com.oaktwister.app.exceptions.UnknownGrantTypeException;
+import com.oaktwister.domain.exceptions.InvalidSessionPropertyException;
 import com.oaktwister.domain.seedwork.Entity;
 import com.oaktwister.domain.services.configs.Session;
 import com.oaktwister.infrastructure.serializers.JsonObjectSerializer;
@@ -33,13 +34,10 @@ public abstract class JsonRepo<T extends Entity> {
 
     protected abstract String getRepoLocation();
 
-    private Path getFullRepoLocation() {
-        if(session.hasDrive()) {
-            String drivePath = session.getDrive().getPath();
-            String repoLocation = getRepoLocation();
-            return Paths.get(drivePath, repoLocation);
-        }
-        throw new RuntimeException("No drive has been set");
+    private Path getFullRepoLocation() throws InvalidSessionPropertyException {
+        String drivePath = session.getDrive().getPath();
+        String repoLocation = getRepoLocation();
+        return Paths.get(drivePath, repoLocation);
     }
 
     private JSONObject rawJsonRead(String jsonLocation) throws IOException {
@@ -58,23 +56,30 @@ public abstract class JsonRepo<T extends Entity> {
         return new JSONObject(json);
     }
 
-    public Path getEntityLocation(UUID id) {
+    protected Path getEntityLocation(UUID id) throws InvalidSessionPropertyException {
         String fileName = id + FILE_EXTENSION;
-        return Paths.get(getFullRepoLocation().toString(), fileName);
+        String fullRepoLocation = getFullRepoLocation().toString();
+        return Paths.get(fullRepoLocation, fileName);
     }
 
     public ArrayList<T> findAll() {
-        ArrayList<T> entities = new ArrayList<>();
-        File repoDirectory = new File(getFullRepoLocation().toString());
-        File[] repoFiles = repoDirectory.listFiles();
-        assert repoFiles != null;
-        for (File repoFile : repoFiles) {
-            String fileName = repoFile.getName();
-            UUID id = UUID.fromString(fileName.replace(FILE_EXTENSION, ""));
-            T entity = findById(id);
-            entities.add(entity);
+        try {
+            ArrayList<T> entities = new ArrayList<>();
+            String fullRepoLocation = getFullRepoLocation().toString();
+            File repoDirectory = new File(fullRepoLocation);
+            File[] repoFiles = repoDirectory.listFiles();
+            assert repoFiles != null;
+            for (File repoFile : repoFiles) {
+                String fileName = repoFile.getName();
+                UUID id = UUID.fromString(fileName.replace(FILE_EXTENSION, ""));
+                T entity = findById(id);
+                entities.add(entity);
+            }
+            return entities;
+        } catch( InvalidSessionPropertyException ex) {
+            logger.error(ex, ex.getMessage());
+            return null;
         }
-        return entities;
     }
 
     public T findById(UUID id) {
@@ -83,7 +88,7 @@ public abstract class JsonRepo<T extends Entity> {
             logger.info("Searching %s", fileLocation);
             JSONObject json = rawJsonRead(fileLocation);
             return jsonObjectSerializer.deserialize(json);
-        } catch (IOException | UnknownGrantTypeException ex) {
+        } catch (IOException | UnknownGrantTypeException | InvalidSessionPropertyException ex) {
             logger.error(ex, ex.getMessage());
             return null;
         }
@@ -97,7 +102,7 @@ public abstract class JsonRepo<T extends Entity> {
             logger.info("Adding %s", fileLocation.toString());
             Files.writeString(fileLocation, json.toString());
             return true;
-        } catch (IOException | UnknownGrantTypeException ex) {
+        } catch (IOException | UnknownGrantTypeException | InvalidSessionPropertyException ex) {
             logger.error(ex, ex.getMessage());
             return false;
         }
@@ -110,7 +115,7 @@ public abstract class JsonRepo<T extends Entity> {
             logger.info("Deleting %s", fileLocation.toString());
             Files.delete(fileLocation);
             return true;
-        } catch (IOException ex) {
+        } catch (IOException | InvalidSessionPropertyException ex) {
             logger.error(ex, ex.getMessage());
             return false;
         }
@@ -123,7 +128,7 @@ public abstract class JsonRepo<T extends Entity> {
             logger.info("Updating %s", fileLocation.toString());
             Files.writeString(fileLocation, json.toString(), StandardOpenOption.TRUNCATE_EXISTING);
             return true;
-        } catch (IOException | UnknownGrantTypeException ex) {
+        } catch (IOException | UnknownGrantTypeException | InvalidSessionPropertyException ex) {
             logger.error(ex, ex.getMessage());
             return false;
         }

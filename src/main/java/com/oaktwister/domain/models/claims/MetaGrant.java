@@ -1,6 +1,5 @@
 package com.oaktwister.domain.models.claims;
 
-import com.oaktwister.app.exceptions.UnknownGrantTypeException;
 import com.oaktwister.domain.exceptions.UnknownMetaGrantException;
 import com.oaktwister.domain.models.grants.DateTimeGrant;
 import com.oaktwister.domain.models.grants.FlagGrant;
@@ -10,7 +9,6 @@ import com.oaktwister.domain.models.grants.SecretGrant;
 import com.oaktwister.domain.models.grants.TextGrant;
 import com.oaktwister.domain.seedwork.Enumerable;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
