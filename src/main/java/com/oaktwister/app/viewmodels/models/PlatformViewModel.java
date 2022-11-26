@@ -3,7 +3,6 @@ package com.oaktwister.app.viewmodels.models;
 import com.oaktwister.app.core.ViewModelFactory;
 import com.oaktwister.app.viewmodels.models.claims.ClaimMapViewModel;
 import com.oaktwister.app.viewmodels.models.claims.ClaimViewModel;
-import com.oaktwister.domain.exceptions.UnknownMetaGrantException;
 import com.oaktwister.domain.models.platforms.Platform;
 import com.oaktwister.domain.models.claims.Claim;
 import com.oaktwister.domain.models.claims.ClaimMap;
@@ -23,6 +22,7 @@ import java.util.UUID;
 
 public class PlatformViewModel {
 
+    private final ViewModelFactory viewModelFactory;
     private final PlatformsRepo platformsRepo;
     private final ImagesRepo imagesRepo;
     private final Logger logger;
@@ -39,6 +39,7 @@ public class PlatformViewModel {
 
     public PlatformViewModel(ViewModelFactory viewModelFactory, PlatformsRepo platformsRepo,
                              ImagesRepo imagesRepo, Logger logger) {
+        this.viewModelFactory = viewModelFactory;
         this.platformsRepo = platformsRepo;
         this.imagesRepo = imagesRepo;
         this.logger = logger;
@@ -58,20 +59,14 @@ public class PlatformViewModel {
     }
 
     public void setPlatform(Platform platform) {
-        UUID id = platform.getId();
-        idProperty.set(id);
-        String name = platform.getName();
-        nameProperty.set(name);
+        idProperty.set(platform.getId());
+        nameProperty.set(platform.getName());
         UUID imageId = platform.getImageId();
         imageIdProperty.set(imageId);
-        Image image = imagesRepo.findById(imageId);
-        imageProperty.set(image);
-        String url = platform.getUrl();
-        urlProperty.set(url);
-        LocalDateTime createdAt = platform.getCreatedAt();
-        createdAtProperty.set(createdAt);
-        ClaimMap claimMap = platform.getClaims();
-        claimMapViewModel.setClaimMap(claimMap);
+        imageProperty.set(imagesRepo.findById(imageId));
+        urlProperty.set(platform.getUrl());
+        createdAtProperty.set(platform.getCreatedAt());
+        claimMapViewModel.setClaimMap(platform.getClaims());
     }
 
     public Platform getPlatform() {
@@ -88,6 +83,15 @@ public class PlatformViewModel {
             claims.add(claim);
         }
         return platform;
+    }
+
+    public void copy(PlatformViewModel source) {
+        idProperty.set(source.getId());
+        nameProperty.set(source.getName());
+        imageProperty.set(source.getImage());
+        urlProperty.set(source.getUrl());
+        createdAtProperty.set(source.getCreatedAt());
+        claimMapViewModel.copy(source.claimMap());
     }
 
     public ClaimMapViewModel claimMap() {

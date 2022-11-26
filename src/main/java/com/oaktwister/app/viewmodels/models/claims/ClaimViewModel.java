@@ -29,6 +29,12 @@ public class ClaimViewModel {
         return new Claim(name, metaGrant, isOptional);
     }
 
+    public void copy(ClaimViewModel source) {
+        nameProperty.set(source.getName());
+        metaGrantNameProperty.set(source.getMetaGrantName());
+        isOptionalProperty.set(source.getIsOptional());
+    }
+
     public StringProperty nameProperty() {
         return nameProperty;
     }

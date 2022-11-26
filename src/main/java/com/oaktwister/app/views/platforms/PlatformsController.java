@@ -60,14 +60,11 @@ public final class PlatformsController extends Controller<CrudFrame> {
     }
 
     private void onAddPlatform(ActionEvent actionEvent) {
-        PlatformViewModel platform = ui.viewModels().platform();
-        EditPlatformDialog dialog = new EditPlatformDialog();
-        dialog.setPlatform(platform);
-        dialog.setClaimFactory(() -> ui.viewModels().claim());
-        Stage stage = ui.navigation().getDialogStage(dialog);
-        dialog.showAndWait(stage);
+        EditPlatformDialog dialog = new EditPlatformDialog(ui);
+        dialog.showAndWait();
         if(dialog.resultProperty().get() == DialogResult.SAVED) {
             // TODO: Save to database
+            PlatformViewModel platform = dialog.getPlatform();
             System.out.println("Saving platform to database");
         }
     }
@@ -81,11 +78,9 @@ public final class PlatformsController extends Controller<CrudFrame> {
             Stage stage = ui.navigation().getDialogStage(alert);
             alert.showAndWait(stage);
         } else {
-            EditPlatformDialog dialog = new EditPlatformDialog();
-            dialog.setPlatform(platform);
-            dialog.setClaimFactory(() -> ui.viewModels().claim());
-            Stage stage = ui.navigation().getDialogStage(dialog);
-            dialog.showAndWait(stage);
+            EditPlatformDialog dialog = new EditPlatformDialog(ui);
+            dialog.getPlatform().copy(platform);
+            dialog.showAndWait();
             if(dialog.resultProperty().get() == DialogResult.SAVED) {
                 // TODO: Save to database
                 System.out.println("Updating platform to database");

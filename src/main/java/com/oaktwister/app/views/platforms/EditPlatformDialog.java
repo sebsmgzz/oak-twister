@@ -1,6 +1,7 @@
 package com.oaktwister.app.views.platforms;
 
 import com.oaktwister.app.annotations.ViewDescriptor;
+import com.oaktwister.app.core.UIContext;
 import com.oaktwister.app.services.resources.ImageResources;
 import com.oaktwister.app.services.resources.ViewResources;
 import com.oaktwister.app.utils.extensions.FXMLUtil;
@@ -31,6 +32,8 @@ public class EditPlatformDialog extends AnchorPane implements Initializable {
 
     private final static String TITLE = "Edit platform";
 
+    private final UIContext ui;
+
     @FXML private DialogFrame dialogFrame;
 
     // Overview tab
@@ -48,11 +51,10 @@ public class EditPlatformDialog extends AnchorPane implements Initializable {
     @FXML private ClaimsTable claimsTable;
 
     private final SimpleObjectProperty<PlatformViewModel> platformProperty;
-    private final SimpleObjectProperty<Callable<ClaimViewModel>> claimFactoryProperty;
 
-    public EditPlatformDialog() {
+    public EditPlatformDialog(UIContext ui) {
+        this.ui = ui;
         platformProperty = new SimpleObjectProperty<>();
-        claimFactoryProperty = new SimpleObjectProperty<>();
         FXMLUtil.loadControl(this);
     }
 
@@ -69,6 +71,7 @@ public class EditPlatformDialog extends AnchorPane implements Initializable {
             platformImageView.imageProperty().bindBidirectional(newValue.imageProperty());
             claimsTable.claimsProperty().bind(newValue.claimMap().claimsProperty());
         });
+        platformProperty.set(ui.viewModels().platform());
         claimsTable.selectedClaimProperty().addListener((observable, oldValue, newValue) -> {
             claimNameTextField.setText(newValue.getName());
             claimGrantTypeComboBox.setSelectedMetaGrantName(newValue.getMetaGrantName());
@@ -79,7 +82,8 @@ public class EditPlatformDialog extends AnchorPane implements Initializable {
         removeClaimButton.setOnAction(this::onRemoveClaim);
     }
 
-    public void showAndWait(Stage stage) {
+    public void showAndWait() {
+        Stage stage = ui.navigation().getDialogStage(this);
         stage.getIcons().add(new Image(ImageResources.FontAwesome.LAYER_GROUP_SOLID));
         dialogFrame.showAndWait(stage);
     }
@@ -87,7 +91,7 @@ public class EditPlatformDialog extends AnchorPane implements Initializable {
     private void onAddClaim(ActionEvent actionEvent) {
         try {
             PlatformViewModel platform = getPlatform();
-            ClaimViewModel claim = getClaimFactory().call();
+            ClaimViewModel claim = ui.viewModels().claim();
             claim.setName(claimNameTextField.getText());
             claim.setMetaGrantName(claimGrantTypeComboBox.getSelectedMetaGrantName());
             claim.setIsOptional(claimOptionalRadioButton.isSelected());
@@ -98,7 +102,6 @@ public class EditPlatformDialog extends AnchorPane implements Initializable {
     }
 
     private void onUpdateClaim(ActionEvent actionEvent) {
-
     }
 
     private void onRemoveClaim(ActionEvent actionEvent) {
@@ -111,24 +114,11 @@ public class EditPlatformDialog extends AnchorPane implements Initializable {
         return resultProperty().get();
     }
 
-    public ObjectProperty<PlatformViewModel> platformProperty() {
+    public ReadOnlyObjectProperty<PlatformViewModel> platformProperty() {
         return platformProperty;
     }
     public PlatformViewModel getPlatform() {
         return platformProperty().get();
-    }
-    public void setPlatform(PlatformViewModel value) {
-        platformProperty().set(value);
-    }
-
-    public ObjectProperty<Callable<ClaimViewModel>> claimFactoryProperty() {
-        return claimFactoryProperty;
-    }
-    public Callable<ClaimViewModel> getClaimFactory() {
-        return claimFactoryProperty().get();
-    }
-    public void setClaimFactory(Callable<ClaimViewModel> value) {
-        claimFactoryProperty().set(value);
     }
 
 }

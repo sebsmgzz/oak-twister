@@ -40,6 +40,15 @@ public class ClaimMapViewModel {
         return claimMap;
     }
 
+    public void copy(ClaimMapViewModel source) {
+        clearClaims();
+        for(ClaimViewModel claimSource : source.getClaims()) {
+            ClaimViewModel claimCopy = viewModelFactory.claim();
+            claimCopy.copy(claimSource);
+            addClaim(claimCopy);
+        }
+    }
+
     public ListProperty<ClaimViewModel> claimsProperty() {
         return claimsProperty;
     }
