@@ -69,6 +69,11 @@ public class EditPlatformDialog extends AnchorPane implements Initializable {
             platformImageView.imageProperty().bindBidirectional(newValue.imageProperty());
             claimsTable.claimsProperty().bind(newValue.claimMap().claimsProperty());
         });
+        claimsTable.selectedClaimProperty().addListener((observable, oldValue, newValue) -> {
+            claimNameTextField.setText(newValue.getName());
+            claimGrantTypeComboBox.setSelectedMetaGrantName(newValue.getMetaGrantName());
+            claimOptionalRadioButton.setSelected(newValue.getIsOptional());
+        });
         addClaimButton.setOnAction(this::onAddClaim);
         updateClaimButton.setOnAction(this::onUpdateClaim);
         removeClaimButton.setOnAction(this::onRemoveClaim);

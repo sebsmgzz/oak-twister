@@ -5,9 +5,11 @@ import com.oaktwister.app.services.resources.ViewResources;
 import com.oaktwister.app.utils.extensions.FXMLUtil;
 import com.oaktwister.app.viewmodels.models.claims.ClaimViewModel;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
@@ -32,6 +34,14 @@ public class ClaimsTable extends AnchorPane implements Initializable {
         nameColumn.setCellValueFactory(cell -> cell.getValue().nameProperty());
         metaGrantColumn.setCellValueFactory(cell -> cell.getValue().metaGrantNameProperty());
         optionalColumn.setCellValueFactory(cell -> cell.getValue().isOptionalProperty());
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    }
+
+    public ReadOnlyObjectProperty<ClaimViewModel> selectedClaimProperty() {
+        return tableView.getSelectionModel().selectedItemProperty();
+    }
+    public ClaimViewModel getSelectedClaimProperty() {
+        return selectedClaimProperty().get();
     }
 
     public ObjectProperty<ObservableList<ClaimViewModel>> claimsProperty() {
