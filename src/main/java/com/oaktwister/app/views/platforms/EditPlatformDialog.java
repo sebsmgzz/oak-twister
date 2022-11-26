@@ -22,9 +22,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
 import java.net.URL;
-import java.util.*;
+import java.util.ResourceBundle;
 import java.util.concurrent.Callable;
 
 @ViewDescriptor(location = ViewResources.Platforms.EDIT_DIALOG)
@@ -41,7 +40,7 @@ public class EditPlatformDialog extends AnchorPane implements Initializable {
 
     // Claims tab
     @FXML private TextField claimNameTextField;
-    @FXML private GrantTypesComboBox claimGrantTypeComboBox;
+    @FXML private MetaGrantNamesComboBox claimGrantTypeComboBox;
     @FXML private RadioButton claimOptionalRadioButton;
     @FXML private Button addClaimButton;
     @FXML private Button updateClaimButton;
@@ -50,12 +49,10 @@ public class EditPlatformDialog extends AnchorPane implements Initializable {
 
     private final SimpleObjectProperty<PlatformViewModel> platformProperty;
     private final SimpleObjectProperty<Callable<ClaimViewModel>> claimFactoryProperty;
-    private final SimpleObjectProperty<Callable<Collection<String>>> grantTypesFactoryProperty;
 
     public EditPlatformDialog() {
         platformProperty = new SimpleObjectProperty<>();
         claimFactoryProperty = new SimpleObjectProperty<>();
-        grantTypesFactoryProperty = new SimpleObjectProperty<>();
         FXMLUtil.loadControl(this);
     }
 
@@ -72,16 +69,6 @@ public class EditPlatformDialog extends AnchorPane implements Initializable {
             platformImageView.imageProperty().bindBidirectional(newValue.imageProperty());
             claimsTable.claimsProperty().bind(newValue.claimMap().claimsProperty());
         });
-        claimGrantTypeComboBox.setOnShowing(event -> {
-            try {
-                Callable<Collection<String>> grantsFactory = grantTypesFactoryProperty.get();
-                Collection<String> grants = grantsFactory.call();
-                claimGrantTypeComboBox.clearGrantTypes();
-                claimGrantTypeComboBox.addGrantTypes(grants.toArray(new String[0]));
-            } catch (Exception ex) {
-                throw new RuntimeException(ex);
-            }
-        });
         addClaimButton.setOnAction(this::onAddClaim);
         updateClaimButton.setOnAction(this::onUpdateClaim);
         removeClaimButton.setOnAction(this::onRemoveClaim);
@@ -97,7 +84,7 @@ public class EditPlatformDialog extends AnchorPane implements Initializable {
             PlatformViewModel platform = getPlatform();
             ClaimViewModel claim = getClaimFactory().call();
             claim.setName(claimNameTextField.getText());
-            claim.setMetaGrantName(claimGrantTypeComboBox.getSelectedGrantType());
+            claim.setMetaGrantName(claimGrantTypeComboBox.getSelectedMetaGrantName());
             claim.setIsOptional(claimOptionalRadioButton.isSelected());
             platform.claimMap().addClaim(claim);
         } catch (Exception ex) {
@@ -137,16 +124,6 @@ public class EditPlatformDialog extends AnchorPane implements Initializable {
     }
     public void setClaimFactory(Callable<ClaimViewModel> value) {
         claimFactoryProperty().set(value);
-    }
-
-    public ObjectProperty<Callable<Collection<String>>> grantTypesFactoryProperty() {
-        return grantTypesFactoryProperty;
-    }
-    public Callable<Collection<String>> getGrantTypesFactory() {
-        return grantTypesFactoryProperty().get();
-    }
-    public void setGrantTypesFactory(Callable<Collection<String>> value) {
-        grantTypesFactoryProperty().set(value);
     }
 
 }

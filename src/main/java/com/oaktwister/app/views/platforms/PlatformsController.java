@@ -64,7 +64,6 @@ public final class PlatformsController extends Controller<CrudFrame> {
         EditPlatformDialog dialog = new EditPlatformDialog();
         dialog.setPlatform(platform);
         dialog.setClaimFactory(() -> ui.viewModels().claim());
-        dialog.setGrantTypesFactory(this::getGrantTypes);
         Stage stage = ui.navigation().getDialogStage(dialog);
         dialog.showAndWait(stage);
         if(dialog.resultProperty().get() == DialogResult.SAVED) {
@@ -85,7 +84,6 @@ public final class PlatformsController extends Controller<CrudFrame> {
             EditPlatformDialog dialog = new EditPlatformDialog();
             dialog.setPlatform(platform);
             dialog.setClaimFactory(() -> ui.viewModels().claim());
-            dialog.setGrantTypesFactory(this::getGrantTypes);
             Stage stage = ui.navigation().getDialogStage(dialog);
             dialog.showAndWait(stage);
             if(dialog.resultProperty().get() == DialogResult.SAVED) {
@@ -93,10 +91,6 @@ public final class PlatformsController extends Controller<CrudFrame> {
                 System.out.println("Updating platform to database");
             }
         }
-    }
-
-    private Collection<String> getGrantTypes() {
-        return MetaGrant.getAll().stream().map(MetaGrant::getName).toList();
     }
 
     private void onRemovePlatform(ActionEvent actionEvent) {

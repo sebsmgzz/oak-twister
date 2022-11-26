@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.HBox?>
 
 <?import javafx.scene.control.RadioButton?>
-<?import com.oaktwister.app.views.platforms.GrantTypesComboBox?>
+<?import com.oaktwister.app.views.platforms.MetaGrantNamesComboBox?>
 <fx:root xmlns="http://javafx.com/javafx/8"
          xmlns:fx="http://javafx.com/fxml/1"
          type="javafx.scene.layout.AnchorPane"
@@ -126,7 +126,7 @@
                                 <Insets left="5.0" right="5.0" top="5.0" bottom="5"/>
                             </padding>
                             <Label text="Grant type:" HBox.hgrow="SOMETIMES" />
-                            <GrantTypesComboBox fx:id="claimGrantTypeComboBox" HBox.hgrow="ALWAYS"/>
+                            <MetaGrantNamesComboBox fx:id="claimGrantTypeComboBox" HBox.hgrow="ALWAYS"/>
                         </HBox>
 
                         <HBox spacing="10" alignment="CENTER_LEFT"

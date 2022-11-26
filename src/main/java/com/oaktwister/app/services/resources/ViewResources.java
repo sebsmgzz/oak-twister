@@ -34,7 +34,7 @@ public interface ViewResources {
         String PANE = URL + "/PlatformPane.fxml";
         String EDIT_DIALOG = URL + "/EditPlatformDialog.fxml";
         String CLAIMS_TABLE = URL + "/ClaimsTable.fxml";
-        String GRANT_TYPES_COMBO_BOX = URL + "/GrantTypesComboBox.fxml";
+        String META_GRANT_NAMES_COMBO_BOX = URL + "/MetaGrantNamesComboBox.fxml";
     }
 
     interface Widgets {
