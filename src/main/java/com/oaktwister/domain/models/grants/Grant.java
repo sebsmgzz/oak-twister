@@ -7,8 +7,8 @@ import java.util.List;
 
 public abstract class Grant<T> extends ValueObject {
 
-    private String name;
-    private T value;
+    private final String name;
+    private final T value;
 
     public Grant(String name, T value) {
         this.name = name;
@@ -25,10 +25,6 @@ public abstract class Grant<T> extends ValueObject {
 
     public T getValue() {
         return value;
-    }
-
-    public void setValue(T value) {
-        this.value = value;
     }
 
     @Override
