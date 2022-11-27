@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class IdentitiesRepo extends JsonRepo<Identity> {
 
-    public static final String LOCATION = "identities";
+    public static final String DIRECTORY_NAME = "identities";
 
     private final AccountsRepo accountsRepo;
 
@@ -23,8 +23,8 @@ public class IdentitiesRepo extends JsonRepo<Identity> {
     }
 
     @Override
-    protected String getRepoLocation() {
-        return LOCATION;
+    protected String getRepoDirectoryName() {
+        return DIRECTORY_NAME;
     }
 
     @Override
@@ -36,7 +36,6 @@ public class IdentitiesRepo extends JsonRepo<Identity> {
             accountsRepo.update(account);
         }
     }
-
     @Override
     public boolean tryRemove(Identity identity) {
         boolean removed = super.tryRemove(identity);

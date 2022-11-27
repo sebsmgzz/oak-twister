@@ -10,7 +10,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -32,15 +31,21 @@ public abstract class JsonRepo<T extends Entity> {
         this.logger = logger;
     }
 
-    protected abstract String getRepoLocation();
+    protected abstract String getRepoDirectoryName();
 
-    private Path getFullRepoLocation() throws InvalidSessionPropertyException {
+    protected Path getRepoAbsolutePath() throws InvalidSessionPropertyException {
         String drivePath = session.getDrive().getPath();
-        String repoLocation = getRepoLocation();
+        String repoLocation = getRepoDirectoryName();
         return Paths.get(drivePath, repoLocation);
     }
 
-    private JSONObject rawJsonRead(String jsonLocation) throws IOException {
+    protected Path getEntityAbsolutePath(UUID id) throws InvalidSessionPropertyException {
+        String fileName = id + FILE_EXTENSION;
+        String fullRepoLocation = getRepoAbsolutePath().toString();
+        return Paths.get(fullRepoLocation, fileName);
+    }
+
+    private JSONObject read(String jsonLocation) throws IOException {
         FileReader reader = new FileReader(jsonLocation);
         BufferedReader buffer = new BufferedReader(reader);
         StringBuilder builder = new StringBuilder();
@@ -56,15 +61,9 @@ public abstract class JsonRepo<T extends Entity> {
         return new JSONObject(json);
     }
 
-    protected Path getEntityLocation(UUID id) throws InvalidSessionPropertyException {
-        String fileName = id + FILE_EXTENSION;
-        String fullRepoLocation = getFullRepoLocation().toString();
-        return Paths.get(fullRepoLocation, fileName);
-    }
-
     public ArrayList<T> findAll() throws IOException, InvalidSessionPropertyException {
         ArrayList<T> entities = new ArrayList<>();
-        String fullRepoLocation = getFullRepoLocation().toString();
+        String fullRepoLocation = getRepoAbsolutePath().toString();
         File repoDirectory = new File(fullRepoLocation);
         File[] repoFiles = repoDirectory.listFiles();
         assert repoFiles != null;
@@ -76,7 +75,6 @@ public abstract class JsonRepo<T extends Entity> {
         }
         return entities;
     }
-
     public ArrayList<T> tryFindAll() {
         try {
             return findAll();
@@ -87,12 +85,11 @@ public abstract class JsonRepo<T extends Entity> {
     }
 
     public T findById(UUID id) throws InvalidSessionPropertyException, IOException {
-        String fileLocation = getEntityLocation(id).toString();
+        String fileLocation = getEntityAbsolutePath(id).toString();
         logger.info("Searching %s", fileLocation);
-        JSONObject json = rawJsonRead(fileLocation);
+        JSONObject json = read(fileLocation);
         return jsonObjectSerializer.deserialize(json);
     }
-
     public T tryFindById(UUID id) {
         try {
             return findById(id);
@@ -104,12 +101,11 @@ public abstract class JsonRepo<T extends Entity> {
 
     public void add(T entity) throws InvalidSessionPropertyException, IOException {
         entity.setId(UUID.randomUUID());
-        Path fileLocation = getEntityLocation(entity.getId());
+        Path fileLocation = getEntityAbsolutePath(entity.getId());
         JSONObject json = jsonObjectSerializer.serialize(entity);
         logger.info("Adding %s", fileLocation.toString());
         Files.writeString(fileLocation, json.toString());
     }
-
     public boolean tryAdd(T entity) {
         try {
             add(entity);
@@ -121,12 +117,11 @@ public abstract class JsonRepo<T extends Entity> {
     }
 
     public void remove(T entity) throws InvalidSessionPropertyException, IOException {
-        Path fileLocation = getEntityLocation(entity.getId());
+        Path fileLocation = getEntityAbsolutePath(entity.getId());
         File file = new File(fileLocation.toString());
         logger.info("Deleting %s", fileLocation.toString());
         Files.delete(fileLocation);
     }
-
     public boolean tryRemove(T entity) {
         try {
             remove(entity);
@@ -138,12 +133,11 @@ public abstract class JsonRepo<T extends Entity> {
     }
 
     public void update(T entity) throws InvalidSessionPropertyException, IOException {
-        Path fileLocation = getEntityLocation(entity.getId());
+        Path fileLocation = getEntityAbsolutePath(entity.getId());
         JSONObject json = jsonObjectSerializer.serialize(entity);
         logger.info("Updating %s", fileLocation.toString());
         Files.writeString(fileLocation, json.toString(), StandardOpenOption.TRUNCATE_EXISTING);
     }
-
     public boolean tryUpdate(T entity) {
         try {
             update(entity);

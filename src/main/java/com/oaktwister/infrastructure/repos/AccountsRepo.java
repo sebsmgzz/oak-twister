@@ -12,15 +12,15 @@ import java.util.ArrayList;
 
 public class AccountsRepo extends JsonRepo<Account> {
 
-    public static final String LOCATION = "accounts";
+    public static final String DIRECTORY_NAME = "accounts";
 
     public AccountsRepo(Session session, AccountSerializer accountSerializer, Logger logger) {
         super(session, accountSerializer, logger);
     }
 
     @Override
-    protected String getRepoLocation() {
-        return LOCATION;
+    protected String getRepoDirectoryName() {
+        return DIRECTORY_NAME;
     }
 
     public ArrayList<Account> findByIdentity(Identity identity) throws IOException, InvalidSessionPropertyException {
@@ -28,7 +28,6 @@ public class AccountsRepo extends JsonRepo<Account> {
         accounts.removeIf(account -> !identity.getId().equals(account.getIdentityId()));
         return accounts;
     }
-
     public ArrayList<Account> tryFindByIdentity(Identity identity) {
         try {
             return findByIdentity(identity);
@@ -43,7 +42,6 @@ public class AccountsRepo extends JsonRepo<Account> {
         accounts.removeIf(account -> !platform.getId().equals(account.getPlatformId()));
         return accounts;
     }
-
     public ArrayList<Account> tryFindByPlatform(Platform platform) {
         try {
             return findByPlatform(platform);

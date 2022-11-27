@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class PlatformsRepo extends JsonRepo<Platform> {
 
-    public static final String LOCATION = "platforms";
+    public static final String DIRECTORY_NAME = "platforms";
 
     private final AccountsRepo accountsRepo;
 
@@ -22,8 +22,8 @@ public class PlatformsRepo extends JsonRepo<Platform> {
     }
 
     @Override
-    protected String getRepoLocation() {
-        return LOCATION;
+    protected String getRepoDirectoryName() {
+        return DIRECTORY_NAME;
     }
 
     @Override
@@ -34,7 +34,6 @@ public class PlatformsRepo extends JsonRepo<Platform> {
             accountsRepo.remove(account);
         }
     }
-
     @Override
     public boolean tryRemove(Platform platform) {
         boolean removed = super.tryRemove(platform);

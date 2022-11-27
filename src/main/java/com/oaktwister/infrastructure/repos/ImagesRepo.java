@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public class ImagesRepo {
 
-    public static final String LOCATION = "images";
+    public static final String DIRECTORY_NAME = "images";
     public static final String FILE_EXTENSION = ".png";
 
     private final Session session;
@@ -19,22 +19,21 @@ public class ImagesRepo {
         this.session = session;
     }
 
-    private Path getFullRepoLocation() throws InvalidSessionPropertyException {
+    private Path getRepoAbsolutePath() throws InvalidSessionPropertyException {
         String path = session.getDrive().getPath();
-        return Paths.get(path, LOCATION);
+        return Paths.get(path, DIRECTORY_NAME);
     }
 
-    private Path getImageLocation(UUID id) throws InvalidSessionPropertyException {
+    private Path getEntityAbsolutePath(UUID id) throws InvalidSessionPropertyException {
         String fileName = id + FILE_EXTENSION;
-        String fullRepoLocation = getFullRepoLocation().toString();
+        String fullRepoLocation = getRepoAbsolutePath().toString();
         return Paths.get(fullRepoLocation, fileName);
     }
 
     public Image findById(UUID id) throws InvalidSessionPropertyException {
-        String fileLocation = getImageLocation(id).toString();
+        String fileLocation = getEntityAbsolutePath(id).toString();
         return new Image(fileLocation);
     }
-
     public Image tryFindById(UUID id) {
         try {
             return findById(id);
@@ -47,7 +46,6 @@ public class ImagesRepo {
     public void add(Image image) {
         // TODO
     }
-
     public boolean tryAdd(Image image) {
         add(image);
         return true;
@@ -56,11 +54,9 @@ public class ImagesRepo {
     public void remove(Image image) {
         // TODO
     }
-
     public boolean tryRemove(Image image) {
         remove(image);
         return true;
     }
-
 
 }
