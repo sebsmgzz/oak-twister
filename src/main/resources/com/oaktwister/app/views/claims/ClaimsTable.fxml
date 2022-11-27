@@ -7,7 +7,7 @@
 <fx:root xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
          type="javafx.scene.layout.AnchorPane"
-         fx:controller="com.oaktwister.app.views.platforms.ClaimsTable">
+         fx:controller="com.oaktwister.app.views.claims.ClaimsTable">
     <TableView fx:id="tableView" editable="true"
                AnchorPane.topAnchor="0" AnchorPane.leftAnchor="0"
                AnchorPane.bottomAnchor="0" AnchorPane.rightAnchor="0">

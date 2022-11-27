@@ -43,5 +43,7 @@ module oaktwister.main {
 
     exports com.oaktwister.app.views.widgets.dialogs;
     opens com.oaktwister.app.views.widgets.dialogs to javafx.fxml;
+    exports com.oaktwister.app.views.claims;
+    opens com.oaktwister.app.views.claims to javafx.fxml;
 
 }

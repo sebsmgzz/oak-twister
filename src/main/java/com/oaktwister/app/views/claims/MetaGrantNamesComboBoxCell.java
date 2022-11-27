@@ -1,4 +1,4 @@
-package com.oaktwister.app.views.platforms;
+package com.oaktwister.app.views.claims;
 
 import javafx.scene.control.ListCell;
 

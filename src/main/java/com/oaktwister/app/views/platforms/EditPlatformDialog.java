@@ -7,10 +7,11 @@ import com.oaktwister.app.services.resources.ViewResources;
 import com.oaktwister.app.utils.extensions.FXMLUtil;
 import com.oaktwister.app.viewmodels.models.claims.ClaimViewModel;
 import com.oaktwister.app.viewmodels.models.PlatformViewModel;
+import com.oaktwister.app.views.claims.ClaimsTable;
+import com.oaktwister.app.views.claims.MetaGrantNamesComboBox;
 import com.oaktwister.app.views.widgets.dialogs.DialogButton;
 import com.oaktwister.app.views.widgets.dialogs.DialogFrame;
 import com.oaktwister.app.views.widgets.dialogs.DialogResult;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
@@ -25,7 +26,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.concurrent.Callable;
 
 @ViewDescriptor(location = ViewResources.Platforms.EDIT_DIALOG)
 public class EditPlatformDialog extends AnchorPane implements Initializable {

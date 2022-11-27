@@ -1,4 +1,4 @@
-package com.oaktwister.app.views.platforms;
+package com.oaktwister.app.views.claims;
 
 import com.oaktwister.app.annotations.ViewDescriptor;
 import com.oaktwister.app.services.resources.ViewResources;
@@ -17,7 +17,7 @@ import javafx.scene.layout.AnchorPane;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-@ViewDescriptor(location = ViewResources.Platforms.CLAIMS_TABLE)
+@ViewDescriptor(location = ViewResources.Claims.TABLE)
 public class ClaimsTable extends AnchorPane implements Initializable {
 
     @FXML private TableView<ClaimViewModel> tableView;

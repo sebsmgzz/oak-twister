@@ -10,10 +10,15 @@ public interface ViewResources {
         String PAGE = URL + "/AccountsPage.fxml";
     }
 
+    interface Claims {
+        String URL = BASE_URL + "/claims";
+        String TABLE = URL + "/ClaimsTable.fxml";
+        String NAMES_COMBO_BOX = URL + "/MetaGrantNamesComboBox.fxml";
+    }
+
     interface Identities {
         String URL = BASE_URL + "/identities";
         String PANE = URL + "/IdentityPane.fxml";
-        String PAGE = URL + "/IdentitiesPage.fxml";
         String TABLE = URL + "/IdentitiesTable.fxml";
     }
 
@@ -33,13 +38,10 @@ public interface ViewResources {
         String URL = BASE_URL + "/platforms";
         String PANE = URL + "/PlatformPane.fxml";
         String EDIT_DIALOG = URL + "/EditPlatformDialog.fxml";
-        String CLAIMS_TABLE = URL + "/ClaimsTable.fxml";
-        String META_GRANT_NAMES_COMBO_BOX = URL + "/MetaGrantNamesComboBox.fxml";
     }
 
     interface Widgets {
         String URL = BASE_URL + "/widgets";
-        String GROUP_BOX = URL + "/GroupBox.fxml";
         String IMAGE_BUTTON_BOX = URL + "/ImageButtonBox.fxml";
         String CRUD_FRAME = URL + "/crud/CrudFrame.fxml";
         String CRUD_PANE = URL + "/crud/CrudPane.fxml";

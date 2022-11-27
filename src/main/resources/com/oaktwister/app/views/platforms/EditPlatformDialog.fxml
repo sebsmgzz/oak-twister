@@ -14,10 +14,10 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.image.Image?>
 <?import com.oaktwister.app.views.widgets.dialogs.DialogFrame?>
-<?import com.oaktwister.app.views.platforms.ClaimsTable?>
+<?import com.oaktwister.app.views.claims.ClaimsTable?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.RadioButton?>
-<?import com.oaktwister.app.views.platforms.MetaGrantNamesComboBox?>
+<?import com.oaktwister.app.views.claims.MetaGrantNamesComboBox?>
 
 <fx:root xmlns="http://javafx.com/javafx/8"
          xmlns:fx="http://javafx.com/fxml/1"
