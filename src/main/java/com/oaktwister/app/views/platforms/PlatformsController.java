@@ -93,7 +93,7 @@ public final class PlatformsController extends Controller<CrudFrame> {
             Alert alert = new Alert();
             alert.setAlertType(AlertType.INFO);
             alert.setMessage(NO_PLATFORM_SELECTED_MESSAGE);
-            Stage stage = ui.navigation().getDialogStage(alert);
+            Stage stage = ui.stages().getDialogStage(alert);
             alert.showAndWait(stage);
             return;
         }
@@ -130,7 +130,7 @@ public final class PlatformsController extends Controller<CrudFrame> {
         Alert alert = new Alert();
         alert.setAlertType(AlertType.CONFIRM);
         alert.setMessage(String.format(DELETE_CONFIRMATION_MESSAGE, platform.getId()));
-        Stage stage = ui.navigation().getDialogStage(alert);
+        Stage stage = ui.stages().getDialogStage(alert);
         alert.showAndWait(stage);
 
         // If user didn't agreed to delete, simply end execution

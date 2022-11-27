@@ -81,7 +81,7 @@ public final class LoginController extends Controller<LoginLayout> {
         } else {
             LoginFailedAlert alert = new LoginFailedAlert();
             alert.messageProperty().bind(viewModel.loginErrorMessageProperty());
-            Stage stage = ui.navigation().getDialogStage(alert);
+            Stage stage = ui.stages().getDialogStage(alert);
             alert.stageProperty().set(stage);
             if(alert.resultProperty().get() == DialogResult.SAVED) {
                 // TODO: Save to database

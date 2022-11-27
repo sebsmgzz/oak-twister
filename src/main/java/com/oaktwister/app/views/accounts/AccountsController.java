@@ -72,7 +72,7 @@ public final class AccountsController extends Controller<CrudFrame> {
         Alert alert = new Alert();
         alert.setAlertType(AlertType.CONFIRM);
         alert.setMessage(String.format(DELETE_CONFIRMATION_MESSAGE, account.getId()));
-        Stage stage = ui.navigation().getDialogStage(alert);
+        Stage stage = ui.stages().getDialogStage(alert);
         alert.showAndWait(stage);
         DialogResult result = alert.resultProperty().get();
         if(result == DialogResult.YES) {

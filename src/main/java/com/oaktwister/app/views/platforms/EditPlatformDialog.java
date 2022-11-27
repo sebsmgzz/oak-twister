@@ -83,7 +83,7 @@ public class EditPlatformDialog extends AnchorPane implements Initializable {
     }
 
     public void showAndWait() {
-        Stage stage = ui.navigation().getDialogStage(this);
+        Stage stage = ui.stages().getDialogStage(this);
         stage.getIcons().add(new Image(ImageResources.FontAwesome.LAYER_GROUP_SOLID));
         dialogFrame.showAndWait(stage);
     }
