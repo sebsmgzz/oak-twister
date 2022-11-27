@@ -32,16 +32,15 @@ public class EditPlatformDialog extends AnchorPane implements Initializable {
 
     private final static String TITLE = "Edit platform";
 
-    private final UIContext ui;
 
     @FXML private DialogFrame dialogFrame;
 
-    // Overview tab
+    // UI: Overview tab
     @FXML private TextField platformNameTextField;
     @FXML private TextField platformUrlTextField;
     @FXML private ImageView platformImageView;
 
-    // Claims tab
+    // : Claims tab
     @FXML private TextField claimNameTextField;
     @FXML private MetaGrantNamesComboBox claimGrantTypeComboBox;
     @FXML private RadioButton claimOptionalRadioButton;
@@ -50,7 +49,11 @@ public class EditPlatformDialog extends AnchorPane implements Initializable {
     @FXML private Button removeClaimButton;
     @FXML private ClaimsTable claimsTable;
 
+    // Properties
     private final SimpleObjectProperty<PlatformViewModel> platformProperty;
+
+    // Other
+    private final UIContext ui;
 
     public EditPlatformDialog(UIContext ui) {
         this.ui = ui;

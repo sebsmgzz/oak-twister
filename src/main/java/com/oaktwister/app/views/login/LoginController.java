@@ -16,11 +16,14 @@ import javafx.stage.Stage;
 
 public final class LoginController extends Controller<LoginLayout> {
 
+    // Context
     private final UIContext ui;
     private final LoginViewModel viewModel;
 
+    // UI
     private final LoginLayout layout;
 
+    // Listeners and mappings
     private final ListItemAddedListener<DriveViewModel> driveAddedListener;
     private final ListItemRemovedListener<DriveViewModel> driveRemovedListener;
 

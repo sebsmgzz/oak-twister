@@ -21,11 +21,11 @@ import java.util.ResourceBundle;
 @ViewDescriptor(location = ViewResources.Widgets.IMAGE_BUTTON_BOX)
 public class ImageButtonBox extends HBox implements Initializable {
 
+    // UI
     @FXML private Button button;
     @FXML private ImageView imageView;
 
     public ImageButtonBox() {
-        super();
         FXMLUtil.loadControl(this);
     }
 

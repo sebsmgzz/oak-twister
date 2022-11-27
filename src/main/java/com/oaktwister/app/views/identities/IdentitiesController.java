@@ -14,12 +14,15 @@ import java.util.HashMap;
 
 public final class IdentitiesController extends Controller<CrudFrame> {
 
+    // Context
     private final UIContext ui;
     private final IdentitiesViewModel viewModel;
 
+    // UI
     private final CrudFrame crudFrame;
     private final IdentitiesTable identitiesTable;
 
+    // Listeners and mappings
     private final HashMap<IdentityViewModel, IdentityPane> identityMapping;
     private final ListItemAddedListener<IdentityViewModel> identityAddedListener;
     private final ListItemRemovedListener<IdentityViewModel> identityRemovedListener;

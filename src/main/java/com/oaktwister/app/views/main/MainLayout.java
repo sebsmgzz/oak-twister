@@ -25,6 +25,7 @@ import java.util.ResourceBundle;
 @ViewDescriptor(location = ViewResources.Main.LAYOUT)
 public class MainLayout extends GridPane implements Initializable {
 
+    // UI
     @FXML private Label titleLabel;
     @FXML private ImageButtonBox accountsImageButtonBox;
     @FXML private ImageButtonBox platformsImageButtonBox;
@@ -33,6 +34,7 @@ public class MainLayout extends GridPane implements Initializable {
     @FXML private ImageButtonBox settingsButton;
     @FXML private AnchorPane anchorPane;
 
+    // Properties
     private final SimpleObjectProperty<MainPage> pageProperty;
     private final SimpleObjectProperty<Node> accountPageProperty;
     private final SimpleObjectProperty<Node> platformsPageProperty;

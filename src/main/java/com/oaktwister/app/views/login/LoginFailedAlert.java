@@ -24,11 +24,13 @@ import java.util.ResourceBundle;
 @ViewDescriptor(location = ViewResources.Login.FAILED_ALERT)
 public class LoginFailedAlert extends AnchorPane implements Initializable {
 
+    // UI
     @FXML private ImageView iconImageView;
     @FXML private Label titleLabel;
     @FXML private Label messageLabel;
     @FXML private Button okayButton;
 
+    // Properties
     private final SimpleObjectProperty<DialogResult> resultProperty;
     private final SimpleObjectProperty<Stage> stageProperty;
 

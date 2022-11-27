@@ -31,19 +31,23 @@ import java.util.ResourceBundle;
 @ViewDescriptor(location = ViewResources.Widgets.Dialogs.DIALOG_FRAME)
 public class DialogFrame extends AnchorPane implements Initializable, DialogControl {
 
-    @FXML private HBox headerHBox;
+    // UI
     @FXML private ImageView iconImageView;
     @FXML private Label titleLabel;
     @FXML private AnchorPane contentAnchorPane;
     @FXML private HBox buttonsHBox;
 
+    // Properties
     private final SimpleObjectProperty<Node> contentProperty;
     private final SimpleObjectProperty<DialogResult> resultProperty;
     private final SimpleListProperty<DialogButton> buttonsProperty;
 
-    private Stage stage;
+    // Listeners
     private final ListItemAddedListener<DialogButton> onButtonAddedListener;
     private final ListItemRemovedListener<DialogButton> onButtonRemovedListener;
+
+    // Other
+    private Stage stage;
 
     public DialogFrame() {
         contentProperty = new SimpleObjectProperty<>();

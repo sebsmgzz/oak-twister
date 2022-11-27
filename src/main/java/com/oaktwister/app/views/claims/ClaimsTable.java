@@ -20,6 +20,7 @@ import java.util.ResourceBundle;
 @ViewDescriptor(location = ViewResources.Claims.TABLE)
 public class ClaimsTable extends AnchorPane implements Initializable {
 
+    // UI
     @FXML private TableView<ClaimViewModel> tableView;
     @FXML private TableColumn<ClaimViewModel, String> nameColumn;
     @FXML private TableColumn<ClaimViewModel, String> metaGrantColumn;

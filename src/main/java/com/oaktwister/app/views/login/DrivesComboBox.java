@@ -19,6 +19,7 @@ import java.util.ResourceBundle;
 @ViewDescriptor(location = ViewResources.Login.DRIVES_COMBO_BOX)
 public class DrivesComboBox extends AnchorPane implements Initializable {
 
+    // UI
     @FXML private ComboBox<DriveViewModel> comboBox;
 
     public DrivesComboBox() {

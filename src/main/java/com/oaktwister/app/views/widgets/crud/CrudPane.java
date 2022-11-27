@@ -22,8 +22,10 @@ public class CrudPane<T extends Node> extends AnchorPane implements Initializabl
 
     public final static String SELECTED_STYLE_CLASS = "selected";
 
+    // UI
     @FXML private Button button;
 
+    // Properties
     private final SimpleObjectProperty<EventHandler<CrudPaneActionEvent<T>>> onSelectedActionProperty;
     private final SimpleBooleanProperty selectedProperty;
     private final SimpleObjectProperty<T> graphicProperty;

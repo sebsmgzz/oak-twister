@@ -18,8 +18,10 @@ import java.util.ResourceBundle;
 @ViewDescriptor(location = ViewResources.Widgets.Dialogs.DIALOG_BUTTON)
 public class DialogButton extends AnchorPane implements Initializable {
 
+    // UI
     @FXML private Button button;
 
+    // Properties
     private final SimpleStringProperty textProperty;
     private final SimpleObjectProperty<EventHandler<DialogButtonEvent>> onActionProperty;
     private final SimpleObjectProperty<DialogResult> resultProperty;

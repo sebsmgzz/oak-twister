@@ -21,11 +21,13 @@ import java.util.ResourceBundle;
 @ViewDescriptor(location = ViewResources.Widgets.CRUD_FRAME)
 public class CrudFrame extends VBox implements Initializable {
 
+    // UI
     @FXML private AnchorPane anchorPane;
     @FXML private Button addButton;
     @FXML private Button editButton;
     @FXML private Button removeButton;
 
+    // Properties
     private final SimpleObjectProperty<Node> contentProperty;
 
     public CrudFrame() {

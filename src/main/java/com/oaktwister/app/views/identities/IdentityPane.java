@@ -24,18 +24,20 @@ import java.util.UUID;
 @ViewDescriptor(location = ViewResources.Identities.PANE)
 public class IdentityPane extends StackPane implements Initializable {
 
-    private final SimpleObjectProperty<UUID> identifierProperty;
-    private final SimpleObjectProperty<LocalDateTime> createdAtProperty;
-    private final SimpleIntegerProperty grantsCountProperty;
-    private final SimpleObjectProperty<EventHandler<IdentityPaneActionEvent>> onMainActionProperty;
-    private final SimpleObjectProperty<EventHandler<IdentityPaneActionEvent>> onDeleteActionProperty;
-
+    // UI
     @FXML private Button mainButton;
     @FXML private Label identifierLabel;
     @FXML private Label nameLabel;
     @FXML private Label grantsCountLabel;
     @FXML private Label createdAtLabel;
     @FXML private Button deleteButton;
+
+    // Properties
+    private final SimpleObjectProperty<UUID> identifierProperty;
+    private final SimpleObjectProperty<LocalDateTime> createdAtProperty;
+    private final SimpleIntegerProperty grantsCountProperty;
+    private final SimpleObjectProperty<EventHandler<IdentityPaneActionEvent>> onMainActionProperty;
+    private final SimpleObjectProperty<EventHandler<IdentityPaneActionEvent>> onDeleteActionProperty;
 
     public IdentityPane() {
         super();

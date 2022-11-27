@@ -26,6 +26,7 @@ import java.util.ResourceBundle;
 @ViewDescriptor(location = ViewResources.Login.LAYOUT)
 public class LoginLayout extends AnchorPane implements Initializable {
 
+    // UI
     @FXML private Hyperlink websiteHyperlink;
     @FXML private Hyperlink documentationHyperlink;
     @FXML private Hyperlink repositoryHyperlink;

@@ -37,16 +37,6 @@ public class FXMLUtil {
         }
     }
 
-    public static <T extends Node> T loadControl(@NotNull Class<T> nodeClass, @NotNull T node) {
-        try {
-            URL resourceUrl = getViewResourceUrl(nodeClass);
-            return loadControl(resourceUrl, node);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            throw new RuntimeException(ex);
-        }
-    }
-
     public static <T extends Node> T loadControl(@NotNull URL resourceUrl, @NotNull Node node) {
         try {
             FXMLLoader loader = new FXMLLoader(resourceUrl);

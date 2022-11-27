@@ -17,6 +17,7 @@ import java.util.ResourceBundle;
 @ViewDescriptor(location = ViewResources.Claims.NAMES_COMBO_BOX)
 public class MetaGrantNamesComboBox extends AnchorPane implements Initializable {
 
+    // UI
     @FXML private ComboBox<String> comboBox;
 
     public MetaGrantNamesComboBox() {

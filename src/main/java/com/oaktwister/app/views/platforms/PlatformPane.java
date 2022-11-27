@@ -23,14 +23,17 @@ import java.util.UUID;
 @ViewDescriptor(location = ViewResources.Platforms.PANE)
 public class PlatformPane extends AnchorPane implements Initializable {
 
-    private final SimpleObjectProperty<UUID> identifierProperty;
-    private final SimpleObjectProperty<LocalDateTime> createdAtProperty;
-    private final SimpleObjectProperty<PlatformViewModel> platformProperty;
-
+    // UI
     @FXML private Label identifierLabel;
     @FXML private ImageView imageView;
     @FXML private Label nameLabel;
     @FXML private Label createdAtLabel;
+
+
+    // Properties
+    private final SimpleObjectProperty<UUID> identifierProperty;
+    private final SimpleObjectProperty<LocalDateTime> createdAtProperty;
+    private final SimpleObjectProperty<PlatformViewModel> platformProperty;
 
     public PlatformPane() {
         identifierProperty = new SimpleObjectProperty<>(UUIDUtil.empty());

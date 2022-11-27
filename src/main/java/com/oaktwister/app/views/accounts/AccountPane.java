@@ -23,16 +23,18 @@ import java.util.UUID;
 @ViewDescriptor(location = ViewResources.Accounts.PANE)
 public class AccountPane extends AnchorPane implements Initializable {
 
-    private final SimpleObjectProperty<UUID> identifierProperty;
-    private final SimpleObjectProperty<LocalDateTime> createdAtProperty;
-    private final SimpleIntegerProperty grantsCountProperty;
-    private final SimpleObjectProperty<AccountViewModel> accountProperty;
-
+    // UI
     @FXML private ImageView imageView;
     @FXML private Label platformNameLabel;
     @FXML private Label identifierLabel;
     @FXML private Label grantsCountLabel;
     @FXML private Label createdAtLabel;
+
+    // Properties
+    private final SimpleObjectProperty<UUID> identifierProperty;
+    private final SimpleObjectProperty<LocalDateTime> createdAtProperty;
+    private final SimpleIntegerProperty grantsCountProperty;
+    private final SimpleObjectProperty<AccountViewModel> accountProperty;
 
     public AccountPane() {
         accountProperty = new SimpleObjectProperty<>();

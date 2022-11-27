@@ -19,11 +19,15 @@ import java.util.ResourceBundle;
 @ViewDescriptor(location = ViewResources.Widgets.CRUD_PAGE)
 public class CrudPage<T extends Node> extends AnchorPane implements Initializable {
 
+    // UI
     @FXML private ScrollPane scrollPane;
     @FXML private FlowPane flowPane;
 
-    private final HashMap<T, CrudPane<T>> paneMapping;
+    // Properties
     private final SimpleObjectProperty<CrudPane<T>> selectedPaneProperty;
+
+    // Other
+    private final HashMap<T, CrudPane<T>> paneMapping;
 
     public CrudPage() {
         paneMapping = new HashMap<>();

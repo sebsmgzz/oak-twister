@@ -23,10 +23,12 @@ import java.util.ResourceBundle;
 @ViewDescriptor(location = ViewResources.Widgets.Dialogs.ALERT)
 public class Alert extends AnchorPane implements Initializable, DialogControl {
 
-    private final SimpleObjectProperty<AlertType> alertTypeProperty;
-
+    // UI
     @FXML private DialogFrame dialogFrame;
     @FXML private Label messageLabel;
+
+    // Properties
+    private final SimpleObjectProperty<AlertType> alertTypeProperty;
 
     public Alert() {
         alertTypeProperty = new SimpleObjectProperty<>();

@@ -20,12 +20,15 @@ public final class AccountsController extends Controller<CrudFrame> {
     private final static String DELETE_CONFIRMATION_MESSAGE =
             "Are you sure you want to delete %s account? \nThis action cannot be undone.";
 
+    // Context
     private final UIContext ui;
     private final AccountsViewModel viewModel;
 
+    // UI
     private final CrudFrame crudFrame;
     private final CrudPage<AccountPane> crudPage;
 
+    // Listeners and mappings
     private final HashMap<AccountViewModel, AccountPane> accountMapping;
     private final ListItemAddedListener<AccountViewModel> accountAddedListener;
     private final ListItemRemovedListener<AccountViewModel> accountRemovedListener;

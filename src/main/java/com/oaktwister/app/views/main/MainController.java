@@ -11,12 +11,13 @@ import javafx.beans.value.ObservableValue;
 
 public final class MainController extends Controller<MainLayout> {
 
+    // Context
     private final UIContext ui;
-
     private final AccountsController accounts;
     private final PlatformsController platforms;
     private final IdentitiesController identities;
 
+    // UI
     private final MainLayout layout;
 
     public MainController(UIContext ui) {

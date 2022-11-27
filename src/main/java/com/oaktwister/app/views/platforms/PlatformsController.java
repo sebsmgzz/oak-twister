@@ -24,12 +24,15 @@ public final class PlatformsController extends Controller<CrudFrame> {
             "This action will delete all related accounts as well and cannot be undone.";
     private final static String NO_PLATFORM_SELECTED_MESSAGE = "Please select a platform before continuing.";
 
+    // Context
     private final UIContext ui;
     private final PlatformsViewModel viewModel;
 
+    // UI
     private final CrudFrame crudFrame;
     private final CrudPage<PlatformPane> crudPage;
 
+    // Listeners and mappings
     private final HashMap<PlatformViewModel, PlatformPane> platformMapping;
     private final ListItemAddedListener<PlatformViewModel> platformAddedListener;
     private final ListItemRemovedListener<PlatformViewModel> platformRemovedListener;

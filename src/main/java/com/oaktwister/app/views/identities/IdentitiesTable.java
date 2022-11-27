@@ -19,6 +19,7 @@ import java.util.UUID;
 @ViewDescriptor(location = ViewResources.Identities.TABLE)
 public class IdentitiesTable extends TableView<IdentityViewModel> implements Initializable {
 
+    // UI
     @FXML private TableColumn<IdentityViewModel, UUID> idColumn;
     @FXML private TableColumn<IdentityViewModel, String> nameColumn;
     @FXML private TableColumn<IdentityViewModel, Integer> grantsCountColumn;
