@@ -27,6 +27,7 @@ public final class PlatformsController extends Controller<CrudFrame> {
     // Context
     private final UIContext ui;
     private final PlatformsViewModel viewModel;
+    private final EditPlatformController editPlatformController;
 
     // UI
     private final CrudFrame crudFrame;
@@ -40,6 +41,7 @@ public final class PlatformsController extends Controller<CrudFrame> {
     public PlatformsController(UIContext ui) {
         this.ui = ui;
         viewModel = ui.viewModels().platforms();
+        editPlatformController = new EditPlatformController(ui);
         crudFrame = new CrudFrame();
         crudPage = new CrudPage<>();
         platformMapping = new HashMap<>();
@@ -65,16 +67,14 @@ public final class PlatformsController extends Controller<CrudFrame> {
     private void onAddPlatform(ActionEvent actionEvent) {
 
         // Display the dialog to add the platform
-        EditPlatformDialog dialog = new EditPlatformDialog(ui);
-        dialog.showAndWait();
-
         // If the user did not save the dialog, simply end execution
-        if(dialog.getResult() != DialogResult.SAVED) {
+        DialogResult result = editPlatformController.showAndWait();
+        if(result != DialogResult.SAVED) {
             return;
         }
 
         // Create the platform
-        PlatformViewModel platform = dialog.getPlatform();
+        PlatformViewModel platform = editPlatformController.getPlatform();
         boolean inserted = platform.insert();
         if(inserted) {
             // Update the UI
@@ -102,13 +102,11 @@ public final class PlatformsController extends Controller<CrudFrame> {
         }
 
         // Display the dialog to edit the selectedPlatform
-        EditPlatformDialog dialog = new EditPlatformDialog(ui);
-        PlatformViewModel platform = dialog.getPlatform();
-        platform.copy(selectedPlatform);
-        dialog.showAndWait();
-
         // If the user did not save the dialog, simply end execution
-        if(dialog.resultProperty().get() != DialogResult.SAVED) {
+        PlatformViewModel platform = editPlatformController.getPlatform();
+        platform.copy(selectedPlatform);
+        DialogResult result = editPlatformController.showAndWait();
+        if(result != DialogResult.SAVED) {
             return;
         }
 
@@ -116,7 +114,7 @@ public final class PlatformsController extends Controller<CrudFrame> {
         boolean updated = platform.update();
         if(updated) {
             // Update the UI
-            selectedPlatform.copy(dialog.getPlatform());
+            selectedPlatform.copy(platform);
         } else {
             // TODO: Show an alert of the failed operation
             Exception error = platform.getError();

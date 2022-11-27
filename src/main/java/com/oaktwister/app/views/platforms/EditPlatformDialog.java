@@ -12,6 +12,7 @@ import com.oaktwister.app.views.claims.MetaGrantNamesComboBox;
 import com.oaktwister.app.views.widgets.dialogs.DialogButton;
 import com.oaktwister.app.views.widgets.dialogs.DialogFrame;
 import com.oaktwister.app.views.widgets.dialogs.DialogResult;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
@@ -26,13 +27,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.Callable;
 
 @ViewDescriptor(location = ViewResources.Platforms.EDIT_DIALOG)
 public class EditPlatformDialog extends AnchorPane implements Initializable {
 
     private final static String TITLE = "Edit platform";
 
-
+    // UI
     @FXML private DialogFrame dialogFrame;
 
     // UI: Overview tab
@@ -40,7 +42,7 @@ public class EditPlatformDialog extends AnchorPane implements Initializable {
     @FXML private TextField platformUrlTextField;
     @FXML private ImageView platformImageView;
 
-    // : Claims tab
+    // UI: Claims tab
     @FXML private TextField claimNameTextField;
     @FXML private MetaGrantNamesComboBox claimGrantTypeComboBox;
     @FXML private RadioButton claimOptionalRadioButton;
@@ -51,13 +53,11 @@ public class EditPlatformDialog extends AnchorPane implements Initializable {
 
     // Properties
     private final SimpleObjectProperty<PlatformViewModel> platformProperty;
+    private final SimpleObjectProperty<Callable<ClaimViewModel>> claimFactoryProperty;
 
-    // Other
-    private final UIContext ui;
-
-    public EditPlatformDialog(UIContext ui) {
-        this.ui = ui;
+    public EditPlatformDialog() {
         platformProperty = new SimpleObjectProperty<>();
+        claimFactoryProperty = new SimpleObjectProperty<>();
         FXMLUtil.loadControl(this);
     }
 
@@ -74,7 +74,6 @@ public class EditPlatformDialog extends AnchorPane implements Initializable {
             platformImageView.imageProperty().bindBidirectional(newValue.imageProperty());
             claimsTable.claimsProperty().bind(newValue.claimMap().claimsProperty());
         });
-        platformProperty.set(ui.viewModels().platform());
         claimsTable.selectedClaimProperty().addListener((observable, oldValue, newValue) -> {
             claimNameTextField.setText(newValue.getName());
             claimGrantTypeComboBox.setSelectedMetaGrantName(newValue.getMetaGrantName());
@@ -85,16 +84,10 @@ public class EditPlatformDialog extends AnchorPane implements Initializable {
         removeClaimButton.setOnAction(this::onRemoveClaim);
     }
 
-    public void showAndWait() {
-        Stage stage = ui.stages().getDialogStage(this);
-        stage.getIcons().add(new Image(ImageResources.FontAwesome.LAYER_GROUP_SOLID));
-        dialogFrame.showAndWait(stage);
-    }
-
     private void onAddClaim(ActionEvent actionEvent) {
         try {
             PlatformViewModel platform = getPlatform();
-            ClaimViewModel claim = ui.viewModels().claim();
+            ClaimViewModel claim = getClaimFactory().call();
             claim.setName(claimNameTextField.getText());
             claim.setMetaGrantName(claimGrantTypeComboBox.getSelectedMetaGrantName());
             claim.setIsOptional(claimOptionalRadioButton.isSelected());
@@ -117,11 +110,24 @@ public class EditPlatformDialog extends AnchorPane implements Initializable {
         return resultProperty().get();
     }
 
-    public ReadOnlyObjectProperty<PlatformViewModel> platformProperty() {
+    public ObjectProperty<PlatformViewModel> platformProperty() {
         return platformProperty;
     }
     public PlatformViewModel getPlatform() {
         return platformProperty().get();
+    }
+    public void setPlatform(PlatformViewModel value) {
+        platformProperty().set(value);
+    }
+
+    public ObjectProperty<Callable<ClaimViewModel>> claimFactoryProperty() {
+        return claimFactoryProperty;
+    }
+    public Callable<ClaimViewModel> getClaimFactory() {
+        return claimFactoryProperty().get();
+    }
+    public void setClaimFactory(Callable<ClaimViewModel> value) {
+        claimFactoryProperty().set(value);
     }
 
 }

@@ -29,7 +29,7 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 
 @ViewDescriptor(location = ViewResources.Widgets.Dialogs.DIALOG_FRAME)
-public class DialogFrame extends AnchorPane implements Initializable, DialogControl {
+public class DialogFrame extends AnchorPane implements Initializable {
 
     // UI
     @FXML private ImageView iconImageView;
@@ -45,9 +45,6 @@ public class DialogFrame extends AnchorPane implements Initializable, DialogCont
     // Listeners
     private final ListItemAddedListener<DialogButton> onButtonAddedListener;
     private final ListItemRemovedListener<DialogButton> onButtonRemovedListener;
-
-    // Other
-    private Stage stage;
 
     public DialogFrame() {
         contentProperty = new SimpleObjectProperty<>();
@@ -70,19 +67,10 @@ public class DialogFrame extends AnchorPane implements Initializable, DialogCont
         });
     }
 
-    public void showAndWait(Stage stage) {
-        this.stage = stage;
-        stage.showAndWait();
-        this.stage = null;
-    }
-
     private void onButtonAdded(DialogButton dialogButton) {
         dialogButton.setOnAction(event -> {
             DialogButton button = event.getSender();
             resultProperty.set(button.getResult());
-            if(stage != null) {
-                stage.close();
-            }
         });
         buttonsHBox.getChildren().add(dialogButton);
     }

@@ -21,7 +21,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 @ViewDescriptor(location = ViewResources.Widgets.Dialogs.ALERT)
-public class Alert extends AnchorPane implements Initializable, DialogControl {
+public class Alert extends AnchorPane implements Initializable {
 
     // UI
     @FXML private DialogFrame dialogFrame;
@@ -42,7 +42,6 @@ public class Alert extends AnchorPane implements Initializable, DialogControl {
 
     public void showAndWait(Stage stage) {
         stage.getIcons().add(new Image(ImageResources.Vikings.OAK));
-        dialogFrame.showAndWait(stage);
     }
 
     private void onAlertTypeChanged(ObservableValue<? extends AlertType> observable, AlertType oldValue, AlertType newValue) {
@@ -65,7 +64,6 @@ public class Alert extends AnchorPane implements Initializable, DialogControl {
             // TODO: Load image from ImageResources.ERROR_ICON
             dialogFrame.clearButtons();
             dialogFrame.addButtons(DialogButton.fromResult(DialogResult.OKAY));
-        } else {
         }
     }
 
