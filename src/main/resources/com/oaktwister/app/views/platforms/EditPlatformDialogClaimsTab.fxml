@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.Label?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import com.oaktwister.app.views.claims.ClaimsTable?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.RadioButton?>
+<?import com.oaktwister.app.views.claims.MetaGrantNamesComboBox?>
+
+<?import com.oaktwister.app.views.claims.MetaGrantNamesComboBox?>
+<fx:root xmlns="http://javafx.com/javafx"
+         xmlns:fx="http://javafx.com/fxml"
+         fx:controller="com.oaktwister.app.views.platforms.EditPlatformDialogClaimsTab"
+         type="javafx.scene.layout.GridPane">
+
+    <padding>
+        <Insets left="10.0" right="10.0" top="10.0"/>
+    </padding>
+
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" />
+        <ColumnConstraints hgrow="ALWAYS" minWidth="100" />
+        <ColumnConstraints hgrow="SOMETIMES" />
+    </columnConstraints>
+
+    <rowConstraints>
+        <RowConstraints vgrow="NEVER" />
+        <RowConstraints vgrow="NEVER" />
+        <RowConstraints vgrow="NEVER" />
+        <RowConstraints vgrow="ALWAYS" />
+    </rowConstraints>
+
+    <Label text="Name:" alignment="CENTER_RIGHT"
+           GridPane.rowIndex="0" GridPane.columnIndex="0"
+           GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+        <GridPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+        </GridPane.margin>
+    </Label>
+
+    <TextField fx:id="claimNameTextField"
+               GridPane.rowIndex="0" GridPane.columnIndex="1"
+               GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+        <GridPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+        </GridPane.margin>
+    </TextField>
+
+    <Label text="Grant type:" alignment="CENTER_RIGHT"
+           GridPane.rowIndex="1" GridPane.columnIndex="0"
+           GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+        <GridPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+        </GridPane.margin>
+    </Label>
+
+    <MetaGrantNamesComboBox fx:id="claimGrantTypeComboBox"
+                            GridPane.rowIndex="1" GridPane.columnIndex="1"
+                            GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+        <GridPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+        </GridPane.margin>
+    </MetaGrantNamesComboBox>
+
+
+    <Label text="Is optional:" alignment="CENTER_RIGHT"
+           GridPane.rowIndex="2" GridPane.columnIndex="0"
+           GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+        <GridPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+        </GridPane.margin>
+    </Label>
+
+    <RadioButton fx:id="claimOptionalRadioButton" alignment="CENTER_RIGHT"
+                 GridPane.rowIndex="2" GridPane.columnIndex="1"
+                 GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+        <GridPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+        </GridPane.margin>
+    </RadioButton>
+
+    <VBox spacing="10" HBox.hgrow="NEVER" alignment="CENTER"
+          GridPane.rowIndex="0" GridPane.columnIndex="2"
+          GridPane.rowSpan="3">
+        <padding>
+            <Insets left="5.0" right="5.0" top="5.0" bottom="5"/>
+        </padding>
+        <Button fx:id="addClaimButton" text="Add" minWidth="100"/>
+        <Button fx:id="updateClaimButton" text="Update" minWidth="100"/>
+        <Button fx:id="removeClaimButton" text="Remove" minWidth="100"/>
+    </VBox>
+
+    <ClaimsTable fx:id="claimsTable"
+                 GridPane.rowIndex="3" GridPane.columnIndex="0"
+                 GridPane.columnSpan="3"/>
+
+</fx:root>

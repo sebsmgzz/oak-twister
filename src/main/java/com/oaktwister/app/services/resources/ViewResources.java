@@ -38,6 +38,8 @@ public interface ViewResources {
         String URL = BASE_URL + "/platforms";
         String PANE = URL + "/PlatformPane.fxml";
         String EDIT_DIALOG = URL + "/EditPlatformDialog.fxml";
+        String EDIT_DIALOG_OVERVIEW_TAB = URL + "/EditPlatformDialogOverviewTab.fxml";
+        String EDIT_DIALOG_CLAIMS_TAB = URL + "/EditPlatformDialogClaimsTab.fxml";
     }
 
     interface Widgets {

@@ -4,20 +4,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.Tab?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.control.Label?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.image.Image?>
 <?import com.oaktwister.app.views.widgets.dialogs.DialogFrame?>
-<?import com.oaktwister.app.views.claims.ClaimsTable?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.RadioButton?>
-<?import com.oaktwister.app.views.claims.MetaGrantNamesComboBox?>
+
+<?import com.oaktwister.app.views.platforms.EditPlatformDialogOverviewTab?>
+<?import com.oaktwister.app.views.platforms.EditPlatformDialogClaimsTab?>
 
 <fx:root xmlns="http://javafx.com/javafx/8"
          xmlns:fx="http://javafx.com/fxml/1"
@@ -31,152 +21,11 @@
             <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
 
                 <Tab text="Overview">
-                    <GridPane AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
-
-                        <columnConstraints>
-                            <ColumnConstraints hgrow="NEVER"/>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                        </columnConstraints>
-                        <rowConstraints>
-                            <RowConstraints vgrow="NEVER"/>
-                            <RowConstraints vgrow="NEVER"/>
-                            <RowConstraints vgrow="ALWAYS"/>
-                        </rowConstraints>
-
-                        <Label alignment="CENTER_RIGHT" maxWidth="Infinity" text="Name:"
-                               GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                            <GridPane.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-                            </GridPane.margin>
-                        </Label>
-
-                        <Label text="URL:" alignment="CENTER_RIGHT" maxWidth="Infinity"
-                               GridPane.halignment="CENTER" GridPane.valignment="CENTER"
-                               GridPane.rowIndex="1">
-                            <GridPane.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-                            </GridPane.margin>
-                        </Label>
-
-                        <TextField fx:id="platformNameTextField" GridPane.columnIndex="1"
-                                   GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                            <GridPane.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-                            </GridPane.margin>
-                        </TextField>
-
-                        <TextField fx:id="platformUrlTextField"
-                                   GridPane.rowIndex="1" GridPane.columnIndex="1"
-                                   GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                            <GridPane.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-                            </GridPane.margin>
-                        </TextField>
-
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0"
-                              GridPane.rowIndex="2" GridPane.columnSpan="2"
-                              GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS"
-                              GridPane.valignment="CENTER" GridPane.halignment="CENTER">
-                            <GridPane.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-                            </GridPane.margin>
-                            <ImageView fx:id="platformImageView" fitWidth="200.0" pickOnBounds="true"
-                                       preserveRatio="true" VBox.vgrow="ALWAYS">
-                                <Image url="/com/oaktwister/app/images/placeholders/image.png"/>
-                            </ImageView>
-                            <Button text="Browse" minWidth="100.0"
-                                    mnemonicParsing="false" VBox.vgrow="NEVER"/>
-                        </VBox>
-
-                    </GridPane>
+                    <EditPlatformDialogOverviewTab fx:id="overviewTab" />
                 </Tab>
 
                 <Tab text="Claims">
-                    <GridPane>
-
-                        <padding>
-                            <Insets left="10.0" right="10.0" top="10.0"/>
-                        </padding>
-
-                        <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" />
-                            <ColumnConstraints hgrow="ALWAYS" minWidth="100" />
-                            <ColumnConstraints hgrow="SOMETIMES" />
-                        </columnConstraints>
-
-                        <rowConstraints>
-                            <RowConstraints vgrow="NEVER" />
-                            <RowConstraints vgrow="NEVER" />
-                            <RowConstraints vgrow="NEVER" />
-                            <RowConstraints vgrow="ALWAYS" />
-                        </rowConstraints>
-
-                        <Label text="Name:" alignment="CENTER_RIGHT"
-                               GridPane.rowIndex="0" GridPane.columnIndex="0"
-                               GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                            <GridPane.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-                            </GridPane.margin>
-                        </Label>
-
-                        <TextField fx:id="claimNameTextField"
-                                   GridPane.rowIndex="0" GridPane.columnIndex="1"
-                                   GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                            <GridPane.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-                            </GridPane.margin>
-                        </TextField>
-
-                        <Label text="Grant type:" alignment="CENTER_RIGHT"
-                               GridPane.rowIndex="1" GridPane.columnIndex="0"
-                               GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                            <GridPane.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-                            </GridPane.margin>
-                        </Label>
-
-                        <MetaGrantNamesComboBox fx:id="claimGrantTypeComboBox"
-                                                GridPane.rowIndex="1" GridPane.columnIndex="1"
-                                                GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                            <GridPane.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-                            </GridPane.margin>
-                        </MetaGrantNamesComboBox>
-
-
-                        <Label text="Is optional:" alignment="CENTER_RIGHT"
-                               GridPane.rowIndex="2" GridPane.columnIndex="0"
-                               GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                            <GridPane.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-                            </GridPane.margin>
-                        </Label>
-
-                        <RadioButton fx:id="claimOptionalRadioButton" alignment="CENTER_RIGHT"
-                                     GridPane.rowIndex="2" GridPane.columnIndex="1"
-                                     GridPane.halignment="LEFT" GridPane.valignment="CENTER">
-                            <GridPane.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-                            </GridPane.margin>
-                        </RadioButton>
-
-                        <VBox spacing="10" HBox.hgrow="NEVER" alignment="CENTER"
-                              GridPane.rowIndex="0" GridPane.columnIndex="2"
-                              GridPane.rowSpan="3">
-                            <padding>
-                                <Insets left="5.0" right="5.0" top="5.0" bottom="5"/>
-                            </padding>
-                            <Button fx:id="addClaimButton" text="Add" minWidth="100"/>
-                            <Button fx:id="updateClaimButton" text="Update" minWidth="100"/>
-                            <Button fx:id="removeClaimButton" text="Remove" minWidth="100"/>
-                        </VBox>
-
-                        <ClaimsTable fx:id="claimsTable"
-                                     GridPane.rowIndex="3" GridPane.columnIndex="0"
-                                     GridPane.columnSpan="3"/>
-
-                    </GridPane>
+                    <EditPlatformDialogClaimsTab fx:id="claimsTab" />
                 </Tab>
 
             </TabPane>
