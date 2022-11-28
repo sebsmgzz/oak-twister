@@ -9,6 +9,7 @@ import com.oaktwister.app.views.claims.ClaimsTable;
 import com.oaktwister.app.views.claims.MetaGrantNamesComboBox;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -45,33 +46,61 @@ public class EditPlatformDialogClaimsTab extends GridPane implements Initializab
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        claimsTable.selectedClaimProperty().addListener((observable, oldValue, newValue) -> {
-            claimNameTextField.setText(newValue.getName());
-            claimGrantTypeComboBox.setSelectedMetaGrantName(newValue.getMetaGrantName());
-            claimOptionalRadioButton.setSelected(newValue.getIsOptional());
-        });
+        claimsTable.selectedClaimProperty().addListener(this::onSelectedClaimChanged);
         addClaimButton.setOnAction(this::onAddClaim);
         updateClaimButton.setOnAction(this::onUpdateClaim);
         removeClaimButton.setOnAction(this::onRemoveClaim);
+        platformProperty.addListener((observable, oldValue, newValue) -> {
+            claimsTable.claimsProperty().bind(newValue.claimMap().claimsProperty());
+        });
     }
 
     private void onAddClaim(ActionEvent actionEvent) {
         try {
-            PlatformViewModel platform = getPlatform();
             ClaimViewModel claim = getClaimFactory().call();
             claim.setName(claimNameTextField.getText());
             claim.setMetaGrantName(claimGrantTypeComboBox.getSelectedMetaGrantName());
             claim.setIsOptional(claimOptionalRadioButton.isSelected());
+            PlatformViewModel platform = getPlatform();
             platform.claimMap().addClaim(claim);
         } catch (Exception ex) {
+            // TODO: Handle exception
             throw new RuntimeException(ex);
         }
     }
 
     private void onUpdateClaim(ActionEvent actionEvent) {
+        ClaimViewModel selectedClaim = claimsTable.getSelectedClaimProperty();
+        if(selectedClaim != null) {
+            selectedClaim.setName(claimNameTextField.getText());
+            selectedClaim.setMetaGrantName(claimGrantTypeComboBox.getSelectedMetaGrantName());
+            selectedClaim.setIsOptional(claimOptionalRadioButton.isSelected());
+        } else {
+            // TODO: Throw exception? This should never happen
+        }
     }
 
     private void onRemoveClaim(ActionEvent actionEvent) {
+        ClaimViewModel selectedClaim = claimsTable.getSelectedClaimProperty();
+        if(selectedClaim != null) {
+            getPlatform().claimMap().removeClaim(selectedClaim);
+        } else {
+            // TODO: Throw exception? This should never happen
+        }
+    }
+
+    private void onSelectedClaimChanged(ObservableValue<? extends ClaimViewModel> observable,
+                                        ClaimViewModel oldValue, ClaimViewModel newValue) {
+        if(newValue != null) {
+            claimNameTextField.setText(newValue.getName());
+            claimGrantTypeComboBox.setSelectedMetaGrantName(newValue.getMetaGrantName());
+            claimOptionalRadioButton.setSelected(newValue.getIsOptional());
+            removeClaimButton.setDisable(false);
+            updateClaimButton.setDisable(false);
+        } else {
+            removeClaimButton.setDisable(true);
+            updateClaimButton.setDisable(true);
+        }
     }
 
     public ObjectProperty<PlatformViewModel> platformProperty() {
@@ -92,28 +121,6 @@ public class EditPlatformDialogClaimsTab extends GridPane implements Initializab
     }
     public void setClaimFactory(Callable<ClaimViewModel> value) {
         claimFactoryProperty().set(value);
-    }
-
-    public ObjectProperty<ObservableList<ClaimViewModel>> claimsProperty() {
-        return claimsTable.claimsProperty();
-    }
-    public ObservableList<ClaimViewModel> getClaims() {
-        return claimsProperty().get();
-    }
-    public boolean addClaim(ClaimViewModel claim) {
-        return getClaims().add(claim);
-    }
-    public boolean addClaims(ClaimViewModel... claims) {
-        return getClaims().addAll(claims);
-    }
-    public boolean removeClaim(ClaimViewModel claim) {
-        return getClaims().remove(claim);
-    }
-    public boolean removeClaims(ClaimViewModel claims) {
-        return getClaims().removeAll(claims);
-    }
-    public void clearClaims() {
-        getClaims().clear();
     }
 
 }

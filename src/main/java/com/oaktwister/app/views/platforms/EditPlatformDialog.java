@@ -52,12 +52,8 @@ public class EditPlatformDialog extends AnchorPane implements Initializable {
         dialogFrame.addButtons(
                 DialogButton.fromResult(DialogResult.SAVED),
                 DialogButton.fromResult(DialogResult.CANCELED));
-        platformProperty.addListener((observable, oldValue, newValue) -> {
-            overviewTab.platformNameProperty().bindBidirectional(newValue.nameProperty());
-            overviewTab.platformUrlProperty().bindBidirectional(newValue.urlProperty());
-            overviewTab.platformImageProperty().bindBidirectional(newValue.imageProperty());
-            claimsTab.claimsProperty().bind(newValue.claimMap().claimsProperty());
-        });
+        overviewTab.platformProperty().bind(platformProperty);
+        claimsTab.platformProperty().bind(platformProperty);
     }
 
     public ReadOnlyObjectProperty<DialogResult> resultProperty() {

@@ -92,8 +92,8 @@
             <Insets left="5.0" right="5.0" top="5.0" bottom="5"/>
         </padding>
         <Button fx:id="addClaimButton" text="Add" minWidth="100"/>
-        <Button fx:id="updateClaimButton" text="Update" minWidth="100"/>
-        <Button fx:id="removeClaimButton" text="Remove" minWidth="100"/>
+        <Button fx:id="updateClaimButton" text="Update" minWidth="100" disable="true"/>
+        <Button fx:id="removeClaimButton" text="Remove" minWidth="100" disable="true"/>
     </VBox>
 
     <ClaimsTable fx:id="claimsTable"
